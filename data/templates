@@ -34,49 +34,83 @@
 // Weapons: //
 //**********//
 
-<item category:weapon>
-	name:dagger
-	plural name:daggers
-	writing:
-	appearance:)
-	stackable:0
-	weight:5
-	value:1
-	color:iron
-	material:iron
-	melee damage:4-8
-	thrown damage:1-3
-	ranged damage:1-1
-	light radius:0
-	light beam:0
-	beam angle:0
-	<weapon>
-		governing weapon skill:bladed weapons
-		weapon category:short blades
-	</weapon>
-</item>
+	//********//
+	// Melee: //
+	//********//
 
-<item category:weapon>
-	name:bow
-	plural name:bows
-	writing:
-	appearance:)
-	stackable:0
-	weight:3
-	value:1
-	color:wood
-	material:wood
-	melee damage:1-1
-	thrown damage:1-2
-	ranged damage:1-4
-	light radius:0
-	light beam:0
-	beam angle:0
-	<weapon>
-		governing weapon skill:launcher weapons
-		weapon category:bows
-	</weapon>
-</item>
+	<item category:weapon>
+		name:dagger
+		plural name:daggers
+		writing:
+		appearance:)
+		stackable:0
+		weight:7
+		value:1
+		color:iron
+		material:iron
+		melee damage:24-31
+		thrown damage:1-1
+		ranged damage:1-1
+		light radius:0
+		light beam:0
+		beam angle:0
+		<weapon>
+			governing weapon skill:bladed weapons
+			weapon category:short blades
+		</weapon>
+	</item>
+	
+	//*********//
+	// Ranged: //
+	//*********//
+
+	<item category:weapon>
+		name:bow
+		plural name:bows
+		writing:
+		appearance:)
+		stackable:0
+		weight:3
+		value:1
+		color:wood
+		material:wood
+		melee damage:1-1
+		thrown damage:1-2
+		ranged damage:1-4
+		light radius:0
+		light beam:0
+		beam angle:0
+		<weapon>
+			governing weapon skill:launcher weapons
+			weapon category:bows
+		</weapon>
+	</item>
+	
+	//*********//
+	// Thrown: //
+	//*********//
+	
+	<item category:weapon>
+		name:shuriken
+		plural name:shurikens
+		writing:
+		appearance:)
+		stackable:1
+		weight:4
+		value:1
+		color:iron
+		material:iron
+		melee damage:1-1
+		thrown damage:12-16
+		ranged damage:0-0
+		light radius:0
+		light beam:0
+		beam angle:0
+		<weapon>
+			governing weapon skill:thrown weapons
+			weapon category:thrown
+		</weapon>
+	</item>
 
 //********//
 // Armor: //
@@ -378,12 +412,12 @@
 		writing:
 		appearance:"
 		stackable:0
-		weight:18
+		weight:9
 		value:1
 		color:copper
 		material:copper
-		melee damage:1-6
-		thrown damage:1-3
+		melee damage:1-1
+		thrown damage:1-1
 		ranged damage:0-0
 		light radius:0
 		light beam:0
@@ -404,11 +438,11 @@
 		writing:
 		appearance:=
 		stackable:0
-		weight:9
+		weight:4
 		value:1
 		color:copper
 		material:copper
-		melee damage:1-2
+		melee damage:1-1
 		thrown damage:1-1
 		ranged damage:0-0
 		light radius:0

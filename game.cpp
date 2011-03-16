@@ -511,7 +511,7 @@ void Game::generate_level(){
         int random_item_stack=1;
         //If the item is stackable.
         if(templates.template_items[random_item_category][random_item_template].stackable){
-            random_item_stack=random_range(1,32);
+            random_item_stack=random_range(1,8);
         }
 
         //If the tile at the random position is an appropriate tile for an item.

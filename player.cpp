@@ -20,12 +20,6 @@ Player::Player(){
 
     is_player=true;
 
-    //Randomly choose a facing direction.
-    int random=random_range(FOV_EAST,FOV_SOUTHEAST);
-    facing=(fov_direction_type)random;
-    fov_radius=10;
-    fov_angle=90.0f;
-    beam=false;
     light_on=true;
     source_data.permanent=true;
 
@@ -533,7 +527,7 @@ void Player::update_fov(){
             if(vector_levels[current_level].items[i].light_on){
                 //If the light source is a beam.
                 if(vector_levels[current_level].items[i].beam){
-                    fov_beam(&fov_settings,&vector_levels[current_level],&vector_levels[current_level].items[i].source_data,vector_levels[current_level].items[i].x,vector_levels[current_level].items[i].y,vector_levels[current_level].items[i].fov_radius,facing,vector_levels[current_level].items[i].fov_angle);
+                    fov_beam(&fov_settings,&vector_levels[current_level],&vector_levels[current_level].items[i].source_data,vector_levels[current_level].items[i].x,vector_levels[current_level].items[i].y,vector_levels[current_level].items[i].fov_radius,vector_levels[current_level].items[i].facing,vector_levels[current_level].items[i].fov_angle);
                 }
                 //If the light source is a circle.
                 else{

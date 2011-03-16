@@ -64,7 +64,9 @@ Creature::Creature(){
     movement_speed=25;
     next_move=movement_speed;
 
-    facing=FOV_EAST;
+    //Randomly choose a facing direction.
+    int random=random_range(FOV_EAST,FOV_SOUTHEAST);
+    facing=(fov_direction_type)random;
     fov_radius=10;
     fov_angle=90.0f;
     beam=false;

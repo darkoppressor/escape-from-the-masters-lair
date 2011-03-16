@@ -9,7 +9,42 @@
 
 using namespace std;
 
-void Creature::attack_thrown(Creature* target){
+int Creature::attack_thrown(int item_identifier){
+    int damage=0;
+
+    //We now determine the maximum amount of damage the attacker's item can do.
+
+    //Damage begins with base thrown damage.
+    int base_damage=random_range(base_damage_thrown_min,base_damage_thrown_max);
+
+    damage=base_damage;
+
+    //Add in thrown weapon damage.
+
+    //Determine the base damage range for this item.
+    int weapon_damage_min=inventory[item_identifier].damage_min_thrown;
+    int weapon_damage_max=inventory[item_identifier].damage_max_thrown;
+    int weapon_damage=random_range(weapon_damage_min,weapon_damage_max);
+
+    //Apply the appropriate weapon skill, if any.
+
+    //If the item is governed by the thrown weapons skill.
+    if(inventory[item_identifier].category==ITEM_WEAPON && inventory[item_identifier].governing_skill_weapon==SKILL_THROWN_WEAPONS){
+        weapon_damage+=weapon_damage*(skills[SKILL_THROWN_WEAPONS]/10);
+    }
+
+    //Add the weapon's damage to the attack's damage.
+    damage+=weapon_damage;
+
+    //Apply the agility bonus.
+    damage+=damage*(attributes[ATTRIBUTE_AGILITY]/6);
+
+    //Apply the strength bonus.
+    damage+=damage*(attributes[ATTRIBUTE_STRENGTH]/8);
+
+    //We have finished determining the maximum damage the attacker can do.
+
+    return damage;
 }
 
 void Creature::attack_melee(Creature* target){

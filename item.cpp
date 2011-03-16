@@ -15,6 +15,12 @@ Item::Item(){
 
     dye=0;
 
+    move_direction=NONE;
+
+    momentum=0;
+
+    damage=0;
+
     stack=1;
 
     stackable=false;
@@ -42,6 +48,9 @@ Item::Item(){
     damage_min_ranged=1;
     damage_max_ranged=1;
 
+    //Randomly choose a facing direction.
+    int random=random_range(FOV_EAST,FOV_SOUTHEAST);
+    facing=(fov_direction_type)random;
     fov_radius=LIGHT_NONE;
     beam=false;
     fov_angle=90.0f;
@@ -75,6 +84,187 @@ Item::Item(){
     //Container-specific//
 
     //Other-specific//
+}
+
+bool Item::check_movement(short check_x,short check_y){
+    //Keep the creature in the level map's bounds.
+    if(check_x<0 || check_x>vector_levels[current_level].level_x-1){
+        return false;
+    }
+    if(check_y<0 || check_y>vector_levels[current_level].level_y-1){
+        return false;
+    }
+
+    switch(vector_levels[current_level].tiles[check_x][check_y].type){
+        //If no special tiles are encountered.
+        default:
+            return true;
+            break;
+
+        case TILE_TYPE_WALL: case TILE_TYPE_SOLID: case TILE_TYPE_DOOR_CLOSED: case TILE_TYPE_SECRET_DOOR:
+            return false;
+            break;
+    }
+}
+
+void Item::execute_movement(short check_x,short check_y){
+    bool clear_for_move=false;
+
+    switch(vector_levels[current_level].tiles[check_x][check_y].type){
+        //If no special tiles are encountered.
+        default:
+            clear_for_move=true;
+            break;
+
+        case TILE_TYPE_WALL: case TILE_TYPE_SOLID: case TILE_TYPE_DOOR_CLOSED: case TILE_TYPE_SECRET_DOOR:
+            ///
+            break;
+    }
+
+    //If the tile is clear for movement, check for something to attack before moving to it.
+    if(clear_for_move){
+        bool combat_occurred=false;
+
+        //Check for the player.
+        if(player.alive && check_x==player.x && check_y==player.y){
+            //Attack the player.
+            attack(&player);
+            combat_occurred=true;
+        }
+        //Check for a monster.
+        for(int i=0;i<vector_levels[current_level].monsters.size();i++){
+            if(vector_levels[current_level].monsters[i].alive && check_x==vector_levels[current_level].monsters[i].x && check_y==vector_levels[current_level].monsters[i].y){
+                //Attack the monster.
+                attack(&vector_levels[current_level].monsters[i]);
+                combat_occurred=true;
+                break;
+            }
+        }
+
+        //If no attack occurred, move the creature.
+        if(!combat_occurred){
+            x=check_x;
+            y=check_y;
+
+            //The item loses one momentum.
+            momentum--;
+        }
+        //If an attack occurred.
+        else{
+            //The item loses all momentum and thus becomes still.
+            momentum=0;
+        }
+    }
+}
+
+void Item::move(){
+    //If the item has momentum.
+    if(momentum>0){
+        if(move_direction==LEFT){
+            //If the target tile can be moved into.
+            if(check_movement(x-1,y)){
+                facing=FOV_WEST;
+
+                execute_movement(x-1,y);
+            }
+            //If the target tile cannot be moved into.
+            else{
+                //The item loses all momentum and thus becomes still.
+                momentum=0;
+            }
+        }
+        else if(move_direction==UP){
+            //If the target tile can be moved into.
+            if(check_movement(x,y-1)){
+                facing=FOV_NORTH;
+
+                execute_movement(x,y-1);
+            }
+            //If the target tile cannot be moved into.
+            else{
+                //The item loses all momentum and thus becomes still.
+                momentum=0;
+            }
+        }
+        else if(move_direction==RIGHT){
+            //If the target tile can be moved into.
+            if(check_movement(x+1,y)){
+                facing=FOV_EAST;
+
+                execute_movement(x+1,y);
+            }
+            //If the target tile cannot be moved into.
+            else{
+                //The item loses all momentum and thus becomes still.
+                momentum=0;
+            }
+        }
+        else if(move_direction==DOWN){
+            //If the target tile can be moved into.
+            if(check_movement(x,y+1)){
+                facing=FOV_SOUTH;
+
+                execute_movement(x,y+1);
+            }
+            //If the target tile cannot be moved into.
+            else{
+                //The item loses all momentum and thus becomes still.
+                momentum=0;
+            }
+        }
+        else if(move_direction==LEFT_UP){
+            //If the target tile can be moved into.
+            if(check_movement(x-1,y-1)){
+                facing=FOV_NORTHWEST;
+
+                execute_movement(x-1,y-1);
+            }
+            //If the target tile cannot be moved into.
+            else{
+                //The item loses all momentum and thus becomes still.
+                momentum=0;
+            }
+        }
+        else if(move_direction==RIGHT_UP){
+            //If the target tile can be moved into.
+            if(check_movement(x+1,y-1)){
+                facing=FOV_NORTHEAST;
+
+                execute_movement(x+1,y-1);
+            }
+            //If the target tile cannot be moved into.
+            else{
+                //The item loses all momentum and thus becomes still.
+                momentum=0;
+            }
+        }
+        else if(move_direction==RIGHT_DOWN){
+            //If the target tile can be moved into.
+            if(check_movement(x+1,y+1)){
+                facing=FOV_SOUTHEAST;
+
+                execute_movement(x+1,y+1);
+            }
+            //If the target tile cannot be moved into.
+            else{
+                //The item loses all momentum and thus becomes still.
+                momentum=0;
+            }
+        }
+        else if(move_direction==LEFT_DOWN){
+            //If the target tile can be moved into.
+            if(check_movement(x-1,y+1)){
+                facing=FOV_SOUTHWEST;
+
+                execute_movement(x-1,y+1);
+            }
+            //If the target tile cannot be moved into.
+            else{
+                //The item loses all momentum and thus becomes still.
+                momentum=0;
+            }
+        }
+    }
 }
 
 string Item::return_full_name(int override_stack){

@@ -7,8 +7,13 @@
 #include "object.h"
 #include "light_data.h"
 #include "effect.h"
+#include "fov.h"
 
 #include <vector>
+
+//Incomplete declaration of Creature.
+//We have to do this here, because a Creature object is used by a function in Item, but Creature relies on Item.
+class Creature;
 
 class Item: public Object{
     private:
@@ -21,6 +26,7 @@ class Item: public Object{
     //Is the light currently on.
     bool light_on;
     light_data source_data;
+    fov_direction_type facing;
 
     //The letter for inventory interaction.
     char inventory_letter;
@@ -39,6 +45,16 @@ class Item: public Object{
 
     //Special effects (both positive and negative) conferred by the item to its owner.
     std::vector<Effect> effects;
+
+    //The direction the item is moving.
+    short move_direction;
+
+    //The current momentum of the item.
+    //This is the maximum number of tiles the item can move.
+    short momentum;
+
+    //The damage the item will do if it hits a creature.
+    int damage;
 
     //The stacked number of this item.
     int stack;
@@ -134,6 +150,16 @@ class Item: public Object{
     //Other-specific//
 
     Item();
+
+    //Evaluate the tile the item is trying to move to.
+    //Returns true if the item can move, false if the item can not move.
+    bool check_movement(short check_x,short check_y);
+
+    void execute_movement(short check_x,short check_y);
+
+    void attack(Creature* target);
+
+    void move();
 
     std::string return_full_name(int override_stack=-1);
 

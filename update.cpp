@@ -49,6 +49,11 @@ void movement(){
 
 //Handle events, such as collisions.
 void events(){
+    //Move the items.
+    for(int i=0;i<vector_levels[current_level].items.size();i++){
+        vector_levels[current_level].items[i].move();
+    }
+
     player.update_fov();
 }
 
