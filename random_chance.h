@@ -1,3 +1,6 @@
+/* Copyright (c) 2011 Kevin Wells */
+/* Escape from the Master's Lair may be freely redistributed.  See license for details. */
+
 #ifndef random_chance_h
 #define random_chance_h
 

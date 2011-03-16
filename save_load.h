@@ -1,3 +1,6 @@
+/* Copyright (c) 2011 Kevin Wells */
+/* Escape from the Master's Lair may be freely redistributed.  See license for details. */
+
 #ifndef save_load_h
 #define save_load_h
 

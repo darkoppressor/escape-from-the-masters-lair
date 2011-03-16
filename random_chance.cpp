@@ -1,3 +1,6 @@
+/* Copyright (c) 2011 Kevin Wells */
+/* Escape from the Master's Lair may be freely redistributed.  See license for details. */
+
 #include "random_chance.h"
 #include "random_number_generator.h"
 
