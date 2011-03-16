@@ -1,0 +1,161 @@
+{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\colortbl ;\red255\green0\blue0;}
+{\*\generator Msftedit 5.41.21.2509;}\viewkind4\uc1\pard\sa200\sl276\slmult1\lang9\f0\fs22 Abilities similar to Din's Curse (no need to unlock higher tier skills) and other ARPGs.\par
+\par
+\strike Health DOES NOT regenerate on its own.\par
+Mana DOES regenerate on its own.\strike0\par
+\par
+Numbers:\par
+\strike -Health\par
+-Mana\par
+-Level\par
+-Experience\strike0\par
+-Hunger (maybe)\par
+\strike -Movement speed\strike0\par
+\par
+Creatures have a vector of statuses. When they walk through water or otherwise have water on them, they become wet.\par
+They dry out at some rate (perhaps each dungeon level should have a temperature that affects this?).\par
+If a wet creature is hit with something cold enough, like a frost spell, that creature becomes frozen. Etc.\par
+\par
+There are no classes. You do get a class name, but it is determined by your attributes and skills, and is just descriptive.\par
+Instead of choosing a class at the beginning of the game, you choose what skills to focus on.\par
+All skills and attributes start at pretty low defaults, which are the same every game (so no point in start-scumming). When you choose your focus, your focused skills increase a bit.\par
+Focused skills increase a little faster than regular ones.\par
+The player levels up in the classic way, by gaining enough experience points.\par
+Experience is gained through a variety of means, but the main one is obviously fighting monsters.\par
+Gender is selectable, but does not affect anything.\par
+Race can be chosen, and increases some skills, attributes, and grants abilities and more.\par
+All races in the game should be available to both the player and the monster generator.\par
+When you level up, you can select between 1 and 3 attributes to increase. The 1-3 range is determined by some function of the level.\par
+As a skill increases during a given level, it adds to a multiplier for the associated skill.\par
+This multiplier increases the amount by which the attribute is increased if selected during level-up.\par
+For example, a x2 multiplier is on strength. The player levels up, and chooses to increase strength. Instead of only gaining 1 point of strength, you gain 2.\par
+\par
+Attributes increase much more slowly than skills.\par
+\par
+\cf1\strike Attributes, skills, etc., should be doubles, and can increase by a decimal amount. UPDATE: I think I am changing them back to simple shorts.\cf0\strike0\par
+\par
+There should be some things that can give penalties to offensive and defensive actions, as well.\par
+For offensive, wielding a weapon you shouldn't be gives a pretty big damage reduction.\par
+If you wear armor you shouldn't wear, it will give a reduction to movement speed, chance to hit, chance to dodge, and chance to crit.\par
+If you wear non-magic user armor, you will suffer a penalty to magic damage.\par
+\par
+Attributes:\par
+-Strength\par
+\strike\tab -Increases melee damage.\strike0\par
+\tab -Increases ranged damage slightly.\par
+\tab -Increases carrying capacity.\par
+-Agility\par
+\tab -Increases chance to hit with all attacks.\par
+\tab -Increases chance to dodge all attacks.\par
+\tab -Increases chance to score a critical hit with all attacks.\par
+\tab -Increases movement speed.\par
+\tab -Increases ranged damage slightly (more than strength).\par
+\tab -Increases stealth abilities (maybe).\par
+-Hardiness\par
+\tab -Increases health.\par
+\tab -Increases carrying capacity slightly.\par
+\strike\tab -Increases damage absorbed by all armor.\strike0\par
+\tab -Increases movement speed slightly.\par
+-Comprehension\par
+\tab -Increases mana.\par
+\tab -Increases mana regeneration rate slightly.\par
+\tab -Increases magic damage.\par
+-Acumen\par
+\tab -Increases mana regeneration rate.\par
+\tab -Increases mana slightly.\par
+\tab -Increases magic resistance.\par
+-Charisma (Only used if I implement trading)\par
+\tab -Improves deals in trades. (Increases selling price, decreases buying price)\par
+-Luck\par
+\tab -Affects chances for lots of things.\par
+\par
+Each skill is governed by one attribute.\par
+Luck does not govern any skills.\par
+Skills increase by using the associated stuff.\par
+The Comprehension and Acumen skills are the schools of magic.\par
+\par
+Experience should have diminishing returns when fighting monsters far below your level.\par
+The same should be true of skills that require fighting enemies.\par
+\par
+Skills:\par
+-Governed by Strength\par
+\tab -Melee Weapons\par
+\tab\tab -Increased by using the melee weapons in the associated category.\par
+\strike\tab\tab -Increases damage done by the associated melee weapon category.\par
+\tab\tab\tab -Bladed Weapons\par
+\tab\tab\tab -Blunt Weapons\par
+\tab\tab\tab -Stabbing Weapons\strike0\par
+\tab -Unarmed\par
+\tab\tab -Increased by using hands in place of a melee weapon.\par
+\strike\tab\tab -Increases damage done by hands.\strike0\par
+-Governed by Agility\par
+\tab -Security\par
+\tab\tab -Increased by picking locks and disabling traps. Also increased by discovering traps, secret doors, and trapdoors.\par
+\tab\tab -Increases success chance of picking locks and disabling traps. Also increases chance to detect traps and secret doors.\par
+\tab -Stealth\par
+\tab\tab -Increased by \par
+\tab\tab -Increases \par
+\tab -Ranged Weapons\par
+\tab\tab -Increased by using the ranged weapons in the associated category.\par
+\tab\tab -Increases damage done by the associated ranged weapon category.\par
+\tab\tab\tab -Launcher Weapons\par
+\tab\tab\tab -Thrown Weapons\par
+\tab -Dual Wielding\par
+\tab\tab -Increased by attacking with two melee weapons equipped at once.\par
+\strike\tab\tab -Increases damage done with two melee weapons equipped at once.\strike0\par
+\tab -Speed\par
+\tab\tab -Increased by moving. The lighter your load, the faster this skill increases.\par
+\tab\tab -Increases movement speed.\par
+\tab -Fighting\par
+\tab\tab -Increased by attacking.\par
+\strike\tab\tab -Increases chance to hit.\strike0\par
+\tab -Dodging\par
+\tab\tab -Increased by being attacked.\par
+\strike\tab\tab -Increases chance to dodge.\strike0\par
+-Governed by Hardiness\par
+\tab -Armor\par
+\tab\tab -Increased by doing things while wearing armor. The heavier the armor, the faster this skill increases.\par
+\strike\tab\tab -Increases damage absorbed by armor.\strike0\par
+-Governed by Comprehension\par
+\tab -Air Magic\par
+\tab\tab -Increased by using air magic (regardless of success).\par
+\tab\tab -Increases effectiveness of air magic.\par
+\tab\tab -Decreases chance of spell failure for air magic.\par
+\tab -Fire Magic\par
+\tab\tab -Increased by using fire magic (regardless of success).\par
+\tab\tab -Increases effectiveness of fire magic.\par
+\tab\tab -Decreases chance of spell failure for fire magic.\par
+\tab -Water Magic\par
+\tab\tab -Increased by using water magic (regardless of success).\par
+\tab\tab -Increases effectiveness of water magic.\par
+\tab\tab -Decreases chance of spell failure for water magic.\par
+\tab -Cold Magic\par
+\tab\tab -Increased by using cold magic (regardless of success).\par
+\tab\tab -Increases effectiveness of cold magic.\par
+\tab\tab -Decreases chance of spell failure for cold magic.\par
+-Governed by Acumen\par
+\tab -Earth Magic\par
+\tab\tab -Increased by using earth magic (regardless of success).\par
+\tab\tab -Increases effectiveness of earth magic.\par
+\tab\tab -Decreases chance of spell failure for earth magic.\par
+\tab -Conjuration Magic\par
+\tab\tab -Increased by using conjuration magic (regardless of success).\par
+\tab\tab -Increases effectiveness of conjuration magic.\par
+\tab\tab -Decreases chance of spell failure for conjuration magic.\par
+\tab -Enchantment Magic\par
+\tab\tab -Increased by using enchantment magic (regardless of success).\par
+\tab\tab -Increases effectiveness of enchantment magic.\par
+\tab\tab -Decreases chance of spell failure for enchantment magic.\par
+\tab -Summoning Magic\par
+\tab\tab -Increased by using summoning magic (regardless of success).\par
+\tab\tab -Increases effectiveness of summoning magic.\par
+\tab\tab -Decreases chance of spell failure for summoning magic.\par
+-Governed by Charisma\par
+\tab -Increased by selling items.\par
+\tab -Allows buying items more cheaply and selling them for more money.\par
+\par
+Abilities:\par
+-\par
+}
+ 

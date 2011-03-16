@@ -1,0 +1,140 @@
+#ifndef item_h
+#define item_h
+
+#include "object.h"
+#include "light_data.h"
+#include "effect.h"
+
+#include <vector>
+
+class Item: public Object{
+    private:
+    public:
+
+    //*********************************************//
+    // Variables that do NOT come from a template: //
+    //*********************************************//
+
+    //Is the light currently on.
+    bool light_on;
+    light_data source_data;
+
+    //The letter for inventory interaction.
+    char inventory_letter;
+
+    //If true, item is currently equipped by its owner.
+    //If false, item is not equipped.
+    bool equipped;
+
+    //The race the item belonged to.
+    //Currently, this just applies to corpses.
+    short race;
+
+    //The color of the dye applied to the item.
+    //A value of 0 means no dye.
+    short dye;
+
+    //Special effects (both positive and negative) conferred by the item to its owner.
+    std::vector<Effect> effects;
+
+    //The stacked number of this item.
+    int stack;
+
+    //*****************************************//
+    // Variables that DO come from a template: //
+    //*****************************************//
+
+    //If true, this item can stack.
+    //If false, this item cannot stack.
+    bool stackable;
+
+    //If true, the item can be spawned in levels, inventories, etc.
+    //If false, the item will never be spawned in the game in the normal ways.
+    bool spawnable;
+
+    //The writing on the item, if any.
+    std::string writing;
+
+    //The name of the item if stack>1.
+    std::string plural_name;
+
+    //The weight of the item.
+    short weight;
+
+    //The item's value in terms of money.
+    short monetary_value;
+
+    //The item category to which the item belongs.
+    short category;
+
+    //The material the item is composed of.
+    short material;
+
+    //Base damage range when wielded as a melee weapon.
+    short damage_min_melee;
+    short damage_max_melee;
+
+    //Base damage range as a projectile.
+    short damage_min_thrown;
+    short damage_max_thrown;
+
+    //The base damage range added to a missile when fired from this item.
+    short damage_min_ranged;
+    short damage_max_ranged;
+
+    //Field of view variables:
+
+    //The radius of the light.
+    //If 0, the item does not give off light.
+    unsigned int fov_radius;
+
+    //If true, the light is a beam.
+    //If false, the light is not a beam.
+    bool beam;
+
+    //The width of the beam.
+    float fov_angle;
+
+    //Weapon-specific//
+
+    //The skill that this weapon exercises and uses for damage bonuses, etc.
+    short governing_skill_weapon;
+
+    //The weapon category to which the weapon belongs.
+    short weapon_category;
+
+    //Armor-specific//
+
+    //The armor category to which the armor belongs.
+    short armor_category;
+
+    //The base amount of damage absorbed by the armor.
+    short defense;
+
+    //Food-specific//
+
+    //If true, this food is a corpse.
+    //If false, this food is not a corpse.
+    bool is_corpse;
+
+    //Drink-specific//
+
+    //The amount of thirst quenched by quaffing this drink.
+    short thirst_quenched;
+
+    //Scroll-specific//
+
+    //Book-specific//
+
+    //Container-specific//
+
+    //Other-specific//
+
+    Item();
+
+    std::string return_full_name(int override_stack=-1);
+
+    void render(std::vector< std::vector<bool> >* tile_rendered);
+};
+
+#endif

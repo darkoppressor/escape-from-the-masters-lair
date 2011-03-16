@@ -1,0 +1,20 @@
+#ifndef string_input_h
+#define string_input_h
+
+#include <string>
+#include <SDL.h>
+
+class string_input{
+    private:
+    public:
+    //Storage string.
+    std::string str1;
+
+    string_input();
+
+    ~string_input();
+
+    void handle_events();
+};
+
+#endif
