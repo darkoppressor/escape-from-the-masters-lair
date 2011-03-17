@@ -85,7 +85,9 @@ class Creature: public Object{
     bool check_inventory_letter_availability(char letter_to_check);
 
     //Assigns an inventory letter to an item.
-    char assign_inventory_letter();
+    //If letter_remove is non-zero, the letter stored in letter_remove is used.
+    //Otherwise, the next letter in the list is used.
+    char assign_inventory_letter(char letter_remove=0);
 
     //Returns an inventory letter to the list.
     void return_inventory_letter(char returning_letter);

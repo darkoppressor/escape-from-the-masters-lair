@@ -164,12 +164,31 @@ bool Creature::check_inventory_letter_availability(char letter_to_check){
     return false;
 }
 
-char Creature::assign_inventory_letter(){
-    char new_letter=inventory_letters[0];
+char Creature::assign_inventory_letter(char letter_remove){
+    //If no letter has been specified.
+    if(letter_remove==0){
+        char new_letter=inventory_letters[0];
 
-    inventory_letters.erase(inventory_letters.begin());
+        inventory_letters.erase(inventory_letters.begin());
 
-    return new_letter;
+        return new_letter;
+    }
+    //If a letter has been specified.
+    else{
+        char new_letter=0;
+
+        //Look through all of the inventory letters.
+        for(int i=0;i<inventory_letters.size();i++){
+            //If this letter matches the specified letter.
+            if(inventory_letters[i]==letter_remove){
+                new_letter=inventory_letters[i];
+
+                inventory_letters.erase(inventory_letters.begin()+i);
+            }
+        }
+
+        return new_letter;
+    }
 }
 
 void Creature::return_inventory_letter(char returning_letter){

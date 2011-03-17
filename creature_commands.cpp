@@ -228,7 +228,8 @@ void Creature::execute_command(short command){
                         if(is_player && vector_levels[current_level].items[i].inventory_letter!=0){
                             //If the item's inventory letter is available.
                             if(check_inventory_letter_availability(vector_levels[current_level].items[i].inventory_letter)){
-                                //Leave the item's inventory letter alone.
+                                //Remove the item's inventory letter from the inventory letters list.
+                                assign_inventory_letter(vector_levels[current_level].items[i].inventory_letter);
                             }
                             //If the item's inventory letter is unavailable.
                             else{

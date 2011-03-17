@@ -123,17 +123,17 @@ void Monster::handle_ai(){
         int random=random_range(AIK_LEFT,AIK_LEFT_DOWN);
         ///ai_keystates[random]=true;
 
-        /**short target_x=0;
+        short target_x=0;
         short target_y=0;
 
-        ///target_x=player.x;
-        ///target_y=player.y;
+        target_x=player.x;
+        target_y=player.y;
 
-        target_x=vector_levels[current_level].items[0].x;
-        target_y=vector_levels[current_level].items[0].y;
+        ///target_x=vector_levels[current_level].items[0].x;
+        ///target_y=vector_levels[current_level].items[0].y;
 
-        if(inventory.size()==0){
-            if(x!=target_x || y!=target_y){
+        ///if(inventory.size()==0){
+            /**if(x!=target_x || y!=target_y){
                 if(target_x<x && target_y<y){
                     ai_keystates[AIK_LEFT_UP]=true;
                 }
@@ -159,11 +159,11 @@ void Monster::handle_ai(){
                     ai_keystates[AIK_DOWN]=true;
                 }
             }
-            else{
+            /**else{
                 ai_keystates[AIK_PICK_UP]=true;
-            }
-        }
-        else{
+            }*/
+        ///}
+        /**else{
             ai_keystates[AIK_DROP_ITEM]=true;
             inventory_input_state=inventory[0].inventory_letter;
         }*/

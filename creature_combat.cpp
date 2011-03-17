@@ -566,6 +566,16 @@ void Creature::die(){
     for(int i=0;i<inventory.size();i++){
         //If the item is either not money, or is money but with at least 1 in the stack.
         if(inventory[i].inventory_letter!='$' || (inventory[i].inventory_letter=='$' && inventory[i].stack>0)){
+            //Return the item's inventory letter.
+            return_inventory_letter(inventory[i].inventory_letter);
+
+            //If the creature is not the player.
+            if(!is_player){
+                //Reset the item's inventory letter.
+                //We only do this for monsters. The player leaves the letter attached to the item.
+                inventory[i].inventory_letter=0;
+            }
+
             //Set the item's position to the creature's current position.
             inventory[i].x=x;
             inventory[i].y=y;
