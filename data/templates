@@ -50,7 +50,7 @@
 		material:iron
 		melee damage:24-31
 		thrown damage:1-1
-		ranged damage:1-1
+		ranged damage:0-0
 		light radius:0
 		light beam:0
 		beam angle:0
@@ -70,13 +70,13 @@
 		writing:
 		appearance:)
 		stackable:0
-		weight:3
+		weight:6
 		value:1
 		color:wood
 		material:wood
 		melee damage:1-1
-		thrown damage:1-2
-		ranged damage:1-4
+		thrown damage:1-1
+		ranged damage:14-19
 		light radius:0
 		light beam:0
 		beam angle:0

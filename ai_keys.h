@@ -24,7 +24,8 @@ enum{
     AIK_DROP_ITEM,
     AIK_EQUIP_ITEM,
     AIK_UNEQUIP_ITEM,
-    AIK_THROW_ITEM
+    AIK_THROW_ITEM,
+    AIK_QUIVER_ITEM
 };
 
 #endif

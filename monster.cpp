@@ -324,6 +324,11 @@ void Monster::handle_input(){
             input_inventory=INVENTORY_COMMAND_THROW_ITEM;
         }
 
+        //Quiver item.
+        else if(ai_keystates[AIK_QUIVER_ITEM]){
+            input_inventory=INVENTORY_COMMAND_QUIVER_ITEM;
+        }
+
         //If a directional command has been given.
         if(input_directional!=DIRECTIONAL_COMMAND_NONE && move_state!=NONE){
             check_command_directional(move_state);

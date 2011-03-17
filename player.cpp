@@ -297,6 +297,13 @@ void Player::handle_input(){
                         input_inventory=INVENTORY_COMMAND_UNEQUIP_ITEM;
                     }
 
+                    //Quiver item.
+                    else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.sym==SDLK_q){
+                        update_text_log("What do you want to quiver?",is_player);
+
+                        input_inventory=INVENTORY_COMMAND_QUIVER_ITEM;
+                    }
+
                     //Throw item.
                     else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.sym==SDLK_t){
                         update_text_log("What do you want to throw?",is_player);

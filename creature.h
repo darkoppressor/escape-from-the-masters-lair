@@ -130,6 +130,8 @@ class Creature: public Object{
 
     void attack_thrown(Creature* target,Item* thrown_item);
 
+    void attack_ranged(Creature* target,Item* thrown_item);
+
     void die();
 
     //Level up the creature.

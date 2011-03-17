@@ -959,6 +959,10 @@ void Creature::execute_command_directional(short direction){
     }
 }
 
+///*********************///
+/// Inventory commands: ///
+///*********************///
+
 void Creature::check_command_inventory(char inventory_letter){
     short command=input_inventory;
 
@@ -1079,6 +1083,40 @@ void Creature::check_command_inventory(char inventory_letter){
         //If the item is equipped.
         else{
             update_text_log("You must unequip the item first.",is_player);
+
+            //No inventory command will be executed.
+            input_inventory=0;
+            inventory_input_state=0;
+        }
+    }
+
+    else if(command==INVENTORY_COMMAND_QUIVER_ITEM){
+        //If the item is not already equipped.
+        if(!inventory[inventory_item_index].equipped &&
+        //And if a corresponding equipment slot is open.
+        ((inventory[inventory_item_index].category!=ITEM_ARMOR && equipment_slot_empty(inventory[inventory_item_index].category,0)) ||
+        (inventory[inventory_item_index].category==ITEM_ARMOR && equipment_slot_empty(ITEM_ARMOR,inventory[inventory_item_index].armor_category)))){
+            initiate_move=true;
+        }
+        //If the item is already equipped.
+        else if(inventory[inventory_item_index].equipped){
+            update_text_log("That item is already equipped.",is_player);
+
+            //No inventory command will be executed.
+            input_inventory=0;
+            inventory_input_state=0;
+        }
+        //If the item is stackable, and thus not equippable.
+        else if(inventory[inventory_item_index].stackable){
+            update_text_log("Stackable items cannot be equipped.",is_player);
+
+            //No inventory command will be executed.
+            input_inventory=0;
+            inventory_input_state=0;
+        }
+        //If there is no equipment slot for the item.
+        else{
+            update_text_log("There is already an item equipped in that slot.",is_player);
 
             //No inventory command will be executed.
             input_inventory=0;
