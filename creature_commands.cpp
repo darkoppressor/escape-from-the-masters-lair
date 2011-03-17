@@ -710,9 +710,6 @@ void Creature::execute_command_directional(short direction){
             //Set the thrown item's direction.
             vector_levels[current_level].items[vector_levels[current_level].items.size()-1].move_direction=direction;
 
-            //Set the thrown item's damage.
-            ///vector_levels[current_level].items[vector_levels[current_level].items.size()-1].damage=attack_thrown(inventory_item_index);
-
             //Set the thrown item's momentum.
             vector_levels[current_level].items[vector_levels[current_level].items.size()-1].momentum=determine_momentum(inventory[inventory_item_index].weight);
 

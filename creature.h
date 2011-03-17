@@ -126,9 +126,9 @@ class Creature: public Object{
     //Execute an inventory command.
     void execute_command_inventory(char inventory_letter);
 
-    void attack_thrown(Creature* target);
-
     void attack_melee(Creature* target);
+
+    void attack_thrown(Creature* target,Item* thrown_item);
 
     void die();
 

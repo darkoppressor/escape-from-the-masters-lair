@@ -29,6 +29,7 @@ class Game{
     public:
 
     //Available identifiers for objects.
+    //0 is reserved to mean "no identifier assigned."
     std::vector< std::vector<uint32_t> > identifiers;
 
     //The default constructor. It does not currently do anything.

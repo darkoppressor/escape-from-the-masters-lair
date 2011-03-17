@@ -31,7 +31,7 @@ void Game::prepare_identifiers(){
         identifiers.push_back(vector<uint32_t>());
     }
 
-    for(uint32_t i=0;i<MAX_OBJECTS;i++){
+    for(uint32_t i=1;i<MAX_OBJECTS+1;i++){
         identifiers[OBJECT_CREATURE].push_back(i);
         identifiers[OBJECT_ITEM].push_back(i);
     }

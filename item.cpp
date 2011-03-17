@@ -86,6 +86,36 @@ Item::Item(){
     //Other-specific//
 }
 
+Creature* Item::determine_owner_address(){
+    Creature* ptr_owner;
+
+    //If the player is the owner.
+    if(owner!=0 && owner==player.identifier){
+        ptr_owner=&player;
+
+        return ptr_owner;
+    }
+    //If the player is not the owner.
+    else{
+        //Look through all of the levels.
+        for(int i=0;i<vector_levels.size()-1;i++){
+            //Look through all of the monsters on this level.
+            for(int n=0;n<vector_levels[i].monsters.size()-1;n++){
+                //If this monster is the owner.
+                if(owner!=0 && owner==vector_levels[i].monsters[n].identifier){
+                    ptr_owner=&vector_levels[i].monsters[n];
+
+                    return ptr_owner;
+                }
+            }
+        }
+    }
+
+    ///fprintf(stderr,"Error: Item::determine_owner_address() returned a NULL pointer.\n");
+
+    return NULL;
+}
+
 void Item::assign_identifier(){
     identifier=game.assign_identifier(OBJECT_ITEM);
 }
@@ -134,19 +164,25 @@ void Item::execute_movement(short check_x,short check_y){
     if(clear_for_move){
         bool combat_occurred=false;
 
-        //Check for the player.
-        if(player.alive && check_x==player.x && check_y==player.y){
-            //Attack the player.
-            attack(&player);
-            combat_occurred=true;
-        }
-        //Check for a monster.
-        for(int i=0;i<vector_levels[current_level].monsters.size();i++){
-            if(vector_levels[current_level].monsters[i].alive && check_x==vector_levels[current_level].monsters[i].x && check_y==vector_levels[current_level].monsters[i].y){
-                //Attack the monster.
-                attack(&vector_levels[current_level].monsters[i]);
+        //Setup a pointer to the item's owner.
+        Creature* ptr_owner=determine_owner_address();
+
+        //If the item has an owner.
+        if(ptr_owner!=NULL){
+            //Check for the player.
+            if(player.alive && check_x==player.x && check_y==player.y){
+                //Attack the player.
+                ptr_owner->attack_thrown(&player,this);
                 combat_occurred=true;
-                break;
+            }
+            //Check for a monster.
+            for(int i=0;i<vector_levels[current_level].monsters.size();i++){
+                if(vector_levels[current_level].monsters[i].alive && check_x==vector_levels[current_level].monsters[i].x && check_y==vector_levels[current_level].monsters[i].y){
+                    //Attack the monster.
+                    ptr_owner->attack_thrown(&vector_levels[current_level].monsters[i],this);
+                    combat_occurred=true;
+                    break;
+                }
             }
         }
 
@@ -160,6 +196,9 @@ void Item::execute_movement(short check_x,short check_y){
         }
         //If an attack occurred.
         else{
+            x=check_x;
+            y=check_y;
+
             //The item loses all momentum and thus becomes still.
             momentum=0;
         }

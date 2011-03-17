@@ -151,6 +151,10 @@ class Item: public Object{
 
     Item();
 
+    //Returns a pointer to the item's owner.
+    //If a NULL pointer is returned, no owner was found.
+    Creature* determine_owner_address();
+
     //Assign an identifier to the item.
     void assign_identifier();
 
@@ -162,8 +166,6 @@ class Item: public Object{
     bool check_movement(short check_x,short check_y);
 
     void execute_movement(short check_x,short check_y);
-
-    ///void attack(Creature* target);
 
     void move();
 

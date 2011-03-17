@@ -9,7 +9,7 @@
 
 using namespace std;
 
-void Creature::attack_thrown(Creature* target){
+void Creature::attack_thrown(Creature* target,Item* thrown_item){
     int damage=0;
 
     string outcome="";
@@ -21,59 +21,33 @@ void Creature::attack_thrown(Creature* target){
             //The attack will hit.
             //We now determine the maximum amount of damage the attacker can do (before the target's reduction(s)).
 
-            //Damage begins with base melee damage.
-            int base_damage=random_range(base_damage_melee_min,base_damage_melee_max);
+            //Damage begins with base thrown damage.
+            int base_damage=random_range(base_damage_thrown_min,base_damage_thrown_max);
 
             damage=base_damage;
 
-            //Add in melee weapon damage.
+            //Add in thrown weapon damage.
 
-            //Check for items wielded in either hand.
-            for(int i=EQUIP_HOLD_RIGHT;i<EQUIP_HOLD_LEFT+1;i++){
-                //If there is an item wielded in this hand.
-                if(equipment[i]!=0){
-                    //Determine the identifier for the item equipped in this slot.
-                    int item_identifier=slot_equipped_with_what_item(equipment[i]);
+            //Determine the base damage range for this item.
+            int weapon_damage_min=thrown_item->damage_min_thrown;
+            int weapon_damage_max=thrown_item->damage_max_thrown;
+            int weapon_damage=random_range(weapon_damage_min,weapon_damage_max);
 
-                    //Determine the base damage range for this item.
-                    int weapon_damage_min=inventory[item_identifier].damage_min_melee;
-                    int weapon_damage_max=inventory[item_identifier].damage_max_melee;
-                    int weapon_damage=random_range(weapon_damage_min,weapon_damage_max);
+            //Apply the appropriate weapon skill, if any.
 
-                    //Apply the appropriate weapon skill, if any.
-
-                    //If the item is governed by the bladed weapons skill.
-                    if(inventory[item_identifier].category==ITEM_WEAPON && inventory[item_identifier].governing_skill_weapon==SKILL_BLADED_WEAPONS){
-                        weapon_damage+=weapon_damage*(skills[SKILL_BLADED_WEAPONS]/10);
-                    }
-                    //If the item is governed by the blunt weapons skill.
-                    else if(inventory[item_identifier].category==ITEM_WEAPON && inventory[item_identifier].governing_skill_weapon==SKILL_BLUNT_WEAPONS){
-                        weapon_damage+=weapon_damage*(skills[SKILL_BLUNT_WEAPONS]/10);
-                    }
-                    //If the item is governed by the stabbing weapons skill.
-                    else if(inventory[item_identifier].category==ITEM_WEAPON && inventory[item_identifier].governing_skill_weapon==SKILL_STABBING_WEAPONS){
-                        weapon_damage+=weapon_damage*(skills[SKILL_STABBING_WEAPONS]/10);
-                    }
-
-                    //Add the weapon's damage to the attack's damage.
-                    damage+=weapon_damage;
-                }
+            //If the item is governed by the thrown weapons skill.
+            if(thrown_item->category==ITEM_WEAPON && thrown_item->governing_skill_weapon==SKILL_THROWN_WEAPONS){
+                weapon_damage+=weapon_damage*(skills[SKILL_THROWN_WEAPONS]/10);
             }
 
-            //If items are being dual-wielded.
-            if(equipment[EQUIP_HOLD_RIGHT]!=0 && equipment[EQUIP_HOLD_LEFT]!=0){
-                //Add the dual-wielding bonus.
-                damage+=skills[SKILL_DUAL_WIELDING]/2;
-            }
+            //Add the weapon's damage to the attack's damage.
+            damage+=weapon_damage;
 
-            //If there are no items being wielded.
-            else if(equipment[EQUIP_HOLD_RIGHT]==0 && equipment[EQUIP_HOLD_LEFT]==0){
-                //Apply the unarmed weapon skill.
-                damage+=base_damage*(skills[SKILL_UNARMED]/10);
-            }
+            //Apply the agility bonus.
+            damage+=damage*(attributes[ATTRIBUTE_AGILITY]/6);
 
             //Apply the strength bonus.
-            damage+=damage*(attributes[ATTRIBUTE_STRENGTH]/4);
+            damage+=damage*(attributes[ATTRIBUTE_STRENGTH]/8);
 
             //We have finished determining the maximum damage the attacker can do.
             //Now, we determine the damage reduction based on the target's stats.
@@ -118,12 +92,16 @@ void Creature::attack_thrown(Creature* target){
             if(is_player){
                 outcome="The ";
                 outcome+=target->return_full_name();
-                outcome+=" dodges out of the way!";
+                outcome+=" dodges your ";
+                outcome+=thrown_item->return_full_name();
+                outcome+="!";
             }
             else{
                 outcome="You dodge the ";
                 outcome+=return_full_name();
-                outcome+="'s attack!";
+                outcome+="'s ";
+                outcome+=thrown_item->return_full_name();
+                outcome+="!";
             }
 
             update_text_log(outcome.c_str(),true);
@@ -134,13 +112,17 @@ void Creature::attack_thrown(Creature* target){
     //If the attacker fails its hit check.
     else{
         if(is_player){
-            outcome="You miss the ";
+            outcome="Your ";
+            outcome+=thrown_item->return_full_name();
+            outcome+=" misses the ";
             outcome+=target->return_full_name();
             outcome+="!";
         }
         else{
             outcome="The ";
             outcome+=return_full_name();
+            outcome+="'s ";
+            outcome+=thrown_item->return_full_name();
             outcome+=" misses!";
         }
 
@@ -153,196 +135,9 @@ void Creature::attack_thrown(Creature* target){
     if(damage>0){
         //If the creature is the player.
         if(is_player){
-            //If there are no items being wielded.
-            if(equipment[EQUIP_HOLD_RIGHT]==0 && equipment[EQUIP_HOLD_LEFT]==0){
-                outcome="You attack the ";
-                outcome+=target->return_full_name();
-                outcome+=" with your bare hands!";
-            }
-            //If there is an item being wielded in the right hand only.
-            else if(equipment[EQUIP_HOLD_RIGHT]!=0 && equipment[EQUIP_HOLD_LEFT]==0){
-                //Determine the identifier for the item equipped in this slot.
-                int item_identifier=slot_equipped_with_what_item(equipment[EQUIP_HOLD_RIGHT]);
-
-                //If the item being wielded is a weapon.
-                if(inventory[item_identifier].category==ITEM_WEAPON){
-                    //If the item is a bladed weapon.
-                    if(inventory[item_identifier].governing_skill_weapon==SKILL_BLADED_WEAPONS){
-                        outcome="You slash the ";
-                    }
-                    //If the item is a blunt weapon.
-                    else if(inventory[item_identifier].governing_skill_weapon==SKILL_BLUNT_WEAPONS){
-                        outcome="You smash the ";
-                    }
-                    //If the item is a stabbing weapon.
-                    else if(inventory[item_identifier].governing_skill_weapon==SKILL_STABBING_WEAPONS){
-                        outcome="You stab the ";
-                    }
-                    //If the item is not a melee weapon.
-                    else{
-                        outcome="You whack the ";
-                    }
-                }
-                //If the item being wielded is not a weapon.
-                else{
-                    outcome="You whack the ";
-                }
-
-                outcome+=target->return_full_name();
-                outcome+=" with your ";
-                outcome+=inventory[item_identifier].return_full_name();
-                outcome+="!";
-            }
-            //If there is an item being wielded in the left hand only.
-            else if(equipment[EQUIP_HOLD_RIGHT]==0 && equipment[EQUIP_HOLD_LEFT]!=0){
-                //Determine the identifier for the item equipped in this slot.
-                int item_identifier=slot_equipped_with_what_item(equipment[EQUIP_HOLD_LEFT]);
-
-                //If the item being wielded is a weapon.
-                if(inventory[item_identifier].category==ITEM_WEAPON){
-                    //If the item is a bladed weapon.
-                    if(inventory[item_identifier].governing_skill_weapon==SKILL_BLADED_WEAPONS){
-                        outcome="You slash the ";
-                    }
-                    //If the item is a blunt weapon.
-                    else if(inventory[item_identifier].governing_skill_weapon==SKILL_BLUNT_WEAPONS){
-                        outcome="You smash the ";
-                    }
-                    //If the item is a stabbing weapon.
-                    else if(inventory[item_identifier].governing_skill_weapon==SKILL_STABBING_WEAPONS){
-                        outcome="You stab the ";
-                    }
-                    //If the item is not a melee weapon.
-                    else{
-                        outcome="You whack the ";
-                    }
-                }
-                //If the item being wielded is not a weapon.
-                else{
-                    outcome="You whack the ";
-                }
-
-                outcome+=target->return_full_name();
-                outcome+=" with your ";
-                outcome+=inventory[item_identifier].return_full_name();
-                outcome+="!";
-            }
-            //If there is an item being wielded in both hands.
-            else if(equipment[EQUIP_HOLD_RIGHT]!=0 && equipment[EQUIP_HOLD_LEFT]!=0){
-                //Determine the identifier for the item equipped in each slot.
-                int item_identifier_right=slot_equipped_with_what_item(equipment[EQUIP_HOLD_RIGHT]);
-                int item_identifier_left=slot_equipped_with_what_item(equipment[EQUIP_HOLD_LEFT]);
-
-                outcome="You attack the ";
-                outcome+=target->return_full_name();
-                outcome+=" with your ";
-                outcome+=inventory[item_identifier_right].return_full_name();
-                outcome+=" and your ";
-                outcome+=inventory[item_identifier_left].return_full_name();
-                outcome+="!";
-            }
-        }
-        //If the creature is not the player.
-        else{
-            //If there are no items being wielded.
-            if(equipment[EQUIP_HOLD_RIGHT]==0 && equipment[EQUIP_HOLD_LEFT]==0){
-                outcome="The ";
-                outcome+=return_full_name();
-                outcome+=" attacks you with its bare hands!";
-            }
-            //If there is an item being wielded in the right hand only.
-            else if(equipment[EQUIP_HOLD_RIGHT]!=0 && equipment[EQUIP_HOLD_LEFT]==0){
-                //Determine the identifier for the item equipped in this slot.
-                int item_identifier=slot_equipped_with_what_item(equipment[EQUIP_HOLD_RIGHT]);
-
-                outcome="The ";
-                outcome+=return_full_name();
-
-                //If the item being wielded is a weapon.
-                if(inventory[item_identifier].category==ITEM_WEAPON){
-                    //If the item is a bladed weapon.
-                    if(inventory[item_identifier].governing_skill_weapon==SKILL_BLADED_WEAPONS){
-                        outcome+=" slashes you ";
-                    }
-                    //If the item is a blunt weapon.
-                    else if(inventory[item_identifier].governing_skill_weapon==SKILL_BLUNT_WEAPONS){
-                        outcome+=" smashes you ";
-                    }
-                    //If the item is a stabbing weapon.
-                    else if(inventory[item_identifier].governing_skill_weapon==SKILL_STABBING_WEAPONS){
-                        outcome+=" stabs you ";
-                    }
-                    //If the item is not a melee weapon.
-                    else{
-                        outcome=" whacks you ";
-                    }
-                }
-                //If the item being wielded is not a weapon.
-                else{
-                    outcome+=" whacks you ";
-                }
-
-                outcome+=" with its ";
-                outcome+=inventory[item_identifier].return_full_name();
-                outcome+="!";
-            }
-            //If there is an item being wielded in the left hand only.
-            else if(equipment[EQUIP_HOLD_RIGHT]==0 && equipment[EQUIP_HOLD_LEFT]!=0){
-                //Determine the identifier for the item equipped in this slot.
-                int item_identifier=slot_equipped_with_what_item(equipment[EQUIP_HOLD_LEFT]);
-
-                outcome="The ";
-                outcome+=return_full_name();
-
-                //If the item being wielded is a weapon.
-                if(inventory[item_identifier].category==ITEM_WEAPON){
-                    //If the item is a bladed weapon.
-                    if(inventory[item_identifier].governing_skill_weapon==SKILL_BLADED_WEAPONS){
-                        outcome+=" slashes you ";
-                    }
-                    //If the item is a blunt weapon.
-                    else if(inventory[item_identifier].governing_skill_weapon==SKILL_BLUNT_WEAPONS){
-                        outcome+=" smashes you ";
-                    }
-                    //If the item is a stabbing weapon.
-                    else if(inventory[item_identifier].governing_skill_weapon==SKILL_STABBING_WEAPONS){
-                        outcome+=" stabs you ";
-                    }
-                    //If the item is not a melee weapon.
-                    else{
-                        outcome=" whacks you ";
-                    }
-                }
-                //If the item being wielded is not a weapon.
-                else{
-                    outcome+=" whacks you ";
-                }
-
-                outcome+=" with its ";
-                outcome+=inventory[item_identifier].return_full_name();
-                outcome+="!";
-            }
-            //If there is an item being wielded in both hands.
-            else if(equipment[EQUIP_HOLD_RIGHT]!=0 && equipment[EQUIP_HOLD_LEFT]!=0){
-                //Determine the identifier for the item equipped in each slot.
-                int item_identifier_right=slot_equipped_with_what_item(equipment[EQUIP_HOLD_RIGHT]);
-                int item_identifier_left=slot_equipped_with_what_item(equipment[EQUIP_HOLD_LEFT]);
-
-                outcome="The ";
-                outcome+=return_full_name();
-                outcome=" attacks you with its ";
-                outcome+=inventory[item_identifier_right].return_full_name();
-                outcome+=" and its ";
-                outcome+=inventory[item_identifier_left].return_full_name();
-                outcome+="!";
-            }
-        }
-    }
-    //If the attack succeeded but did no damage.
-    else{
-        //If the creature is the player.
-        if(is_player){
-            outcome="Your attack glances off the ";
+            outcome="Your ";
+            outcome+=thrown_item->return_full_name();
+            outcome+=" hits the ";
             outcome+=target->return_full_name();
             outcome+="!";
         }
@@ -350,7 +145,28 @@ void Creature::attack_thrown(Creature* target){
         else{
             outcome="The ";
             outcome+=return_full_name();
-            outcome+="'s attack glances off!";
+            outcome+="'s ";
+            outcome+=thrown_item->return_full_name();
+            outcome+=" hits you!";
+        }
+    }
+    //If the attack succeeded but did no damage.
+    else{
+        //If the creature is the player.
+        if(is_player){
+            outcome="Your ";
+            outcome+=thrown_item->return_full_name();
+            outcome+=" bounces off of the ";
+            outcome+=target->return_full_name();
+            outcome+="!";
+        }
+        //If the creature is not the player.
+        else{
+            outcome="The ";
+            outcome+=return_full_name();
+            outcome+="'s ";
+            outcome+=thrown_item->return_full_name();
+            outcome+=" bounces off of you!";
         }
     }
 
