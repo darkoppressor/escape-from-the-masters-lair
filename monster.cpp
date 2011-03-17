@@ -13,6 +13,8 @@ Monster::Monster(){
 }
 
 void Monster::set_inventory(){
+    create_money_item();
+
     //The maximum number of items.
     int max_items=random_range(1,12);
 
@@ -65,6 +67,12 @@ void Monster::set_inventory(){
 
                 //Add the item to the inventory items vector.
                 inventory.push_back(temp_item);
+
+                //Assign an identifier to the item.
+                inventory[inventory.size()-1].assign_identifier();
+
+                //Assign an owner identifier to the item.
+                inventory[inventory.size()-1].owner=identifier;
             }
         }
 

@@ -7,6 +7,8 @@
 using namespace std;
 
 Item::Item(){
+    owner=0;
+
     inventory_letter=0;
 
     equipped=false;
@@ -30,8 +32,6 @@ Item::Item(){
     writing="";
 
     plural_name="";
-
-    weight=1;
 
     monetary_value=1;
 
@@ -84,6 +84,15 @@ Item::Item(){
     //Container-specific//
 
     //Other-specific//
+}
+
+void Item::assign_identifier(){
+    identifier=game.assign_identifier(OBJECT_ITEM);
+}
+
+void Item::return_identifier(){
+    game.return_identifier(OBJECT_ITEM,identifier);
+    identifier=0;
 }
 
 bool Item::check_movement(short check_x,short check_y){

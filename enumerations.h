@@ -372,6 +372,15 @@ enum{
     INVENTORY_COMMAND_THROW_ITEM
 };
 
+//***************//
+// Object Types: //
+//***************//
+
+enum{
+    OBJECT_CREATURE,
+    OBJECT_ITEM
+};
+
 //***********//
 // Messages: //
 //***********//

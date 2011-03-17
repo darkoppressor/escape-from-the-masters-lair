@@ -46,6 +46,7 @@ extern Templates templates;
 extern Game game;
 
 extern Player player;
+
 extern std::vector<Level> vector_levels;
 
 extern Image image;

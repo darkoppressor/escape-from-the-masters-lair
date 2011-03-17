@@ -8,11 +8,13 @@
 using namespace std;
 
 Object::Object(){
+    identifier=0;
     x=0;
     y=0;
     name="";
     appearance="";
     color=COLOR_WHITE;
+    weight=1;
 }
 
 double Object::return_absolute_x(){

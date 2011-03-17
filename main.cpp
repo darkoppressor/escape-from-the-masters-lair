@@ -37,6 +37,9 @@ void game_loop(){
 
     //Load the first level.
     ///New game.
+    game.prepare_identifiers();
+    player.assign_identifier();
+    player.create_money_item();
     player.set_base_stats();
     player.apply_race(1);
     game.generate_level();

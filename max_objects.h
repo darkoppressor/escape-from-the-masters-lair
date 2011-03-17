@@ -1,9 +1,9 @@
 /* Copyright (c) 2011 Kevin Wells */
 /* Escape from the Master's Lair may be freely redistributed.  See license for details. */
 
-/**#include "item.h"
+#ifndef max_objects_h
+#define max_objects_h
 
-using namespace std;
+const uint32_t MAX_OBJECTS=1000000;
 
-void Item::attack(Creature* target){
-}*/
+#endif

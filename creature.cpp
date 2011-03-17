@@ -28,8 +28,6 @@ Creature::Creature(){
 
     gender=GENDER_MALE;
 
-    weight=1;
-
     race=-1;
     race_name="";
 
@@ -83,7 +81,9 @@ Creature::Creature(){
     for(int i=EQUIP_HEAD;i<EQUIP_HOLD_LEFT+1;i++){
         equipment.push_back(0);
     }
+}
 
+void Creature::create_money_item(){
     Item temp_item;
 
     temp_item.inventory_letter='$';
@@ -96,7 +96,7 @@ Creature::Creature(){
     temp_item.weight=1;
     temp_item.monetary_value=1;
     temp_item.category=ITEM_OTHER;
-    temp_item.material=MATERIAL_WOOD;
+    temp_item.material=MATERIAL_GOLD;
 
     temp_item.damage_min_melee=1;
     temp_item.damage_max_melee=1;
@@ -107,8 +107,17 @@ Creature::Creature(){
     temp_item.damage_min_ranged=1;
     temp_item.damage_max_ranged=4;
 
-    inventory.push_back(Item());
-    inventory[inventory.size()-1]=temp_item;
+    inventory.push_back(temp_item);
+    inventory[inventory.size()-1].assign_identifier();
+}
+
+void Creature::assign_identifier(){
+    identifier=game.assign_identifier(OBJECT_CREATURE);
+}
+
+void Creature::return_identifier(){
+    game.return_identifier(OBJECT_CREATURE,identifier);
+    identifier=0;
 }
 
 int Creature::item_category_in_inventory(short category){

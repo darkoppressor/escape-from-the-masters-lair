@@ -27,11 +27,24 @@ class Game{
     std::vector<Monster> generated_monsters;
 
     public:
+
+    //Available identifiers for objects.
+    std::vector< std::vector<uint32_t> > identifiers;
+
     //The default constructor. It does not currently do anything.
     Game();
 
     //The destructor frees all of the level files that need freeing.
     ~Game();
+
+    //Prepare the identifier lists.
+    void prepare_identifiers();
+
+    //Returns an unused identifier to be assigned to an object.
+    uint32_t assign_identifier(short object_type);
+
+    //Returns an identifier to the list.
+    void return_identifier(short object_type,uint32_t returning_identifier);
 
     //Returns true if the checked tile is a wall.
     ///short tile_check(short check_x,short check_y);

@@ -23,6 +23,9 @@ class Item: public Object{
     // Variables that do NOT come from a template: //
     //*********************************************//
 
+    //The identifier of the item's owner.
+    uint32_t owner;
+
     //Is the light currently on.
     bool light_on;
     light_data source_data;
@@ -76,9 +79,6 @@ class Item: public Object{
 
     //The name of the item if stack>1.
     std::string plural_name;
-
-    //The weight of the item.
-    short weight;
 
     //The item's value in terms of money.
     short monetary_value;
@@ -151,13 +151,19 @@ class Item: public Object{
 
     Item();
 
+    //Assign an identifier to the item.
+    void assign_identifier();
+
+    //Return the item's identifier.
+    void return_identifier();
+
     //Evaluate the tile the item is trying to move to.
     //Returns true if the item can move, false if the item can not move.
     bool check_movement(short check_x,short check_y);
 
     void execute_movement(short check_x,short check_y);
 
-    void attack(Creature* target);
+    ///void attack(Creature* target);
 
     void move();
 

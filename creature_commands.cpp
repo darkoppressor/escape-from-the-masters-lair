@@ -244,7 +244,16 @@ void Creature::execute_command(short command){
 
                         //Add the item to the inventory items vector.
                         inventory.push_back(vector_levels[current_level].items[i]);
+
+                        //Assign an identifier to the item.
+                        inventory[inventory.size()-1].assign_identifier();
+
+                        //Assign an owner identifier to the new item.
+                        inventory[inventory.size()-1].owner=identifier;
                     }
+
+                    //Return the item's identifier.
+                    vector_levels[current_level].items[i].return_identifier();
 
                     //Remove the item from the dungeon items vector.
                     vector_levels[current_level].items.erase(vector_levels[current_level].items.begin()+i);
@@ -322,6 +331,37 @@ Creature::directional_check_coordinates Creature::determine_direction(short dire
     }
 
     return coords;
+}
+
+int Creature::determine_momentum(short item_weight){
+    //Base momentum is 6.
+    int momentum=6;
+
+    double item_throwing_weight=(double)item_weight/2;
+    if(item_throwing_weight==0.0){
+        item_throwing_weight=1.0;
+    }
+
+    //Determine the bonus from strength.
+    double momentum_bonus=(attributes[ATTRIBUTE_STRENGTH]/item_throwing_weight)/20;
+
+    //If the momentum bonus is less than 0.1.
+    if(momentum_bonus*10<1.0){
+        //Subtract a momentum penalty from momentum.
+        momentum-=momentum_bonus*100;
+    }
+    //If the momentum bonus is greater than or equal to 0.1.
+    else{
+        //Add the momentum bonus to momentum.
+        momentum+=momentum_bonus;
+    }
+
+    //Minimum momentum is 0.
+    if(momentum<0){
+        momentum=0;
+    }
+
+    return momentum;
 }
 
 void Creature::check_command_directional(short direction){
@@ -661,28 +701,26 @@ void Creature::execute_command_directional(short direction){
             inventory[inventory_item_index].x=x;
             inventory[inventory_item_index].y=y;
 
+            //Add the item to the dungeon items vector.
+            vector_levels[current_level].items.push_back(inventory[inventory_item_index]);
+
+            //Assign an identifier to the newly thrown item.
+            vector_levels[current_level].items[vector_levels[current_level].items.size()-1].assign_identifier();
+
+            //Set the thrown item's direction.
+            vector_levels[current_level].items[vector_levels[current_level].items.size()-1].move_direction=direction;
+
+            //Set the thrown item's damage.
+            ///vector_levels[current_level].items[vector_levels[current_level].items.size()-1].damage=attack_thrown(inventory_item_index);
+
+            //Set the thrown item's momentum.
+            vector_levels[current_level].items[vector_levels[current_level].items.size()-1].momentum=determine_momentum(inventory[inventory_item_index].weight);
+
             //If the item's stack is greater than 1, or the item is money.
             //We just subtract 1 from the stack instead of removing the item from the inventory.
             if(inventory[inventory_item_index].stack>1 || inventory[inventory_item_index].inventory_letter=='$'){
-                //Add the item to the dungeon items vector.
-                vector_levels[current_level].items.push_back(inventory[inventory_item_index]);
-
                 //Set the newly created item's stack to 1.
                 vector_levels[current_level].items[vector_levels[current_level].items.size()-1].stack=1;
-
-                //Set the thrown item's direction.
-                vector_levels[current_level].items[vector_levels[current_level].items.size()-1].move_direction=direction;
-
-                //Set the thrown item's damage.
-                vector_levels[current_level].items[vector_levels[current_level].items.size()-1].damage=attack_thrown(inventory_item_index);
-
-                //Determine the thrown item's momentum.
-                int item_throwing_weight=inventory[inventory_item_index].weight/2;
-                if(item_throwing_weight==0){
-                    item_throwing_weight=1;
-                }
-                //
-                vector_levels[current_level].items[vector_levels[current_level].items.size()-1].momentum=6+(attributes[ATTRIBUTE_STRENGTH]/item_throwing_weight)/20;
 
                 //Subtract 1 from the inventory item's stack.
                 inventory[inventory_item_index].stack--;
@@ -690,44 +728,8 @@ void Creature::execute_command_directional(short direction){
             //If the item's stack is 1 and the item is not money.
             //We remove the item from the inventory.
             else{
-                //Add the item to the dungeon items vector.
-                vector_levels[current_level].items.push_back(inventory[inventory_item_index]);
-
-                //Set the thrown item's direction.
-                vector_levels[current_level].items[vector_levels[current_level].items.size()-1].move_direction=direction;
-
-                //Set the thrown item's damage.
-                vector_levels[current_level].items[vector_levels[current_level].items.size()-1].damage=attack_thrown(inventory_item_index);
-
-                //Determine the thrown item's momentum.
-                double item_throwing_weight=(double)inventory[inventory_item_index].weight/2;
-                if(item_throwing_weight==0.0){
-                    item_throwing_weight=1.0;
-                }
-
-                //Base momentum is 6.
-                int momentum=6;
-
-                //Determine the bonus from strength.
-                double momentum_bonus=(attributes[ATTRIBUTE_STRENGTH]/item_throwing_weight)/20;
-
-                //If the momentum bonus is less than 0.1.
-                if(momentum_bonus*10<1.0){
-                    //Subtract a momentum penalty from momentum.
-                    momentum-=momentum_bonus*100;
-                }
-                //If the momentum bonus is greater than or equal to 0.1.
-                else{
-                    //Add the momentum bonus to momentum.
-                    momentum+=momentum_bonus;
-                }
-
-                //Minimum momentum is 0.
-                if(momentum<0){
-                    momentum=0;
-                }
-
-                vector_levels[current_level].items[vector_levels[current_level].items.size()-1].momentum=momentum;
+                //Return the item's identifier.
+                inventory[inventory_item_index].return_identifier();
 
                 //Remove the item from the inventory items vector.
                 inventory.erase(inventory.begin()+inventory_item_index);
@@ -1143,6 +1145,12 @@ void Creature::execute_command_inventory(char inventory_letter){
             //Add the item to the dungeon items vector.
             vector_levels[current_level].items.push_back(inventory[inventory_item_index]);
 
+            //Assign an identifier to the new item.
+            vector_levels[current_level].items[vector_levels[current_level].items.size()-1].assign_identifier();
+
+            //Return the inventory item's identifier.
+            inventory[inventory_item_index].return_identifier();
+
             //Remove the item from the inventory items vector.
             inventory.erase(inventory.begin()+inventory_item_index);
         }
@@ -1154,6 +1162,12 @@ void Creature::execute_command_inventory(char inventory_letter){
 
             //Add the item to the dungeon items vector.
             vector_levels[current_level].items.push_back(inventory[inventory_item_index]);
+
+            //Assign an identifier to the new item.
+            vector_levels[current_level].items[vector_levels[current_level].items.size()-1].assign_identifier();
+
+            //Assign an owner identifier to the new item.
+            vector_levels[current_level].items[vector_levels[current_level].items.size()-1].owner=identifier;
 
             //Zero out the money count.
             inventory[inventory_item_index].stack=0;

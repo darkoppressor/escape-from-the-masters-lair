@@ -11,6 +11,9 @@ class Object{
     private:
     public:
 
+    //The object's unique identifier.
+    uint32_t identifier;
+
     Object();
 
     //Returns the absolute (i.e., not in terms of tiles, but of pixels) x position of the object.
@@ -30,6 +33,9 @@ class Object{
 
     //The color of the item.
     short color;
+
+    //The weight of the object.
+    short weight;
 };
 
 #endif

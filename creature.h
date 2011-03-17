@@ -46,6 +46,14 @@ class Creature: public Object{
 
     Creature();
 
+    void create_money_item();
+
+    //Assign an identifier to the creature.
+    void assign_identifier();
+
+    //Return the creature's identifier.
+    void return_identifier();
+
     //Determines which item is equipped in an equipment slot.
     int slot_equipped_with_what_item(char item_inventory_letter);
 
@@ -99,6 +107,9 @@ class Creature: public Object{
     //
     directional_check_coordinates determine_direction(short direction);
 
+    //Determine the momentum of an item.
+    int determine_momentum(short item_weight);
+
     //Check to see if a directional command can be done.
     //If so, queue it for the next call to move().
     //If not, handle it appropriately.
@@ -115,7 +126,7 @@ class Creature: public Object{
     //Execute an inventory command.
     void execute_command_inventory(char inventory_letter);
 
-    int attack_thrown(int item_identifier);
+    void attack_thrown(Creature* target);
 
     void attack_melee(Creature* target);
 
@@ -149,9 +160,6 @@ class Creature: public Object{
     bool alive;
 
     short gender;
-
-    //The weight of the creature.
-    short weight;
 
     //*****************//
     // Game variables: //

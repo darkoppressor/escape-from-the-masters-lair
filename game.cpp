@@ -6,6 +6,7 @@
 #include "render.h"
 #include "random_number_generator.h"
 #include "random_chance.h"
+#include "max_objects.h"
 
 #include <fstream>
 
@@ -23,6 +24,38 @@ Game::~Game(){
     //Free the music.
     Mix_FreeMusic(music);
     music=NULL;
+}
+
+void Game::prepare_identifiers(){
+    for(short i=0;i<OBJECT_ITEM+1;i++){
+        identifiers.push_back(vector<uint32_t>());
+    }
+
+    for(uint32_t i=0;i<MAX_OBJECTS;i++){
+        identifiers[OBJECT_CREATURE].push_back(i);
+        identifiers[OBJECT_ITEM].push_back(i);
+    }
+}
+
+uint32_t Game::assign_identifier(short object_type){
+    //If the identifiers list for this object type is not empty.
+    if(identifiers[object_type].size()>0){
+        uint32_t new_identifier=identifiers[object_type][0];
+
+        identifiers[object_type].erase(identifiers[object_type].begin());
+
+        return new_identifier;
+    }
+    //If the identifiers list for this object type is empty.
+    else{
+        fprintf(stderr,"identifiers[%i] depleted!\n",object_type);
+
+        return 0;
+    }
+}
+
+void Game::return_identifier(short object_type,uint32_t returning_identifier){
+    identifiers[object_type].push_back(returning_identifier);
 }
 
 /**short Game::tile_check(short check_x,short check_y){
@@ -520,6 +553,9 @@ void Game::generate_level(){
             //Generate the item.
             generated_items.push_back(Item());
 
+            //Assign an identifier to the item.
+            generated_items[generated_items.size()-1].assign_identifier();
+
             //Apply the selected template to the item.
             generated_items[generated_items.size()-1]=templates.template_items[random_item_category][random_item_template];
 
@@ -562,6 +598,9 @@ void Game::generate_level(){
         if(generated_tiles[x][y].type==TILE_TYPE_FLOOR){
             //Generate the monster.
             generated_monsters.push_back(Monster());
+
+            //Assign an identifier to the monster.
+            generated_monsters[generated_monsters.size()-1].assign_identifier();
 
             //Set the monster's base stats.
             generated_monsters[generated_monsters.size()-1].set_base_stats(vector_levels.size());
