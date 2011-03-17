@@ -309,9 +309,24 @@ void Monster::handle_input(){
             input_inventory=INVENTORY_COMMAND_DROP_ITEM;
         }
 
-        //Equip item.
-        else if(ai_keystates[AIK_EQUIP_ITEM]){
-            input_inventory=INVENTORY_COMMAND_EQUIP_ITEM;
+        //Equip item in right hand.
+        else if(ai_keystates[AIK_EQUIP_RIGHT_HAND]){
+            input_inventory=INVENTORY_COMMAND_EQUIP_RIGHT_HAND;
+        }
+
+        //Equip item in left hand.
+        else if(ai_keystates[AIK_EQUIP_LEFT_HAND]){
+            input_inventory=INVENTORY_COMMAND_EQUIP_LEFT_HAND;
+        }
+
+        //Quiver item.
+        else if(ai_keystates[AIK_QUIVER_ITEM]){
+            input_inventory=INVENTORY_COMMAND_QUIVER_ITEM;
+        }
+
+        //Equip armor.
+        else if(ai_keystates[AIK_EQUIP_ARMOR]){
+            input_inventory=INVENTORY_COMMAND_EQUIP_ARMOR;
         }
 
         //Unequip item.
@@ -322,11 +337,6 @@ void Monster::handle_input(){
         //Throw item.
         else if(ai_keystates[AIK_THROW_ITEM]){
             input_inventory=INVENTORY_COMMAND_THROW_ITEM;
-        }
-
-        //Quiver item.
-        else if(ai_keystates[AIK_QUIVER_ITEM]){
-            input_inventory=INVENTORY_COMMAND_QUIVER_ITEM;
         }
 
         //If a directional command has been given.

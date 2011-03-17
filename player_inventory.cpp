@@ -68,85 +68,84 @@ void Player::render_inventory(){
 
                         //If the item is equipped.
                         if(inventory[i].equipped){
-                            //If the item is anything other than armor.
-                            if(inventory[i].category!=ITEM_ARMOR){
-                                //The item is being wielded as a weapon.
-                                str_item_equipped=" (being wielded ";
+                            //Determine what slot the item is equipped in.
+                            short equip_slot=item_equipped_in_which_slot(i);
 
-                                //If wielded in right hand.
-                                if(item_equipped_in_which_slot(i)==EQUIP_HOLD_RIGHT){
-                                    str_item_equipped+="in right hand)";
-                                }
-                                //If wielded in left hand.
-                                else if(item_equipped_in_which_slot(i)==EQUIP_HOLD_LEFT){
-                                    str_item_equipped+="in left hand)";
-                                }
+                            str_item_equipped=" (";
+
+                            //If the item is a stack larger than 1 and the equipment slot is a hold slot.
+                            if(inventory[i].stack>1 && (equip_slot==EQUIP_HOLD_RIGHT || equip_slot==EQUIP_HOLD_LEFT)){
+                                str_item_equipped+="one ";
                             }
-                            //If the item is armor.
-                            else{
-                                //The item is being worn as armor.
-                                str_item_equipped=" (being worn ";
 
-                                switch(inventory[i].armor_category){
-                                case ARMOR_HEAD:
-                                    str_item_equipped+="on head)";
-                                    break;
+                            switch(equip_slot){
+                            case EQUIP_HOLD_RIGHT:
+                                str_item_equipped+="being wielded in right hand)";
+                                break;
 
-                                case ARMOR_SHOULDER:
-                                    str_item_equipped+="on shoulders)";
-                                    break;
+                            case EQUIP_HOLD_LEFT:
+                                str_item_equipped+="being wielded in left hand)";
+                                break;
 
-                                case ARMOR_CHEST:
-                                    str_item_equipped+="on chest)";
-                                    break;
+                            case EQUIP_QUIVER:
+                                str_item_equipped+="in quiver)";
+                                break;
 
-                                case ARMOR_BACK:
-                                    str_item_equipped+="on back)";
-                                    break;
+                            case EQUIP_HEAD:
+                                str_item_equipped+="being worn on head)";
+                                break;
 
-                                case ARMOR_WAIST:
-                                    str_item_equipped+="on waist)";
-                                    break;
+                            case EQUIP_SHOULDER:
+                                str_item_equipped+="being worn on shoulders)";
+                                break;
 
-                                case ARMOR_LEG:
-                                    str_item_equipped+="on legs)";
-                                    break;
+                            case EQUIP_CHEST:
+                                str_item_equipped+="being worn on chest)";
+                                break;
 
-                                case ARMOR_FOOT:
-                                    str_item_equipped+="on feet)";
-                                    break;
+                            case EQUIP_BACK:
+                                str_item_equipped+="being worn on back)";
+                                break;
 
-                                case ARMOR_HAND:
-                                    str_item_equipped+="on hands)";
-                                    break;
+                            case EQUIP_WAIST:
+                                str_item_equipped+="being worn on waist)";
+                                break;
 
-                                case ARMOR_SHIELD:
-                                    str_item_equipped+="on arm)";
-                                    break;
+                            case EQUIP_LEG:
+                                str_item_equipped+="being worn on legs)";
+                                break;
 
-                                case ARMOR_NECK:
-                                    str_item_equipped+="around neck)";
-                                    break;
+                            case EQUIP_FOOT:
+                                str_item_equipped+="being worn on feet)";
+                                break;
 
-                                case ARMOR_WRIST:
-                                    str_item_equipped+="on wrists)";
-                                    break;
+                            case EQUIP_HAND:
+                                str_item_equipped+="being worn on hands)";
+                                break;
 
-                                case ARMOR_SHIRT:
-                                    str_item_equipped+="on chest as a shirt)";
-                                    break;
+                            case EQUIP_SHIELD:
+                                str_item_equipped+="being worn on arm)";
+                                break;
 
-                                case ARMOR_FINGER:
-                                    //If worn on right finger.
-                                    if(item_equipped_in_which_slot(i)==EQUIP_FINGER_RIGHT){
-                                        str_item_equipped+="on right ring finger)";
-                                    }
-                                    //If worn on left finger.
-                                    else if(item_equipped_in_which_slot(i)==EQUIP_FINGER_LEFT){
-                                        str_item_equipped+="on left ring finger)";
-                                    }
-                                    break;
-                                }
+                            case EQUIP_NECK:
+                                str_item_equipped+="being worn around neck)";
+                                break;
+
+                            case EQUIP_WRIST:
+                                str_item_equipped+="being worn on wrists)";
+                                break;
+
+                            case EQUIP_SHIRT:
+                                str_item_equipped+="being worn on chest as a shirt)";
+                                break;
+
+                            case EQUIP_FINGER_RIGHT:
+                                str_item_equipped+="being worn on right ring finger)";
+                                break;
+
+                            case EQUIP_FINGER_LEFT:
+                                str_item_equipped+="being worn on left ring finger)";
+                                break;
                             }
                         }
 

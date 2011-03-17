@@ -283,18 +283,18 @@ void Player::handle_input(){
                         input_inventory=INVENTORY_COMMAND_DROP_ITEM;
                     }
 
-                    //Equip item.
-                    else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.sym==SDLK_e){
-                        update_text_log("What do you want to equip?",is_player);
+                    //Equip item in right hand.
+                    else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.sym==SDLK_1){
+                        update_text_log("What do you want to wield in your right hand?",is_player);
 
-                        input_inventory=INVENTORY_COMMAND_EQUIP_ITEM;
+                        input_inventory=INVENTORY_COMMAND_EQUIP_RIGHT_HAND;
                     }
 
-                    //Unequip item.
-                    else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.sym==SDLK_u){
-                        update_text_log("What do you want to unequip?",is_player);
+                    //Equip item in left hand.
+                    else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.sym==SDLK_2){
+                        update_text_log("What do you want to wield in your left hand?",is_player);
 
-                        input_inventory=INVENTORY_COMMAND_UNEQUIP_ITEM;
+                        input_inventory=INVENTORY_COMMAND_EQUIP_LEFT_HAND;
                     }
 
                     //Quiver item.
@@ -302,6 +302,20 @@ void Player::handle_input(){
                         update_text_log("What do you want to quiver?",is_player);
 
                         input_inventory=INVENTORY_COMMAND_QUIVER_ITEM;
+                    }
+
+                    //Equip armor.
+                    else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.sym==SDLK_w){
+                        update_text_log("What do you want to wear?",is_player);
+
+                        input_inventory=INVENTORY_COMMAND_EQUIP_ARMOR;
+                    }
+
+                    //Unequip item.
+                    else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.sym==SDLK_u){
+                        update_text_log("What do you want to unequip?",is_player);
+
+                        input_inventory=INVENTORY_COMMAND_UNEQUIP_ITEM;
                     }
 
                     //Throw item.

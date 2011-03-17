@@ -64,12 +64,16 @@ class Creature: public Object{
     void unequip_item(int item_identifier);
 
     //Equips the item with index item_identifier.
-    void equip_item(int item_identifier);
+    //If equip_slot is not -1, that slot will be filled.
+    //If equip_slot is -1, the armor slot corresponding with the item indexed by item_identifier will be filled.
+    void equip_item(int item_identifier,short equip_slot);
 
-    //Determines if the equipment slot that the passed item could fill is currently empty.
+    //Determines if the passed equipment slot is currently empty.
     //Returns true if the slot is empty and available.
     //Returns false if the slot is already occupied.
-    bool equipment_slot_empty(short item_category,short equip_category);
+    //If equip_slot is not -1, that slot will be checked.
+    //If equip_slot is -1, the armor slot corresponding with the item indexed by item_identifier will be checked.
+    bool equipment_slot_empty(int item_identifier,short equip_slot);
 
     //Returns the number of items in the passed item category currently in the creature's inventory.
     int item_category_in_inventory(short category);

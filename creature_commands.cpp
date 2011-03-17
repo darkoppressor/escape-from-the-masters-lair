@@ -1015,14 +1015,25 @@ void Creature::check_command_inventory(char inventory_letter){
         }
     }
 
-    else if(command==INVENTORY_COMMAND_EQUIP_ITEM){
+    else if(command==INVENTORY_COMMAND_EQUIP_RIGHT_HAND || command==INVENTORY_COMMAND_EQUIP_LEFT_HAND ||
+            command==INVENTORY_COMMAND_QUIVER_ITEM || command==INVENTORY_COMMAND_EQUIP_ARMOR){
+        //Determine the equipment slot to check.
+        //If this remains -1, we are checking an armor slot.
+        short equip_slot=-1;
+        if(command==INVENTORY_COMMAND_EQUIP_RIGHT_HAND){
+            equip_slot=EQUIP_HOLD_RIGHT;
+        }
+        else if(command==INVENTORY_COMMAND_EQUIP_LEFT_HAND){
+            equip_slot=EQUIP_HOLD_LEFT;
+        }
+        else if(command==INVENTORY_COMMAND_QUIVER_ITEM){
+            equip_slot=EQUIP_QUIVER;
+        }
+
         //If the item is not already equipped.
         if(!inventory[inventory_item_index].equipped &&
-        //And if the item is not stackable.
-        !inventory[inventory_item_index].stackable &&
-        //And if a corresponding equipment slot is open.
-        ((inventory[inventory_item_index].category!=ITEM_ARMOR && equipment_slot_empty(inventory[inventory_item_index].category,0)) ||
-        (inventory[inventory_item_index].category==ITEM_ARMOR && equipment_slot_empty(ITEM_ARMOR,inventory[inventory_item_index].armor_category)))){
+        //And if the corresponding equipment slot is open.
+        equipment_slot_empty(inventory_item_index,equip_slot)){
             initiate_move=true;
         }
         //If the item is already equipped.
@@ -1033,9 +1044,9 @@ void Creature::check_command_inventory(char inventory_letter){
             input_inventory=0;
             inventory_input_state=0;
         }
-        //If the item is stackable, and thus not equippable.
-        else if(inventory[inventory_item_index].stackable){
-            update_text_log("Stackable items cannot be equipped.",is_player);
+        //If the item is not armor, but the creature tried to wear it.
+        else if(command==INVENTORY_COMMAND_EQUIP_ARMOR && inventory[inventory_item_index].category!=ITEM_ARMOR){
+            update_text_log("You can't wear that!",is_player);
 
             //No inventory command will be executed.
             input_inventory=0;
@@ -1084,40 +1095,6 @@ void Creature::check_command_inventory(char inventory_letter){
         //If the item is equipped.
         else{
             update_text_log("You must unequip the item first.",is_player);
-
-            //No inventory command will be executed.
-            input_inventory=0;
-            inventory_input_state=0;
-        }
-    }
-
-    else if(command==INVENTORY_COMMAND_QUIVER_ITEM){
-        //If the item is not already equipped.
-        if(!inventory[inventory_item_index].equipped &&
-        //And if a corresponding equipment slot is open.
-        ((inventory[inventory_item_index].category!=ITEM_ARMOR && equipment_slot_empty(inventory[inventory_item_index].category,0)) ||
-        (inventory[inventory_item_index].category==ITEM_ARMOR && equipment_slot_empty(ITEM_ARMOR,inventory[inventory_item_index].armor_category)))){
-            initiate_move=true;
-        }
-        //If the item is already equipped.
-        else if(inventory[inventory_item_index].equipped){
-            update_text_log("That item is already equipped.",is_player);
-
-            //No inventory command will be executed.
-            input_inventory=0;
-            inventory_input_state=0;
-        }
-        //If the item is stackable, and thus not equippable.
-        else if(inventory[inventory_item_index].stackable){
-            update_text_log("Stackable items cannot be equipped.",is_player);
-
-            //No inventory command will be executed.
-            input_inventory=0;
-            inventory_input_state=0;
-        }
-        //If there is no equipment slot for the item.
-        else{
-            update_text_log("There is already an item equipped in that slot.",is_player);
 
             //No inventory command will be executed.
             input_inventory=0;
@@ -1210,28 +1187,94 @@ void Creature::execute_command_inventory(char inventory_letter){
         }
     }
 
-    else if(command==INVENTORY_COMMAND_EQUIP_ITEM){
+    else if(command==INVENTORY_COMMAND_EQUIP_RIGHT_HAND || command==INVENTORY_COMMAND_EQUIP_LEFT_HAND ||
+            command==INVENTORY_COMMAND_QUIVER_ITEM || command==INVENTORY_COMMAND_EQUIP_ARMOR){
         //Setup an equip message.
 
         string str_equip_item="";
 
         //If the creature is the player.
         if(is_player){
-            str_equip_item="You equip the ";
+            if(command==INVENTORY_COMMAND_EQUIP_RIGHT_HAND || command==INVENTORY_COMMAND_EQUIP_LEFT_HAND){
+                str_equip_item="You wield the ";
+            }
+            else if(command==INVENTORY_COMMAND_QUIVER_ITEM){
+                str_equip_item="You place the ";
+            }
+            else if(command==INVENTORY_COMMAND_EQUIP_ARMOR){
+                str_equip_item="You put on the ";
+            }
         }
         //If the creature is not the player.
         else{
-            str_equip_item="The ";
-            str_equip_item+=return_full_name();
-            str_equip_item+=" equips the ";
+            if(command==INVENTORY_COMMAND_EQUIP_RIGHT_HAND || command==INVENTORY_COMMAND_EQUIP_LEFT_HAND){
+                str_equip_item="The ";
+                str_equip_item+=return_full_name();
+                str_equip_item+=" wields the ";
+            }
+            else if(command==INVENTORY_COMMAND_QUIVER_ITEM){
+                str_equip_item="The ";
+                str_equip_item+=return_full_name();
+                str_equip_item+=" places the ";
+            }
+            else if(command==INVENTORY_COMMAND_EQUIP_ARMOR){
+                str_equip_item="The ";
+                str_equip_item+=return_full_name();
+                str_equip_item+=" puts on the ";
+            }
         }
 
-        str_equip_item+=inventory[inventory_item_index].return_full_name();
+        if(command==INVENTORY_COMMAND_EQUIP_RIGHT_HAND || command==INVENTORY_COMMAND_EQUIP_LEFT_HAND){
+            str_equip_item+=inventory[inventory_item_index].return_full_name(1);
+        }
+        else{
+            str_equip_item+=inventory[inventory_item_index].return_full_name();
+        }
+
+        if(command==INVENTORY_COMMAND_EQUIP_RIGHT_HAND){
+            if(is_player){
+                str_equip_item+=" in your right hand";
+            }
+            else{
+                str_equip_item+=" in its right hand";
+            }
+        }
+        else if(command==INVENTORY_COMMAND_EQUIP_LEFT_HAND){
+            if(is_player){
+                str_equip_item+=" in your left hand";
+            }
+            else{
+                str_equip_item+=" in its left hand";
+            }
+        }
+        else if(command==INVENTORY_COMMAND_QUIVER_ITEM){
+            if(is_player){
+                str_equip_item+=" into your quiver";
+            }
+            else{
+                str_equip_item+=" into its quiver";
+            }
+        }
+
         str_equip_item+=".";
+
         update_text_log(str_equip_item.c_str(),true);
 
+        //Determine the equipment slot.
+        //If this remains -1, we are equipping a piece of armor.
+        short equip_slot=-1;
+        if(command==INVENTORY_COMMAND_EQUIP_RIGHT_HAND){
+            equip_slot=EQUIP_HOLD_RIGHT;
+        }
+        else if(command==INVENTORY_COMMAND_EQUIP_LEFT_HAND){
+            equip_slot=EQUIP_HOLD_LEFT;
+        }
+        else if(command==INVENTORY_COMMAND_QUIVER_ITEM){
+            equip_slot=EQUIP_QUIVER;
+        }
+
         //Equip the item.
-        equip_item(inventory_item_index);
+        equip_item(inventory_item_index,equip_slot);
     }
 
     else if(command==INVENTORY_COMMAND_UNEQUIP_ITEM){

@@ -147,7 +147,7 @@
 	//************//
 
 	<item category:armor>
-		name:leather spaulders
+		name:pair of leather spaulders
 		plural name:pairs of leather spaulders
 		writing:
 		appearance:[
@@ -251,7 +251,7 @@
 	//*******//
 
 	<item category:armor>
-		name:leather trousers
+		name:pair of leather trousers
 		plural name:pairs of leather trousers
 		writing:
 		appearance:[
@@ -277,7 +277,7 @@
 	//*******//
 
 	<item category:armor>
-		name:leather boots
+		name:pair of leather boots
 		plural name:pairs of leather boots
 		writing:
 		appearance:[
@@ -303,7 +303,7 @@
 	//********//
 
 	<item category:armor>
-		name:leather gloves
+		name:pair of leather gloves
 		plural name:pairs of leather gloves
 		writing:
 		appearance:[
@@ -329,7 +329,7 @@
 	//*********//
 
 	<item category:armor>
-		name:leather bracers
+		name:pair of leather bracers
 		plural name:pairs of leather bracers
 		writing:
 		appearance:[

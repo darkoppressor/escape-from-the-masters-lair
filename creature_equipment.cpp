@@ -49,21 +49,12 @@ void Creature::unequip_item(int item_identifier){
     inventory[item_identifier].equipped=false;
 }
 
-void Creature::equip_item(int item_identifier){
-    //If we are equipping anything that isn't armor.
-    if(inventory[item_identifier].category!=ITEM_ARMOR){
-        //If the right hand is free.
-        if(equipment[EQUIP_HOLD_RIGHT]==0){
-            //Assign the item to this slot.
-            equipment[EQUIP_HOLD_RIGHT]=inventory[item_identifier].inventory_letter;
-        }
-        //If the left hand is free.
-        else if(equipment[EQUIP_HOLD_LEFT]==0){
-            //Assign the item to this slot.
-            equipment[EQUIP_HOLD_LEFT]=inventory[item_identifier].inventory_letter;
-        }
+void Creature::equip_item(int item_identifier,short equip_slot){
+    //If we are equipping an item in the right hand, left hand, or quiver.
+    if(equip_slot!=-1){
+        //Assign the item to this slot.
+        equipment[equip_slot]=inventory[item_identifier].inventory_letter;
     }
-
     //If we are equipping some armor.
     else{
         //If we are equipping a finger item.
@@ -149,21 +140,27 @@ void Creature::equip_item(int item_identifier){
     inventory[item_identifier].equipped=true;
 }
 
-bool Creature::equipment_slot_empty(short item_category,short equip_category){
-    //If we are checking anything that isn't armor.
-    if(item_category!=ITEM_ARMOR){
-        ///Weapons needing 1 or 2 hands will be handled here.
-        ///For now, all weapons need one slot.
-        //If one of the hold slots is empty.
-        if(equipment[EQUIP_HOLD_RIGHT]==0 || equipment[EQUIP_HOLD_LEFT]==0){
+bool Creature::equipment_slot_empty(int item_identifier,short equip_slot){
+    ///Weapons needing 1 or 2 hands may be handled here.
+    ///This might instead be handled in the inventory input check function.
+    ///For now, all weapons need one slot.
+
+    //If we are checking the right hand, left hand, or quiver.
+    if(equip_slot!=-1){
+        //If the slot is empty.
+        if(equipment[equip_slot]==0){
             return true;
         }
     }
-
-    //If we are checking some armor.
+    //If we are checking an armor slot.
     else{
+        //If the item is not armor.
+        if(inventory[item_identifier].category!=ITEM_ARMOR){
+            return false;
+        }
+
         //If the armor needs a finger slot.
-        if(equip_category==ARMOR_FINGER){
+        if(inventory[item_identifier].armor_category==ARMOR_FINGER){
             //If one of the finger slots is empty.
             if(equipment[EQUIP_FINGER_RIGHT]==0 || equipment[EQUIP_FINGER_LEFT]==0){
                 return true;
@@ -171,7 +168,7 @@ bool Creature::equipment_slot_empty(short item_category,short equip_category){
         }
         //If the armor needs a regular corresponding slot.
         else{
-            switch(equip_category){
+            switch(inventory[item_identifier].armor_category){
             case ARMOR_HEAD:
                 if(equipment[EQUIP_HEAD]==0){
                     return true;
