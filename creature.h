@@ -132,6 +132,12 @@ class Creature: public Object{
 
     void die();
 
+    //Level up the creature.
+    void level_up();
+
+    //Gain experience points from killing a creature.
+    void gain_experience(short killed_experience_level);
+
     //Evaluate the tile the creature is trying to move to.
     //Returns true if the creature can move, false if the creature can not move.
     bool check_movement(short check_x,short check_y);

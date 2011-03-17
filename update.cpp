@@ -225,7 +225,7 @@ void render(int frame_rate, double ms_per_frame){
             ss.clear();ss.str("");ss<<"Dungeon Level: ";ss<<current_level+1;ss<<"\xA";msg=ss.str();
             ss.clear();ss.str("");ss<<"Turn: ";ss<<player.turn;ss<<"\xA";msg+=ss.str();
             ss.clear();ss.str("");ss<<"Experience Level: ";ss<<player.experience_level;ss<<"\xA";msg+=ss.str();
-            ss.clear();ss.str("");ss<<"Experience (Next): ";ss<<player.experience;ss<<" (";ss<<player.experience_max;ss<<")";ss<<"\xA";msg+=ss.str();
+            ss.clear();ss.str("");ss<<"Experience: ";ss<<player.experience;ss<<"/";ss<<player.experience_max;ss<<"\xA";msg+=ss.str();
             ss.clear();ss.str("");ss<<"Health: ";ss<<player.health;ss<<"/";ss<<player.health_max;ss<<"\xA";msg+=ss.str();
             ss.clear();ss.str("");ss<<"Mana: ";ss<<player.mana;ss<<"/";ss<<player.mana_max;ss<<"\xA";msg+=ss.str();
             ss.clear();ss.str("");ss<<"Money: ";ss<<player.inventory[0].stack;ss<<"\xA";msg+=ss.str();

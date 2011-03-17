@@ -178,6 +178,9 @@ void Creature::attack_thrown(Creature* target,Item* thrown_item){
     //If the target's health drops to 0 or below, it has been killed.
     if(target->health<=0){
         target->die();
+
+        //This creature gains experience.
+        gain_experience(target->experience_level);
     }
 }
 
@@ -534,6 +537,9 @@ void Creature::attack_melee(Creature* target){
     //If the target's health drops to 0 or below, it has been killed.
     if(target->health<=0){
         target->die();
+
+        //This creature gains experience.
+        gain_experience(target->experience_level);
     }
 }
 

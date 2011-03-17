@@ -87,6 +87,7 @@
 		<Unit filename="creature_combat.cpp" />
 		<Unit filename="creature_commands.cpp" />
 		<Unit filename="creature_equipment.cpp" />
+		<Unit filename="creature_experience.cpp" />
 		<Unit filename="dungeon_location.cpp" />
 		<Unit filename="dungeon_location.h" />
 		<Unit filename="effect.cpp" />
