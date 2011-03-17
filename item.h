@@ -11,6 +11,17 @@
 
 #include <vector>
 
+//All of the special data needed by an Item after being thrown by a Creature.
+struct Owner_Data_Thrown{
+    short strength;
+    short agility;
+    short fighting_skill;
+    short thrown_weapons_skill;
+    short experience_level;
+    short base_damage_min_thrown;
+    short base_damage_max_thrown;
+};
+
 //Incomplete declaration of Creature.
 //We have to do this here, because a Creature object is used by a function in Item, but Creature relies on Item.
 class Creature;
@@ -25,6 +36,9 @@ class Item: public Object{
 
     //The identifier of the item's owner.
     uint32_t owner;
+
+    //Used to store special data for when the item has been thrown by a creature.
+    std::vector<Owner_Data_Thrown> owner_data_thrown;
 
     //Is the light currently on.
     bool light_on;
@@ -55,6 +69,9 @@ class Item: public Object{
     //The current momentum of the item.
     //This is the maximum number of tiles the item can move.
     short momentum;
+
+    //The cause of any current movement.
+    short movement_cause;
 
     //The damage the item will do if it hits a creature.
     int damage;
@@ -166,6 +183,10 @@ class Item: public Object{
     bool check_movement(short check_x,short check_y);
 
     void execute_movement(short check_x,short check_y);
+
+    void assign_owner_data_thrown(Creature* creature);
+
+    void attack_thrown(Creature* target);
 
     void move();
 

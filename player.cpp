@@ -187,6 +187,13 @@ void Player::handle_input(){
                         input_directional=DIRECTIONAL_COMMAND_CLOSE_DOOR;
                     }
 
+                    //Fire item.
+                    else if(input_directional==DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE && event.key.keysym.sym==SDLK_f){
+                        update_text_log(string_command_what_direction.c_str(),is_player);
+
+                        input_directional=DIRECTIONAL_COMMAND_FIRE_ITEM;
+                    }
+
                     //Move left.
                     else if(event.key.keysym.sym==SDLK_LEFT || event.key.keysym.sym==SDLK_KP4){
                         move_state=LEFT;

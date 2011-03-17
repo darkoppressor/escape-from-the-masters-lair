@@ -21,6 +21,8 @@ Item::Item(){
 
     momentum=0;
 
+    movement_cause=ITEM_MOVEMENT_CAUSE_NONE;
+
     damage=0;
 
     stack=1;

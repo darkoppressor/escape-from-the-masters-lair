@@ -320,6 +320,17 @@ enum{
     GENDER_NEUTRAL
 };
 
+//***********************//
+// Item Movement Causes: //
+//***********************//
+
+enum{
+    ITEM_MOVEMENT_CAUSE_NONE,
+    ITEM_MOVEMENT_CAUSE_THROWN,
+    ITEM_MOVEMENT_CAUSE_FIRED,
+    ITEM_MOVEMENT_CAUSE_KICKED
+};
+
 //****************//
 // Light Sources: //
 //****************//
@@ -358,7 +369,8 @@ enum{
     DIRECTIONAL_COMMAND_MOVE_RIGHT_UP,
     DIRECTIONAL_COMMAND_MOVE_RIGHT_DOWN,
     DIRECTIONAL_COMMAND_MOVE_LEFT_DOWN,
-    DIRECTIONAL_COMMAND_THROW_ITEM
+    DIRECTIONAL_COMMAND_THROW_ITEM,
+    DIRECTIONAL_COMMAND_FIRE_ITEM
 };
 
 //*********************//

@@ -79,7 +79,7 @@ bool rc_close_door(){
 bool rc_discover_secret_door(){
     int random_attempt=random_range(0,99);
 
-    if(random_attempt>=0 && random_attempt<5){
+    if(random_attempt>=0 && random_attempt<10){
         return true;
     }
     else{

@@ -9,7 +9,7 @@
 
 using namespace std;
 
-void Creature::attack_thrown(Creature* target,Item* thrown_item){
+/**void Creature::attack_thrown(Creature* target,Item* thrown_item){
     int damage=0;
 
     string outcome="";
@@ -182,7 +182,7 @@ void Creature::attack_thrown(Creature* target,Item* thrown_item){
         //This creature gains experience.
         gain_experience(target->experience_level);
     }
-}
+}*/
 
 void Creature::attack_melee(Creature* target){
     int damage=0;

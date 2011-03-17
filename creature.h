@@ -55,6 +55,8 @@ class Creature: public Object{
     void return_identifier();
 
     //Determines which item is equipped in an equipment slot.
+    ///Possibly rename this to index_of_item_in_slot.
+    ///Also, char item_inventory_letter should be changed to short equip_slot.
     int slot_equipped_with_what_item(char item_inventory_letter);
 
     //Determines which equipment slot an item is equipped in.
@@ -114,7 +116,7 @@ class Creature: public Object{
     directional_check_coordinates determine_direction(short direction);
 
     //Determine the momentum of an item.
-    int determine_momentum(short item_weight);
+    int determine_momentum(short item_weight,bool fired);
 
     //Check to see if a directional command can be done.
     //If so, queue it for the next call to move().
@@ -134,9 +136,7 @@ class Creature: public Object{
 
     void attack_melee(Creature* target);
 
-    void attack_thrown(Creature* target,Item* thrown_item);
-
-    void attack_ranged(Creature* target,Item* thrown_item);
+    ///void attack_thrown(Creature* target,Item* thrown_item);
 
     void die();
 

@@ -89,10 +89,10 @@ void Monster::set_base_stats(short pass_level){
 
     // From creature: //
 
-    health_max=random_range(templates.base_stats.health_max/8,templates.base_stats.health_max/4);
+    health_max=random_range(templates.base_stats.health_max/4,templates.base_stats.health_max/2);
     health=health_max;
 
-    mana_max=random_range(templates.base_stats.mana_max/8,templates.base_stats.mana_max/4);
+    mana_max=random_range(templates.base_stats.mana_max/4,templates.base_stats.mana_max/2);
     mana=mana_max;
 
     base_damage_melee_min=random_range(templates.base_stats.base_damage_melee_min/4,templates.base_stats.base_damage_melee_min/2);
@@ -218,6 +218,11 @@ void Monster::handle_input(){
         //Close door.
         else if(ai_keystates[AIK_CLOSE_DOOR]){
             input_directional=DIRECTIONAL_COMMAND_CLOSE_DOOR;
+        }
+
+        //Fire item.
+        else if(ai_keystates[AIK_FIRE_ITEM]){
+            input_directional=DIRECTIONAL_COMMAND_FIRE_ITEM;
         }
 
         //Move left.

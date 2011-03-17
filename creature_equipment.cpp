@@ -156,6 +156,7 @@ bool Creature::equipment_slot_empty(int item_identifier,short equip_slot){
     else{
         //If the item is not armor.
         if(inventory[item_identifier].category!=ITEM_ARMOR){
+            //Only armor can be worn.
             return false;
         }
 

@@ -109,6 +109,7 @@
 		<Unit filename="inventory_data.h" />
 		<Unit filename="item.cpp" />
 		<Unit filename="item.h" />
+		<Unit filename="item_combat.cpp" />
 		<Unit filename="level.cpp" />
 		<Unit filename="level.h" />
 		<Unit filename="level_size.h" />

@@ -334,7 +334,13 @@ Creature::directional_check_coordinates Creature::determine_direction(short dire
     return coords;
 }
 
-int Creature::determine_momentum(short item_weight){
+int Creature::determine_momentum(short item_weight,bool fired){
+    double bonus_denominator=20;
+
+    if(fired){
+        bonus_denominator=10;
+    }
+
     //Base momentum is 6.
     int momentum=6;
 
@@ -344,7 +350,7 @@ int Creature::determine_momentum(short item_weight){
     }
 
     //Determine the bonus from strength.
-    double momentum_bonus=((double)attributes[ATTRIBUTE_STRENGTH]/item_throwing_weight)/20;
+    double momentum_bonus=((double)attributes[ATTRIBUTE_STRENGTH]/item_throwing_weight)/bonus_denominator;
 
     //If the momentum bonus is less than 0.1.
     if(momentum_bonus*10<1.0){
@@ -460,8 +466,33 @@ void Creature::check_command_directional(short direction){
         }
         //If the item cannot be thrown.
         else{
-            //
             ///update_text_log("",is_player);
+
+            //No directional command will be executed.
+            input_directional=0;
+            move_state=0;
+        }
+    }
+
+    else if(command==DIRECTIONAL_COMMAND_FIRE_ITEM){
+        //If an item is quivered.
+        if(!equipment_slot_empty(-1,EQUIP_QUIVER) &&
+           //And if a launcher is being wielded in either the right or left hand.
+           ((!equipment_slot_empty(-1,EQUIP_HOLD_RIGHT) && inventory[slot_equipped_with_what_item(equipment[EQUIP_HOLD_RIGHT])].category==ITEM_WEAPON && inventory[slot_equipped_with_what_item(equipment[EQUIP_HOLD_RIGHT])].governing_skill_weapon==SKILL_LAUNCHER_WEAPONS) ||
+            (!equipment_slot_empty(-1,EQUIP_HOLD_LEFT) && inventory[slot_equipped_with_what_item(equipment[EQUIP_HOLD_LEFT])].category==ITEM_WEAPON && inventory[slot_equipped_with_what_item(equipment[EQUIP_HOLD_LEFT])].governing_skill_weapon==SKILL_LAUNCHER_WEAPONS))){
+            initiate_move=true;
+        }
+        //If no item is quivered.
+        else if(equipment_slot_empty(-1,EQUIP_QUIVER)){
+            update_text_log("You have nothing in your quiver.",is_player);
+
+            //No directional command will be executed.
+            input_directional=0;
+            move_state=0;
+        }
+        //If no launcher is being wielded.
+        else{
+            update_text_log("You are not wielding a launcher weapon.",is_player);
 
             //No directional command will be executed.
             input_directional=0;
@@ -712,7 +743,13 @@ void Creature::execute_command_directional(short direction){
             vector_levels[current_level].items[vector_levels[current_level].items.size()-1].move_direction=direction;
 
             //Set the thrown item's momentum.
-            vector_levels[current_level].items[vector_levels[current_level].items.size()-1].momentum=determine_momentum(inventory[inventory_item_index].weight);
+            vector_levels[current_level].items[vector_levels[current_level].items.size()-1].momentum=determine_momentum(inventory[inventory_item_index].weight,false);
+
+            //Set the thrown item's movement cause.
+            vector_levels[current_level].items[vector_levels[current_level].items.size()-1].movement_cause=ITEM_MOVEMENT_CAUSE_THROWN;
+
+            //Set the thrown item's special data.
+            vector_levels[current_level].items[vector_levels[current_level].items.size()-1].assign_owner_data_thrown(this);
 
             //If the item's stack is greater than 1, or the item is money.
             //We just subtract 1 from the stack instead of removing the item from the inventory.
@@ -731,6 +768,102 @@ void Creature::execute_command_directional(short direction){
 
                 //Remove the item from the inventory items vector.
                 inventory.erase(inventory.begin()+inventory_item_index);
+            }
+        }
+    }
+
+    else if(command==DIRECTIONAL_COMMAND_FIRE_ITEM){
+        //Determine the index of the quivered item.
+        int quivered_item=slot_equipped_with_what_item(equipment[EQUIP_QUIVER]);
+
+        //Determine the index of the launcher item.
+        int launcher_item=-1;
+        //If a launcher is being wielded in the right hand.
+        if(!equipment_slot_empty(-1,EQUIP_HOLD_RIGHT) && inventory[slot_equipped_with_what_item(equipment[EQUIP_HOLD_RIGHT])].category==ITEM_WEAPON && inventory[slot_equipped_with_what_item(equipment[EQUIP_HOLD_RIGHT])].governing_skill_weapon==SKILL_LAUNCHER_WEAPONS){
+            launcher_item=slot_equipped_with_what_item(equipment[EQUIP_HOLD_RIGHT]);
+        }
+        //If a launcher is being wielded in the left hand.
+        else if(!equipment_slot_empty(-1,EQUIP_HOLD_LEFT) && inventory[slot_equipped_with_what_item(equipment[EQUIP_HOLD_LEFT])].category==ITEM_WEAPON && inventory[slot_equipped_with_what_item(equipment[EQUIP_HOLD_LEFT])].governing_skill_weapon==SKILL_LAUNCHER_WEAPONS){
+            launcher_item=slot_equipped_with_what_item(equipment[EQUIP_HOLD_LEFT]);
+        }
+
+        //Setup a fire message.
+
+        string fire_item="";
+
+        //If the creature is the player.
+        if(is_player){
+            fire_item="You fire the ";
+        }
+        //If the creature is not the player.
+        else{
+            fire_item="The ";
+            fire_item+=return_full_name();
+            fire_item+=" fires the ";
+        }
+
+        fire_item+=inventory[quivered_item].return_full_name(1);
+
+        fire_item+=" from the ";
+        fire_item+=inventory[launcher_item].return_full_name();
+
+        fire_item+=".";
+        update_text_log(fire_item.c_str(),true);
+
+        //If the quivered item's stack is not 0.
+        if(inventory[quivered_item].stack!=0){
+            //If the item's stack is 1 and the item is not money.
+            if(inventory[quivered_item].stack==1 && inventory[quivered_item].inventory_letter!='$'){
+                //Return the item's inventory letter.
+                return_inventory_letter(inventory[quivered_item].inventory_letter);
+
+                //If the creature is not the player.
+                if(!is_player){
+                    //Reset the item's inventory letter.
+                    //We only do this for monsters. The player leaves the letter attached to the item.
+                    inventory[quivered_item].inventory_letter=0;
+                }
+            }
+
+            //Set the item's position to the creature's current position.
+            inventory[quivered_item].x=x;
+            inventory[quivered_item].y=y;
+
+            //Add the item to the dungeon items vector.
+            vector_levels[current_level].items.push_back(inventory[quivered_item]);
+
+            //Assign an identifier to the newly fired item.
+            vector_levels[current_level].items[vector_levels[current_level].items.size()-1].assign_identifier();
+
+            //Set the fired item's direction.
+            vector_levels[current_level].items[vector_levels[current_level].items.size()-1].move_direction=direction;
+
+            //Set the fired item's momentum.
+            vector_levels[current_level].items[vector_levels[current_level].items.size()-1].momentum=determine_momentum(inventory[quivered_item].weight,true);
+
+            //Set the fired item's movement cause.
+            vector_levels[current_level].items[vector_levels[current_level].items.size()-1].movement_cause=ITEM_MOVEMENT_CAUSE_FIRED;
+
+            //Set the fired item's special data.
+            ///vector_levels[current_level].items[vector_levels[current_level].items.size()-1].assign_owner_data_fired(this);
+
+            //If the item's stack is greater than 1, or the item is money.
+            //We just subtract 1 from the stack instead of removing the item from the inventory.
+            if(inventory[quivered_item].stack>1 || inventory[quivered_item].inventory_letter=='$'){
+                //Set the newly created item's stack to 1.
+                vector_levels[current_level].items[vector_levels[current_level].items.size()-1].stack=1;
+
+                //Subtract 1 from the inventory item's stack.
+                inventory[quivered_item].stack--;
+            }
+            //If the item's stack is 1 and the item is not money.
+            //We remove the item from the inventory.
+            else{
+                //Return the item's identifier.
+                inventory[quivered_item].return_identifier();
+
+                //Remove the item from the inventory items vector.
+                inventory.erase(inventory.begin()+quivered_item);
             }
         }
     }
