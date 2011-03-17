@@ -343,7 +343,7 @@ int Creature::determine_momentum(short item_weight){
     }
 
     //Determine the bonus from strength.
-    double momentum_bonus=(attributes[ATTRIBUTE_STRENGTH]/item_throwing_weight)/20;
+    double momentum_bonus=((double)attributes[ATTRIBUTE_STRENGTH]/item_throwing_weight)/20;
 
     //If the momentum bonus is less than 0.1.
     if(momentum_bonus*10<1.0){
