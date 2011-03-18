@@ -335,22 +335,20 @@ Creature::directional_check_coordinates Creature::determine_direction(short dire
 }
 
 int Creature::determine_momentum(short item_weight,bool fired){
-    double bonus_denominator=20;
-
-    if(fired){
-        bonus_denominator=10;
-    }
-
     //Base momentum is 6.
-    int momentum=6;
+    double momentum=6.0;
 
-    double item_throwing_weight=(double)item_weight/2;
+    double item_throwing_weight=(double)item_weight/2.0;
     if(item_throwing_weight==0.0){
         item_throwing_weight=1.0;
     }
 
     //Determine the bonus from strength.
-    double momentum_bonus=((double)attributes[ATTRIBUTE_STRENGTH]/item_throwing_weight)/bonus_denominator;
+    double momentum_bonus=((double)attributes[ATTRIBUTE_STRENGTH]/item_throwing_weight)/20.0;
+
+    if(fired){
+        momentum_bonus*=2;
+    }
 
     //If the momentum bonus is less than 0.1.
     if(momentum_bonus*10<1.0){
@@ -364,11 +362,11 @@ int Creature::determine_momentum(short item_weight,bool fired){
     }
 
     //Minimum momentum is 0.
-    if(momentum<0){
-        momentum=0;
+    if(momentum<0.0){
+        momentum=0.0;
     }
 
-    return momentum;
+    return (int)momentum;
 }
 
 void Creature::check_command_directional(short direction){
@@ -853,6 +851,9 @@ void Creature::execute_command_directional(short direction){
             //If the item's stack is 1 and the item is not money.
             //We remove the item from the inventory.
             else{
+                //Unequip the item.
+                unequip_item(quivered_item);
+
                 //Return the item's identifier.
                 inventory[quivered_item].return_identifier();
 

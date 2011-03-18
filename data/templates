@@ -297,7 +297,7 @@
 			defense:7
 		</armor>
 	</item>
-	
+
 	//********//
 	// Hands: //
 	//********//
@@ -412,7 +412,7 @@
 		writing:
 		appearance:"
 		stackable:0
-		weight:9
+		weight:4
 		value:1
 		color:copper
 		material:copper
@@ -438,7 +438,7 @@
 		writing:
 		appearance:=
 		stackable:0
-		weight:4
+		weight:2
 		value:1
 		color:copper
 		material:copper
@@ -459,23 +459,23 @@
 //*********//
 
 <item category:drink>
-	name:potion of healing
-	plural name:potions of healing
+	name:bottle of water
+	plural name:bottles of water
 	writing:
 	appearance:!
 	stackable:1
 	weight:1
 	value:1
-	color:pink
+	color:water
 	material:glass
 	melee damage:1-1
-	thrown damage:1-2
-	ranged damage:1-4
+	thrown damage:1-1
+	ranged damage:0-0
 	light radius:0
 	light beam:0
 	beam angle:0
 	<drink>
-		thirst quenched:5
+		thirst quenched:25
 	</drink>
 </item>
 
@@ -493,11 +493,11 @@
 	stackable:0
 	weight:1
 	value:1
-	color:brown
-	material:cloth
+	color:corpse
+	material:corpse
 	melee damage:1-1
-	thrown damage:1-2
-	ranged damage:1-4
+	thrown damage:1-1
+	ranged damage:0-0
 	light radius:0
 	light beam:0
 	beam angle:0
@@ -515,10 +515,10 @@
 	weight:1
 	value:1
 	color:brown
-	material:cloth
+	material:food
 	melee damage:1-1
-	thrown damage:1-2
-	ranged damage:1-4
+	thrown damage:1-1
+	ranged damage:0-0
 	light radius:0
 	light beam:0
 	beam angle:0
@@ -542,8 +542,8 @@
 	color:paper
 	material:paper
 	melee damage:1-1
-	thrown damage:1-2
-	ranged damage:1-4
+	thrown damage:1-1
+	ranged damage:0-0
 	light radius:0
 	light beam:0
 	beam angle:0
@@ -567,8 +567,8 @@
 	color:paper
 	material:paper
 	melee damage:1-1
-	thrown damage:1-2
-	ranged damage:1-4
+	thrown damage:1-1
+	ranged damage:0-0
 	light radius:0
 	light beam:0
 	beam angle:0
@@ -593,7 +593,7 @@
 	material:cloth
 	melee damage:1-1
 	thrown damage:1-2
-	ranged damage:1-4
+	ranged damage:0-0
 	light radius:0
 	light beam:0
 	beam angle:0

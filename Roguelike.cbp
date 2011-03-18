@@ -78,6 +78,10 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Linker>
+			<Add option="-static-libgcc" />
+			<Add option="-static-libstdc++" />
+		</Linker>
 		<Unit filename="MersenneTwister.h" />
 		<Unit filename="ai_keys.h" />
 		<Unit filename="collision.cpp" />

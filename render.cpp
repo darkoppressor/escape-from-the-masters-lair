@@ -336,6 +336,12 @@ color_data color_name_to_doubles(short color_number){
     case COLOR_BONE:
         new_color=color_shorts_to_doubles(255,255,255);
         break;
+    case COLOR_CORPSE:
+        new_color=color_shorts_to_doubles(138,51,36);
+        break;
+    case COLOR_FOOD:
+        new_color=color_shorts_to_doubles(149,69,53);
+        break;
     case COLOR_STONE:
         new_color=color_shorts_to_doubles(128,128,128);
         break;

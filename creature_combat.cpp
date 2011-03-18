@@ -407,7 +407,12 @@ void Creature::die(){
     temp_item.name=temp_name+temp_item.name;
 
     temp_item.color=templates.template_races[race].color;
+
     temp_item.weight=templates.template_races[race].weight;
+
+    temp_item.damage_max_melee=temp_item.weight/6;
+
+    temp_item.damage_max_thrown=temp_item.damage_max_melee/2;
 
     //Set the item's position to the creature's current position.
     temp_item.x=x;

@@ -65,6 +65,12 @@ void Tile::render(vector< vector<bool> >* tile_rendered){
                 else if(material==MATERIAL_BONE){
                     color=COLOR_BONE;
                 }
+                else if(material==MATERIAL_CORPSE){
+                    color=COLOR_CORPSE;
+                }
+                else if(material==MATERIAL_FOOD){
+                    color=COLOR_FOOD;
+                }
                 else if(material==MATERIAL_STONE){
                     color=COLOR_STONE;
                 }

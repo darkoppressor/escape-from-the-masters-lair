@@ -41,6 +41,12 @@ short Templates::string_to_material(string line){
     else if(line=="bone"){
         material=MATERIAL_BONE;
     }
+    else if(line=="corpse"){
+        material=MATERIAL_CORPSE;
+    }
+    else if(line=="food"){
+        material=MATERIAL_FOOD;
+    }
     else if(line=="stone"){
         material=MATERIAL_STONE;
     }
@@ -362,6 +368,12 @@ short Templates::string_to_color(string line){
     }
     else if(line=="bone"){
         color=COLOR_BONE;
+    }
+    else if(line=="corpse"){
+        color=COLOR_CORPSE;
+    }
+    else if(line=="food"){
+        color=COLOR_FOOD;
     }
     else if(line=="stone"){
         color=COLOR_STONE;
