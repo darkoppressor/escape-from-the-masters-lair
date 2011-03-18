@@ -21,8 +21,6 @@ Item::Item(){
 
     momentum=0;
 
-    movement_cause=ITEM_MOVEMENT_CAUSE_NONE;
-
     damage=0;
 
     stack=1;
@@ -88,7 +86,7 @@ Item::Item(){
     //Other-specific//
 }
 
-Creature* Item::determine_owner_address(){
+/**Creature* Item::determine_owner_address(){
     Creature* ptr_owner;
 
     //If the player is the owner.
@@ -116,7 +114,7 @@ Creature* Item::determine_owner_address(){
     ///fprintf(stderr,"Error: Item::determine_owner_address() returned a NULL pointer.\n");
 
     return NULL;
-}
+}*/
 
 void Item::assign_identifier(){
     identifier=game.assign_identifier(OBJECT_ITEM);
@@ -166,41 +164,37 @@ void Item::execute_movement(short check_x,short check_y){
     if(clear_for_move){
         bool combat_occurred=false;
 
-        //Setup a pointer to the item's owner.
-        Creature* ptr_owner=determine_owner_address();
+        //Check for the player.
+        if(player.alive && check_x==player.x && check_y==player.y){
+            //Attack the player.
+            attack(&player);
+            combat_occurred=true;
+        }
 
-        //If the item has an owner.
-        if(ptr_owner!=NULL){
-            //Check for the player.
-            if(player.alive && check_x==player.x && check_y==player.y){
-                //Attack the player.
-                ptr_owner->attack_thrown(&player,this);
-                combat_occurred=true;
-            }
+        //If an attack has not yet occurred.
+        if(!combat_occurred){
             //Check for a monster.
             for(int i=0;i<vector_levels[current_level].monsters.size();i++){
                 if(vector_levels[current_level].monsters[i].alive && check_x==vector_levels[current_level].monsters[i].x && check_y==vector_levels[current_level].monsters[i].y){
                     //Attack the monster.
-                    ptr_owner->attack_thrown(&vector_levels[current_level].monsters[i],this);
+                    attack(&vector_levels[current_level].monsters[i]);
                     combat_occurred=true;
                     break;
                 }
             }
         }
 
-        //If no attack occurred, move the creature.
-        if(!combat_occurred){
-            x=check_x;
-            y=check_y;
+        //Move the creature.
+        x=check_x;
+        y=check_y;
 
+        //If no attack occurred.
+        if(!combat_occurred){
             //The item loses one momentum.
             momentum--;
         }
         //If an attack occurred.
         else{
-            x=check_x;
-            y=check_y;
-
             //The item loses all momentum and thus becomes still.
             momentum=0;
         }
@@ -313,6 +307,12 @@ void Item::move(){
                 //The item loses all momentum and thus becomes still.
                 momentum=0;
             }
+        }
+
+        //If the item is no longer moving.
+        if(momentum==0){
+            //It doesn't matter what caused the item to move, since it has stopped moving.
+            clear_owner_data_all();
         }
     }
 }

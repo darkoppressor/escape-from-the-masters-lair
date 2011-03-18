@@ -11,6 +11,10 @@
 
 #include <vector>
 
+//Incomplete declaration of Creature.
+//We have to do this here, because a Creature object is used by a function in Item, but Creature relies on Item.
+class Creature;
+
 //All of the special data needed by an Item after being thrown by a Creature.
 struct Owner_Data_Thrown{
     short strength;
@@ -20,11 +24,19 @@ struct Owner_Data_Thrown{
     short experience_level;
     short base_damage_min_thrown;
     short base_damage_max_thrown;
+    std::string full_name;
+    bool is_player;
 };
 
-//Incomplete declaration of Creature.
-//We have to do this here, because a Creature object is used by a function in Item, but Creature relies on Item.
-class Creature;
+//All of the special data needed by an Item after being fired by a Creature.
+struct Owner_Data_Fired{
+    ///
+};
+
+//All of the special data needed by an Item after being kicked by a Creature.
+struct Owner_Data_Kicked{
+    ///
+};
 
 class Item: public Object{
     private:
@@ -39,6 +51,12 @@ class Item: public Object{
 
     //Used to store special data for when the item has been thrown by a creature.
     std::vector<Owner_Data_Thrown> owner_data_thrown;
+
+    //Used to store special data for when the item has been fired by a creature.
+    std::vector<Owner_Data_Fired> owner_data_fired;
+
+    //Used to store special data for when the item has been kicked by a creature.
+    std::vector<Owner_Data_Kicked> owner_data_kicked;
 
     //Is the light currently on.
     bool light_on;
@@ -69,9 +87,6 @@ class Item: public Object{
     //The current momentum of the item.
     //This is the maximum number of tiles the item can move.
     short momentum;
-
-    //The cause of any current movement.
-    short movement_cause;
 
     //The damage the item will do if it hits a creature.
     int damage;
@@ -170,7 +185,7 @@ class Item: public Object{
 
     //Returns a pointer to the item's owner.
     //If a NULL pointer is returned, no owner was found.
-    Creature* determine_owner_address();
+    ///Creature* determine_owner_address();
 
     //Assign an identifier to the item.
     void assign_identifier();
@@ -184,9 +199,26 @@ class Item: public Object{
 
     void execute_movement(short check_x,short check_y);
 
+    //Clear all of the special data vectors.
+    void clear_owner_data_all();
+
+    //Assign special thrown data to the item.
     void assign_owner_data_thrown(Creature* creature);
 
+    //Assign special fired data to the item.
+    void assign_owner_data_fired(Creature* creature);
+
+    //Assign special kicked data to the item.
+    void assign_owner_data_kicked(Creature* creature);
+
+    //Initiate an attack.
+    void attack(Creature* target);
+
     void attack_thrown(Creature* target);
+
+    void attack_fired(Creature* target);
+
+    void attack_kicked(Creature* target);
 
     void move();
 

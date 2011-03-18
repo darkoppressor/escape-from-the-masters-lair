@@ -6,8 +6,8 @@
 
 using namespace std;
 
-bool rc_attack_critical_strike(Creature* attacker,Creature* target){
-    int max_chance_range=99-((double)attacker->attributes[ATTRIBUTE_AGILITY]/10)*((double)attacker->experience_level/(double)target->experience_level);
+bool rc_attack_critical_strike(short attacker_agility,short attacker_experience_level,Creature* target){
+    int max_chance_range=99-((double)attacker_agility/10)*((double)attacker_experience_level/(double)target->experience_level);
     if(max_chance_range<0){
         max_chance_range=0;
     }
@@ -22,8 +22,8 @@ bool rc_attack_critical_strike(Creature* attacker,Creature* target){
     }
 }
 
-bool rc_attack_dodge(Creature* attacker,Creature* target){
-    int max_chance_range=(99-((double)target->skills[SKILL_DODGING]/250)*(double)target->attributes[ATTRIBUTE_AGILITY])/((double)target->experience_level/(double)attacker->experience_level);
+bool rc_attack_dodge(short attacker_experience_level,Creature* target){
+    int max_chance_range=(99-((double)target->skills[SKILL_DODGING]/250)*(double)target->attributes[ATTRIBUTE_AGILITY])/((double)target->experience_level/(double)attacker_experience_level);
     if(max_chance_range<0){
         max_chance_range=0;
     }
@@ -38,8 +38,8 @@ bool rc_attack_dodge(Creature* attacker,Creature* target){
     }
 }
 
-bool rc_attack_hit(Creature* attacker,Creature* target){
-    int max_chance_range=(99-((double)attacker->skills[SKILL_FIGHTING]/2500)*(double)attacker->attributes[ATTRIBUTE_AGILITY])/((double)attacker->experience_level/(double)target->experience_level);
+bool rc_attack_hit(short attacker_fighting_skill,short attacker_agility,short attacker_experience_level,Creature* target){
+    int max_chance_range=(99-((double)attacker_fighting_skill/2500)*(double)attacker_agility)/((double)attacker_experience_level/(double)target->experience_level);
     if(max_chance_range<0){
         max_chance_range=0;
     }

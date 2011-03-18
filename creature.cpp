@@ -289,15 +289,18 @@ void Creature::execute_movement(short check_x,short check_y){
                 attack_melee(&player);
                 combat_occurred=true;
             }
-            //Check for a monster.
-            for(int i=0;i<vector_levels[current_level].monsters.size();i++){
-                //The monster should ignore itself.
-                if(this!=&vector_levels[current_level].monsters[i]){
-                    if(vector_levels[current_level].monsters[i].alive && check_x==vector_levels[current_level].monsters[i].x && check_y==vector_levels[current_level].monsters[i].y){
-                        //Don't attack the monster.
-                        //However, we still say a combat occurred, so the monster can't move into this space.
-                        combat_occurred=true;
-                        break;
+            //If an attack has not yet occurred.
+            if(!combat_occurred){
+                //Check for a monster.
+                for(int i=0;i<vector_levels[current_level].monsters.size();i++){
+                    //The monster should ignore itself.
+                    if(this!=&vector_levels[current_level].monsters[i]){
+                        if(vector_levels[current_level].monsters[i].alive && check_x==vector_levels[current_level].monsters[i].x && check_y==vector_levels[current_level].monsters[i].y){
+                            //Don't attack the monster.
+                            //However, we still say a combat occurred, so the monster can't move into this space.
+                            combat_occurred=true;
+                            break;
+                        }
                     }
                 }
             }

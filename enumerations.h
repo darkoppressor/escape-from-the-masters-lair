@@ -320,17 +320,6 @@ enum{
     GENDER_NEUTRAL
 };
 
-//***********************//
-// Item Movement Causes: //
-//***********************//
-
-enum{
-    ITEM_MOVEMENT_CAUSE_NONE,
-    ITEM_MOVEMENT_CAUSE_THROWN,
-    ITEM_MOVEMENT_CAUSE_FIRED,
-    ITEM_MOVEMENT_CAUSE_KICKED
-};
-
 //****************//
 // Light Sources: //
 //****************//

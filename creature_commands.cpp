@@ -745,9 +745,6 @@ void Creature::execute_command_directional(short direction){
             //Set the thrown item's momentum.
             vector_levels[current_level].items[vector_levels[current_level].items.size()-1].momentum=determine_momentum(inventory[inventory_item_index].weight,false);
 
-            //Set the thrown item's movement cause.
-            vector_levels[current_level].items[vector_levels[current_level].items.size()-1].movement_cause=ITEM_MOVEMENT_CAUSE_THROWN;
-
             //Set the thrown item's special data.
             vector_levels[current_level].items[vector_levels[current_level].items.size()-1].assign_owner_data_thrown(this);
 
@@ -841,11 +838,8 @@ void Creature::execute_command_directional(short direction){
             //Set the fired item's momentum.
             vector_levels[current_level].items[vector_levels[current_level].items.size()-1].momentum=determine_momentum(inventory[quivered_item].weight,true);
 
-            //Set the fired item's movement cause.
-            vector_levels[current_level].items[vector_levels[current_level].items.size()-1].movement_cause=ITEM_MOVEMENT_CAUSE_FIRED;
-
             //Set the fired item's special data.
-            ///vector_levels[current_level].items[vector_levels[current_level].items.size()-1].assign_owner_data_fired(this);
+            vector_levels[current_level].items[vector_levels[current_level].items.size()-1].assign_owner_data_fired(this);
 
             //If the item's stack is greater than 1, or the item is money.
             //We just subtract 1 from the stack instead of removing the item from the inventory.
@@ -1179,7 +1173,10 @@ void Creature::check_command_inventory(char inventory_letter){
         }
         //If the item is not armor, but the creature tried to wear it.
         else if(command==INVENTORY_COMMAND_EQUIP_ARMOR && inventory[inventory_item_index].category!=ITEM_ARMOR){
-            update_text_log("You can't wear that!",is_player);
+            string message="You can't wear a ";
+            message+=inventory[inventory_item_index].return_full_name(1);
+            message+="!";
+            update_text_log(message.c_str(),is_player);
 
             //No inventory command will be executed.
             input_inventory=0;

@@ -136,8 +136,6 @@ class Creature: public Object{
 
     void attack_melee(Creature* target);
 
-    ///void attack_thrown(Creature* target,Item* thrown_item);
-
     void die();
 
     //Level up the creature.
