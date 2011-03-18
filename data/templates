@@ -475,7 +475,7 @@
 	light beam:0
 	beam angle:0
 	<drink>
-		thirst quenched:25
+		thirst quenched:100
 	</drink>
 </item>
 

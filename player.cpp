@@ -415,6 +415,13 @@ void Player::handle_input(){
                         input_inventory=INVENTORY_COMMAND_THROW_ITEM;
                     }
 
+                    //Quaff item.
+                    else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.sym==SDLK_r){
+                        update_text_log("What do you want to quaff?",is_player);
+
+                        input_inventory=INVENTORY_COMMAND_QUAFF_ITEM;
+                    }
+
                     //Inventory letter.
                     else if(input_inventory!=INVENTORY_COMMAND_NONE && ((event.key.keysym.unicode>=(Uint16)'A' && event.key.keysym.unicode<=(Uint16)'Z') || (event.key.keysym.unicode>=(Uint16)'a' && event.key.keysym.unicode<=(Uint16)'z') || (event.key.keysym.unicode==(Uint16)'$'))){
                         inventory_input_state=(char)event.key.keysym.unicode;
@@ -511,7 +518,6 @@ void Player::handle_input(){
         if(keystates[SDLK_RETURN] || keystates[SDLK_KP_ENTER]){
             chat_mode=true;
 
-            //
             keystates[SDLK_RETURN]=NULL;
             keystates[SDLK_KP_ENTER]=NULL;
         }

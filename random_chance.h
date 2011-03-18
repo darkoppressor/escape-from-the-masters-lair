@@ -29,6 +29,8 @@ bool rc_discover_secret_door();
 
 bool rc_regain_mana();
 
+bool rc_gain_thirst();
+
 //Level generation//
 
 bool rc_levelgen_secret_door();

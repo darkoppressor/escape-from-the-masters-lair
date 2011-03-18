@@ -213,6 +213,7 @@ void render(int frame_rate, double ms_per_frame){
         ss.clear();ss.str("");ss<<"Level Monsters Size: ";ss<<vector_levels[current_level].monsters.size();ss<<"\xA";msg+=ss.str();
         ss.clear();ss.str("");ss<<"Level Size: ";ss<<vector_levels[current_level].level_x;ss<<"/";ss<<vector_levels[current_level].level_y;ss<<"\xA";msg+=ss.str();
         ss.clear();ss.str("");ss<<"CPU Architecture: ";ss<<8*sizeof(void*);ss<<"-bit";ss<<"\xA";msg+=ss.str();
+        ss.clear();ss.str("");ss<<"Thirst: ";ss<<player.thirst;ss<<"\xA";msg+=ss.str();
         font.show(15,15,msg,COLOR_WHITE);
     }
     else{
@@ -227,6 +228,7 @@ void render(int frame_rate, double ms_per_frame){
             ss.clear();ss.str("");ss<<"Health: ";ss<<player.health;ss<<"/";ss<<player.health_max;ss<<"\xA";msg+=ss.str();
             ss.clear();ss.str("");ss<<"Mana: ";ss<<player.mana;ss<<"/";ss<<player.mana_max;ss<<"\xA";msg+=ss.str();
             ss.clear();ss.str("");ss<<"Money: ";ss<<player.inventory[0].stack;ss<<"\xA";msg+=ss.str();
+            ss.clear();ss.str("");ss<<"You are ";ss<<player.return_thirst_state();ss<<".";ss<<"\xA";msg+=ss.str();
             font.show(15,15,msg,COLOR_WHITE);
         }
     }

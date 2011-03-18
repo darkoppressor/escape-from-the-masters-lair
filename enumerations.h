@@ -325,6 +325,32 @@ enum{
     GENDER_NEUTRAL
 };
 
+//******************//
+// Causes of death: //
+//******************//
+
+enum{
+    CAUSE_OF_DEATH_MELEE,
+    CAUSE_OF_DEATH_THROWN,
+    CAUSE_OF_DEATH_RANGED,
+    CAUSE_OF_DEATH_KICKED,
+    CAUSE_OF_DEATH_THIRST
+};
+
+//****************//
+// Thirst States: //
+//****************//
+
+enum{
+    THIRST_DEATH=1850,
+    THIRST_FAINTING=1650,
+    THIRST_WEAK=1600,
+    THIRST_THIRSTY=1500,
+    THIRST_NOT_THIRSTY=500,
+    THIRST_SATIATED=0,
+    THIRST_BLOATED=-1
+};
+
 //****************//
 // Light Sources: //
 //****************//
@@ -380,7 +406,8 @@ enum{
     INVENTORY_COMMAND_EQUIP_LIGHT_SOURCE,
     INVENTORY_COMMAND_EQUIP_ARMOR,
     INVENTORY_COMMAND_UNEQUIP_ITEM,
-    INVENTORY_COMMAND_THROW_ITEM
+    INVENTORY_COMMAND_THROW_ITEM,
+    INVENTORY_COMMAND_QUAFF_ITEM
 };
 
 //***************//

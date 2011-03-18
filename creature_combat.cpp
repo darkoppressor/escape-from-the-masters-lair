@@ -341,27 +341,96 @@ void Creature::attack_melee(Creature* target){
 
     //If the target's health drops to 0 or below, it has been killed.
     if(target->health<=0){
-        target->die();
+        target->die(CAUSE_OF_DEATH_MELEE,return_full_name(),"");
 
         //This creature gains experience.
         ///gain_experience(target->experience_level);
     }
 }
 
-void Creature::die(){
+void Creature::die(short cause_of_death,string killer,string killer_item){
     //The creature is now dead.
     alive=false;
 
     string message="";
 
-    if(is_player){
-        message="You have been slain";
-        message+="!";
+    if(cause_of_death==CAUSE_OF_DEATH_MELEE){
+        if(is_player){
+            message="You have been slain!";
+            message+="\xA";
+            message+="Killed by a ";
+            message+=killer;
+            message+=".";
+        }
+        else{
+            message="You have slain the ";
+            message+=return_full_name();
+            message+="!";
+        }
     }
-    else{
-        message="The ";
-        message+=return_full_name();
-        message+=" dies!";
+    else if(cause_of_death==CAUSE_OF_DEATH_THROWN){
+        if(is_player){
+            message="You have been slain!";
+            message+="\xA";
+            message+="Killed by a ";
+            message+=killer_item;
+            message+=" thrown by a ";
+            message+=killer;
+            message+=".";
+        }
+        else{
+            message="Your ";
+            message+=killer_item;
+            message+=" kills the ";
+            message+=return_full_name();
+            message+="!";
+        }
+    }
+    else if(cause_of_death==CAUSE_OF_DEATH_RANGED){
+        if(is_player){
+            message="You have been slain!";
+            message+="\xA";
+            message+="Killed by a ";
+            message+=killer_item;
+            message+=" fired by a ";
+            message+=killer;
+            message+=".";
+        }
+        else{
+            message="Your ";
+            message+=killer_item;
+            message+=" kills the ";
+            message+=return_full_name();
+            message+="!";
+        }
+    }
+    else if(cause_of_death==CAUSE_OF_DEATH_KICKED){
+        if(is_player){
+            message="You have been slain!";
+            message+="\xA";
+            message+="Killed by a ";
+            message+=killer_item;
+            message+=" kicked by a ";
+            message+=killer;
+            message+=".";
+        }
+        else{
+            message="Your ";
+            message+=killer_item;
+            message+=" kills the ";
+            message+=return_full_name();
+            message+="!";
+        }
+    }
+    else if(cause_of_death==CAUSE_OF_DEATH_THIRST){
+        if(is_player){
+            message="You have died of thirst!";
+        }
+        else{
+            message="The ";
+            message+=return_full_name();
+            message+=" dies of thirst!";
+        }
     }
 
     update_text_log(message.c_str(),true);

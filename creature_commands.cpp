@@ -193,12 +193,17 @@ void Creature::execute_command(short command){
             if(vector_levels[current_level].items[i].x==x && vector_levels[current_level].items[i].y==y){
                 //If the inventory is not full, or the item is money, pick up the item.
                 if(inventory.size()<INVENTORY_MAX_SIZE || vector_levels[current_level].items[i].inventory_letter=='$'){
+                    //The inventory index of the item being picked up.
+                    int picked_up_item_index=-1;
+
                     //Check to see if there is an identical item already in the inventory.
                     inventory_match match_check=check_for_inventory_match(&vector_levels[current_level].items[i]);
 
                     //If there is already an identical item in the inventory, and the item is stackable.
                     if(match_check.match_found && vector_levels[current_level].items[i].stackable){
                         inventory[match_check.inventory_slot].stack+=vector_levels[current_level].items[i].stack;
+
+                        picked_up_item_index=match_check.inventory_slot;
                     }
                     //If there is no identical item in the inventory, or the item is not stackable.
                     else{
@@ -232,6 +237,8 @@ void Creature::execute_command(short command){
 
                         //Assign an owner identifier to the new item.
                         inventory[inventory.size()-1].owner=identifier;
+
+                        picked_up_item_index=inventory.size()-1;
                     }
 
                     //Setup a pick up message.
@@ -248,11 +255,11 @@ void Creature::execute_command(short command){
                         grab_item+=" picks up the ";
                     }
 
-                    grab_item+=inventory[inventory.size()-1].return_full_name();
+                    grab_item+=vector_levels[current_level].items[i].return_full_name();
 
                     if(is_player){
                         grab_item+=" - ";
-                        grab_item+=inventory[inventory.size()-1].inventory_letter;
+                        grab_item+=inventory[picked_up_item_index].inventory_letter;
                     }
 
                     grab_item+=".";
@@ -718,7 +725,9 @@ void Creature::execute_command_directional(short direction){
         }
 
         throw_item+=inventory[inventory_item_index].return_full_name(1);
+
         throw_item+=".";
+
         update_text_log(throw_item.c_str(),true);
 
         //If the item's stack is not 0.
@@ -1258,6 +1267,31 @@ void Creature::check_command_inventory(char inventory_letter){
             inventory_input_state=0;
         }
     }
+
+    else if(command==INVENTORY_COMMAND_QUAFF_ITEM){
+        //If the item is NOT equipped.
+        if(!inventory[inventory_item_index].equipped &&
+           //And if the item can quench thirst.
+           inventory[inventory_item_index].thirst_quenched>0){
+            initiate_move=true;
+        }
+        //If the item is equipped.
+        else if(inventory[inventory_item_index].equipped){
+            update_text_log("You must unequip the item first.",is_player);
+
+            //No inventory command will be executed.
+            input_inventory=0;
+            inventory_input_state=0;
+        }
+        //If the item cannot quench thirst.
+        else{
+            update_text_log("You can't drink that!",is_player);
+
+            //No inventory command will be executed.
+            input_inventory=0;
+            inventory_input_state=0;
+        }
+    }
 }
 
 void Creature::execute_command_inventory(char inventory_letter){
@@ -1293,7 +1327,9 @@ void Creature::execute_command_inventory(char inventory_letter){
         }
 
         drop_item+=inventory[inventory_item_index].return_full_name();
+
         drop_item+=".";
+
         update_text_log(drop_item.c_str(),true);
 
         //If the item is not money.
@@ -1455,6 +1491,9 @@ void Creature::execute_command_inventory(char inventory_letter){
     }
 
     else if(command==INVENTORY_COMMAND_UNEQUIP_ITEM){
+        //Determine what slot the item is equipped in.
+        short equip_slot=item_equipped_in_which_slot(inventory_item_index);
+
         //Setup an equip message.
 
         string str_unequip_item="";
@@ -1470,8 +1509,15 @@ void Creature::execute_command_inventory(char inventory_letter){
             str_unequip_item+=" unequips the ";
         }
 
-        str_unequip_item+=inventory[inventory_item_index].return_full_name();
+        if(equip_slot==EQUIP_QUIVER){
+            str_unequip_item+=inventory[inventory_item_index].return_full_name();
+        }
+        else{
+            str_unequip_item+=inventory[inventory_item_index].return_full_name(1);
+        }
+
         str_unequip_item+=".";
+
         update_text_log(str_unequip_item.c_str(),true);
 
         //Unequip the item.
@@ -1491,5 +1537,50 @@ void Creature::execute_command_inventory(char inventory_letter){
         update_text_log(throw_item.c_str(),is_player);
 
         input_directional=DIRECTIONAL_COMMAND_THROW_ITEM;
+    }
+
+    else if(command==INVENTORY_COMMAND_QUAFF_ITEM){
+        //Setup a message.
+
+        string str_quaff_item="";
+
+        //If the creature is the player.
+        if(is_player){
+            str_quaff_item="You quaff the ";
+        }
+        //If the creature is not the player.
+        else{
+            str_quaff_item="The ";
+            str_quaff_item+=return_full_name();
+            str_quaff_item+=" quaffs the ";
+        }
+
+        str_quaff_item+=inventory[inventory_item_index].return_full_name(1);
+
+        str_quaff_item+=".";
+
+        update_text_log(str_quaff_item.c_str(),true);
+
+        //Quaff the item.
+
+        //Reduce the creature's thirst by the item's thirst_quenched value.
+        thirst-=inventory[inventory_item_index].thirst_quenched;
+
+        //If the stack is greater than 1.
+        if(inventory[inventory_item_index].stack>1){
+            //Simply decrement the stack by 1.
+            inventory[inventory_item_index].stack--;
+        }
+        //If the stack is exactly 1.
+        else{
+            //Return the item's inventory letter.
+            return_inventory_letter(inventory[inventory_item_index].inventory_letter);
+
+            //Return the item's identifier.
+            inventory[inventory_item_index].return_identifier();
+
+            //Remove the item from the inventory items vector.
+            inventory.erase(inventory.begin()+inventory_item_index);
+        }
     }
 }

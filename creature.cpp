@@ -42,6 +42,8 @@ Creature::Creature(){
     experience=0;
     experience_max=100;
 
+    thirst=THIRST_NOT_THIRSTY;
+
     base_damage_melee_min=1;
     base_damage_melee_max=5;
 
@@ -240,6 +242,75 @@ void Creature::process_turn(){
             mana=mana_max;
         }
     }
+
+    handle_thirst();
+}
+
+void Creature::handle_thirst(){
+    if(rc_gain_thirst()){
+        thirst++;
+    }
+
+    ///There should probably be a minimum for thirst for technical reasons.
+    ///This will need to be implemented when I add a way to lower thirst.
+
+    //If the creature is bloated.
+    if(thirst<=THIRST_BLOATED){
+    }
+    //If the creature is satiated.
+    else if(thirst>=THIRST_SATIATED && thirst<THIRST_NOT_THIRSTY){
+    }
+    //If the creature is not thirsty.
+    else if(thirst>=THIRST_NOT_THIRSTY && thirst<THIRST_THIRSTY){
+    }
+    //If the creature is thirsty.
+    else if(thirst>=THIRST_THIRSTY && thirst<THIRST_WEAK){
+    }
+    //If the creature is weak.
+    else if(thirst>=THIRST_WEAK && thirst<THIRST_FAINTING){
+    }
+    //If the creature is fainting.
+    else if(thirst>=THIRST_FAINTING && thirst<THIRST_DEATH){
+    }
+    //If the creature is dead.
+    else if(thirst>=THIRST_DEATH){
+        die(CAUSE_OF_DEATH_THIRST,"","");
+    }
+}
+
+string Creature::return_thirst_state(){
+    string thirst_state="";
+
+    //If the creature is bloated.
+    if(thirst<=THIRST_BLOATED){
+        thirst_state="bloated";
+    }
+    //If the creature is satiated.
+    else if(thirst>=THIRST_SATIATED && thirst<THIRST_NOT_THIRSTY){
+        thirst_state="satiated";
+    }
+    //If the creature is not thirsty.
+    else if(thirst>=THIRST_NOT_THIRSTY && thirst<THIRST_THIRSTY){
+        thirst_state="not thirsty";
+    }
+    //If the creature is thirsty.
+    else if(thirst>=THIRST_THIRSTY && thirst<THIRST_WEAK){
+        thirst_state="thirsty";
+    }
+    //If the creature is weak.
+    else if(thirst>=THIRST_WEAK && thirst<THIRST_FAINTING){
+        thirst_state="weak from thirst";
+    }
+    //If the creature is fainting.
+    else if(thirst>=THIRST_FAINTING && thirst<THIRST_DEATH){
+        thirst_state="fainting from lack of water";
+    }
+    //If the creature is dead.
+    else if(thirst>=THIRST_DEATH){
+        thirst_state="dead of thirst";
+    }
+
+    return thirst_state;
 }
 
 void Creature::apply_race(short race_to_apply){

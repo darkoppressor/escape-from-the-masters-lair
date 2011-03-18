@@ -71,6 +71,10 @@ class Creature: public Object{
     //Experience needed for next level.
     short experience_max;
 
+    //The current thirst level of the creature.
+    //Lower numbers are better.
+    short thirst;
+
     //The amount of damage the creature does with its bare hands with no bonuses from anything.
     //Determined by race.
     short base_damage_melee_min;
@@ -204,7 +208,7 @@ class Creature: public Object{
 
     void attack_melee(Creature* target);
 
-    void die();
+    void die(short cause_of_death,std::string killer,std::string killer_item);
 
     //Level up the creature.
     void level_up();
@@ -222,6 +226,11 @@ class Creature: public Object{
 
     //Handle anything that needs handling on each turn.
     void process_turn();
+
+    //Increase thirst, handle thirst states, etc.
+    void handle_thirst();
+
+    std::string return_thirst_state();
 
     //Apply a race's benefits and negatives to the creature.
     void apply_race(short race_to_apply);

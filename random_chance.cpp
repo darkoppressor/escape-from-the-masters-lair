@@ -98,6 +98,18 @@ bool rc_regain_mana(){
     }
 }
 
+bool rc_gain_thirst(){
+    int random_attempt=random_range(0,99);
+
+    ///Right now, there is a 100% chance the creature will gain thirst each turn.
+    if(random_attempt>=0 && random_attempt<100){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
 bool rc_levelgen_secret_door(){
     int random_attempt=random_range(0,99);
 
