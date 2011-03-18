@@ -7,6 +7,7 @@
 #include "random_chance.h"
 #include "random_number_generator.h"
 #include "message_log.h"
+#include "combat_all.h"
 
 using namespace std;
 
@@ -37,7 +38,15 @@ void Item::assign_owner_data_fired(Creature* creature){
 
     owner_data_fired.push_back(Owner_Data_Fired());
 
-    ///owner_data_fired[0].strength=creature->attributes[ATTRIBUTE_STRENGTH];
+    owner_data_fired[0].strength=creature->attributes[ATTRIBUTE_STRENGTH];
+    owner_data_fired[0].agility=creature->attributes[ATTRIBUTE_AGILITY];
+    owner_data_fired[0].fighting_skill=creature->skills[SKILL_FIGHTING];
+    owner_data_fired[0].launcher_weapons_skill=creature->skills[SKILL_LAUNCHER_WEAPONS];
+    owner_data_fired[0].experience_level=creature->experience_level;
+    owner_data_fired[0].base_damage_min_ranged=creature->base_damage_ranged_min;
+    owner_data_fired[0].base_damage_max_ranged=creature->base_damage_ranged_max;
+    owner_data_fired[0].full_name=creature->return_full_name();
+    owner_data_fired[0].is_player=creature->is_player;
 }
 
 void Item::attack(Creature* target){
@@ -100,32 +109,11 @@ void Item::attack_thrown(Creature* target){
             //We have finished determining the maximum damage the attacker can do.
             //Now, we determine the damage reduction based on the target's stats.
 
-            int damage_reduction=0;
-
-            //Add in target's armor damage reduction.
-
-            //Look through all of the target's armor slots.
-            for(int i=EQUIP_HEAD;i<EQUIP_FINGER_LEFT+1;i++){
-                //If this slot has an item equipped.
-                if(target->equipment[i]!=0){
-                    //Determine the identifier for the item equipped in this slot.
-                    int item_identifier=target->slot_equipped_with_what_item(target->equipment[i]);
-
-                    //Determine the base amount of damage absorbed by this item.
-                    int armor_absorption=target->inventory[item_identifier].defense;
-
-                    //Apply the armor skill.
-                    armor_absorption+=armor_absorption*(target->skills[SKILL_ARMOR]/10);
-
-                    damage_reduction+=armor_absorption;
-                }
-            }
-
-            //Apply the hardiness bonus.
-            damage_reduction+=damage_reduction*(target->attributes[ATTRIBUTE_HARDINESS]/4);
+            int damage_reduction=determine_damage_reduction(target);
 
             //Subtract the total damage reduction from the maximum damage.
             damage-=damage_reduction;
+
             if(damage<0){
                 damage=0;
             }
@@ -238,81 +226,66 @@ void Item::attack_fired(Creature* target){
     string outcome="";
 
     //If the attacker succeeds its hit check.
-    if(rc_attack_hit(owner_data_thrown[0].fighting_skill,owner_data_thrown[0].agility,owner_data_thrown[0].experience_level,target)){
+    if(rc_attack_hit(owner_data_fired[0].fighting_skill,owner_data_fired[0].agility,owner_data_fired[0].experience_level,target)){
        //If the defender fails its dodge check.
-       if(!rc_attack_dodge(owner_data_thrown[0].experience_level,target)){
+       if(!rc_attack_dodge(owner_data_fired[0].experience_level,target)){
             //The attack will hit.
             //We now determine the maximum amount of damage the attacker can do (before the target's reduction(s)).
 
-            //Damage begins with base thrown damage.
-            int base_damage=random_range(owner_data_thrown[0].base_damage_min_thrown,owner_data_thrown[0].base_damage_max_thrown);
+            //Damage begins with base ranged damage.
+            int base_damage=random_range(owner_data_fired[0].base_damage_min_ranged,owner_data_fired[0].base_damage_max_ranged);
 
             damage=base_damage;
 
-            //Add in thrown weapon damage.
+            //Add the actual projectile's thrown weapon damage.
 
             //Determine the base damage range for this item.
             int weapon_damage_min=damage_min_thrown;
             int weapon_damage_max=damage_max_thrown;
             int weapon_damage=random_range(weapon_damage_min,weapon_damage_max);
 
-            //Apply the appropriate weapon skill, if any.
+            //Add the weapon's damage to the attack's damage.
+            damage+=weapon_damage;
 
-            //If the item is governed by the thrown weapons skill.
-            if(category==ITEM_WEAPON && governing_skill_weapon==SKILL_THROWN_WEAPONS){
-                weapon_damage+=weapon_damage*(owner_data_thrown[0].thrown_weapons_skill/10);
-            }
+            //Add in ranged weapon damage.
+
+            //Determine the base damage range for this item.
+            weapon_damage_min=damage_min_ranged;
+            weapon_damage_max=damage_max_ranged;
+            weapon_damage=random_range(weapon_damage_min,weapon_damage_max);
+
+            //Apply the ranged weapon skill.
+            weapon_damage+=weapon_damage*(owner_data_fired[0].launcher_weapons_skill/10);
 
             //Add the weapon's damage to the attack's damage.
             damage+=weapon_damage;
 
             //Apply the agility bonus.
-            damage+=damage*(owner_data_thrown[0].agility/6);
+            damage+=damage*(owner_data_fired[0].agility/6);
 
             //Apply the strength bonus.
-            damage+=damage*(owner_data_thrown[0].strength/8);
+            damage+=damage*(owner_data_fired[0].strength/8);
 
             //We have finished determining the maximum damage the attacker can do.
             //Now, we determine the damage reduction based on the target's stats.
 
-            int damage_reduction=0;
-
-            //Add in target's armor damage reduction.
-
-            //Look through all of the target's armor slots.
-            for(int i=EQUIP_HEAD;i<EQUIP_FINGER_LEFT+1;i++){
-                //If this slot has an item equipped.
-                if(target->equipment[i]!=0){
-                    //Determine the identifier for the item equipped in this slot.
-                    int item_identifier=target->slot_equipped_with_what_item(target->equipment[i]);
-
-                    //Determine the base amount of damage absorbed by this item.
-                    int armor_absorption=target->inventory[item_identifier].defense;
-
-                    //Apply the armor skill.
-                    armor_absorption+=armor_absorption*(target->skills[SKILL_ARMOR]/10);
-
-                    damage_reduction+=armor_absorption;
-                }
-            }
-
-            //Apply the hardiness bonus.
-            damage_reduction+=damage_reduction*(target->attributes[ATTRIBUTE_HARDINESS]/4);
+            int damage_reduction=determine_damage_reduction(target);
 
             //Subtract the total damage reduction from the maximum damage.
             damage-=damage_reduction;
+
             if(damage<0){
                 damage=0;
             }
 
             //If the attacker succeeds in a critical strike.
-            if(rc_attack_critical_strike(owner_data_thrown[0].agility,owner_data_thrown[0].experience_level,target)){
+            if(rc_attack_critical_strike(owner_data_fired[0].agility,owner_data_fired[0].experience_level,target)){
                 damage+=random_range(damage/4,damage/2);
             }
        }
         //If the defender succeeds in its dodge check.
         else{
-            if(owner_data_thrown[0].is_player){
+            if(owner_data_fired[0].is_player){
                 outcome="The ";
                 outcome+=target->return_full_name();
                 outcome+=" dodges your ";
@@ -321,7 +294,7 @@ void Item::attack_fired(Creature* target){
             }
             else{
                 outcome="You dodge the ";
-                outcome+=owner_data_thrown[0].full_name;
+                outcome+=owner_data_fired[0].full_name;
                 outcome+="'s ";
                 outcome+=return_full_name(1);
                 outcome+="!";
@@ -334,7 +307,7 @@ void Item::attack_fired(Creature* target){
     }
     //If the attacker fails its hit check.
     else{
-        if(owner_data_thrown[0].is_player){
+        if(owner_data_fired[0].is_player){
             outcome="Your ";
             outcome+=return_full_name(1);
             outcome+=" misses the ";
@@ -343,7 +316,7 @@ void Item::attack_fired(Creature* target){
         }
         else{
             outcome="The ";
-            outcome+=owner_data_thrown[0].full_name;
+            outcome+=owner_data_fired[0].full_name;
             outcome+="'s ";
             outcome+=return_full_name(1);
             outcome+=" misses!";
@@ -357,7 +330,7 @@ void Item::attack_fired(Creature* target){
     //If the attack succeeded and did damage.
     if(damage>0){
         //If the creature is the player.
-        if(owner_data_thrown[0].is_player){
+        if(owner_data_fired[0].is_player){
             outcome="Your ";
             outcome+=return_full_name(1);
             outcome+=" hits the ";
@@ -367,7 +340,7 @@ void Item::attack_fired(Creature* target){
         //If the creature is not the player.
         else{
             outcome="The ";
-            outcome+=owner_data_thrown[0].full_name;
+            outcome+=owner_data_fired[0].full_name;
             outcome+="'s ";
             outcome+=return_full_name(1);
             outcome+=" hits you!";
@@ -376,7 +349,7 @@ void Item::attack_fired(Creature* target){
     //If the attack succeeded but did no damage.
     else{
         //If the creature is the player.
-        if(owner_data_thrown[0].is_player){
+        if(owner_data_fired[0].is_player){
             outcome="Your ";
             outcome+=return_full_name(1);
             outcome+=" bounces off of the ";
@@ -386,7 +359,7 @@ void Item::attack_fired(Creature* target){
         //If the creature is not the player.
         else{
             outcome="The ";
-            outcome+=owner_data_thrown[0].full_name;
+            outcome+=owner_data_fired[0].full_name;
             outcome+="'s ";
             outcome+=return_full_name(1);
             outcome+=" bounces off of you!";

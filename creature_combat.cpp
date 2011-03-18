@@ -6,6 +6,7 @@
 #include "random_chance.h"
 #include "random_number_generator.h"
 #include "world.h"
+#include "combat_all.h"
 
 using namespace std;
 
@@ -78,32 +79,11 @@ void Creature::attack_melee(Creature* target){
             //We have finished determining the maximum damage the attacker can do.
             //Now, we determine the damage reduction based on the target's stats.
 
-            int damage_reduction=0;
-
-            //Add in target's armor damage reduction.
-
-            //Look through all of the target's armor slots.
-            for(int i=EQUIP_HEAD;i<EQUIP_FINGER_LEFT+1;i++){
-                //If this slot has an item equipped.
-                if(target->equipment[i]!=0){
-                    //Determine the identifier for the item equipped in this slot.
-                    int item_identifier=target->slot_equipped_with_what_item(target->equipment[i]);
-
-                    //Determine the base amount of damage absorbed by this item.
-                    int armor_absorption=target->inventory[item_identifier].defense;
-
-                    //Apply the armor skill.
-                    armor_absorption+=armor_absorption*(target->skills[SKILL_ARMOR]/10);
-
-                    damage_reduction+=armor_absorption;
-                }
-            }
-
-            //Apply the hardiness bonus.
-            damage_reduction+=damage_reduction*(target->attributes[ATTRIBUTE_HARDINESS]/4);
+            int damage_reduction=determine_damage_reduction(target);
 
             //Subtract the total damage reduction from the maximum damage.
             damage-=damage_reduction;
+
             if(damage<0){
                 damage=0;
             }

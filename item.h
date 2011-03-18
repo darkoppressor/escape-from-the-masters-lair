@@ -30,7 +30,15 @@ struct Owner_Data_Thrown{
 
 //All of the special data needed by an Item after being fired by a Creature.
 struct Owner_Data_Fired{
-    ///
+    short strength;
+    short agility;
+    short fighting_skill;
+    short launcher_weapons_skill;
+    short experience_level;
+    short base_damage_min_ranged;
+    short base_damage_max_ranged;
+    std::string full_name;
+    bool is_player;
 };
 
 //All of the special data needed by an Item after being kicked by a Creature.
