@@ -1244,8 +1244,8 @@ void Creature::check_command_inventory(char inventory_letter){
     }
 
     else if(command==INVENTORY_COMMAND_THROW_ITEM){
-        //If the item is unequipped.
-        if(!inventory[inventory_item_index].equipped &&
+        //If either the item is NOT equipped or it is equipped but has more than 1 stack.
+        if((!inventory[inventory_item_index].equipped || (inventory[inventory_item_index].equipped && inventory[inventory_item_index].stack>1)) &&
         //And if the item is either not money, or is money with at least 1 piece.
         ((inventory[inventory_item_index].inventory_letter=='$' && inventory[inventory_item_index].stack>0) || (inventory[inventory_item_index].inventory_letter!='$'))){
             initiate_move=true;
@@ -1269,14 +1269,14 @@ void Creature::check_command_inventory(char inventory_letter){
     }
 
     else if(command==INVENTORY_COMMAND_QUAFF_ITEM){
-        //If the item is NOT equipped.
-        if(!inventory[inventory_item_index].equipped &&
+        //If either the item is NOT equipped or it is equipped but has more than 1 stack.
+        if((!inventory[inventory_item_index].equipped || (inventory[inventory_item_index].equipped && inventory[inventory_item_index].stack>1)) &&
            //And if the item can quench thirst.
            inventory[inventory_item_index].thirst_quenched>0){
             initiate_move=true;
         }
-        //If the item is equipped.
-        else if(inventory[inventory_item_index].equipped){
+        //If the item is equipped and its stack size is 1.
+        else if(inventory[inventory_item_index].equipped && inventory[inventory_item_index].stack==1){
             update_text_log("You must unequip the item first.",is_player);
 
             //No inventory command will be executed.
