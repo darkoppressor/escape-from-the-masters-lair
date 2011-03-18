@@ -93,15 +93,14 @@ void Creature::check_command(short command){
     }
 
     else if(command==COMMAND_TOGGLE_LIGHT){
-        //If the light can be toggled.
-        ///This needs to be updated when lights are fully implemented.
-        if(true){
+        //If there is a light item equipped.
+        if(!equipment_slot_empty(-1,EQUIP_LIGHT_SOURCE)){
             command_standard=command;
             initiate_move=true;
         }
-        //If the light cannot be toggled.
+        //If there is no light item equipped.
         else{
-            ///update_text_log(string_command_stairs_not_here.c_str(),is_player);
+            update_text_log("You have no light source equipped.",is_player);
         }
     }
 
@@ -341,9 +340,14 @@ Creature::directional_check_coordinates Creature::determine_direction(short dire
     return coords;
 }
 
-int Creature::determine_momentum(short item_weight,bool fired){
+int Creature::determine_momentum(double item_weight,bool fired){
     //Base momentum is 6.
     double momentum=6.0;
+
+    //An item cannot have a weight of 0 for throwing calculations.
+    if(item_weight==0.0){
+        item_weight=0.1;
+    }
 
     double firing_bonus=1.0;
 
@@ -355,12 +359,12 @@ int Creature::determine_momentum(short item_weight,bool fired){
     double momentum_penalty=0.0;
 
     //If the creature's strength is greater than the item's throwing adjusted weight.
-    if((double)attributes[ATTRIBUTE_STRENGTH]>=(double)item_weight/4.0){
-        momentum_bonus=(double)attributes[ATTRIBUTE_STRENGTH]/((double)item_weight*1.5);
+    if((double)attributes[ATTRIBUTE_STRENGTH]>=item_weight/4.0){
+        momentum_bonus=(double)attributes[ATTRIBUTE_STRENGTH]/(item_weight*1.5);
     }
     //If the creature's strength is less than the item's throwing adjusted weight.
     else{
-        momentum_penalty=(double)item_weight/(double)attributes[ATTRIBUTE_STRENGTH];
+        momentum_penalty=item_weight/(double)attributes[ATTRIBUTE_STRENGTH];
     }
 
     momentum+=momentum_bonus*firing_bonus;
@@ -481,8 +485,8 @@ void Creature::check_command_directional(short direction){
         //If an item is quivered.
         if(!equipment_slot_empty(-1,EQUIP_QUIVER) &&
            //And if a launcher is being wielded in either the right or left hand.
-           ((!equipment_slot_empty(-1,EQUIP_HOLD_RIGHT) && inventory[slot_equipped_with_what_item(equipment[EQUIP_HOLD_RIGHT])].category==ITEM_WEAPON && inventory[slot_equipped_with_what_item(equipment[EQUIP_HOLD_RIGHT])].governing_skill_weapon==SKILL_LAUNCHER_WEAPONS) ||
-            (!equipment_slot_empty(-1,EQUIP_HOLD_LEFT) && inventory[slot_equipped_with_what_item(equipment[EQUIP_HOLD_LEFT])].category==ITEM_WEAPON && inventory[slot_equipped_with_what_item(equipment[EQUIP_HOLD_LEFT])].governing_skill_weapon==SKILL_LAUNCHER_WEAPONS))){
+           ((!equipment_slot_empty(-1,EQUIP_HOLD_RIGHT) && inventory[slot_equipped_with_what_item(EQUIP_HOLD_RIGHT)].category==ITEM_WEAPON && inventory[slot_equipped_with_what_item(EQUIP_HOLD_RIGHT)].governing_skill_weapon==SKILL_LAUNCHER_WEAPONS) ||
+            (!equipment_slot_empty(-1,EQUIP_HOLD_LEFT) && inventory[slot_equipped_with_what_item(EQUIP_HOLD_LEFT)].category==ITEM_WEAPON && inventory[slot_equipped_with_what_item(EQUIP_HOLD_LEFT)].governing_skill_weapon==SKILL_LAUNCHER_WEAPONS))){
             initiate_move=true;
         }
         //If no item is quivered.
@@ -746,7 +750,7 @@ void Creature::execute_command_directional(short direction){
             vector_levels[current_level].items[vector_levels[current_level].items.size()-1].move_direction=direction;
 
             //Set the thrown item's momentum.
-            vector_levels[current_level].items[vector_levels[current_level].items.size()-1].momentum=determine_momentum(inventory[inventory_item_index].weight,false);
+            vector_levels[current_level].items[vector_levels[current_level].items.size()-1].momentum=determine_momentum((double)inventory[inventory_item_index].weight,false);
 
             //Set the thrown item's special data.
             vector_levels[current_level].items[vector_levels[current_level].items.size()-1].assign_owner_data_thrown(this);
@@ -774,17 +778,17 @@ void Creature::execute_command_directional(short direction){
 
     else if(command==DIRECTIONAL_COMMAND_FIRE_ITEM){
         //Determine the index of the quivered item.
-        int quivered_item=slot_equipped_with_what_item(equipment[EQUIP_QUIVER]);
+        int quivered_item=slot_equipped_with_what_item(EQUIP_QUIVER);
 
         //Determine the index of the launcher item.
         int launcher_item=-1;
         //If a launcher is being wielded in the right hand.
-        if(!equipment_slot_empty(-1,EQUIP_HOLD_RIGHT) && inventory[slot_equipped_with_what_item(equipment[EQUIP_HOLD_RIGHT])].category==ITEM_WEAPON && inventory[slot_equipped_with_what_item(equipment[EQUIP_HOLD_RIGHT])].governing_skill_weapon==SKILL_LAUNCHER_WEAPONS){
-            launcher_item=slot_equipped_with_what_item(equipment[EQUIP_HOLD_RIGHT]);
+        if(!equipment_slot_empty(-1,EQUIP_HOLD_RIGHT) && inventory[slot_equipped_with_what_item(EQUIP_HOLD_RIGHT)].category==ITEM_WEAPON && inventory[slot_equipped_with_what_item(EQUIP_HOLD_RIGHT)].governing_skill_weapon==SKILL_LAUNCHER_WEAPONS){
+            launcher_item=slot_equipped_with_what_item(EQUIP_HOLD_RIGHT);
         }
         //If a launcher is being wielded in the left hand.
-        else if(!equipment_slot_empty(-1,EQUIP_HOLD_LEFT) && inventory[slot_equipped_with_what_item(equipment[EQUIP_HOLD_LEFT])].category==ITEM_WEAPON && inventory[slot_equipped_with_what_item(equipment[EQUIP_HOLD_LEFT])].governing_skill_weapon==SKILL_LAUNCHER_WEAPONS){
-            launcher_item=slot_equipped_with_what_item(equipment[EQUIP_HOLD_LEFT]);
+        else if(!equipment_slot_empty(-1,EQUIP_HOLD_LEFT) && inventory[slot_equipped_with_what_item(EQUIP_HOLD_LEFT)].category==ITEM_WEAPON && inventory[slot_equipped_with_what_item(EQUIP_HOLD_LEFT)].governing_skill_weapon==SKILL_LAUNCHER_WEAPONS){
+            launcher_item=slot_equipped_with_what_item(EQUIP_HOLD_LEFT);
         }
 
         //Setup a fire message.
@@ -842,7 +846,7 @@ void Creature::execute_command_directional(short direction){
             vector_levels[current_level].items[vector_levels[current_level].items.size()-1].move_direction=direction;
 
             //Set the fired item's momentum.
-            vector_levels[current_level].items[vector_levels[current_level].items.size()-1].momentum=determine_momentum(inventory[quivered_item].weight,true);
+            vector_levels[current_level].items[vector_levels[current_level].items.size()-1].momentum=determine_momentum((double)inventory[quivered_item].weight,true);
 
             //Set the fired item's special data.
             vector_levels[current_level].items[vector_levels[current_level].items.size()-1].assign_owner_data_fired(this);
@@ -1149,7 +1153,8 @@ void Creature::check_command_inventory(char inventory_letter){
     }
 
     else if(command==INVENTORY_COMMAND_EQUIP_RIGHT_HAND || command==INVENTORY_COMMAND_EQUIP_LEFT_HAND ||
-            command==INVENTORY_COMMAND_QUIVER_ITEM || command==INVENTORY_COMMAND_EQUIP_ARMOR){
+            command==INVENTORY_COMMAND_QUIVER_ITEM || command==INVENTORY_COMMAND_EQUIP_LIGHT_SOURCE ||
+            command==INVENTORY_COMMAND_EQUIP_ARMOR){
         //Determine the equipment slot to check.
         //If this remains -1, we are checking an armor slot.
         short equip_slot=-1;
@@ -1162,11 +1167,16 @@ void Creature::check_command_inventory(char inventory_letter){
         else if(command==INVENTORY_COMMAND_QUIVER_ITEM){
             equip_slot=EQUIP_QUIVER;
         }
+        else if(command==INVENTORY_COMMAND_EQUIP_LIGHT_SOURCE){
+            equip_slot=EQUIP_LIGHT_SOURCE;
+        }
 
         //If the item is not already equipped.
         if(!inventory[inventory_item_index].equipped &&
         //And if the corresponding equipment slot is open.
-        equipment_slot_empty(inventory_item_index,equip_slot)){
+        equipment_slot_empty(inventory_item_index,equip_slot) &&
+        //And if either the slot is not the light source slot or it is, and the item IS a valid light source.
+        (equip_slot!=EQUIP_LIGHT_SOURCE || (equip_slot==EQUIP_LIGHT_SOURCE && inventory[inventory_item_index].fov_radius>0))){
             initiate_move=true;
         }
         //If the item is already equipped.
@@ -1182,6 +1192,17 @@ void Creature::check_command_inventory(char inventory_letter){
             string message="You can't wear a ";
             message+=inventory[inventory_item_index].return_full_name(1);
             message+="!";
+            update_text_log(message.c_str(),is_player);
+
+            //No inventory command will be executed.
+            input_inventory=0;
+            inventory_input_state=0;
+        }
+        //If the equipment slot is the light source slot and the item is NOT a valid light source.
+        else if(equip_slot==EQUIP_LIGHT_SOURCE && inventory[inventory_item_index].fov_radius==0){
+            string message="A ";
+            message+=inventory[inventory_item_index].return_full_name(1);
+            message+=" can't give off any light!";
             update_text_log(message.c_str(),is_player);
 
             //No inventory command will be executed.
@@ -1324,7 +1345,8 @@ void Creature::execute_command_inventory(char inventory_letter){
     }
 
     else if(command==INVENTORY_COMMAND_EQUIP_RIGHT_HAND || command==INVENTORY_COMMAND_EQUIP_LEFT_HAND ||
-            command==INVENTORY_COMMAND_QUIVER_ITEM || command==INVENTORY_COMMAND_EQUIP_ARMOR){
+            command==INVENTORY_COMMAND_QUIVER_ITEM || command==INVENTORY_COMMAND_EQUIP_LIGHT_SOURCE ||
+            command==INVENTORY_COMMAND_EQUIP_ARMOR){
         //Setup an equip message.
 
         string str_equip_item="";
@@ -1336,6 +1358,9 @@ void Creature::execute_command_inventory(char inventory_letter){
             }
             else if(command==INVENTORY_COMMAND_QUIVER_ITEM){
                 str_equip_item="You place the ";
+            }
+            else if(command==INVENTORY_COMMAND_EQUIP_LIGHT_SOURCE){
+                str_equip_item="You fasten the ";
             }
             else if(command==INVENTORY_COMMAND_EQUIP_ARMOR){
                 str_equip_item="You put on the ";
@@ -1353,6 +1378,11 @@ void Creature::execute_command_inventory(char inventory_letter){
                 str_equip_item+=return_full_name();
                 str_equip_item+=" places the ";
             }
+            else if(command==INVENTORY_COMMAND_EQUIP_LIGHT_SOURCE){
+                str_equip_item="The ";
+                str_equip_item+=return_full_name();
+                str_equip_item+=" fastens the ";
+            }
             else if(command==INVENTORY_COMMAND_EQUIP_ARMOR){
                 str_equip_item="The ";
                 str_equip_item+=return_full_name();
@@ -1360,7 +1390,7 @@ void Creature::execute_command_inventory(char inventory_letter){
             }
         }
 
-        if(command==INVENTORY_COMMAND_EQUIP_RIGHT_HAND || command==INVENTORY_COMMAND_EQUIP_LEFT_HAND){
+        if(command==INVENTORY_COMMAND_EQUIP_RIGHT_HAND || command==INVENTORY_COMMAND_EQUIP_LEFT_HAND || command==INVENTORY_COMMAND_EQUIP_LIGHT_SOURCE){
             str_equip_item+=inventory[inventory_item_index].return_full_name(1);
         }
         else{
@@ -1391,6 +1421,14 @@ void Creature::execute_command_inventory(char inventory_letter){
                 str_equip_item+=" into its quiver";
             }
         }
+        else if(command==INVENTORY_COMMAND_EQUIP_LIGHT_SOURCE){
+            if(is_player){
+                str_equip_item+=" to your belt";
+            }
+            else{
+                str_equip_item+=" to your belt";
+            }
+        }
 
         str_equip_item+=".";
 
@@ -1407,6 +1445,9 @@ void Creature::execute_command_inventory(char inventory_letter){
         }
         else if(command==INVENTORY_COMMAND_QUIVER_ITEM){
             equip_slot=EQUIP_QUIVER;
+        }
+        else if(command==INVENTORY_COMMAND_EQUIP_LIGHT_SOURCE){
+            equip_slot=EQUIP_LIGHT_SOURCE;
         }
 
         //Equip the item.

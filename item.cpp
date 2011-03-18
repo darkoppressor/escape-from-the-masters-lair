@@ -21,8 +21,6 @@ Item::Item(){
 
     momentum=0;
 
-    damage=0;
-
     stack=1;
 
     stackable=false;

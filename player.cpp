@@ -20,7 +20,7 @@ Player::Player(){
 
     is_player=true;
 
-    light_on=true;
+    light_on=false;
     source_data.permanent=true;
 
     // From Player: //
@@ -311,6 +311,13 @@ void Player::handle_input(){
                         input_inventory=INVENTORY_COMMAND_QUIVER_ITEM;
                     }
 
+                    //Equip item in light source slot.
+                    else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.sym==SDLK_b){
+                        update_text_log("What do you want to use as a light source?",is_player);
+
+                        input_inventory=INVENTORY_COMMAND_EQUIP_LIGHT_SOURCE;
+                    }
+
                     //Equip armor.
                     else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.sym==SDLK_w){
                         update_text_log("What do you want to wear?",is_player);
@@ -506,6 +513,8 @@ void Player::handle_input(){
 
 void Player::move(){
     if(alive){
+        update_fov();
+
         if(input_directional!=DIRECTIONAL_COMMAND_NONE && move_state!=NONE){
             execute_command_directional(move_state);
         }
@@ -529,6 +538,8 @@ void Player::move(){
         command_standard=COMMAND_NONE;
 
         process_turn();
+
+        update_fov();
     }
 }
 
@@ -578,12 +589,12 @@ void Player::update_fov(){
     //If the player's light source is on.
     if(light_on){
         //If the light source is a beam.
-        if(beam){
-            fov_beam(&fov_settings,&vector_levels[current_level],&source_data,player.x,player.y,fov_radius,facing,fov_angle);
+        if(inventory[slot_equipped_with_what_item(EQUIP_LIGHT_SOURCE)].beam){
+            fov_beam(&fov_settings,&vector_levels[current_level],&source_data,player.x,player.y,inventory[slot_equipped_with_what_item(EQUIP_LIGHT_SOURCE)].fov_radius,facing,inventory[slot_equipped_with_what_item(EQUIP_LIGHT_SOURCE)].fov_angle);
         }
         //If the light source is a circle.
         else{
-            fov_circle(&fov_settings,&vector_levels[current_level],&source_data,player.x,player.y,fov_radius);
+            fov_circle(&fov_settings,&vector_levels[current_level],&source_data,player.x,player.y,inventory[slot_equipped_with_what_item(EQUIP_LIGHT_SOURCE)].fov_radius);
         }
 
         //Light the player's own space.

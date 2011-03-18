@@ -587,12 +587,12 @@
 	writing:
 	appearance:(
 	stackable:0
-	weight:1
+	weight:8
 	value:1
 	color:cloth
 	material:cloth
-	melee damage:1-1
-	thrown damage:1-2
+	melee damage:1-8
+	thrown damage:1-4
 	ranged damage:0-0
 	light radius:0
 	light beam:0
@@ -612,13 +612,13 @@
 	writing:
 	appearance:$
 	stackable:1
-	weight:1
+	weight:0
 	value:1
 	color:gold
 	material:gold
 	melee damage:1-1
-	thrown damage:1-2
-	ranged damage:1-4
+	thrown damage:1-1
+	ranged damage:0-0
 	light radius:0
 	light beam:0
 	beam angle:0
@@ -633,13 +633,13 @@
 	writing:
 	appearance:è
 	stackable:0
-	weight:1
+	weight:59
 	value:1
 	color:brass
 	material:brass
-	melee damage:1-1
-	thrown damage:1-2
-	ranged damage:1-4
+	melee damage:1-69
+	thrown damage:1-35
+	ranged damage:0-0
 	light radius:10
 	light beam:0
 	beam angle:90

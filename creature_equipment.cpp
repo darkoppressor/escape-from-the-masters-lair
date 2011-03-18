@@ -5,13 +5,13 @@
 
 using namespace std;
 
-int Creature::slot_equipped_with_what_item(char item_inventory_letter){
+int Creature::slot_equipped_with_what_item(short equip_slot){
     int item_identifier=-1;
 
     //Look through all of the items in the inventory.
     for(int i=0;i<inventory.size();i++){
-        //If this item has the searched for inventory letter.
-        if(inventory[i].inventory_letter==item_inventory_letter){
+        //If this item's inventory letter matches the one assigned to the searched equipment slot.
+        if(inventory[i].inventory_letter==equipment[equip_slot]){
             item_identifier=i;
             break;
         }
@@ -42,6 +42,12 @@ void Creature::unequip_item(int item_identifier){
         if(equipment[i]==inventory[item_identifier].inventory_letter){
             //Remove the item from this slot.
             equipment[i]=0;
+
+            //If the unequipped item was the light source.
+            if(i==EQUIP_LIGHT_SOURCE){
+                //Make sure the light source is turned off.
+                light_on=false;
+            }
         }
     }
 

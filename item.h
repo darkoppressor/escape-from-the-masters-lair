@@ -96,9 +96,6 @@ class Item: public Object{
     //This is the maximum number of tiles the item can move.
     short momentum;
 
-    //The damage the item will do if it hits a creature.
-    int damage;
-
     //The stacked number of this item.
     int stack;
 

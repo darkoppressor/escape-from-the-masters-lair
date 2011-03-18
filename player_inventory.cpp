@@ -73,8 +73,8 @@ void Player::render_inventory(){
 
                             str_item_equipped=" (";
 
-                            //If the item is a stack larger than 1 and the equipment slot is a hold slot.
-                            if(inventory[i].stack>1 && (equip_slot==EQUIP_HOLD_RIGHT || equip_slot==EQUIP_HOLD_LEFT)){
+                            //If the item is a stack larger than 1 and the equipment slot is a hold slot or the light source slot.
+                            if(inventory[i].stack>1 && (equip_slot==EQUIP_HOLD_RIGHT || equip_slot==EQUIP_HOLD_LEFT || equip_slot==EQUIP_LIGHT_SOURCE)){
                                 str_item_equipped+="one ";
                             }
 
@@ -89,6 +89,10 @@ void Player::render_inventory(){
 
                             case EQUIP_QUIVER:
                                 str_item_equipped+="in quiver)";
+                                break;
+
+                            case EQUIP_LIGHT_SOURCE:
+                                str_item_equipped+="fastened to belt)";
                                 break;
 
                             case EQUIP_HEAD:

@@ -49,6 +49,9 @@ void game_loop(){
     ///player.name="Player-90437";
     ///load_game();
 
+    //Update initial fov.
+    player.update_fov();
+
     //The number of logic updates allowed each second.
     const double UPDATE_LIMIT=60;
 

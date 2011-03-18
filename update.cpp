@@ -53,8 +53,6 @@ void events(){
     for(int i=0;i<vector_levels[current_level].items.size();i++){
         vector_levels[current_level].items[i].move();
     }
-
-    player.update_fov();
 }
 
 void animation(){

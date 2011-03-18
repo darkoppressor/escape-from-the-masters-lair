@@ -65,9 +65,6 @@ Creature::Creature(){
     //Randomly choose a facing direction.
     int random=random_range(FOV_EAST,FOV_SOUTHEAST);
     facing=(fov_direction_type)random;
-    fov_radius=10;
-    fov_angle=90.0f;
-    beam=false;
     light_on=false;
     source_data.permanent=false;
 
@@ -93,7 +90,7 @@ void Creature::create_money_item(){
     temp_item.plural_name="gold pieces";
     temp_item.appearance='$';
     temp_item.color=COLOR_GOLD;
-    temp_item.weight=1;
+    temp_item.weight=0;
     temp_item.monetary_value=1;
     temp_item.category=ITEM_OTHER;
     temp_item.material=MATERIAL_GOLD;
@@ -102,10 +99,10 @@ void Creature::create_money_item(){
     temp_item.damage_max_melee=1;
 
     temp_item.damage_min_thrown=1;
-    temp_item.damage_max_thrown=2;
+    temp_item.damage_max_thrown=1;
 
-    temp_item.damage_min_ranged=1;
-    temp_item.damage_max_ranged=4;
+    temp_item.damage_min_ranged=0;
+    temp_item.damage_max_ranged=0;
 
     inventory.push_back(temp_item);
     inventory[inventory.size()-1].assign_identifier();
@@ -139,8 +136,11 @@ inventory_match Creature::check_for_inventory_match(Item* item_to_check){
     //Look through all of the inventory items.
     for(int i=0;i<inventory.size();i++){
         ///I might later need to modify what constitutes a match.
-        if(inventory[i].name==item_to_check->name && inventory[i].plural_name==item_to_check->plural_name && inventory[i].color==item_to_check->color
-           && inventory[i].appearance==item_to_check->appearance){
+        ///I definitely need to add in effects matching eventually.
+        if(inventory[i].name==item_to_check->name && inventory[i].plural_name==item_to_check->plural_name && inventory[i].color==item_to_check->color &&
+           inventory[i].appearance==item_to_check->appearance && inventory[i].weight==item_to_check->weight && inventory[i].race==item_to_check->race &&
+           inventory[i].dye==item_to_check->dye && inventory[i].writing==item_to_check->writing && inventory[i].category==item_to_check->category &&
+           inventory[i].material==item_to_check->material && inventory[i].weapon_category==item_to_check->weapon_category && inventory[i].armor_category==item_to_check->armor_category){
             match_check.match_found=true;
             match_check.inventory_slot=i;
             break;

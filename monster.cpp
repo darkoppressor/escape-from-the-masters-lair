@@ -329,6 +329,11 @@ void Monster::handle_input(){
             input_inventory=INVENTORY_COMMAND_QUIVER_ITEM;
         }
 
+        //Equip item light source slot.
+        else if(ai_keystates[AIK_EQUIP_LIGHT_SOURCE]){
+            input_inventory=INVENTORY_COMMAND_EQUIP_LIGHT_SOURCE;
+        }
+
         //Equip armor.
         else if(ai_keystates[AIK_EQUIP_ARMOR]){
             input_inventory=INVENTORY_COMMAND_EQUIP_ARMOR;
@@ -358,6 +363,8 @@ void Monster::handle_input(){
 
 void Monster::move(){
     if(alive){
+        ///update_fov();
+
         if(input_directional!=DIRECTIONAL_COMMAND_NONE && move_state!=NONE){
             execute_command_directional(move_state);
         }
@@ -381,6 +388,8 @@ void Monster::move(){
         command_standard=COMMAND_NONE;
 
         process_turn();
+
+        ///update_fov();
     }
 }
 

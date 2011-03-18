@@ -57,7 +57,7 @@ class Creature: public Object{
     //Determines which item is equipped in an equipment slot.
     ///Possibly rename this to index_of_item_in_slot.
     ///Also, char item_inventory_letter should be changed to short equip_slot.
-    int slot_equipped_with_what_item(char item_inventory_letter);
+    int slot_equipped_with_what_item(short equip_slot);
 
     //Determines which equipment slot an item is equipped in.
     short item_equipped_in_which_slot(int item_identifier);
@@ -116,7 +116,7 @@ class Creature: public Object{
     directional_check_coordinates determine_direction(short direction);
 
     //Determine the momentum of an item.
-    int determine_momentum(short item_weight,bool fired);
+    int determine_momentum(double item_weight,bool fired);
 
     //Check to see if a directional command can be done.
     //If so, queue it for the next call to move().
@@ -225,10 +225,6 @@ class Creature: public Object{
 
     fov_direction_type facing;
     fov_settings_type fov_settings;
-    unsigned int fov_radius;
-    //The width of the beam.
-    float fov_angle;
-    bool beam;
     bool light_on;
     light_data source_data;
 
