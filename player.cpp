@@ -73,6 +73,8 @@ void Player::set_inventory(){
 
     create_light_item();
 
+    create_water_bottle();
+
     equip_item(1,EQUIP_LIGHT_SOURCE);
 
     light_on=true;

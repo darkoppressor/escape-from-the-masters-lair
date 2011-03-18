@@ -87,14 +87,16 @@ void Creature::create_money_item(){
 
     temp_item.inventory_letter='$';
     temp_item.stack=0;
-    temp_item.stackable=true;
+
+    temp_item.category=ITEM_OTHER;
     temp_item.name="gold piece";
     temp_item.plural_name="gold pieces";
+    temp_item.writing="";
     temp_item.appearance='$';
-    temp_item.color=COLOR_GOLD;
+    temp_item.stackable=true;
     temp_item.weight=0;
     temp_item.monetary_value=1;
-    temp_item.category=ITEM_OTHER;
+    temp_item.color=COLOR_GOLD;
     temp_item.material=MATERIAL_GOLD;
 
     temp_item.damage_min_melee=1;
@@ -136,6 +138,43 @@ void Creature::create_light_item(){
     temp_item.fov_radius=10;
     temp_item.beam=false;
     temp_item.fov_angle=90;
+
+    //Assign the item an available inventory letter.
+    temp_item.inventory_letter=assign_inventory_letter();
+
+    inventory.push_back(temp_item);
+
+    //Assign an identifier to the item.
+    inventory[inventory.size()-1].assign_identifier();
+
+    //Assign an owner identifier to the item.
+    inventory[inventory.size()-1].owner=identifier;
+}
+
+void Creature::create_water_bottle(){
+    Item temp_item;
+
+    temp_item.category=ITEM_DRINK;
+    temp_item.name="bottle of water";
+    temp_item.plural_name="bottles of water";
+    temp_item.writing="";
+    temp_item.appearance='!';
+    temp_item.stackable=true;
+    temp_item.weight=1;
+    temp_item.monetary_value=1;
+    temp_item.color=COLOR_WATER;
+    temp_item.material=MATERIAL_GLASS;
+
+    temp_item.damage_min_melee=1;
+    temp_item.damage_max_melee=1;
+
+    temp_item.damage_min_thrown=1;
+    temp_item.damage_max_thrown=1;
+
+    temp_item.damage_min_ranged=0;
+    temp_item.damage_max_ranged=0;
+
+    temp_item.thirst_quenched=100;
 
     //Assign the item an available inventory letter.
     temp_item.inventory_letter=assign_inventory_letter();

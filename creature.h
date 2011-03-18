@@ -122,6 +122,8 @@ class Creature: public Object{
 
     void create_light_item();
 
+    void create_water_bottle();
+
     //Assign an identifier to the creature.
     void assign_identifier();
 
