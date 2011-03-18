@@ -485,8 +485,8 @@ void Creature::check_command_directional(short direction){
         //If an item is quivered.
         if(!equipment_slot_empty(-1,EQUIP_QUIVER) &&
            //And if a launcher is being wielded in either the right or left hand.
-           ((!equipment_slot_empty(-1,EQUIP_HOLD_RIGHT) && inventory[slot_equipped_with_what_item(EQUIP_HOLD_RIGHT)].category==ITEM_WEAPON && inventory[slot_equipped_with_what_item(EQUIP_HOLD_RIGHT)].governing_skill_weapon==SKILL_LAUNCHER_WEAPONS) ||
-            (!equipment_slot_empty(-1,EQUIP_HOLD_LEFT) && inventory[slot_equipped_with_what_item(EQUIP_HOLD_LEFT)].category==ITEM_WEAPON && inventory[slot_equipped_with_what_item(EQUIP_HOLD_LEFT)].governing_skill_weapon==SKILL_LAUNCHER_WEAPONS))){
+           ((!equipment_slot_empty(-1,EQUIP_HOLD_RIGHT) && inventory[index_of_item_in_slot(EQUIP_HOLD_RIGHT)].category==ITEM_WEAPON && inventory[index_of_item_in_slot(EQUIP_HOLD_RIGHT)].governing_skill_weapon==SKILL_LAUNCHER_WEAPONS) ||
+            (!equipment_slot_empty(-1,EQUIP_HOLD_LEFT) && inventory[index_of_item_in_slot(EQUIP_HOLD_LEFT)].category==ITEM_WEAPON && inventory[index_of_item_in_slot(EQUIP_HOLD_LEFT)].governing_skill_weapon==SKILL_LAUNCHER_WEAPONS))){
             initiate_move=true;
         }
         //If no item is quivered.
@@ -778,17 +778,17 @@ void Creature::execute_command_directional(short direction){
 
     else if(command==DIRECTIONAL_COMMAND_FIRE_ITEM){
         //Determine the index of the quivered item.
-        int quivered_item=slot_equipped_with_what_item(EQUIP_QUIVER);
+        int quivered_item=index_of_item_in_slot(EQUIP_QUIVER);
 
         //Determine the index of the launcher item.
         int launcher_item=-1;
         //If a launcher is being wielded in the right hand.
-        if(!equipment_slot_empty(-1,EQUIP_HOLD_RIGHT) && inventory[slot_equipped_with_what_item(EQUIP_HOLD_RIGHT)].category==ITEM_WEAPON && inventory[slot_equipped_with_what_item(EQUIP_HOLD_RIGHT)].governing_skill_weapon==SKILL_LAUNCHER_WEAPONS){
-            launcher_item=slot_equipped_with_what_item(EQUIP_HOLD_RIGHT);
+        if(!equipment_slot_empty(-1,EQUIP_HOLD_RIGHT) && inventory[index_of_item_in_slot(EQUIP_HOLD_RIGHT)].category==ITEM_WEAPON && inventory[index_of_item_in_slot(EQUIP_HOLD_RIGHT)].governing_skill_weapon==SKILL_LAUNCHER_WEAPONS){
+            launcher_item=index_of_item_in_slot(EQUIP_HOLD_RIGHT);
         }
         //If a launcher is being wielded in the left hand.
-        else if(!equipment_slot_empty(-1,EQUIP_HOLD_LEFT) && inventory[slot_equipped_with_what_item(EQUIP_HOLD_LEFT)].category==ITEM_WEAPON && inventory[slot_equipped_with_what_item(EQUIP_HOLD_LEFT)].governing_skill_weapon==SKILL_LAUNCHER_WEAPONS){
-            launcher_item=slot_equipped_with_what_item(EQUIP_HOLD_LEFT);
+        else if(!equipment_slot_empty(-1,EQUIP_HOLD_LEFT) && inventory[index_of_item_in_slot(EQUIP_HOLD_LEFT)].category==ITEM_WEAPON && inventory[index_of_item_in_slot(EQUIP_HOLD_LEFT)].governing_skill_weapon==SKILL_LAUNCHER_WEAPONS){
+            launcher_item=index_of_item_in_slot(EQUIP_HOLD_LEFT);
         }
 
         //Setup a fire message.

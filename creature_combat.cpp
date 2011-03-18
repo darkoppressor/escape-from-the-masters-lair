@@ -34,7 +34,7 @@ void Creature::attack_melee(Creature* target){
                 //If there is an item wielded in this hand.
                 if(equipment[i]!=0){
                     //Determine the identifier for the item equipped in this slot.
-                    int item_identifier=slot_equipped_with_what_item(i);
+                    int item_identifier=index_of_item_in_slot(i);
 
                     //Determine the base damage range for this item.
                     int weapon_damage_min=inventory[item_identifier].damage_min_melee;
@@ -142,7 +142,7 @@ void Creature::attack_melee(Creature* target){
             //If there is an item being wielded in the right hand only.
             else if(equipment[EQUIP_HOLD_RIGHT]!=0 && equipment[EQUIP_HOLD_LEFT]==0){
                 //Determine the identifier for the item equipped in this slot.
-                int item_identifier=slot_equipped_with_what_item(EQUIP_HOLD_RIGHT);
+                int item_identifier=index_of_item_in_slot(EQUIP_HOLD_RIGHT);
 
                 //If the item being wielded is a weapon.
                 if(inventory[item_identifier].category==ITEM_WEAPON){
@@ -176,7 +176,7 @@ void Creature::attack_melee(Creature* target){
             //If there is an item being wielded in the left hand only.
             else if(equipment[EQUIP_HOLD_RIGHT]==0 && equipment[EQUIP_HOLD_LEFT]!=0){
                 //Determine the identifier for the item equipped in this slot.
-                int item_identifier=slot_equipped_with_what_item(EQUIP_HOLD_LEFT);
+                int item_identifier=index_of_item_in_slot(EQUIP_HOLD_LEFT);
 
                 //If the item being wielded is a weapon.
                 if(inventory[item_identifier].category==ITEM_WEAPON){
@@ -210,8 +210,8 @@ void Creature::attack_melee(Creature* target){
             //If there is an item being wielded in both hands.
             else if(equipment[EQUIP_HOLD_RIGHT]!=0 && equipment[EQUIP_HOLD_LEFT]!=0){
                 //Determine the identifier for the item equipped in each slot.
-                int item_identifier_right=slot_equipped_with_what_item(EQUIP_HOLD_RIGHT);
-                int item_identifier_left=slot_equipped_with_what_item(EQUIP_HOLD_LEFT);
+                int item_identifier_right=index_of_item_in_slot(EQUIP_HOLD_RIGHT);
+                int item_identifier_left=index_of_item_in_slot(EQUIP_HOLD_LEFT);
 
                 outcome="You attack the ";
                 outcome+=target->return_full_name();
@@ -233,7 +233,7 @@ void Creature::attack_melee(Creature* target){
             //If there is an item being wielded in the right hand only.
             else if(equipment[EQUIP_HOLD_RIGHT]!=0 && equipment[EQUIP_HOLD_LEFT]==0){
                 //Determine the identifier for the item equipped in this slot.
-                int item_identifier=slot_equipped_with_what_item(EQUIP_HOLD_RIGHT);
+                int item_identifier=index_of_item_in_slot(EQUIP_HOLD_RIGHT);
 
                 outcome="The ";
                 outcome+=return_full_name();
@@ -269,7 +269,7 @@ void Creature::attack_melee(Creature* target){
             //If there is an item being wielded in the left hand only.
             else if(equipment[EQUIP_HOLD_RIGHT]==0 && equipment[EQUIP_HOLD_LEFT]!=0){
                 //Determine the identifier for the item equipped in this slot.
-                int item_identifier=slot_equipped_with_what_item(EQUIP_HOLD_LEFT);
+                int item_identifier=index_of_item_in_slot(EQUIP_HOLD_LEFT);
 
                 outcome="The ";
                 outcome+=return_full_name();
@@ -305,8 +305,8 @@ void Creature::attack_melee(Creature* target){
             //If there is an item being wielded in both hands.
             else if(equipment[EQUIP_HOLD_RIGHT]!=0 && equipment[EQUIP_HOLD_LEFT]!=0){
                 //Determine the identifier for the item equipped in each slot.
-                int item_identifier_right=slot_equipped_with_what_item(EQUIP_HOLD_RIGHT);
-                int item_identifier_left=slot_equipped_with_what_item(EQUIP_HOLD_LEFT);
+                int item_identifier_right=index_of_item_in_slot(EQUIP_HOLD_RIGHT);
+                int item_identifier_left=index_of_item_in_slot(EQUIP_HOLD_LEFT);
 
                 outcome="The ";
                 outcome+=return_full_name();

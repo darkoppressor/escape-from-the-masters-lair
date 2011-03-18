@@ -111,7 +111,6 @@ void Creature::create_money_item(){
 void Creature::create_light_item(){
     Item temp_item;
 
-    ///temp_item.inventory_letter='$';
     temp_item.category=ITEM_OTHER;
     temp_item.name="lantern";
     temp_item.plural_name="lanterns";

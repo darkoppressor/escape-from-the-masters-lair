@@ -5,7 +5,7 @@
 
 using namespace std;
 
-int Creature::slot_equipped_with_what_item(short equip_slot){
+int Creature::index_of_item_in_slot(short equip_slot){
     int item_identifier=-1;
 
     //Look through all of the items in the inventory.

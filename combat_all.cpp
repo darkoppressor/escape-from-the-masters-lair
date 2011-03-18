@@ -15,7 +15,7 @@ int determine_damage_reduction(Creature* target){
         //If this slot has an item equipped.
         if(target->equipment[i]!=0){
             //Determine the identifier for the item equipped in this slot.
-            int item_identifier=target->slot_equipped_with_what_item(i);
+            int item_identifier=target->index_of_item_in_slot(i);
 
             //Determine the base amount of damage absorbed by this item.
             int armor_absorption=target->inventory[item_identifier].defense;

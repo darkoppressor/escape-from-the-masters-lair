@@ -665,12 +665,12 @@ void Player::update_fov(){
     //If the player's light source is on.
     if(light_on){
         //If the light source is a beam.
-        if(inventory[slot_equipped_with_what_item(EQUIP_LIGHT_SOURCE)].beam){
-            fov_beam(&fov_settings,&vector_levels[current_level],&source_data,player.x,player.y,inventory[slot_equipped_with_what_item(EQUIP_LIGHT_SOURCE)].fov_radius,facing,inventory[slot_equipped_with_what_item(EQUIP_LIGHT_SOURCE)].fov_angle);
+        if(inventory[index_of_item_in_slot(EQUIP_LIGHT_SOURCE)].beam){
+            fov_beam(&fov_settings,&vector_levels[current_level],&source_data,player.x,player.y,inventory[index_of_item_in_slot(EQUIP_LIGHT_SOURCE)].fov_radius,facing,inventory[index_of_item_in_slot(EQUIP_LIGHT_SOURCE)].fov_angle);
         }
         //If the light source is a circle.
         else{
-            fov_circle(&fov_settings,&vector_levels[current_level],&source_data,player.x,player.y,inventory[slot_equipped_with_what_item(EQUIP_LIGHT_SOURCE)].fov_radius);
+            fov_circle(&fov_settings,&vector_levels[current_level],&source_data,player.x,player.y,inventory[index_of_item_in_slot(EQUIP_LIGHT_SOURCE)].fov_radius);
         }
 
         //Light the player's own space.
