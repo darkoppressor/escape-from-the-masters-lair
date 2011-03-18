@@ -848,6 +848,9 @@ void Creature::execute_command_directional(short direction){
             //Add the item to the dungeon items vector.
             vector_levels[current_level].items.push_back(inventory[quivered_item]);
 
+            //Regardless of whether or not the item was unequipped above, the new item in the dungeon MUST not be set to equipped.
+            vector_levels[current_level].items[vector_levels[current_level].items.size()-1].equipped=false;
+
             //Assign an identifier to the newly fired item.
             vector_levels[current_level].items[vector_levels[current_level].items.size()-1].assign_identifier();
 
