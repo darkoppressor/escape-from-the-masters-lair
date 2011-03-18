@@ -194,24 +194,6 @@ void Creature::execute_command(short command){
             if(vector_levels[current_level].items[i].x==x && vector_levels[current_level].items[i].y==y){
                 //If the inventory is not full, or the item is money, pick up the item.
                 if(inventory.size()<INVENTORY_MAX_SIZE || vector_levels[current_level].items[i].inventory_letter=='$'){
-                    //Setup a pick up message.
-
-                    string grab_item="";
-
-                    //If the creature is the player.
-                    if(is_player){
-                        grab_item="You pick up the ";
-                    }
-                    else{
-                        grab_item="The ";
-                        grab_item+=return_full_name();
-                        grab_item+=" picks up the ";
-                    }
-
-                    grab_item+=vector_levels[current_level].items[i].return_full_name();
-                    grab_item+=".";
-                    update_text_log(grab_item.c_str(),true);
-
                     //Check to see if there is an identical item already in the inventory.
                     inventory_match match_check=check_for_inventory_match(&vector_levels[current_level].items[i]);
 
@@ -252,6 +234,31 @@ void Creature::execute_command(short command){
                         //Assign an owner identifier to the new item.
                         inventory[inventory.size()-1].owner=identifier;
                     }
+
+                    //Setup a pick up message.
+
+                    string grab_item="";
+
+                    //If the creature is the player.
+                    if(is_player){
+                        grab_item="You pick up the ";
+                    }
+                    else{
+                        grab_item="The ";
+                        grab_item+=return_full_name();
+                        grab_item+=" picks up the ";
+                    }
+
+                    grab_item+=inventory[inventory.size()-1].return_full_name();
+
+                    if(is_player){
+                        grab_item+=" - ";
+                        grab_item+=inventory[inventory.size()-1].inventory_letter;
+                    }
+
+                    grab_item+=".";
+
+                    update_text_log(grab_item.c_str(),true);
 
                     //Return the item's identifier.
                     vector_levels[current_level].items[i].return_identifier();
@@ -338,28 +345,26 @@ int Creature::determine_momentum(short item_weight,bool fired){
     //Base momentum is 6.
     double momentum=6.0;
 
-    double item_throwing_weight=(double)item_weight/2.0;
-    if(item_throwing_weight==0.0){
-        item_throwing_weight=1.0;
-    }
-
-    //Determine the bonus from strength.
-    double momentum_bonus=((double)attributes[ATTRIBUTE_STRENGTH]/item_throwing_weight)/20.0;
+    double firing_bonus=1.0;
 
     if(fired){
-        momentum_bonus*=2;
+        firing_bonus=2.0;
     }
 
-    //If the momentum bonus is less than 0.1.
-    if(momentum_bonus*10<1.0){
-        //Subtract a momentum penalty from momentum.
-        momentum-=momentum_bonus*100;
+    double momentum_bonus=0.0;
+    double momentum_penalty=0.0;
+
+    //If the creature's strength is greater than the item's throwing adjusted weight.
+    if((double)attributes[ATTRIBUTE_STRENGTH]>=(double)item_weight/4.0){
+        momentum_bonus=(double)attributes[ATTRIBUTE_STRENGTH]/((double)item_weight*1.5);
     }
-    //If the momentum bonus is greater than or equal to 0.1.
+    //If the creature's strength is less than the item's throwing adjusted weight.
     else{
-        //Add the momentum bonus to momentum.
-        momentum+=momentum_bonus;
+        momentum_penalty=(double)item_weight/(double)attributes[ATTRIBUTE_STRENGTH];
     }
+
+    momentum+=momentum_bonus*firing_bonus;
+    momentum-=momentum_penalty/firing_bonus;
 
     //Minimum momentum is 0.
     if(momentum<0.0){
@@ -818,6 +823,9 @@ void Creature::execute_command_directional(short direction){
                     //We only do this for monsters. The player leaves the letter attached to the item.
                     inventory[quivered_item].inventory_letter=0;
                 }
+
+                //Unequip the item.
+                unequip_item(quivered_item);
             }
 
             //Set the item's position to the creature's current position.
@@ -851,9 +859,6 @@ void Creature::execute_command_directional(short direction){
             //If the item's stack is 1 and the item is not money.
             //We remove the item from the inventory.
             else{
-                //Unequip the item.
-                unequip_item(quivered_item);
-
                 //Return the item's identifier.
                 inventory[quivered_item].return_identifier();
 
