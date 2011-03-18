@@ -666,10 +666,10 @@ void Player::update_window_caption(int frame_rate,double ms_per_frame){
 
     //Set the window caption.
     if(option_dev){
-        msg="Roguelike (DEV Mode) - ";
+        msg="Escape from the Master's Lair (DEV Mode) - ";
     }
     else{
-        msg="Roguelike - ";
+        msg="Escape from the Master's Lair - ";
     }
 
     msg+=player.name;

@@ -123,7 +123,7 @@ bool Game_Window::init(){
     Mix_AllocateChannels(2000);
 
     //Set the window caption.
-    SDL_WM_SetCaption("Roguelike","Roguelike");
+    SDL_WM_SetCaption("Escape from the Master's Lair","Escape from the Master's Lair");
 
     //Show the mouse cursor.
     SDL_ShowCursor(1);

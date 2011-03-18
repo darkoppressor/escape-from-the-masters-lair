@@ -93,16 +93,16 @@ void string_input::handle_events(){
 
             else if(str_command=="about" || str_command=="a"){
                 string version="";
-                ss.clear();ss.str("");ss<<"                               Version: ";ss<<AutoVersion::MAJOR;ss<<".";ss<<AutoVersion::MINOR;ss<<" ";ss<<AutoVersion::STATUS;version=ss.str();
+                ss.clear();ss.str("");ss<<"                              Version: ";ss<<AutoVersion::MAJOR;ss<<".";ss<<AutoVersion::MINOR;ss<<" ";ss<<AutoVersion::STATUS;version=ss.str();
 
                 string date="";
-                ss.clear();ss.str("");ss<<"                            Built on: ";ss<<AutoVersion::MONTH;ss<<"-";ss<<AutoVersion::DATE;ss<<"-";ss<<AutoVersion::YEAR;date=ss.str();
+                ss.clear();ss.str("");ss<<"                             Built on: ";ss<<AutoVersion::MONTH;ss<<"-";ss<<AutoVersion::DATE;ss<<"-";ss<<AutoVersion::YEAR;date=ss.str();
 
                 update_text_log("--------------------------------------------------------------------------------",true,MESSAGE_SYSTEM);
                 update_text_log(date.c_str(),true,MESSAGE_SYSTEM);
                 update_text_log(version.c_str(),true,MESSAGE_SYSTEM);
                 update_text_log("                            Created by: Kevin Wells",true,MESSAGE_SYSTEM);
-                update_text_log("                                    Roguelike                                   ",true,MESSAGE_SYSTEM);
+                update_text_log("                         Escape from the Master's Lair",true,MESSAGE_SYSTEM);
                 update_text_log("--------------------------------------------------------------------------------",true,MESSAGE_SYSTEM);
             }
 
