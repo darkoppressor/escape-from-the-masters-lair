@@ -20,7 +20,6 @@ Player::Player(){
 
     is_player=true;
 
-    light_on=false;
     source_data.permanent=true;
 
     // From Player: //
@@ -67,6 +66,83 @@ Player::Player(){
         inventory.push_back(Item());
         inventory[inventory.size()-1].name=(char)i;
     }*/
+}
+
+void Player::set_inventory(){
+    create_money_item();
+
+    create_light_item();
+
+    equip_item(1,EQUIP_LIGHT_SOURCE);
+
+    light_on=true;
+
+    //The maximum number of items.
+    int max_items=random_range(1,12);
+
+    for(int i=0;i<100;i++){
+        //Randomly determine the item category.
+        ///For now, equal chance for all categories.
+        int random_item_category=random_range(ITEM_WEAPON,ITEM_OTHER);
+
+        //Randomly select an item from the chosen category's template.
+        ///For now, equal chance for all items within category.
+        int random_item_template=random_range(0,templates.template_items[random_item_category].size()-1);
+
+        //If the item is not spawnable.
+        if(!templates.template_items[random_item_category][random_item_template].spawnable){
+            //Skip this item.
+            continue;
+        }
+
+        //Randomly select a stack size.
+        int random_item_stack=1;
+        //If the item is stackable.
+        if(templates.template_items[random_item_category][random_item_template].stackable){
+            random_item_stack=random_range(1,8);
+        }
+
+        //If the inventory is not full, or the item is money, add the item.
+        if(inventory.size()<INVENTORY_MAX_SIZE || templates.template_items[random_item_category][random_item_template].inventory_letter=='$'){
+            //Generate the item.
+            Item temp_item;
+
+            //Apply the selected template to the item.
+            temp_item=templates.template_items[random_item_category][random_item_template];
+
+            //Apply the randomly selected stack size.
+            temp_item.stack=random_item_stack;
+
+            //Check to see if there is an identical item already in the inventory.
+            inventory_match match_check=check_for_inventory_match(&temp_item);
+
+            //If there is already an identical item in the inventory, and the item is stackable.
+            if(match_check.match_found && temp_item.stackable){
+                inventory[match_check.inventory_slot].stack+=temp_item.stack;
+            }
+            //If there is no identical item in the inventory, or the item is not stackable.
+            else{
+                //Determine an inventory letter for the item.
+
+                //Assign the item an available inventory letter.
+                temp_item.inventory_letter=assign_inventory_letter();
+
+                //Add the item to the inventory items vector.
+                inventory.push_back(temp_item);
+
+                //Assign an identifier to the item.
+                inventory[inventory.size()-1].assign_identifier();
+
+                //Assign an owner identifier to the item.
+                inventory[inventory.size()-1].owner=identifier;
+            }
+        }
+
+        //If the number of items generated has exceeded the maximum.
+        if(inventory.size()>max_items || inventory.size()>=INVENTORY_MAX_SIZE){
+            break;
+        }
+    }
 }
 
 void Player::set_base_stats(){

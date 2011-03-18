@@ -28,6 +28,9 @@ class Player: public Creature{
 
     Player();
 
+    //Setup the player's starting inventory.
+    void set_inventory();
+
     //Set the base stats of the player.
     void set_base_stats();
 

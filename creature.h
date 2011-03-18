@@ -48,6 +48,8 @@ class Creature: public Object{
 
     void create_money_item();
 
+    void create_light_item();
+
     //Assign an identifier to the creature.
     void assign_identifier();
 
@@ -224,8 +226,10 @@ class Creature: public Object{
     //Field of view variables:
 
     fov_direction_type facing;
+    ///This can probably be replaced by something global.
     fov_settings_type fov_settings;
     bool light_on;
+    ///This can probably be replaced by something global.
     light_data source_data;
 
     //A list of available inventory letters.

@@ -62,7 +62,7 @@ void Monster::set_inventory(){
             else{
                 //Determine an inventory letter for the item.
 
-                //Assign the item an available inventory number.
+                //Assign the item an available inventory letter.
                 temp_item.inventory_letter=assign_inventory_letter();
 
                 //Add the item to the inventory items vector.

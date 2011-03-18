@@ -108,6 +108,46 @@ void Creature::create_money_item(){
     inventory[inventory.size()-1].assign_identifier();
 }
 
+void Creature::create_light_item(){
+    Item temp_item;
+
+    ///temp_item.inventory_letter='$';
+    temp_item.category=ITEM_OTHER;
+    temp_item.name="lantern";
+    temp_item.plural_name="lanterns";
+    temp_item.writing="";
+    temp_item.appearance='\xE8';
+    temp_item.stackable=false;
+    temp_item.weight=59;
+    temp_item.monetary_value=1;
+    temp_item.color=COLOR_BRASS;
+    temp_item.material=MATERIAL_BRASS;
+
+    temp_item.damage_min_melee=1;
+    temp_item.damage_max_melee=69;
+
+    temp_item.damage_min_thrown=1;
+    temp_item.damage_max_thrown=35;
+
+    temp_item.damage_min_ranged=0;
+    temp_item.damage_max_ranged=0;
+
+    temp_item.fov_radius=10;
+    temp_item.beam=false;
+    temp_item.fov_angle=90;
+
+    //Assign the item an available inventory letter.
+    temp_item.inventory_letter=assign_inventory_letter();
+
+    inventory.push_back(temp_item);
+
+    //Assign an identifier to the item.
+    inventory[inventory.size()-1].assign_identifier();
+
+    //Assign an owner identifier to the item.
+    inventory[inventory.size()-1].owner=identifier;
+}
+
 void Creature::assign_identifier(){
     identifier=game.assign_identifier(OBJECT_CREATURE);
 }
