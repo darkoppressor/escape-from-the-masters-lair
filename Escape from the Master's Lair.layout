@@ -20,16 +20,16 @@
 		<Cursor1 position="199" topLine="0" />
 	</File>
 	<File name="creature.cpp" open="1" top="1" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="7856" topLine="108" />
+		<Cursor1 position="8526" topLine="300" />
 	</File>
 	<File name="creature.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="7397" topLine="203" />
+		<Cursor1 position="7469" topLine="215" />
 	</File>
 	<File name="creature_combat.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="17629" topLine="416" />
 	</File>
 	<File name="creature_commands.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="55344" topLine="292" />
+		<Cursor1 position="55303" topLine="1564" />
 	</File>
 	<File name="creature_equipment.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="1711" topLine="33" />
@@ -143,7 +143,7 @@
 		<Cursor1 position="132" topLine="0" />
 	</File>
 	<File name="player.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="376" topLine="6" />
+		<Cursor1 position="330" topLine="456" />
 	</File>
 	<File name="player.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="605" topLine="18" />

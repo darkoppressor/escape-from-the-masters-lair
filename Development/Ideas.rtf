@@ -1,6 +1,6 @@
 {\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
 {\colortbl ;\red255\green0\blue0;}
-{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\sa200\sl276\slmult1\lang9\b\f0\fs22 Brainstorming:\b0\par
+{\*\generator Msftedit 5.41.21.2509;}\viewkind4\uc1\pard\sa200\sl276\slmult1\lang9\b\f0\fs22 Brainstorming:\b0\par
 Saving/death works pretty much the same as Nethack.\par
 Massive dungeon (hundreds of levels), but you are not expected to traverse it all (shortcut to bottom).\par
 The island should not only exist between characters, but should continue "running" even when not being played.  When a level is loaded, the enemies and items could be processed a certain number of turns depending on how long its been since the last time the level was loaded.  If it's been a short enough amount of time (the level was loaded only a few minutes ago), no processing will take place.  Enemies could move, and items could be moved around, too.  Note that this process should be independent of players, and should only look at the last level load time.\par
@@ -88,5 +88,9 @@ When you attempt to disarm a trap and fail, the trap should be immediately set o
 Instead of hunger, I might just implement thirst. It makes more sense, as the player will be thirsty a lot. In fact, all of the monsters should probably get thirsty a lot, too. I need to decide whether to have food, drink, or light source be the driving force (or some combination of the 3). Right now, I am thinking of having no food, and combining water and lighting as two game movers.\par
 Food, if I include it, should rot, go bad, etc. Corpses should break down into bones over time.\par
 There can be some kind of dye item, that comes in different colors. Dye can be applied to items (and later probably tiles, etc. too).\par
+I might need to add a tool slot. Either that, or tools can be used when wielded.\par
+I could remove the light source equipment slot and just have items be turned on or off for lighting. This would allow multiple light sources on at once for the creature, so that would have to be handled.\par
+Statuses for the creatures, such as blindness, hallucination, etc.\par
+Search should look for traps too.\par
 }
  

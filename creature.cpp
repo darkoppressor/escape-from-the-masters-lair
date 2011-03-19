@@ -284,37 +284,57 @@ void Creature::process_turn(){
         }
     }
 
-    handle_thirst();
+    change_thirst(true);
 }
 
-void Creature::change_thirst(){
-    if(rc_gain_thirst()){
-        thirst++;
+void Creature::change_thirst(bool increase,short amount){
+    //If thirst is increasing.
+    if(increase){
+        if(rc_gain_thirst()){
+            thirst++;
+        }
     }
+    //If thirst is decreasing.
+    else{
+        thirst-=amount;
 
-    ///There should probably be a minimum for thirst for technical reasons.
-    ///This will need to be implemented when I add a way to lower thirst.
+        //If thirst falls below the thirst floor.
+        if(thirst<THIRST_FLOOR){
+            //Set the thirst to the thirst floor.
+            thirst=THIRST_FLOOR;
+        }
+    }
 
     //If the creature is bloated.
     if(thirst<=THIRST_BLOATED){
+        ///Movement slowed.
     }
     //If the creature is satiated.
     else if(thirst>=THIRST_SATIATED && thirst<THIRST_NOT_THIRSTY){
+        ///Strength increased slightly.
+        ///Agility increased slightly.
     }
     //If the creature is not thirsty.
     else if(thirst>=THIRST_NOT_THIRSTY && thirst<THIRST_THIRSTY){
+        ///Nothing.
     }
     //If the creature is thirsty.
     else if(thirst>=THIRST_THIRSTY && thirst<THIRST_WEAK){
+        ///Strength decreased slightly.
     }
     //If the creature is weak.
     else if(thirst>=THIRST_WEAK && thirst<THIRST_FAINTING){
+        ///Strength decreased.
     }
     //If the creature is fainting.
     else if(thirst>=THIRST_FAINTING && thirst<THIRST_DEATH){
+        ///Strength decreased (identical to weak).
+        ///Agility decreased.
+        ///Randomly possibility every turn to faint.
     }
-    //If the creature is dead.
+    //If the creature has reached the point of death from thirst.
     else if(thirst>=THIRST_DEATH){
+        //The creature dies of thirst.
         die(CAUSE_OF_DEATH_THIRST,"","");
     }
 }

@@ -230,7 +230,7 @@ class Creature: public Object{
     void process_turn();
 
     //Increase or decrease thirst, and then handle thirst states.
-    void change_thirst();
+    void change_thirst(bool increase,short amount);
 
     std::string return_thirst_state();
 
