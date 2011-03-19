@@ -139,6 +139,8 @@ void Creature::create_light_item(){
     temp_item.beam=false;
     temp_item.fov_angle=90;
 
+    temp_item.fuel=500;
+
     //Assign the item an available inventory letter.
     temp_item.inventory_letter=assign_inventory_letter();
 
@@ -285,7 +287,7 @@ void Creature::process_turn(){
     handle_thirst();
 }
 
-void Creature::handle_thirst(){
+void Creature::change_thirst(){
     if(rc_gain_thirst()){
         thirst++;
     }

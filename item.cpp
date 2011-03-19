@@ -43,8 +43,8 @@ Item::Item(){
     damage_min_thrown=1;
     damage_max_thrown=1;
 
-    damage_min_ranged=1;
-    damage_max_ranged=1;
+    damage_min_ranged=0;
+    damage_max_ranged=0;
 
     //Randomly choose a facing direction.
     int random=random_range(FOV_EAST,FOV_SOUTHEAST);
@@ -82,6 +82,8 @@ Item::Item(){
     //Container-specific//
 
     //Other-specific//
+
+    fuel=0;
 }
 
 /**Creature* Item::determine_owner_address(){

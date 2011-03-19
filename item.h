@@ -186,6 +186,10 @@ class Item: public Object{
 
     //Other-specific//
 
+    //If this item is a light source, this is its fuel supply.
+    //If this item is a fuel item, this is the amount of fuel it can give.
+    short fuel;
+
     Item();
 
     //Returns a pointer to the item's owner.

@@ -622,9 +622,9 @@
 	light radius:0
 	light beam:0
 	beam angle:0
-	//<other>
-		//is money:0
-	//</other>
+	<other>
+		fuel:0
+	</other>
 </item>
 
 <item category:other>
@@ -643,7 +643,7 @@
 	light radius:10
 	light beam:0
 	beam angle:90
-	//<other>
-		//is money:0
-	//</other>
+	<other>
+		fuel:500
+	</other>
 </item>

@@ -1001,7 +1001,7 @@ void Templates::load_template_item_other(Item* temp_item){
 
         //The data name strings used in the file.
 
-        ///string is_money="is money:";
+        string fuel="fuel:";
 
         //Grab the next line of the file.
         getline(load,line);
@@ -1027,13 +1027,13 @@ void Templates::load_template_item_other(Item* temp_item){
 
         //Load data based on the line.
 
-        //Is money.
-        /**else if(line.rfind(is_money.c_str())!=string::npos){
+        //Fuel amount.
+        else if(line.rfind(fuel.c_str())!=string::npos){
             //Clear the data name.
-            line.erase(0,is_money.length());
+            line.erase(0,fuel.length());
 
-            temp_item->is_money=(bool)atoi(line.c_str());
-        }*/
+            temp_item->fuel=atoi(line.c_str());
+        }
 
         //If the line ends the other.
         else if(line.rfind("</other>")!=string::npos){

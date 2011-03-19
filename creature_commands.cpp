@@ -1569,6 +1569,12 @@ void Creature::execute_command_inventory(char inventory_letter){
         //Reduce the creature's thirst by the item's thirst_quenched value.
         thirst-=inventory[inventory_item_index].thirst_quenched;
 
+        //If thirst falls below the thirst floor.
+        if(thirst<THIRST_FLOOR){
+            //Set the thirst to the thirst floor.
+            thirst=THIRST_FLOOR;
+        }
+
         //If the stack is greater than 1.
         if(inventory[inventory_item_index].stack>1){
             //Simply decrement the stack by 1.

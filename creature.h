@@ -229,8 +229,8 @@ class Creature: public Object{
     //Handle anything that needs handling on each turn.
     void process_turn();
 
-    //Increase thirst, handle thirst states, etc.
-    void handle_thirst();
+    //Increase or decrease thirst, and then handle thirst states.
+    void change_thirst();
 
     std::string return_thirst_state();
 
