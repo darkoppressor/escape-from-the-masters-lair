@@ -1,6 +1,6 @@
 {\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
 {\colortbl ;\red255\green0\blue0;}
-{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\sa200\sl276\slmult1\lang9\b\f0\fs22 Brainstorming:\b0\par
+{\*\generator Msftedit 5.41.21.2509;}\viewkind4\uc1\pard\sa200\sl276\slmult1\lang9\b\f0\fs22 Brainstorming:\b0\par
 Saving/death works pretty much the same as Nethack.\par
 Massive dungeon (hundreds of levels), but you are not expected to traverse it all (shortcut to bottom).\par
 The island should not only exist between characters, but should continue "running" even when not being played.  When a level is loaded, the enemies and items could be processed a certain number of turns depending on how long its been since the last time the level was loaded.  If it's been a short enough amount of time (the level was loaded only a few minutes ago), no processing will take place.  Enemies could move, and items could be moved around, too.  Note that this process should be independent of players, and should only look at the last level load time.\par
@@ -93,5 +93,7 @@ I might need to add a tool slot. Either that, or tools can be used when wielded.
 Statuses for the creatures, such as blindness, hallucination, etc.\par
 Search should look for traps too.\par
 I just want to note somewhere: a game turn is one call to turn(). During this turn, creatures can make multiple moves.\par
+The difficulty of monsters generated should be dungeon level-dependent, NOT player's experience level-dependent.\par
+Necromancy sorts of spells that raise corpses and such as undead minions should take the kind of corpse into account. For instance, a grid bug corpse would become a grid bug zombie. Also, since corpses rot and leave behind skeletons, those should be raised as skeletons and not zombies.\par
 }
  

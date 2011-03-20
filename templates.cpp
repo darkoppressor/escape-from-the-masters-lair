@@ -127,6 +127,7 @@ void Templates::load_base_stats(){
         string base_damage_melee="base damage melee:";
         string base_damage_ranged="base damage ranged:";
         string base_damage_thrown="base damage thrown:";
+        string movement_speed="base movement speed:";
 
         //Grab the next line of the file.
         getline(load,line);
@@ -252,6 +253,13 @@ void Templates::load_base_stats(){
 
             temp_creature.base_damage_thrown_min=atoi(min_damage.c_str());
             temp_creature.base_damage_thrown_max=atoi(max_damage.c_str());
+        }
+        //Movement speed.
+        else if(line.rfind(movement_speed.c_str())!=string::npos){
+            //Clear the data name.
+            line.erase(0,movement_speed.length());
+
+            temp_creature.movement_speed=atoi(line.c_str());
         }
 
         //If the line ends the base stats.

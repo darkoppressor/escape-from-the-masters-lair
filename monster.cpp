@@ -92,27 +92,38 @@ void Monster::set_base_stats(short pass_level){
 
     // From creature: //
 
-    health_max=random_range(templates.base_stats.health_max/4,templates.base_stats.health_max/2);
+    health_max=random_range(templates.base_stats.health_max/2,templates.base_stats.health_max);
     health=health_max;
 
-    mana_max=random_range(templates.base_stats.mana_max/4,templates.base_stats.mana_max/2);
+    mana_max=random_range(templates.base_stats.mana_max/2,templates.base_stats.mana_max);
     mana=mana_max;
 
-    base_damage_melee_min=random_range(templates.base_stats.base_damage_melee_min/4,templates.base_stats.base_damage_melee_min/2);
-    base_damage_melee_max=random_range(templates.base_stats.base_damage_melee_max/4,templates.base_stats.base_damage_melee_max/2);
+    base_damage_melee_min=random_range(templates.base_stats.base_damage_melee_min/2,templates.base_stats.base_damage_melee_min);
+    base_damage_melee_max=random_range(templates.base_stats.base_damage_melee_max/2,templates.base_stats.base_damage_melee_max);
 
-    base_damage_ranged_min=random_range(templates.base_stats.base_damage_ranged_min/4,templates.base_stats.base_damage_ranged_min/2);
-    base_damage_ranged_max=random_range(templates.base_stats.base_damage_ranged_max/4,templates.base_stats.base_damage_ranged_max/2);
+    base_damage_ranged_min=random_range(templates.base_stats.base_damage_ranged_min/2,templates.base_stats.base_damage_ranged_min);
+    base_damage_ranged_max=random_range(templates.base_stats.base_damage_ranged_max/2,templates.base_stats.base_damage_ranged_max);
 
-    base_damage_thrown_min=random_range(templates.base_stats.base_damage_thrown_min/4,templates.base_stats.base_damage_thrown_min/2);
-    base_damage_thrown_max=random_range(templates.base_stats.base_damage_thrown_max/4,templates.base_stats.base_damage_thrown_max/2);
+    base_damage_thrown_min=random_range(templates.base_stats.base_damage_thrown_min/2,templates.base_stats.base_damage_thrown_min);
+    base_damage_thrown_max=random_range(templates.base_stats.base_damage_thrown_max/2,templates.base_stats.base_damage_thrown_max);
 
-    ///Not positive how I'll handle movement_speed yet.
-    movement_speed=75;
+    movement_speed=templates.base_stats.movement_speed;
     next_move=movement_speed;
 
     //Level the monster up an appropriate number of times.
-    ///
+
+    int lowest_level=home_level-3;
+    if(lowest_level<0){
+        lowest_level=0;
+    }
+
+    int highest_level=home_level+3;
+
+    int levels_to_gain=random_range(lowest_level,highest_level);
+
+    for(int i=0;i<levels_to_gain;i++){
+        gain_experience(experience_max-experience);
+    }
 }
 
 void Monster::handle_ai(){

@@ -7,6 +7,70 @@
 
 using namespace std;
 
+void Player::render_stats(){
+    if(display_stats){
+        string title="";
+
+        render_rectangle(0,0,800,600,1.0,COLOR_BLACK);
+
+        title=name;
+        render_rectangle(5,5,11*title.length()+3,22,1.0,COLOR_GRAY);
+        font.show(5,8,title,COLOR_BLACK);
+
+        ss.clear();ss.str("");ss<<"Experience Level: ";ss<<experience_level;ss<<"\xA";msg=ss.str();
+        ss.clear();ss.str("");ss<<"Experience: ";ss<<experience;ss<<"/";ss<<experience_max;ss<<"\xA";msg+=ss.str();
+        ss.clear();ss.str("");ss<<"Health: ";ss<<return_health();ss<<"/";ss<<return_health_max();ss<<"\xA";msg+=ss.str();
+        ss.clear();ss.str("");ss<<"Mana: ";ss<<return_mana();ss<<"/";ss<<return_mana_max();ss<<"\xA";msg+=ss.str();
+
+        font.show(5,30,msg,COLOR_WHITE);
+
+        title="Attributes";
+        render_rectangle(275,5,11*title.length()+3,22,1.0,COLOR_GRAY);
+        font.show(275,8,title,COLOR_BLACK);
+
+        ss.clear();ss.str("");ss<<"Strength - ";ss<<return_attribute_strength();ss<<"\xA";msg=ss.str();
+        ss.clear();ss.str("");ss<<"Agility - ";ss<<return_attribute_agility();ss<<"\xA";msg+=ss.str();
+        ss.clear();ss.str("");ss<<"Hardiness - ";ss<<return_attribute_hardiness();ss<<"\xA";msg+=ss.str();
+        ss.clear();ss.str("");ss<<"Comprehension - ";ss<<return_attribute_comprehension();ss<<"\xA";msg+=ss.str();
+        ss.clear();ss.str("");ss<<"Acumen - ";ss<<return_attribute_acumen();ss<<"\xA";msg+=ss.str();
+        ss.clear();ss.str("");ss<<"Luck - ";ss<<return_attribute_luck();ss<<"\xA";msg+=ss.str();
+
+        font.show(275,30,msg,COLOR_WHITE);
+
+        title="Skills";
+        render_rectangle(500,5,11*title.length()+3,22,1.0,COLOR_GRAY);
+        font.show(500,8,title,COLOR_BLACK);
+
+        ss.clear();ss.str("");ss<<"Bladed Weapons - ";ss<<return_skill_bladed_weapons();ss<<"\xA";msg=ss.str();
+        ss.clear();ss.str("");ss<<"Blunt Weapons - ";ss<<return_skill_blunt_weapons();ss<<"\xA";msg+=ss.str();
+        ss.clear();ss.str("");ss<<"Stabbing Weapons - ";ss<<return_skill_stabbing_weapons();ss<<"\xA";msg+=ss.str();
+        ss.clear();ss.str("");ss<<"Unarmed - ";ss<<return_skill_unarmed();ss<<"\xA";msg+=ss.str();
+
+        ss.clear();ss.str("");ss<<"Security - ";ss<<return_skill_security();ss<<"\xA";msg+=ss.str();
+        ss.clear();ss.str("");ss<<"Stealth - ";ss<<return_skill_stealth();ss<<"\xA";msg+=ss.str();
+        ss.clear();ss.str("");ss<<"Launcher Weapons - ";ss<<return_skill_launcher_weapons();ss<<"\xA";msg+=ss.str();
+        ss.clear();ss.str("");ss<<"Thrown Weapons - ";ss<<return_skill_thrown_weapons();ss<<"\xA";msg+=ss.str();
+        ss.clear();ss.str("");ss<<"Dual Wielding - ";ss<<return_skill_dual_wielding();ss<<"\xA";msg+=ss.str();
+        ss.clear();ss.str("");ss<<"Speed - ";ss<<return_skill_speed();ss<<"\xA";msg+=ss.str();
+        ss.clear();ss.str("");ss<<"Fighting - ";ss<<return_skill_fighting();ss<<"\xA";msg+=ss.str();
+        ss.clear();ss.str("");ss<<"Dodging - ";ss<<return_skill_dodging();ss<<"\xA";msg+=ss.str();
+
+        ss.clear();ss.str("");ss<<"Armor - ";ss<<return_skill_armor();ss<<"\xA";msg+=ss.str();
+
+        ss.clear();ss.str("");ss<<"Air Magic - ";ss<<return_skill_magic_air();ss<<"\xA";msg+=ss.str();
+        ss.clear();ss.str("");ss<<"Fire Magic - ";ss<<return_skill_magic_fire();ss<<"\xA";msg+=ss.str();
+        ss.clear();ss.str("");ss<<"Water Magic - ";ss<<return_skill_magic_water();ss<<"\xA";msg+=ss.str();
+        ss.clear();ss.str("");ss<<"Cold Magic - ";ss<<return_skill_magic_cold();ss<<"\xA";msg+=ss.str();
+
+        ss.clear();ss.str("");ss<<"Earth Magic - ";ss<<return_skill_magic_earth();ss<<"\xA";msg+=ss.str();
+        ss.clear();ss.str("");ss<<"Conjuration Magic - ";ss<<return_skill_magic_conjuration();ss<<"\xA";msg+=ss.str();
+        ss.clear();ss.str("");ss<<"Enchantment Magic - ";ss<<return_skill_magic_enchantment();ss<<"\xA";msg+=ss.str();
+        ss.clear();ss.str("");ss<<"Summoning Magic - ";ss<<return_skill_magic_summoning();ss<<"\xA";msg+=ss.str();
+
+        font.show(500,30,msg,COLOR_WHITE);
+    }
+}
+
 void Player::render_inventory(){
     if(display_inventory){
         msg="";

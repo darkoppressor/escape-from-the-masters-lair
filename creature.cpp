@@ -45,24 +45,24 @@ Creature::Creature(){
 
     thirst=THIRST_NOT_THIRSTY;
 
-    base_damage_melee_min=1;
-    base_damage_melee_max=5;
+    base_damage_melee_min=0;
+    base_damage_melee_max=0;
 
-    base_damage_ranged_min=2;
-    base_damage_ranged_max=6;
+    base_damage_ranged_min=0;
+    base_damage_ranged_max=0;
 
-    base_damage_thrown_min=1;
-    base_damage_thrown_max=3;
+    base_damage_thrown_min=0;
+    base_damage_thrown_max=0;
 
     for(int i=0;i<ATTRIBUTE_LUCK+1;i++){
         attributes[i]=1;
     }
 
     for(int i=0;i<SKILL_MAGIC_SUMMONING+1;i++){
-        skills[i]=1;
+        skills[i]=1.0;
     }
 
-    movement_speed=25;
+    movement_speed=0;
     next_move=movement_speed;
 
     //Randomly choose a facing direction.

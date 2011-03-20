@@ -53,11 +53,15 @@ class Player: public Creature{
     //Render the inventory.
     void render_inventory();
 
+    //
+    void render_stats();
+
     //Render the player.
     void render(std::vector< std::vector<bool> >* tile_rendered);
 
     //
     bool display_inventory;
+    bool display_stats;
 
     int turn;
 

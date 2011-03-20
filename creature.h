@@ -76,14 +76,15 @@ class Creature: public Object{
     //Lower numbers are better.
     short thirst;
 
-    //The amount of damage the creature does with its bare hands with no bonuses from anything.
-    //Determined by race.
+    //The base amount of damage the creature does with its bare hands.
     short base_damage_melee_min;
     short base_damage_melee_max;
 
+    //The base amount of damage the creature does with ranged weapons.
     short base_damage_ranged_min;
     short base_damage_ranged_max;
 
+    //The base amount of damage the creature does when throwing weapons.
     short base_damage_thrown_min;
     short base_damage_thrown_max;
 
@@ -91,7 +92,7 @@ class Creature: public Object{
     short attributes[ATTRIBUTE_LUCK+1];
 
     //The creature's base skill values.
-    short skills[SKILL_MAGIC_SUMMONING+1];
+    double skills[SKILL_MAGIC_SUMMONING+1];
 
     //The base speed of this creature, used for the turns system.
     //Lower numbers are faster.
@@ -217,8 +218,8 @@ class Creature: public Object{
     //Level up the creature.
     void level_up();
 
-    //Gain experience points from killing a creature.
-    void gain_experience(int killed_experience_level);
+    //Gain experience points.
+    void gain_experience(int points_gained);
 
     //Evaluate the tile the creature is trying to move to.
     //Returns true if the creature can move, false if the creature can not move.

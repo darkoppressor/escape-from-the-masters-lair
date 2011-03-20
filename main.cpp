@@ -215,6 +215,8 @@ int main(int argc, char* args[]){
     fov_settings_set_opacity_test_function(&player.fov_settings,opaque);
     fov_settings_set_apply_lighting_function(&player.fov_settings,apply);
 
+    fprintf(stdout,"Initialization successful. Calling game_loop().\n");
+
     //Begin the game by entering the game loop.
     game_loop();
 

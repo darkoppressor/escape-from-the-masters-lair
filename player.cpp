@@ -30,6 +30,7 @@ Player::Player(){
     cam_state=CAM_STICKY;
 
     display_inventory=false;
+    display_stats=false;
 
     turn=0;
 
@@ -163,6 +164,9 @@ void Player::set_base_stats(){
 
     base_damage_thrown_min=templates.base_stats.base_damage_thrown_min;
     base_damage_thrown_max=templates.base_stats.base_damage_thrown_max;
+
+    movement_speed=templates.base_stats.movement_speed;
+    next_move=movement_speed;
 }
 
 void Player::load_data(){
@@ -243,6 +247,7 @@ void Player::handle_input(){
                             input_inventory=INVENTORY_COMMAND_NONE;
                         }
                         display_inventory=false;
+                        display_stats=false;
                     }
 
                     //Open door.
@@ -351,7 +356,7 @@ void Player::handle_input(){
                     //*********************//
 
                     //Open inventory.
-                    else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.sym==SDLK_i){
+                    else if(!display_stats && input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.sym==SDLK_i){
                         display_inventory=!display_inventory;
                     }
 
@@ -428,6 +433,15 @@ void Player::handle_input(){
                     //Inventory letter.
                     else if(input_inventory!=INVENTORY_COMMAND_NONE && ((event.key.keysym.unicode>=(Uint16)'A' && event.key.keysym.unicode<=(Uint16)'Z') || (event.key.keysym.unicode>=(Uint16)'a' && event.key.keysym.unicode<=(Uint16)'z') || (event.key.keysym.unicode==(Uint16)'$'))){
                         inventory_input_state=(char)event.key.keysym.unicode;
+                    }
+
+                    //**************//
+                    // Other Input: //
+                    //**************//
+
+                    //Open stats window.
+                    else if(!display_inventory && event.key.keysym.sym==SDLK_F1){
+                        display_stats=!display_stats;
                     }
                 }
                 break;

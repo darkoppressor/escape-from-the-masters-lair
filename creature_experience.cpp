@@ -32,12 +32,10 @@ void Creature::level_up(){
     }
 }
 
-void Creature::gain_experience(int killed_experience_level){
-    int experience_gained=random_range(killed_experience_level*14,killed_experience_level*18);
+void Creature::gain_experience(int points_gained){
+    experience+=points_gained;
 
-    experience+=experience_gained;
-
-    ss.clear();ss.str("");ss<<"You gain ";ss<<experience_gained;ss<<" experience points!";msg=ss.str();
+    ss.clear();ss.str("");ss<<"You gain ";ss<<points_gained;ss<<" experience points!";msg=ss.str();
 
     update_text_log(msg.c_str(),is_player);
 
