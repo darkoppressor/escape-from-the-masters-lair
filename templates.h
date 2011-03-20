@@ -10,6 +10,10 @@
 #include "creature.h"
 
 #include <vector>
+#include <fstream>
+
+#include <boost/filesystem.hpp>
+#include <boost/algorithm/string.hpp>
 
 class Templates{
     private:
