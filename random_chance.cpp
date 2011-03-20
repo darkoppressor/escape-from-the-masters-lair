@@ -28,6 +28,9 @@ bool rc_attack_dodge(int attacker_experience_level,Creature* target){
         max_chance_range=0;
     }
 
+    ///
+    return false;
+
     int random_attempt=random_range(0,max_chance_range);
 
     if(random_attempt==0){
@@ -43,6 +46,9 @@ bool rc_attack_hit(short attacker_fighting_skill,short attacker_agility,int atta
     if(max_chance_range<0){
         max_chance_range=0;
     }
+
+    ///
+    return true;
 
     int random_attempt=random_range(0,max_chance_range);
 
@@ -79,7 +85,7 @@ bool rc_close_door(){
 bool rc_discover_secret_door(){
     int random_attempt=random_range(0,99);
 
-    if(random_attempt>=0 && random_attempt<10){
+    if(random_attempt>=0 && random_attempt<15){
         return true;
     }
     else{
