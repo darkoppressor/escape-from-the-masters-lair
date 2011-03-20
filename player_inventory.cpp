@@ -64,92 +64,110 @@ void Player::render_inventory(){
                             item_amount_prefix="a ";
                         }
 
-                        string str_item_equipped="";
+                        string str_item="";
 
                         //If the item is equipped.
                         if(inventory[i].equipped){
                             //Determine what slot the item is equipped in.
                             short equip_slot=item_equipped_in_which_slot(i);
 
-                            str_item_equipped=" (";
+                            str_item=" (";
 
                             //If the item is a stack larger than 1 and the equipment slot is a hold slot or the light source slot.
                             if(inventory[i].stack>1 && (equip_slot==EQUIP_HOLD_RIGHT || equip_slot==EQUIP_HOLD_LEFT)){
-                                str_item_equipped+="one ";
+                                str_item+="one ";
                             }
 
                             switch(equip_slot){
                             case EQUIP_HOLD_RIGHT:
-                                str_item_equipped+="being wielded in right hand)";
+                                str_item+="being wielded in right hand)";
                                 break;
 
                             case EQUIP_HOLD_LEFT:
-                                str_item_equipped+="being wielded in left hand)";
+                                str_item+="being wielded in left hand)";
                                 break;
 
                             case EQUIP_QUIVER:
-                                str_item_equipped+="in quiver)";
+                                str_item+="in quiver)";
                                 break;
 
                             case EQUIP_HEAD:
-                                str_item_equipped+="being worn on head)";
+                                str_item+="being worn on head)";
                                 break;
 
                             case EQUIP_SHOULDER:
-                                str_item_equipped+="being worn on shoulders)";
+                                str_item+="being worn on shoulders)";
                                 break;
 
                             case EQUIP_CHEST:
-                                str_item_equipped+="being worn on chest)";
+                                str_item+="being worn on chest)";
                                 break;
 
                             case EQUIP_BACK:
-                                str_item_equipped+="being worn on back)";
+                                str_item+="being worn on back)";
                                 break;
 
                             case EQUIP_WAIST:
-                                str_item_equipped+="being worn on waist)";
+                                str_item+="being worn on waist)";
                                 break;
 
                             case EQUIP_LEG:
-                                str_item_equipped+="being worn on legs)";
+                                str_item+="being worn on legs)";
                                 break;
 
                             case EQUIP_FOOT:
-                                str_item_equipped+="being worn on feet)";
+                                str_item+="being worn on feet)";
                                 break;
 
                             case EQUIP_HAND:
-                                str_item_equipped+="being worn on hands)";
+                                str_item+="being worn on hands)";
                                 break;
 
                             case EQUIP_SHIELD:
-                                str_item_equipped+="being worn on arm)";
+                                str_item+="being worn on arm)";
                                 break;
 
                             case EQUIP_NECK:
-                                str_item_equipped+="being worn around neck)";
+                                str_item+="being worn around neck)";
                                 break;
 
                             case EQUIP_WRIST:
-                                str_item_equipped+="being worn on wrists)";
+                                str_item+="being worn on wrists)";
                                 break;
 
                             case EQUIP_SHIRT:
-                                str_item_equipped+="being worn on chest as a shirt)";
+                                str_item+="being worn on chest as a shirt)";
                                 break;
 
                             case EQUIP_FINGER_RIGHT:
-                                str_item_equipped+="being worn on right ring finger)";
+                                str_item+="being worn on right ring finger)";
                                 break;
 
                             case EQUIP_FINGER_LEFT:
-                                str_item_equipped+="being worn on left ring finger)";
+                                str_item+="being worn on left ring finger)";
                                 break;
                             }
                         }
 
-                        ss.clear();ss.str("");ss<<" ";ss<<inventory[i].inventory_letter;ss<<" - ";ss<<item_amount_prefix;ss<<inventory[i].return_full_name();ss<<str_item_equipped;ss<<"\xA";msg=ss.str();
+                        //If the item has a light radius.
+                        if(inventory[i].fov_radius!=LIGHT_NONE){
+                            if(inventory[i].light_on){
+                                str_item=" (lit) (";
+                            }
+                            else{
+                                str_item=" (";
+                            }
+
+                            if(inventory[i].fuel>0){
+                                ss.clear();ss.str("");ss<<inventory[i].fuel;ss<<"/";ss<<inventory[i].fuel_max;str_item+=ss.str();
+                                str_item+=" fuel)";
+                            }
+                            else{
+                                str_item+="out of fuel)";
+                            }
+                        }
+
+                        ss.clear();ss.str("");ss<<" ";ss<<inventory[i].inventory_letter;ss<<" - ";ss<<item_amount_prefix;ss<<inventory[i].return_full_name();ss<<str_item;ss<<"\xA";msg=ss.str();
 
                         font.show(5,10+22*lines_rendered++,msg,render_color);
                     }

@@ -122,7 +122,7 @@ void game_loop(){
 
             //Then, we move all of the objects, if the player has initiated a move.
             if(player.initiate_move){
-                movement();
+                turn();
                 player.turn++;
                 player.initiate_move=false;
             }

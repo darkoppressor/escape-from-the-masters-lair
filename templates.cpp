@@ -1009,7 +1009,7 @@ void Templates::load_template_item_other(Item* temp_item){
 
         //The data name strings used in the file.
 
-        string fuel="fuel:";
+        string fuel_max="max fuel:";
 
         //Grab the next line of the file.
         getline(load,line);
@@ -1035,12 +1035,12 @@ void Templates::load_template_item_other(Item* temp_item){
 
         //Load data based on the line.
 
-        //Fuel amount.
-        else if(line.rfind(fuel.c_str())!=string::npos){
+        //Max fuel amount.
+        else if(line.rfind(fuel_max.c_str())!=string::npos){
             //Clear the data name.
-            line.erase(0,fuel.length());
+            line.erase(0,fuel_max.length());
 
-            temp_item->fuel=atoi(line.c_str());
+            temp_item->fuel_max=atoi(line.c_str());
         }
 
         //If the line ends the other.

@@ -142,6 +142,7 @@ void Creature::create_light_item(){
     temp_item.use=ITEM_USE_LIGHT;
 
     temp_item.fuel=500;
+    temp_item.fuel_max=500;
 
     //Assign the item an available inventory letter.
     temp_item.inventory_letter=assign_inventory_letter();
@@ -280,6 +281,48 @@ void Creature::return_inventory_letter(char returning_letter){
 }
 
 void Creature::process_turn(){
+    //Look through all the items.
+    for(int i=0;i<inventory.size();i++){
+        //If the item has a light radius.
+        if(inventory[i].fov_radius!=LIGHT_NONE){
+            //If the light item is on.
+            if(inventory[i].light_on){
+                //Decrement the item's fuel.
+                inventory[i].fuel--;
+
+                //If the item is out of fuel.
+                if(inventory[i].fuel<=0){
+                    //Ensure the item has exactly 0 fuel.
+                    inventory[i].fuel=0;
+
+                    //Turn off the item's light.
+                    inventory[i].light_on=false;
+
+                    //Set up a light turning off message.
+
+                    string message="";
+
+                    if(is_player){
+                        message="Your ";
+                        message+=inventory[i].return_full_name(1);
+                        message+=" has run out of fuel.";
+                    }
+                    else{
+                        message="The ";
+                        message+=return_full_name();
+                        message+="'s ";
+                        message+=inventory[i].return_full_name(1);
+                        message+=" has run out of fuel.";
+                    }
+
+                    update_text_log(message.c_str(),true);
+                }
+            }
+        }
+    }
+}
+
+void Creature::process_move(){
     if(rc_regain_mana()){
         if(++mana>mana_max){
             mana=mana_max;

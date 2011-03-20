@@ -40,8 +40,9 @@ class Creature: public Object{
     //A standard command to be executed on the next call to move().
     short command_standard;
 
-    //If true, the creature has given some input that should initiate a call to movement().
+    //If true, the creature has given some input that should initiate a call to turn().
     //Only used by the Player class.
+    ///This should really be renamed initiate_turn.
     bool initiate_move;
 
     //If true, this creature is the player.
@@ -227,8 +228,11 @@ class Creature: public Object{
 
     void search();
 
-    //Handle anything that needs handling on each turn.
+    //Handle anything that needs handling on each game turn.
     void process_turn();
+
+    //Handle anything that needs handling on each move.
+    void process_move();
 
     //Increase or decrease thirst, and then handle thirst states.
     void change_thirst(bool increase,short amount);

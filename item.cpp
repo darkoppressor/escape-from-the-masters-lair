@@ -3,6 +3,7 @@
 
 #include "item.h"
 #include "world.h"
+#include "message_log.h"
 
 using namespace std;
 
@@ -86,6 +87,16 @@ Item::Item(){
     //Other-specific//
 
     fuel=0;
+
+    fuel_max=0;
+}
+
+void Item::setup(){
+    //If the item has more than 0 fuel_max.
+    if(fuel_max>0){
+        //Determine the item's fuel.
+        fuel=random_range(1,fuel_max);
+    }
 }
 
 /**Creature* Item::determine_owner_address(){
@@ -315,6 +326,36 @@ void Item::move(){
         if(momentum==0){
             //It doesn't matter what caused the item to move, since it has stopped moving.
             clear_owner_data_all();
+        }
+    }
+}
+
+void Item::process_turn(){
+    //If the item has a light radius.
+    if(fov_radius!=LIGHT_NONE){
+        //If the light item is on.
+        if(light_on){
+            //Decrement the item's fuel.
+            fuel--;
+
+            //If the item is out of fuel.
+            if(fuel<=0){
+                //Ensure the item has exactly 0 fuel.
+                fuel=0;
+
+                //Turn off the item's light.
+                light_on=false;
+
+                //Set up a light turning off message.
+
+                string message="";
+
+                message="The ";
+                message+=return_full_name(1);
+                message+=" has run out of fuel.";
+
+                update_text_log(message.c_str(),true);
+            }
         }
     }
 }

@@ -19,14 +19,28 @@ void input(){
     player.handle_input();
 }
 
-//Move things that need to be moved.
-void movement(){
+void turn(){
+    //Process the player's turn stuff.
+    player.process_turn();
+
+    //Process the monsters' turn stuff.
+    for(int i=0;i<vector_levels[current_level].monsters.size();i++){
+        vector_levels[current_level].monsters[i].process_turn();
+    }
+
+    //Process the items' turn stuff.
+    for(int i=0;i<vector_levels[current_level].items.size();i++){
+        vector_levels[current_level].items[i].process_turn();
+    }
+
     bool player_moved=false;
 
+    //As long as the player has not moved.
     while(!player_moved){
         //Tick down towards the player's next move.
         player.next_move--;
 
+        //If it is time for the player's next move.
         if(player.return_next_move()<=0){
             player.move();
             player.next_move=player.return_movement_speed();
@@ -49,6 +63,7 @@ void movement(){
 
 //Handle events, such as collisions.
 void events(){
+    ///I may need to add some kind of check eventually, so movement cannot resume until no items need to move.
     //Move the items.
     for(int i=0;i<vector_levels[current_level].items.size();i++){
         vector_levels[current_level].items[i].move();

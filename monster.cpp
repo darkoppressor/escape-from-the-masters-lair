@@ -48,6 +48,9 @@ void Monster::set_inventory(){
             //Apply the selected template to the item.
             temp_item=templates.template_items[random_item_category][random_item_template];
 
+            //Run the item's setup function.
+            temp_item.setup();
+
             //Apply the randomly selected stack size.
             temp_item.stack=random_item_stack;
 
@@ -387,7 +390,7 @@ void Monster::move(){
 
         command_standard=COMMAND_NONE;
 
-        process_turn();
+        process_move();
 
         ///update_fov();
     }

@@ -193,7 +193,13 @@ class Item: public Object{
     //If this item is a fuel item, this is the amount of fuel it can give.
     short fuel;
 
+    //The maximum amount of fuel this item can hold.
+    short fuel_max;
+
     Item();
+
+    //Setup any starting stuff for the item.
+    void setup();
 
     //Returns a pointer to the item's owner.
     //If a NULL pointer is returned, no owner was found.
@@ -233,6 +239,9 @@ class Item: public Object{
     void attack_kicked(Creature* target);
 
     void move();
+
+    //Handle anything that needs handling on each game turn.
+    void process_turn();
 
     std::string return_full_name(int override_stack=-1);
 

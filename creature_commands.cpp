@@ -688,24 +688,24 @@ void Creature::execute_command_directional(short direction){
     else if(command==DIRECTIONAL_COMMAND_THROW_ITEM){
         //Setup a throw message.
 
-        string throw_item="";
+        string str_item="";
 
         //If the creature is the player.
         if(is_player){
-            throw_item="You throw the ";
+            str_item="You throw the ";
         }
         //If the creature is not the player.
         else{
-            throw_item="The ";
-            throw_item+=return_full_name();
-            throw_item+=" throws the ";
+            str_item="The ";
+            str_item+=return_full_name();
+            str_item+=" throws the ";
         }
 
-        throw_item+=inventory[inventory_item_index].return_full_name(1);
+        str_item+=inventory[inventory_item_index].return_full_name(1);
 
-        throw_item+=".";
+        str_item+=".";
 
-        update_text_log(throw_item.c_str(),true);
+        update_text_log(str_item.c_str(),true);
 
         //If the item's stack is not 0.
         if(inventory[inventory_item_index].stack!=0){
@@ -1305,24 +1305,24 @@ void Creature::execute_command_inventory(char inventory_letter){
     if(command==INVENTORY_COMMAND_DROP_ITEM){
         //Setup a drop message.
 
-        string drop_item="";
+        string str_item="";
 
         //If the creature is the player.
         if(is_player){
-            drop_item="You drop the ";
+            str_item="You drop the ";
         }
         //If the creature is not the player.
         else{
-            drop_item="The ";
-            drop_item+=return_full_name();
-            drop_item+=" drops the ";
+            str_item="The ";
+            str_item+=return_full_name();
+            str_item+=" drops the ";
         }
 
-        drop_item+=inventory[inventory_item_index].return_full_name();
+        str_item+=inventory[inventory_item_index].return_full_name();
 
-        drop_item+=".";
+        str_item+=".";
 
-        update_text_log(drop_item.c_str(),true);
+        update_text_log(str_item.c_str(),true);
 
         //If the item is not money.
         if(inventory[inventory_item_index].inventory_letter!='$'){
@@ -1376,74 +1376,74 @@ void Creature::execute_command_inventory(char inventory_letter){
             command==INVENTORY_COMMAND_QUIVER_ITEM || command==INVENTORY_COMMAND_EQUIP_ARMOR){
         //Setup an equip message.
 
-        string str_equip_item="";
+        string str_item="";
 
         //If the creature is the player.
         if(is_player){
             if(command==INVENTORY_COMMAND_EQUIP_RIGHT_HAND || command==INVENTORY_COMMAND_EQUIP_LEFT_HAND){
-                str_equip_item="You wield the ";
+                str_item="You wield the ";
             }
             else if(command==INVENTORY_COMMAND_QUIVER_ITEM){
-                str_equip_item="You place the ";
+                str_item="You place the ";
             }
             else if(command==INVENTORY_COMMAND_EQUIP_ARMOR){
-                str_equip_item="You put on the ";
+                str_item="You put on the ";
             }
         }
         //If the creature is not the player.
         else{
             if(command==INVENTORY_COMMAND_EQUIP_RIGHT_HAND || command==INVENTORY_COMMAND_EQUIP_LEFT_HAND){
-                str_equip_item="The ";
-                str_equip_item+=return_full_name();
-                str_equip_item+=" wields the ";
+                str_item="The ";
+                str_item+=return_full_name();
+                str_item+=" wields the ";
             }
             else if(command==INVENTORY_COMMAND_QUIVER_ITEM){
-                str_equip_item="The ";
-                str_equip_item+=return_full_name();
-                str_equip_item+=" places the ";
+                str_item="The ";
+                str_item+=return_full_name();
+                str_item+=" places the ";
             }
             else if(command==INVENTORY_COMMAND_EQUIP_ARMOR){
-                str_equip_item="The ";
-                str_equip_item+=return_full_name();
-                str_equip_item+=" puts on the ";
+                str_item="The ";
+                str_item+=return_full_name();
+                str_item+=" puts on the ";
             }
         }
 
         if(command==INVENTORY_COMMAND_EQUIP_RIGHT_HAND || command==INVENTORY_COMMAND_EQUIP_LEFT_HAND){
-            str_equip_item+=inventory[inventory_item_index].return_full_name(1);
+            str_item+=inventory[inventory_item_index].return_full_name(1);
         }
         else{
-            str_equip_item+=inventory[inventory_item_index].return_full_name();
+            str_item+=inventory[inventory_item_index].return_full_name();
         }
 
         if(command==INVENTORY_COMMAND_EQUIP_RIGHT_HAND){
             if(is_player){
-                str_equip_item+=" in your right hand";
+                str_item+=" in your right hand";
             }
             else{
-                str_equip_item+=" in its right hand";
+                str_item+=" in its right hand";
             }
         }
         else if(command==INVENTORY_COMMAND_EQUIP_LEFT_HAND){
             if(is_player){
-                str_equip_item+=" in your left hand";
+                str_item+=" in your left hand";
             }
             else{
-                str_equip_item+=" in its left hand";
+                str_item+=" in its left hand";
             }
         }
         else if(command==INVENTORY_COMMAND_QUIVER_ITEM){
             if(is_player){
-                str_equip_item+=" into your quiver";
+                str_item+=" into your quiver";
             }
             else{
-                str_equip_item+=" into its quiver";
+                str_item+=" into its quiver";
             }
         }
 
-        str_equip_item+=".";
+        str_item+=".";
 
-        update_text_log(str_equip_item.c_str(),true);
+        update_text_log(str_item.c_str(),true);
 
         //Determine the equipment slot.
         //If this remains -1, we are equipping a piece of armor.
@@ -1468,29 +1468,29 @@ void Creature::execute_command_inventory(char inventory_letter){
 
         //Setup an equip message.
 
-        string str_unequip_item="";
+        string str_item="";
 
         //If the creature is the player.
         if(is_player){
-            str_unequip_item="You unequip the ";
+            str_item="You unequip the ";
         }
         //If the creature is not the player.
         else{
-            str_unequip_item="The ";
-            str_unequip_item+=return_full_name();
-            str_unequip_item+=" unequips the ";
+            str_item="The ";
+            str_item+=return_full_name();
+            str_item+=" unequips the ";
         }
 
         if(equip_slot==EQUIP_QUIVER){
-            str_unequip_item+=inventory[inventory_item_index].return_full_name();
+            str_item+=inventory[inventory_item_index].return_full_name();
         }
         else{
-            str_unequip_item+=inventory[inventory_item_index].return_full_name(1);
+            str_item+=inventory[inventory_item_index].return_full_name(1);
         }
 
-        str_unequip_item+=".";
+        str_item+=".";
 
-        update_text_log(str_unequip_item.c_str(),true);
+        update_text_log(str_item.c_str(),true);
 
         //Unequip the item.
         unequip_item(inventory_item_index);
@@ -1499,14 +1499,14 @@ void Creature::execute_command_inventory(char inventory_letter){
     else if(command==INVENTORY_COMMAND_THROW_ITEM){
         //Setup a throw message.
 
-        string throw_item="";
+        string str_item="";
 
         //If the creature is the player.
         if(is_player){
-            throw_item="Throw in what direction?";
+            str_item="Throw in what direction?";
         }
 
-        update_text_log(throw_item.c_str(),is_player);
+        update_text_log(str_item.c_str(),is_player);
 
         input_directional=DIRECTIONAL_COMMAND_THROW_ITEM;
     }
@@ -1514,24 +1514,24 @@ void Creature::execute_command_inventory(char inventory_letter){
     else if(command==INVENTORY_COMMAND_QUAFF_ITEM){
         //Setup a message.
 
-        string str_quaff_item="";
+        string str_item="";
 
         //If the creature is the player.
         if(is_player){
-            str_quaff_item="You quaff the ";
+            str_item="You quaff the ";
         }
         //If the creature is not the player.
         else{
-            str_quaff_item="The ";
-            str_quaff_item+=return_full_name();
-            str_quaff_item+=" quaffs the ";
+            str_item="The ";
+            str_item+=return_full_name();
+            str_item+=" quaffs the ";
         }
 
-        str_quaff_item+=inventory[inventory_item_index].return_full_name(1);
+        str_item+=inventory[inventory_item_index].return_full_name(1);
 
-        str_quaff_item+=".";
+        str_item+=".";
 
-        update_text_log(str_quaff_item.c_str(),true);
+        update_text_log(str_item.c_str(),true);
 
         //Quaff the item.
 

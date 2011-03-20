@@ -8,7 +8,8 @@
 
 void input();
 
-void movement();
+//Process one full game "turn."
+void turn();
 
 void events();
 

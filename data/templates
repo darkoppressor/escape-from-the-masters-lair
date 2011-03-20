@@ -550,6 +550,6 @@
 	beam angle:90
 	use:light
 	<other>
-		fuel:0
+		max fuel:500
 	</other>
 </item>

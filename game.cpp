@@ -559,6 +559,9 @@ void Game::generate_level(){
             //Apply the selected template to the item.
             generated_items[generated_items.size()-1]=templates.template_items[random_item_category][random_item_template];
 
+            //Run the item's setup function.
+            generated_items[generated_items.size()-1].setup();
+
             //Apply the randomly selected stack size.
             generated_items[generated_items.size()-1].stack=random_item_stack;
 
