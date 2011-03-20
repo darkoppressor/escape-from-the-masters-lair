@@ -110,6 +110,17 @@ bool rc_gain_thirst(){
     }
 }
 
+bool rc_thirst_faint(){
+    int random_attempt=random_range(0,99);
+
+    if(random_attempt>=0 && random_attempt<1){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
 bool rc_levelgen_secret_door(){
     int random_attempt=random_range(0,99);
 

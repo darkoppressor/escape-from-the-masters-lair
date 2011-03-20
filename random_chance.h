@@ -31,6 +31,8 @@ bool rc_regain_mana();
 
 bool rc_gain_thirst();
 
+bool rc_thirst_faint();
+
 //Level generation//
 
 bool rc_levelgen_secret_door();

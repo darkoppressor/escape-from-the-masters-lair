@@ -86,18 +86,18 @@ class Creature: public Object{
     short base_damage_thrown_min;
     short base_damage_thrown_max;
 
-    //The creature's actual, base attribute values.
+    //The creature's base attribute values.
     short attributes[ATTRIBUTE_LUCK+1];
 
-    //The creature's actual, base skill values.
+    //The creature's base skill values.
     short skills[SKILL_MAGIC_SUMMONING+1];
 
-    //The speed of this creature, used for the turns system.
+    //The base speed of this creature, used for the turns system.
     //Lower numbers are faster.
     ///I am thinking about race determining the base value of this.
     unsigned short movement_speed;
 
-    //The number of "turn ticks" until the next move for this creature.
+    //The base number of "turn ticks" until the next move for this creature.
     short next_move;
 
     //The creature's inventory.
@@ -245,6 +245,12 @@ class Creature: public Object{
     //Returns the full name of the creature, which is:
     //race_name + " named " + name
     std::string return_full_name();
+
+    //
+    unsigned short return_movement_speed();
+
+    //
+    short return_next_move();
 
     //Each of these functions returns the current TRUE attribute value (with all relevant bonuses, penalties, etc.) for the corresponding attribute.
     short return_attribute_strength();

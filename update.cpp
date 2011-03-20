@@ -27,9 +27,9 @@ void movement(){
         //Tick down towards the player's next move.
         player.next_move--;
 
-        if(player.next_move<=0){
+        if(player.return_next_move()<=0){
             player.move();
-            player.next_move=player.movement_speed;
+            player.next_move=player.return_movement_speed();
             player_moved=true;
         }
 
@@ -37,11 +37,11 @@ void movement(){
         for(int i=0;i<vector_levels[current_level].monsters.size();i++){
             vector_levels[current_level].monsters[i].next_move--;
 
-            if(vector_levels[current_level].monsters[i].next_move<=0){
+            if(vector_levels[current_level].monsters[i].return_next_move()<=0){
                 vector_levels[current_level].monsters[i].handle_ai();
                 vector_levels[current_level].monsters[i].handle_input();
                 vector_levels[current_level].monsters[i].move();
-                vector_levels[current_level].monsters[i].next_move=vector_levels[current_level].monsters[i].movement_speed;
+                vector_levels[current_level].monsters[i].next_move=vector_levels[current_level].monsters[i].return_movement_speed();
             }
         }
     }

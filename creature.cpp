@@ -309,28 +309,12 @@ void Creature::change_thirst(bool increase,short amount){
     if(thirst<=THIRST_BLOATED){
         ///Movement slowed.
     }
-    //If the creature is satiated.
-    else if(thirst>=THIRST_SATIATED && thirst<THIRST_NOT_THIRSTY){
-        ///Strength increased slightly.
-        ///Agility increased slightly.
-    }
-    //If the creature is not thirsty.
-    else if(thirst>=THIRST_NOT_THIRSTY && thirst<THIRST_THIRSTY){
-        ///Nothing.
-    }
-    //If the creature is thirsty.
-    else if(thirst>=THIRST_THIRSTY && thirst<THIRST_WEAK){
-        ///Strength decreased slightly.
-    }
-    //If the creature is weak.
-    else if(thirst>=THIRST_WEAK && thirst<THIRST_FAINTING){
-        ///Strength decreased.
-    }
     //If the creature is fainting.
     else if(thirst>=THIRST_FAINTING && thirst<THIRST_DEATH){
-        ///Strength decreased (identical to weak).
-        ///Agility decreased.
-        ///Randomly possibility every turn to faint.
+        ///I need to add 'if the creature is not currently fainted' here.
+        if(rc_thirst_faint()){
+            ///Faint.
+        }
     }
     //If the creature has reached the point of death from thirst.
     else if(thirst>=THIRST_DEATH){
