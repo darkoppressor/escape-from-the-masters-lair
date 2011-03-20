@@ -61,7 +61,6 @@ void save_game(){
 
         //Fov data.
         save<<player.facing<<"\n";
-        save<<player.light_on<<"\n";
 
         //******************//
         // Save level data. //
@@ -138,7 +137,6 @@ void load_game(){
         short facing=0;
         load>>facing;
         player.facing=(fov_direction_type)facing;
-        load>>player.light_on;
 
         //******************//
         // Load level data. //

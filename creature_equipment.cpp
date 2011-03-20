@@ -42,12 +42,6 @@ void Creature::unequip_item(int item_identifier){
         if(equipment[i]==inventory[item_identifier].inventory_letter){
             //Remove the item from this slot.
             equipment[i]=0;
-
-            //If the unequipped item was the light source.
-            if(i==EQUIP_LIGHT_SOURCE){
-                //Make sure the light source is turned off.
-                light_on=false;
-            }
         }
     }
 

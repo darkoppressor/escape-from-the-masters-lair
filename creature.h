@@ -111,7 +111,6 @@ class Creature: public Object{
     fov_direction_type facing;
     ///This can probably be replaced by something global.
     fov_settings_type fov_settings;
-    bool light_on;
     ///This can probably be replaced by something global.
     light_data source_data;
 

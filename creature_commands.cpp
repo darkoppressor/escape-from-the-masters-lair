@@ -92,18 +92,6 @@ void Creature::check_command(short command){
         }
     }
 
-    else if(command==COMMAND_TOGGLE_LIGHT){
-        //If there is a light item equipped.
-        if(!equipment_slot_empty(-1,EQUIP_LIGHT_SOURCE)){
-            command_standard=command;
-            initiate_move=true;
-        }
-        //If there is no light item equipped.
-        else{
-            update_text_log("You have no light source equipped.",is_player);
-        }
-    }
-
     else if(command==COMMAND_WAIT){
         //If the creature can wait.
         ///This if() may be unnecessary, as there may be no case in which a creature cannot wait.
@@ -277,17 +265,6 @@ void Creature::execute_command(short command){
                     break;
                 }
             }
-        }
-    }
-
-    else if(command==COMMAND_TOGGLE_LIGHT){
-        light_on=!light_on;
-
-        if(light_on){
-            update_text_log("You turn your light on.",true);
-        }
-        else{
-            update_text_log("You turn your light off.",true);
         }
     }
 
@@ -1165,8 +1142,7 @@ void Creature::check_command_inventory(char inventory_letter){
     }
 
     else if(command==INVENTORY_COMMAND_EQUIP_RIGHT_HAND || command==INVENTORY_COMMAND_EQUIP_LEFT_HAND ||
-            command==INVENTORY_COMMAND_QUIVER_ITEM || command==INVENTORY_COMMAND_EQUIP_LIGHT_SOURCE ||
-            command==INVENTORY_COMMAND_EQUIP_ARMOR){
+            command==INVENTORY_COMMAND_QUIVER_ITEM || command==INVENTORY_COMMAND_EQUIP_ARMOR){
         //Determine the equipment slot to check.
         //If this remains -1, we are checking an armor slot.
         short equip_slot=-1;
@@ -1179,16 +1155,11 @@ void Creature::check_command_inventory(char inventory_letter){
         else if(command==INVENTORY_COMMAND_QUIVER_ITEM){
             equip_slot=EQUIP_QUIVER;
         }
-        else if(command==INVENTORY_COMMAND_EQUIP_LIGHT_SOURCE){
-            equip_slot=EQUIP_LIGHT_SOURCE;
-        }
 
         //If the item is not already equipped.
         if(!inventory[inventory_item_index].equipped &&
         //And if the corresponding equipment slot is open.
-        equipment_slot_empty(inventory_item_index,equip_slot) &&
-        //And if either the slot is not the light source slot or it is, and the item IS a valid light source.
-        (equip_slot!=EQUIP_LIGHT_SOURCE || (equip_slot==EQUIP_LIGHT_SOURCE && inventory[inventory_item_index].fov_radius>0))){
+        equipment_slot_empty(inventory_item_index,equip_slot)){
             initiate_move=true;
         }
         //If the item is already equipped.
@@ -1204,17 +1175,6 @@ void Creature::check_command_inventory(char inventory_letter){
             string message="You can't wear a ";
             message+=inventory[inventory_item_index].return_full_name(1);
             message+="!";
-            update_text_log(message.c_str(),is_player);
-
-            //No inventory command will be executed.
-            input_inventory=0;
-            inventory_input_state=0;
-        }
-        //If the equipment slot is the light source slot and the item is NOT a valid light source.
-        else if(equip_slot==EQUIP_LIGHT_SOURCE && inventory[inventory_item_index].fov_radius==0){
-            string message="A ";
-            message+=inventory[inventory_item_index].return_full_name(1);
-            message+=" can't give off any light!";
             update_text_log(message.c_str(),is_player);
 
             //No inventory command will be executed.
@@ -1384,8 +1344,7 @@ void Creature::execute_command_inventory(char inventory_letter){
     }
 
     else if(command==INVENTORY_COMMAND_EQUIP_RIGHT_HAND || command==INVENTORY_COMMAND_EQUIP_LEFT_HAND ||
-            command==INVENTORY_COMMAND_QUIVER_ITEM || command==INVENTORY_COMMAND_EQUIP_LIGHT_SOURCE ||
-            command==INVENTORY_COMMAND_EQUIP_ARMOR){
+            command==INVENTORY_COMMAND_QUIVER_ITEM || command==INVENTORY_COMMAND_EQUIP_ARMOR){
         //Setup an equip message.
 
         string str_equip_item="";
@@ -1397,9 +1356,6 @@ void Creature::execute_command_inventory(char inventory_letter){
             }
             else if(command==INVENTORY_COMMAND_QUIVER_ITEM){
                 str_equip_item="You place the ";
-            }
-            else if(command==INVENTORY_COMMAND_EQUIP_LIGHT_SOURCE){
-                str_equip_item="You fasten the ";
             }
             else if(command==INVENTORY_COMMAND_EQUIP_ARMOR){
                 str_equip_item="You put on the ";
@@ -1417,11 +1373,6 @@ void Creature::execute_command_inventory(char inventory_letter){
                 str_equip_item+=return_full_name();
                 str_equip_item+=" places the ";
             }
-            else if(command==INVENTORY_COMMAND_EQUIP_LIGHT_SOURCE){
-                str_equip_item="The ";
-                str_equip_item+=return_full_name();
-                str_equip_item+=" fastens the ";
-            }
             else if(command==INVENTORY_COMMAND_EQUIP_ARMOR){
                 str_equip_item="The ";
                 str_equip_item+=return_full_name();
@@ -1429,7 +1380,7 @@ void Creature::execute_command_inventory(char inventory_letter){
             }
         }
 
-        if(command==INVENTORY_COMMAND_EQUIP_RIGHT_HAND || command==INVENTORY_COMMAND_EQUIP_LEFT_HAND || command==INVENTORY_COMMAND_EQUIP_LIGHT_SOURCE){
+        if(command==INVENTORY_COMMAND_EQUIP_RIGHT_HAND || command==INVENTORY_COMMAND_EQUIP_LEFT_HAND){
             str_equip_item+=inventory[inventory_item_index].return_full_name(1);
         }
         else{
@@ -1460,14 +1411,6 @@ void Creature::execute_command_inventory(char inventory_letter){
                 str_equip_item+=" into its quiver";
             }
         }
-        else if(command==INVENTORY_COMMAND_EQUIP_LIGHT_SOURCE){
-            if(is_player){
-                str_equip_item+=" to your belt";
-            }
-            else{
-                str_equip_item+=" to your belt";
-            }
-        }
 
         str_equip_item+=".";
 
@@ -1484,9 +1427,6 @@ void Creature::execute_command_inventory(char inventory_letter){
         }
         else if(command==INVENTORY_COMMAND_QUIVER_ITEM){
             equip_slot=EQUIP_QUIVER;
-        }
-        else if(command==INVENTORY_COMMAND_EQUIP_LIGHT_SOURCE){
-            equip_slot=EQUIP_LIGHT_SOURCE;
         }
 
         //Equip the item.

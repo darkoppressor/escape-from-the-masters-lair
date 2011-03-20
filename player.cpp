@@ -75,10 +75,6 @@ void Player::set_inventory(){
 
     create_water_bottle();
 
-    equip_item(1,EQUIP_LIGHT_SOURCE);
-
-    light_on=true;
-
     //The maximum number of items.
     int max_items=random_range(1,12);
 
@@ -202,13 +198,8 @@ void Player::handle_input(){
                     // Standard Commands: //
                     //********************//
 
-                    //Toggle light item.
-                    if(input_directional==DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE && event.key.keysym.sym==SDLK_l){
-                        check_command(COMMAND_TOGGLE_LIGHT);
-                    }
-
                     //Go down stairs.
-                    else if(input_directional==DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE && event.key.keysym.sym==SDLK_PERIOD && (modstate&KMOD_SHIFT)!=0){
+                    if(input_directional==DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE && event.key.keysym.sym==SDLK_PERIOD && (modstate&KMOD_SHIFT)!=0){
                         check_command(COMMAND_GO_DOWN_STAIRS);
                     }
 
@@ -387,13 +378,6 @@ void Player::handle_input(){
                         update_text_log("What do you want to quiver?",is_player);
 
                         input_inventory=INVENTORY_COMMAND_QUIVER_ITEM;
-                    }
-
-                    //Equip item in light source slot.
-                    else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.sym==SDLK_b){
-                        update_text_log("What do you want to use as a light source?",is_player);
-
-                        input_inventory=INVENTORY_COMMAND_EQUIP_LIGHT_SOURCE;
                     }
 
                     //Equip armor.
@@ -668,28 +652,39 @@ void Player::update_fov(){
         }
     }
 
-    //Process the player's light.
+    //Process the player's light(s).
 
-    //If the player's light source is on.
-    if(light_on){
-        //If the light source is a beam.
-        if(inventory[index_of_item_in_slot(EQUIP_LIGHT_SOURCE)].beam){
-            fov_beam(&fov_settings,&vector_levels[current_level],&source_data,player.x,player.y,inventory[index_of_item_in_slot(EQUIP_LIGHT_SOURCE)].fov_radius,facing,inventory[index_of_item_in_slot(EQUIP_LIGHT_SOURCE)].fov_angle);
-        }
-        //If the light source is a circle.
-        else{
-            fov_circle(&fov_settings,&vector_levels[current_level],&source_data,player.x,player.y,inventory[index_of_item_in_slot(EQUIP_LIGHT_SOURCE)].fov_radius);
-        }
+    //Give off the "no lights" light.
+    fov_circle(&fov_settings,&vector_levels[current_level],&(light_data)LIGHT_SOURCE_OFF_DATA,player.x,player.y,LIGHT_SOURCE_OFF_RADIUS);
+    //Light the player's own space.
+    fov_circle(&fov_settings,&vector_levels[current_level],&(light_data)LIGHT_SOURCE_OFF_DATA,player.x,player.y,0);
 
+    bool any_lights=false;
+
+    //Look through all of the player's items.
+    for(int i=0;i<inventory.size();i++){
+        //If the item has a light radius.
+        if(inventory[i].fov_radius!=LIGHT_NONE){
+            //If the light item is on.
+            if(inventory[i].light_on){
+                any_lights=true;
+
+                //If the light source is a beam.
+                if(inventory[i].beam){
+                    fov_beam(&fov_settings,&vector_levels[current_level],&source_data,player.x,player.y,inventory[i].fov_radius,facing,inventory[i].fov_angle);
+                }
+                //If the light source is a circle.
+                else{
+                    fov_circle(&fov_settings,&vector_levels[current_level],&source_data,player.x,player.y,inventory[i].fov_radius);
+                }
+            }
+        }
+    }
+
+    //If the player had any light items on.
+    if(any_lights){
         //Light the player's own space.
         fov_circle(&fov_settings,&vector_levels[current_level],&source_data,player.x,player.y,0);
-    }
-    //If the player's light source is off.
-    else{
-        fov_circle(&fov_settings,&vector_levels[current_level],&(light_data)LIGHT_SOURCE_OFF_DATA,player.x,player.y,LIGHT_SOURCE_OFF_RADIUS);
-
-        //Light the player's own space.
-        fov_circle(&fov_settings,&vector_levels[current_level],&(light_data)LIGHT_SOURCE_OFF_DATA,player.x,player.y,0);
     }
 }
 

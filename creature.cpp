@@ -67,7 +67,6 @@ Creature::Creature(){
     //Randomly choose a facing direction.
     int random=random_range(FOV_EAST,FOV_SOUTHEAST);
     facing=(fov_direction_type)random;
-    light_on=false;
     source_data.permanent=false;
 
     for(int i=97;i<=122;i++){
@@ -115,6 +114,7 @@ void Creature::create_money_item(){
 void Creature::create_light_item(){
     Item temp_item;
 
+    temp_item.light_on=true;
     temp_item.category=ITEM_OTHER;
     temp_item.name="lantern";
     temp_item.plural_name="lanterns";
@@ -313,7 +313,7 @@ void Creature::change_thirst(bool increase,short amount){
         }
     }
     //If the creature has reached the point of death from thirst.
-    else if(thirst>=THIRST_DEATH){
+    else if(thirst>=THIRST_DEATH+(return_attribute_hardiness()*15)){
         //The creature dies of thirst.
         die(CAUSE_OF_DEATH_THIRST,"","");
     }

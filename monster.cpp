@@ -176,13 +176,8 @@ void Monster::handle_input(){
         // Standard Commands: //
         //********************//
 
-        //Toggle light item.
-        if(ai_keystates[AIK_TOGGLE_LIGHT]){
-            check_command(COMMAND_TOGGLE_LIGHT);
-        }
-
         //Go down stairs.
-        else if(ai_keystates[AIK_DOWN_STAIRS]){
+        if(ai_keystates[AIK_DOWN_STAIRS]){
             check_command(COMMAND_GO_DOWN_STAIRS);
         }
 
@@ -327,11 +322,6 @@ void Monster::handle_input(){
         //Quiver item.
         else if(ai_keystates[AIK_QUIVER_ITEM]){
             input_inventory=INVENTORY_COMMAND_QUIVER_ITEM;
-        }
-
-        //Equip item light source slot.
-        else if(ai_keystates[AIK_EQUIP_LIGHT_SOURCE]){
-            input_inventory=INVENTORY_COMMAND_EQUIP_LIGHT_SOURCE;
         }
 
         //Equip armor.
