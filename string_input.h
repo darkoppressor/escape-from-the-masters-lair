@@ -7,6 +7,8 @@
 #include <string>
 #include <SDL.h>
 
+#include <boost/algorithm/string.hpp>
+
 class string_input{
     private:
     public:

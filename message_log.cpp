@@ -8,10 +8,10 @@
 
 using namespace std;
 
-void update_text_log(const char *message,bool called_by_player,unsigned char message_type){
-    //If the player called this function, we update the message log.
+void update_text_log(const char *message,bool display,unsigned char message_type){
+    //If we want to display this message, we update the message log.
     //Otherwise, ignore this call.
-    if(called_by_player){
+    if(display){
         //Format the message according to its type.
 
         //System message.

@@ -76,6 +76,9 @@ class Creature: public Object{
     //Lower numbers are better.
     short thirst;
 
+    //
+    short carry_capacity_;
+
     //The base amount of damage the creature does with its bare hands.
     short base_damage_melee_min;
     short base_damage_melee_max;
