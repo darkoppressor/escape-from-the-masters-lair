@@ -240,8 +240,8 @@ void render(int frame_rate, double ms_per_frame){
             ss.clear();ss.str("");ss<<"Turn: ";ss<<player.turn;ss<<"\xA";msg+=ss.str();
             ss.clear();ss.str("");ss<<"Experience Level: ";ss<<player.experience_level;ss<<"\xA";msg+=ss.str();
             ss.clear();ss.str("");ss<<"Experience: ";ss<<player.experience;ss<<"/";ss<<player.experience_max;ss<<"\xA";msg+=ss.str();
-            ss.clear();ss.str("");ss<<"Health: ";ss<<player.health;ss<<"/";ss<<player.health_max;ss<<"\xA";msg+=ss.str();
-            ss.clear();ss.str("");ss<<"Mana: ";ss<<player.mana;ss<<"/";ss<<player.mana_max;ss<<"\xA";msg+=ss.str();
+            ss.clear();ss.str("");ss<<"Health: ";ss<<player.return_health();ss<<"/";ss<<player.return_health_max();ss<<"\xA";msg+=ss.str();
+            ss.clear();ss.str("");ss<<"Mana: ";ss<<player.return_mana();ss<<"/";ss<<player.return_mana_max();ss<<"\xA";msg+=ss.str();
             ss.clear();ss.str("");ss<<"Money: ";ss<<player.inventory[0].stack;ss<<"\xA";msg+=ss.str();
             //If the player is anything other than not thirsty.
             if(!(player.thirst>=THIRST_NOT_THIRSTY && player.thirst<THIRST_THIRSTY)){

@@ -5,6 +5,38 @@
 
 using namespace std;
 
+int Creature::return_health(){
+    double number=health;
+
+    ///
+
+    return (int)number;
+}
+
+int Creature::return_health_max(){
+    double number=health_max;
+
+    ///
+
+    return (int)number;
+}
+
+int Creature::return_mana(){
+    double number=mana;
+
+    ///
+
+    return (int)number;
+}
+
+int Creature::return_mana_max(){
+    double number=mana_max;
+
+    ///
+
+    return (int)number;
+}
+
 unsigned short Creature::return_movement_speed(){
     double speed=movement_speed;
 

@@ -212,7 +212,7 @@ void Item::attack_thrown(Creature* target){
     target->health-=damage;
 
     //If the target's health drops to 0 or below, it has been killed.
-    if(target->health<=0){
+    if(target->return_health()<=0){
         target->die(CAUSE_OF_DEATH_THROWN,owner_data_thrown[0].full_name,return_full_name(1));
 
         //This creature gains experience.
@@ -372,7 +372,7 @@ void Item::attack_fired(Creature* target){
     target->health-=damage;
 
     //If the target's health drops to 0 or below, it has been killed.
-    if(target->health<=0){
+    if(target->return_health()<=0){
         target->die(CAUSE_OF_DEATH_THROWN,owner_data_thrown[0].full_name,return_full_name(1));
 
         //This creature gains experience.

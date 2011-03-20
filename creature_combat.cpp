@@ -340,7 +340,7 @@ void Creature::attack_melee(Creature* target){
     target->health-=damage;
 
     //If the target's health drops to 0 or below, it has been killed.
-    if(target->health<=0){
+    if(target->return_health()<=0){
         target->die(CAUSE_OF_DEATH_MELEE,return_full_name(),"");
 
         //This creature gains experience.

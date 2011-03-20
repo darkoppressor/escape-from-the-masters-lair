@@ -253,10 +253,12 @@ class Creature: public Object{
     //race_name + " named " + name
     std::string return_full_name();
 
-    //
+    //Returns the current TRUE value (with all relevant bonuses, penalties, etc.) for the corresponding stats.
+    int return_health();
+    int return_health_max();
+    int return_mana();
+    int return_mana_max();
     unsigned short return_movement_speed();
-
-    //
     short return_next_move();
 
     //Each of these functions returns the current TRUE attribute value (with all relevant bonuses, penalties, etc.) for the corresponding attribute.

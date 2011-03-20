@@ -339,7 +339,7 @@ void Creature::process_move(){
 
         mana+=mana_regen;
 
-        if(mana>mana_max){
+        if(return_mana()>return_mana_max()){
             mana=mana_max;
         }
     }
