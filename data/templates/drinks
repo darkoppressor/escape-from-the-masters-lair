@@ -31,8 +31,8 @@
 	material:glass
 	melee damage:1-1
 	thrown damage:1-1
+	effect:fuel
 	<drink>
 		thirst quenched:10
-		effect:fuel
 	</drink>
 </item>

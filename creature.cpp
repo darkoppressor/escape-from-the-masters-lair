@@ -142,7 +142,7 @@ void Creature::create_light_item(){
     temp_item.beam=false;
     temp_item.fov_angle=90;
 
-    temp_item.use=ITEM_USE_LIGHT;
+    temp_item.effects.push_back(ITEM_EFFECT_USE_LIGHT);
 
     temp_item.fuel=500;
     temp_item.fuel_max=500;

@@ -5,27 +5,14 @@
 
 using namespace std;
 
-short Templates::string_to_use(string line){
-    short use=0;
-
-    if(line=="none"){
-        use=ITEM_USE_NONE;
-    }
-    else if(line=="light"){
-        use=ITEM_USE_LIGHT;
-    }
-
-    return use;
-}
-
-short Templates::string_to_drink_effect(string line){
+short Templates::string_to_item_effect(string line){
     short effect=0;
 
-    if(line=="none"){
-        effect=DRINK_EFFECT_NONE;
+    if(line=="fuel"){
+        effect=ITEM_EFFECT_FUEL;
     }
-    else if(line=="fuel"){
-        effect=DRINK_EFFECT_FUEL;
+    else if(line=="use:light"){
+        effect=ITEM_EFFECT_USE_LIGHT;
     }
 
     return effect;

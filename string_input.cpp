@@ -64,7 +64,7 @@ void string_input::handle_events(){
                 }
             }
 
-            else if(istarts_with(str_command,"add")){
+            else if(player.option_dev && istarts_with(str_command,"add")){
                 ierase_first(str_command,"add");
                 trim(str_command);
 

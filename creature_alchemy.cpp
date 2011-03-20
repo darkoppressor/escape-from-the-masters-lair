@@ -10,7 +10,7 @@ void Creature::mix_items(int item_index_1,int item_index_2){
     string str_item="";
 
     //If the first item is a fuel refiller, and the second item uses fuel.
-    if(inventory[item_index_1].drink_effect==DRINK_EFFECT_FUEL && inventory[item_index_2].fuel_max>0){
+    if(inventory[item_index_1].possesses_effect(ITEM_EFFECT_FUEL) && inventory[item_index_2].fuel_max>0){
         //If the creature is the player.
         if(is_player){
             str_item="You mix the ";

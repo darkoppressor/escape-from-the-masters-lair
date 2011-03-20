@@ -1273,11 +1273,11 @@ void Creature::check_command_inventory(char inventory_letter){
 
     else if(command==INVENTORY_COMMAND_USE_ITEM){
         //If the item can be used.
-        if(inventory[inventory_item_index].use==ITEM_USE_LIGHT && inventory[inventory_item_index].fuel>0){
+        if(inventory[inventory_item_index].possesses_effect(ITEM_EFFECT_USE_LIGHT) && inventory[inventory_item_index].fuel>0){
             initiate_move=true;
         }
         //If the item is a light source with no fuel.
-        else if(inventory[inventory_item_index].use==ITEM_USE_LIGHT && inventory[inventory_item_index].fuel==0){
+        else if(inventory[inventory_item_index].possesses_effect(ITEM_EFFECT_USE_LIGHT) && inventory[inventory_item_index].fuel==0){
             string message="The ";
             message+=inventory[inventory_item_index].return_full_name(1);
             message+=" is out of fuel.";
@@ -1307,11 +1307,6 @@ void Creature::check_command_inventory(char inventory_letter){
         }
         //If the item cannot be mixed.
         else{
-            /**string message="You have no idea what to do with the ";
-            message+=inventory[inventory_item_index].return_full_name(1);
-            message+=".";
-            update_text_log(message.c_str(),is_player);*/
-
             //No inventory command will be executed.
             input_inventory=0;
             inventory_input_state=0;
@@ -1325,11 +1320,6 @@ void Creature::check_command_inventory(char inventory_letter){
         }
         //If the item cannot be mixed.
         else{
-            /**string message="You have no idea what to do with the ";
-            message+=inventory[inventory_item_index].return_full_name(1);
-            message+=".";
-            update_text_log(message.c_str(),is_player);*/
-
             //No inventory command will be executed.
             input_inventory=0;
             inventory_input_state=0;
@@ -1628,7 +1618,7 @@ void Creature::execute_command_inventory(char inventory_letter){
 
         string str_item="";
 
-        if(inventory[inventory_item_index].use==ITEM_USE_LIGHT){
+        if(inventory[inventory_item_index].possesses_effect(ITEM_EFFECT_USE_LIGHT)){
             //If the creature is the player.
             if(is_player){
                 if(inventory[inventory_item_index].light_on){
@@ -1660,7 +1650,7 @@ void Creature::execute_command_inventory(char inventory_letter){
 
         //Use the item.
 
-        if(inventory[inventory_item_index].use==ITEM_USE_LIGHT){
+        if(inventory[inventory_item_index].possesses_effect(ITEM_EFFECT_USE_LIGHT)){
             inventory[inventory_item_index].light_on=!inventory[inventory_item_index].light_on;
         }
     }

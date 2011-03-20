@@ -73,13 +73,9 @@ class Templates{
     //Returns the short for that material.
     short string_to_material(std::string line);
 
-    //Pass a string representing an item use.
-    //Returns the short for that item use.
-    short string_to_use(std::string line);
-
-    //Pass a string representing a drink effect.
-    //Returns the short for that drink effect.
-    short string_to_drink_effect(std::string line);
+    //Pass a string representing an item effect.
+    //Returns the short for that item effect.
+    short string_to_item_effect(std::string line);
 };
 
 #endif

@@ -86,8 +86,9 @@ class Item: public Object{
     //A value of 0 means no dye.
     short dye;
 
+    ///Not sure if this will be used or not, yet.
     //Special effects (both positive and negative) conferred by the item to its owner.
-    std::vector<Effect> effects;
+    ///std::vector<Effect> effects;
 
     //The direction the item is moving.
     short move_direction;
@@ -95,9 +96,6 @@ class Item: public Object{
     //The current momentum of the item.
     //This is the maximum number of tiles the item can move.
     short momentum;
-
-    //The special use of the item, if any.
-    short use;
 
     //The stacked number of this item.
     int stack;
@@ -154,6 +152,9 @@ class Item: public Object{
     //The width of the beam.
     float fov_angle;
 
+    //The item's special effect(s).
+    std::vector<short> effects;
+
     //Weapon-specific//
 
     //The skill that this weapon exercises and uses for damage bonuses, etc.
@@ -180,9 +181,6 @@ class Item: public Object{
 
     //The amount of thirst quenched by quaffing this drink.
     short thirst_quenched;
-
-    //The special drink effect of the item.
-    short drink_effect;
 
     //Scroll-specific//
 
@@ -246,6 +244,10 @@ class Item: public Object{
     void process_turn();
 
     std::string return_full_name(int override_stack=-1);
+
+    //Returns true if the passed effect is possessed by the item.
+    //Returns false if the passed effect is not possessed by the item.
+    bool possesses_effect(short effect);
 
     void render(std::vector< std::vector<bool> >* tile_rendered);
 };

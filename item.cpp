@@ -22,8 +22,6 @@ Item::Item(){
 
     momentum=0;
 
-    use=ITEM_USE_NONE;
-
     stack=1;
 
     stackable=false;
@@ -78,8 +76,6 @@ Item::Item(){
 
     thirst_quenched=0;
 
-    drink_effect=DRINK_EFFECT_NONE;
-
     //Scroll-specific//
 
     //Book-specific//
@@ -99,6 +95,16 @@ void Item::setup(){
         //Determine the item's fuel.
         fuel=random_range(1,fuel_max);
     }
+}
+
+bool Item::possesses_effect(short effect){
+    for(int i=0;i<effects.size();i++){
+        if(effects[i]==effect){
+            return true;
+        }
+    }
+
+    return false;
 }
 
 /**Creature* Item::determine_owner_address(){

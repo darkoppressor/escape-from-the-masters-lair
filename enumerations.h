@@ -203,13 +203,13 @@ enum{
     ITEM_OTHER
 };
 
-//****************//
-// Drink Effects: //
-//****************//
+//***************//
+// Item Effects: //
+//***************//
 
 enum{
-    DRINK_EFFECT_NONE,
-    DRINK_EFFECT_FUEL
+    ITEM_EFFECT_USE_LIGHT,
+    ITEM_EFFECT_FUEL
 };
 
 //*************//
@@ -325,15 +325,6 @@ enum{
     EQUIP_QUIVER,
     EQUIP_HOLD_RIGHT,
     EQUIP_HOLD_LEFT
-};
-
-//************//
-// Item Uses: //
-//************//
-
-enum{
-    ITEM_USE_NONE,
-    ITEM_USE_LIGHT
 };
 
 //**********//
