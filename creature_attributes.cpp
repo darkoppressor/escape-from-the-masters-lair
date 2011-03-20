@@ -6,71 +6,95 @@
 using namespace std;
 
 short Creature::return_attribute_strength(){
-    short attribute=attributes[ATTRIBUTE_STRENGTH];
+    double attribute=attributes[ATTRIBUTE_STRENGTH];
 
     //If the creature's thirst is satiated.
     if(thirst>=THIRST_SATIATED && thirst<THIRST_NOT_THIRSTY){
-        ///Strength increased slightly.
+        attribute+=attribute*0.10;
     }
     //If the creature is thirsty.
     else if(thirst>=THIRST_THIRSTY && thirst<THIRST_WEAK){
-        ///Strength decreased slightly.
+        attribute-=attribute*0.10;
     }
     //If the creature is weak.
     else if(thirst>=THIRST_WEAK && thirst<THIRST_FAINTING){
-        ///Strength decreased.
+        attribute-=attribute*0.25;
     }
     //If the creature is fainting.
     else if(thirst>=THIRST_FAINTING && thirst<THIRST_DEATH){
-        ///Strength decreased (identical to weak).
+        attribute-=attribute*0.25;
     }
 
-    return attribute;
+    if(attribute<0.0){
+        attribute=0.0;
+    }
+
+    return (short)attribute;
 }
 
 short Creature::return_attribute_agility(){
-    short attribute=attributes[ATTRIBUTE_AGILITY];
+    double attribute=attributes[ATTRIBUTE_AGILITY];
 
     //If the creature is satiated.
     if(thirst>=THIRST_SATIATED && thirst<THIRST_NOT_THIRSTY){
-        ///Agility increased slightly.
+        attribute+=attribute*0.10;
     }
     //If the creature is fainting.
     else if(thirst>=THIRST_FAINTING && thirst<THIRST_DEATH){
-        ///Agility decreased.
+        attribute-=attribute*0.25;
     }
 
-    return attribute;
+    if(attribute<0.0){
+        attribute=0.0;
+    }
+
+    return (short)attribute;
 }
 
 short Creature::return_attribute_hardiness(){
-    short attribute=attributes[ATTRIBUTE_HARDINESS];
+    double attribute=attributes[ATTRIBUTE_HARDINESS];
 
     ///
 
-    return attribute;
+    if(attribute<0.0){
+        attribute=0.0;
+    }
+
+    return (short)attribute;
 }
 
 short Creature::return_attribute_comprehension(){
-    short attribute=attributes[ATTRIBUTE_COMPREHENSION];
+    double attribute=attributes[ATTRIBUTE_COMPREHENSION];
 
     ///
 
-    return attribute;
+    if(attribute<0.0){
+        attribute=0.0;
+    }
+
+    return (short)attribute;
 }
 
 short Creature::return_attribute_acumen(){
-    short attribute=attributes[ATTRIBUTE_ACUMEN];
+    double attribute=attributes[ATTRIBUTE_ACUMEN];
 
     ///
 
-    return attribute;
+    if(attribute<0.0){
+        attribute=0.0;
+    }
+
+    return (short)attribute;
 }
 
 short Creature::return_attribute_luck(){
-    short attribute=attributes[ATTRIBUTE_LUCK];
+    double attribute=attributes[ATTRIBUTE_LUCK];
 
     ///
 
-    return attribute;
+    if(attribute<0.0){
+        attribute=0.0;
+    }
+
+    return (short)attribute;
 }

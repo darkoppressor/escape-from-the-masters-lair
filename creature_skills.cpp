@@ -6,169 +6,253 @@
 using namespace std;
 
 short Creature::return_skill_bladed_weapons(){
-    short skill=skills[SKILL_BLADED_WEAPONS];
+    double skill=skills[SKILL_BLADED_WEAPONS];
 
     ///
 
-    return skill;
+    if(skill<0.0){
+        skill=0.0;
+    }
+
+    return (short)skill;
 }
 
 short Creature::return_skill_blunt_weapons(){
-    short skill=skills[SKILL_BLUNT_WEAPONS];
+    double skill=skills[SKILL_BLUNT_WEAPONS];
 
     ///
 
-    return skill;
+    if(skill<0.0){
+        skill=0.0;
+    }
+
+    return (short)skill;
 }
 
 short Creature::return_skill_stabbing_weapons(){
-    short skill=skills[SKILL_STABBING_WEAPONS];
+    double skill=skills[SKILL_STABBING_WEAPONS];
 
     ///
 
-    return skill;
+    if(skill<0.0){
+        skill=0.0;
+    }
+
+    return (short)skill;
 }
 
 short Creature::return_skill_unarmed(){
-    short skill=skills[SKILL_UNARMED];
+    double skill=skills[SKILL_UNARMED];
 
     ///
 
-    return skill;
+    if(skill<0.0){
+        skill=0.0;
+    }
+
+    return (short)skill;
 }
 
 short Creature::return_skill_security(){
-    short skill=skills[SKILL_SECURITY];
+    double skill=skills[SKILL_SECURITY];
 
     ///
 
-    return skill;
+    if(skill<0.0){
+        skill=0.0;
+    }
+
+    return (short)skill;
 }
 
 short Creature::return_skill_stealth(){
-    short skill=skills[SKILL_STEALTH];
+    double skill=skills[SKILL_STEALTH];
 
     ///
 
-    return skill;
+    if(skill<0.0){
+        skill=0.0;
+    }
+
+    return (short)skill;
 }
 
 short Creature::return_skill_launcher_weapons(){
-    short skill=skills[SKILL_LAUNCHER_WEAPONS];
+    double skill=skills[SKILL_LAUNCHER_WEAPONS];
 
     ///
 
-    return skill;
+    if(skill<0.0){
+        skill=0.0;
+    }
+
+    return (short)skill;
 }
 
 short Creature::return_skill_thrown_weapons(){
-    short skill=skills[SKILL_THROWN_WEAPONS];
+    double skill=skills[SKILL_THROWN_WEAPONS];
 
     ///
 
-    return skill;
+    if(skill<0.0){
+        skill=0.0;
+    }
+
+    return (short)skill;
 }
 
 short Creature::return_skill_dual_wielding(){
-    short skill=skills[SKILL_DUAL_WIELDING];
+    double skill=skills[SKILL_DUAL_WIELDING];
 
     ///
 
-    return skill;
+    if(skill<0.0){
+        skill=0.0;
+    }
+
+    return (short)skill;
 }
 
 short Creature::return_skill_speed(){
-    short skill=skills[SKILL_SPEED];
+    double skill=skills[SKILL_SPEED];
 
     ///
 
-    return skill;
+    if(skill<0.0){
+        skill=0.0;
+    }
+
+    return (short)skill;
 }
 
 short Creature::return_skill_fighting(){
-    short skill=skills[SKILL_FIGHTING];
+    double skill=skills[SKILL_FIGHTING];
 
     ///
 
-    return skill;
+    if(skill<0.0){
+        skill=0.0;
+    }
+
+    return (short)skill;
 }
 
 short Creature::return_skill_dodging(){
-    short skill=skills[SKILL_DODGING];
+    double skill=skills[SKILL_DODGING];
 
     ///
 
-    return skill;
+    if(skill<0.0){
+        skill=0.0;
+    }
+
+    return (short)skill;
 }
 
 short Creature::return_skill_armor(){
-    short skill=skills[SKILL_ARMOR];
+    double skill=skills[SKILL_ARMOR];
 
     ///
 
-    return skill;
+    if(skill<0.0){
+        skill=0.0;
+    }
+
+    return (short)skill;
 }
 
 short Creature::return_skill_magic_air(){
-    short skill=skills[SKILL_MAGIC_AIR];
+    double skill=skills[SKILL_MAGIC_AIR];
 
     ///
 
-    return skill;
+    if(skill<0.0){
+        skill=0.0;
+    }
+
+    return (short)skill;
 }
 
 short Creature::return_skill_magic_fire(){
-    short skill=skills[SKILL_MAGIC_FIRE];
+    double skill=skills[SKILL_MAGIC_FIRE];
 
     ///
 
-    return skill;
+    if(skill<0.0){
+        skill=0.0;
+    }
+
+    return (short)skill;
 }
 
 short Creature::return_skill_magic_water(){
-    short skill=skills[SKILL_MAGIC_WATER];
+    double skill=skills[SKILL_MAGIC_WATER];
 
     ///
 
-    return skill;
+    if(skill<0.0){
+        skill=0.0;
+    }
+
+    return (short)skill;
 }
 
 short Creature::return_skill_magic_cold(){
-    short skill=skills[SKILL_MAGIC_COLD];
+    double skill=skills[SKILL_MAGIC_COLD];
 
     ///
 
-    return skill;
+    if(skill<0.0){
+        skill=0.0;
+    }
+
+    return (short)skill;
 }
 
 short Creature::return_skill_magic_earth(){
-    short skill=skills[SKILL_MAGIC_EARTH];
+    double skill=skills[SKILL_MAGIC_EARTH];
 
     ///
 
-    return skill;
+    if(skill<0.0){
+        skill=0.0;
+    }
+
+    return (short)skill;
 }
 
 short Creature::return_skill_magic_conjuration(){
-    short skill=skills[SKILL_MAGIC_CONJURATION];
+    double skill=skills[SKILL_MAGIC_CONJURATION];
 
     ///
 
-    return skill;
+    if(skill<0.0){
+        skill=0.0;
+    }
+
+    return (short)skill;
 }
 
 short Creature::return_skill_magic_enchantment(){
-    short skill=skills[SKILL_MAGIC_ENCHANTMENT];
+    double skill=skills[SKILL_MAGIC_ENCHANTMENT];
 
     ///
 
-    return skill;
+    if(skill<0.0){
+        skill=0.0;
+    }
+
+    return (short)skill;
 }
 
 short Creature::return_skill_magic_summoning(){
-    short skill=skills[SKILL_MAGIC_SUMMONING];
+    double skill=skills[SKILL_MAGIC_SUMMONING];
 
     ///
 
-    return skill;
+    if(skill<0.0){
+        skill=0.0;
+    }
+
+    return (short)skill;
 }

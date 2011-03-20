@@ -284,14 +284,14 @@ void Creature::process_turn(){
         }
     }
 
-    change_thirst(true);
+    change_thirst(true,1);
 }
 
 void Creature::change_thirst(bool increase,short amount){
     //If thirst is increasing.
     if(increase){
         if(rc_gain_thirst()){
-            thirst++;
+            thirst+=amount;
         }
     }
     //If thirst is decreasing.
@@ -305,12 +305,8 @@ void Creature::change_thirst(bool increase,short amount){
         }
     }
 
-    //If the creature is bloated.
-    if(thirst<=THIRST_BLOATED){
-        ///Movement slowed.
-    }
     //If the creature is fainting.
-    else if(thirst>=THIRST_FAINTING && thirst<THIRST_DEATH){
+    if(thirst>=THIRST_FAINTING && thirst<THIRST_DEATH){
         ///I need to add 'if the creature is not currently fainted' here.
         if(rc_thirst_faint()){
             ///Faint.

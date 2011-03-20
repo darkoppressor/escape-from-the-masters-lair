@@ -5,18 +5,32 @@
 
 using namespace std;
 
-short Creature::return_movement_speed(){
-    short speed=movement_speed;
+unsigned short Creature::return_movement_speed(){
+    double speed=movement_speed;
 
-    ///
+    //If the creature is bloated.
+    if(thirst<=THIRST_BLOATED){
+        speed+=speed*0.25;
+    }
 
-    return speed;
+    if(speed<0.0){
+        speed=0.0;
+    }
+
+    return (unsigned short)speed;
 }
 
 short Creature::return_next_move(){
-    short nextmove=next_move;
+    double nextmove=next_move;
 
-    ///
+    //If the creature is bloated.
+    if(thirst<=THIRST_BLOATED){
+        nextmove+=nextmove*0.25;
+    }
 
-    return nextmove;
+    if(nextmove<0.0){
+        nextmove=0.0;
+    }
+
+    return (short)nextmove;
 }
