@@ -1,0 +1,25 @@
+//**********//
+// Weapons: //
+//**********//
+
+	//********//
+	// Melee: //
+	//********//
+
+	<item category:weapon>
+		name:dagger
+		plural name:daggers
+		writing:
+		appearance:)
+		stackable:0
+		weight:7
+		value:1
+		color:iron
+		material:iron
+		melee damage:24-31
+		thrown damage:1-1
+		<weapon>
+			governing weapon skill:bladed weapons
+			weapon category:short blades
+		</weapon>
+	</item>

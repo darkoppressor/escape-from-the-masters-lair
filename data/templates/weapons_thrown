@@ -1,0 +1,25 @@
+//**********//
+// Weapons: //
+//**********//
+	
+	//*********//
+	// Thrown: //
+	//*********//
+	
+	<item category:weapon>
+		name:shuriken
+		plural name:shurikens
+		writing:
+		appearance:)
+		stackable:1
+		weight:4
+		value:1
+		color:iron
+		material:iron
+		melee damage:1-1
+		thrown damage:12-16
+		<weapon>
+			governing weapon skill:thrown weapons
+			weapon category:thrown
+		</weapon>
+	</item>

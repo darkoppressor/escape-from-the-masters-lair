@@ -1,0 +1,20 @@
+//**********//
+// Scrolls: //
+//**********//
+
+<item category:scroll>
+	name:scroll of identify
+	plural name:scrolls of identify
+	writing:
+	appearance:?
+	stackable:1
+	weight:1
+	value:1
+	color:paper
+	material:paper
+	melee damage:1-1
+	thrown damage:1-1
+	//<scroll>
+		//is corpse:0
+	//</scroll>
+</item>

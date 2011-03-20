@@ -1,0 +1,38 @@
+//********//
+// Other: //
+//********//
+
+<item category:other>
+	name:gold piece
+	plural name:gold pieces
+	writing:
+	appearance:$
+	stackable:1
+	weight:0
+	value:1
+	color:gold
+	material:gold
+	melee damage:1-1
+	thrown damage:1-1
+</item>
+
+<item category:other>
+	name:brass lantern
+	plural name:brass lanterns
+	writing:
+	appearance:è
+	stackable:0
+	weight:59
+	value:1
+	color:brass
+	material:brass
+	melee damage:1-69
+	thrown damage:1-35
+	light radius:10
+	light beam:0
+	beam angle:90
+	use:light
+	<other>
+		max fuel:500
+	</other>
+</item>

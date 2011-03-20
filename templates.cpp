@@ -15,15 +15,15 @@ Templates::Templates(){
 
 bool Templates::load_templates(){
     //Look through all of the files in the directory.
-    for(boost::filesystem3::directory_iterator it("data");it!=boost::filesystem3::directory_iterator();it++){
+    for(boost::filesystem3::directory_iterator it("data/templates");it!=boost::filesystem3::directory_iterator();it++){
         //Determine the file's full path name.
         string file_path=it->path().string();
 
         //Determine the file's file name.
         string file_name=it->path().filename().string();
 
-        //If the file is not a directory, and it begins with "templates".
-        if(!boost::filesystem3::is_directory(it->path()) && boost::algorithm::istarts_with(file_name,"templates")){
+        //If the file is not a directory.
+        if(!boost::filesystem3::is_directory(it->path())){
             load.open(file_path.c_str(),ifstream::in);
 
             if(load!=NULL){

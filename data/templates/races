@@ -1,0 +1,17 @@
+//********//
+// Races: //
+//********//
+
+<race>
+	name:grid bug
+	appearance:x
+	color:purple
+	weight:10
+</race>
+
+<race>
+	name:human
+	appearance:@
+	color:white
+	weight:20
+</race>

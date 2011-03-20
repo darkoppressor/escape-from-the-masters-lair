@@ -1,0 +1,38 @@
+//*********//
+// Drinks: //
+//*********//
+
+<item category:drink>
+	name:bottle of water
+	plural name:bottles of water
+	writing:
+	appearance:!
+	stackable:1
+	weight:1
+	value:1
+	color:water
+	material:glass
+	melee damage:1-1
+	thrown damage:1-1
+	<drink>
+		thirst quenched:100
+	</drink>
+</item>
+
+<item category:drink>
+	name:bottle of oil
+	plural name:bottles of oil
+	writing:
+	appearance:!
+	stackable:1
+	weight:1
+	value:1
+	color:glass
+	material:glass
+	melee damage:1-1
+	thrown damage:1-1
+	<drink>
+		thirst quenched:10
+		effect:fuel
+	</drink>
+</item>

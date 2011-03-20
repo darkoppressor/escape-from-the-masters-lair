@@ -1,0 +1,26 @@
+//**********//
+// Weapons: //
+//**********//
+	
+	//*********//
+	// Ranged: //
+	//*********//
+
+	<item category:weapon>
+		name:bow
+		plural name:bows
+		writing:
+		appearance:)
+		stackable:0
+		weight:6
+		value:1
+		color:wood
+		material:wood
+		melee damage:1-1
+		thrown damage:1-1
+		ranged damage:14-19
+		<weapon>
+			governing weapon skill:launcher weapons
+			weapon category:bows
+		</weapon>
+	</item>
