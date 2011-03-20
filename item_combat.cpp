@@ -22,10 +22,10 @@ void Item::assign_owner_data_thrown(Creature* creature){
 
     owner_data_thrown.push_back(Owner_Data_Thrown());
 
-    owner_data_thrown[0].strength=creature->attributes[ATTRIBUTE_STRENGTH];
-    owner_data_thrown[0].agility=creature->attributes[ATTRIBUTE_AGILITY];
-    owner_data_thrown[0].fighting_skill=creature->skills[SKILL_FIGHTING];
-    owner_data_thrown[0].thrown_weapons_skill=creature->skills[SKILL_THROWN_WEAPONS];
+    owner_data_thrown[0].strength=creature->return_attribute_strength();
+    owner_data_thrown[0].agility=creature->return_attribute_agility();
+    owner_data_thrown[0].fighting_skill=creature->return_skill_fighting();
+    owner_data_thrown[0].thrown_weapons_skill=creature->return_skill_thrown_weapons();
     owner_data_thrown[0].experience_level=creature->experience_level;
     owner_data_thrown[0].base_damage_min_thrown=creature->base_damage_thrown_min;
     owner_data_thrown[0].base_damage_max_thrown=creature->base_damage_thrown_max;
@@ -38,10 +38,10 @@ void Item::assign_owner_data_fired(Creature* creature){
 
     owner_data_fired.push_back(Owner_Data_Fired());
 
-    owner_data_fired[0].strength=creature->attributes[ATTRIBUTE_STRENGTH];
-    owner_data_fired[0].agility=creature->attributes[ATTRIBUTE_AGILITY];
-    owner_data_fired[0].fighting_skill=creature->skills[SKILL_FIGHTING];
-    owner_data_fired[0].launcher_weapons_skill=creature->skills[SKILL_LAUNCHER_WEAPONS];
+    owner_data_fired[0].strength=creature->return_attribute_strength();
+    owner_data_fired[0].agility=creature->return_attribute_agility();
+    owner_data_fired[0].fighting_skill=creature->return_skill_fighting();
+    owner_data_fired[0].launcher_weapons_skill=creature->return_skill_launcher_weapons();
     owner_data_fired[0].experience_level=creature->experience_level;
     owner_data_fired[0].base_damage_min_ranged=creature->base_damage_ranged_min;
     owner_data_fired[0].base_damage_max_ranged=creature->base_damage_ranged_max;

@@ -21,14 +21,14 @@ int determine_damage_reduction(Creature* target){
             int armor_absorption=target->inventory[item_identifier].defense;
 
             //Apply the armor skill.
-            armor_absorption+=armor_absorption*(target->skills[SKILL_ARMOR]/10);
+            armor_absorption+=armor_absorption*(target->return_skill_armor()/10);
 
             damage_reduction+=armor_absorption;
         }
     }
 
     //Apply the hardiness bonus.
-    damage_reduction+=damage_reduction*(target->attributes[ATTRIBUTE_HARDINESS]/4);
+    damage_reduction+=damage_reduction*(target->return_attribute_hardiness()/4);
 
     return damage_reduction;
 }

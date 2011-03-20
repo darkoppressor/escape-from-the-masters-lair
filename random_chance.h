@@ -11,11 +11,11 @@
 
 //Combat//
 
-bool rc_attack_critical_strike(short attacker_agility,short attacker_experience_level,Creature* target);
+bool rc_attack_critical_strike(short attacker_agility,int attacker_experience_level,Creature* target);
 
-bool rc_attack_dodge(short attacker_experience_level,Creature* target);
+bool rc_attack_dodge(int attacker_experience_level,Creature* target);
 
-bool rc_attack_hit(short attacker_fighting_skill,short attacker_agility,short attacker_experience_level,Creature* target);
+bool rc_attack_hit(short attacker_fighting_skill,short attacker_agility,int attacker_experience_level,Creature* target);
 
 //Level interaction//
 

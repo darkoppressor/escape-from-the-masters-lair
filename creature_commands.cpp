@@ -366,12 +366,12 @@ int Creature::determine_momentum(double item_weight,bool fired){
     double momentum_penalty=0.0;
 
     //If the creature's strength is greater than the item's throwing adjusted weight.
-    if((double)attributes[ATTRIBUTE_STRENGTH]>=item_weight/4.0){
-        momentum_bonus=(double)attributes[ATTRIBUTE_STRENGTH]/(item_weight*1.5);
+    if((double)return_attribute_strength()>=item_weight/4.0){
+        momentum_bonus=(double)return_attribute_strength()/(item_weight*1.5);
     }
     //If the creature's strength is less than the item's throwing adjusted weight.
     else{
-        momentum_penalty=item_weight/(double)attributes[ATTRIBUTE_STRENGTH];
+        momentum_penalty=item_weight/(double)return_attribute_strength();
     }
 
     momentum+=momentum_bonus*firing_bonus;

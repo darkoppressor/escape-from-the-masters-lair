@@ -32,8 +32,8 @@ void Creature::level_up(){
     }
 }
 
-void Creature::gain_experience(short killed_experience_level){
-    short experience_gained=random_range(killed_experience_level*14,killed_experience_level*18);
+void Creature::gain_experience(int killed_experience_level){
+    int experience_gained=random_range(killed_experience_level*14,killed_experience_level*18);
 
     experience+=experience_gained;
 

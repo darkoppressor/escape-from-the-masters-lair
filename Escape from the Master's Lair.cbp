@@ -90,10 +90,12 @@
 		<Unit filename="combat_all.h" />
 		<Unit filename="creature.cpp" />
 		<Unit filename="creature.h" />
+		<Unit filename="creature_attributes.cpp" />
 		<Unit filename="creature_combat.cpp" />
 		<Unit filename="creature_commands.cpp" />
 		<Unit filename="creature_equipment.cpp" />
 		<Unit filename="creature_experience.cpp" />
+		<Unit filename="creature_skills.cpp" />
 		<Unit filename="dungeon_location.cpp" />
 		<Unit filename="dungeon_location.h" />
 		<Unit filename="effect.cpp" />

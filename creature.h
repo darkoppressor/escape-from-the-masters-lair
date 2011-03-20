@@ -59,17 +59,17 @@ class Creature: public Object{
     short race;
     std::string race_name;
 
-    short health;
-    short health_max;
+    int health;
+    int health_max;
 
-    short mana;
-    short mana_max;
+    int mana;
+    int mana_max;
 
-    short experience_level;
+    int experience_level;
 
-    short experience;
+    int experience;
     //Experience needed for next level.
-    short experience_max;
+    int experience_max;
 
     //The current thirst level of the creature.
     //Lower numbers are better.
@@ -86,8 +86,10 @@ class Creature: public Object{
     short base_damage_thrown_min;
     short base_damage_thrown_max;
 
+    //The creature's actual, base attribute values.
     short attributes[ATTRIBUTE_LUCK+1];
 
+    //The creature's actual, base skill values.
     short skills[SKILL_MAGIC_SUMMONING+1];
 
     //The speed of this creature, used for the turns system.
@@ -216,7 +218,7 @@ class Creature: public Object{
     void level_up();
 
     //Gain experience points from killing a creature.
-    void gain_experience(short killed_experience_level);
+    void gain_experience(int killed_experience_level);
 
     //Evaluate the tile the creature is trying to move to.
     //Returns true if the creature can move, false if the creature can not move.
@@ -243,6 +245,37 @@ class Creature: public Object{
     //Returns the full name of the creature, which is:
     //race_name + " named " + name
     std::string return_full_name();
+
+    //Each of these functions returns the current TRUE attribute value (with all relevant bonuses, penalties, etc.) for the corresponding attribute.
+    short return_attribute_strength();
+    short return_attribute_agility();
+    short return_attribute_hardiness();
+    short return_attribute_comprehension();
+    short return_attribute_acumen();
+    short return_attribute_luck();
+
+    //Each of these functions returns the current TRUE skill value (with all relevant bonuses, penalties, etc.) for the corresponding skill.
+    short return_skill_bladed_weapons();
+    short return_skill_blunt_weapons();
+    short return_skill_stabbing_weapons();
+    short return_skill_unarmed();
+    short return_skill_security();
+    short return_skill_stealth();
+    short return_skill_launcher_weapons();
+    short return_skill_thrown_weapons();
+    short return_skill_dual_wielding();
+    short return_skill_speed();
+    short return_skill_fighting();
+    short return_skill_dodging();
+    short return_skill_armor();
+    short return_skill_magic_air();
+    short return_skill_magic_fire();
+    short return_skill_magic_water();
+    short return_skill_magic_cold();
+    short return_skill_magic_earth();
+    short return_skill_magic_conjuration();
+    short return_skill_magic_enchantment();
+    short return_skill_magic_summoning();
 };
 
 #endif

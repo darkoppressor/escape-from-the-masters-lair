@@ -16,7 +16,7 @@ void Creature::attack_melee(Creature* target){
     string outcome="";
 
     //If the attacker succeeds its hit check.
-    if(rc_attack_hit(skills[SKILL_FIGHTING],attributes[ATTRIBUTE_AGILITY],experience_level,target)){
+    if(rc_attack_hit(return_skill_fighting(),return_attribute_agility(),experience_level,target)){
        //If the defender fails its dodge check.
        if(!rc_attack_dodge(experience_level,target)){
             //The attack will hit.
@@ -45,15 +45,15 @@ void Creature::attack_melee(Creature* target){
 
                     //If the item is governed by the bladed weapons skill.
                     if(inventory[item_identifier].category==ITEM_WEAPON && inventory[item_identifier].governing_skill_weapon==SKILL_BLADED_WEAPONS){
-                        weapon_damage+=weapon_damage*(skills[SKILL_BLADED_WEAPONS]/10);
+                        weapon_damage+=weapon_damage*(return_skill_bladed_weapons()/10);
                     }
                     //If the item is governed by the blunt weapons skill.
                     else if(inventory[item_identifier].category==ITEM_WEAPON && inventory[item_identifier].governing_skill_weapon==SKILL_BLUNT_WEAPONS){
-                        weapon_damage+=weapon_damage*(skills[SKILL_BLUNT_WEAPONS]/10);
+                        weapon_damage+=weapon_damage*(return_skill_blunt_weapons()/10);
                     }
                     //If the item is governed by the stabbing weapons skill.
                     else if(inventory[item_identifier].category==ITEM_WEAPON && inventory[item_identifier].governing_skill_weapon==SKILL_STABBING_WEAPONS){
-                        weapon_damage+=weapon_damage*(skills[SKILL_STABBING_WEAPONS]/10);
+                        weapon_damage+=weapon_damage*(return_skill_stabbing_weapons()/10);
                     }
 
                     //Add the weapon's damage to the attack's damage.
@@ -64,17 +64,17 @@ void Creature::attack_melee(Creature* target){
             //If items are being dual-wielded.
             if(equipment[EQUIP_HOLD_RIGHT]!=0 && equipment[EQUIP_HOLD_LEFT]!=0){
                 //Add the dual-wielding bonus.
-                damage+=skills[SKILL_DUAL_WIELDING]/2;
+                damage+=return_skill_dual_wielding()/2;
             }
 
             //If there are no items being wielded.
             else if(equipment[EQUIP_HOLD_RIGHT]==0 && equipment[EQUIP_HOLD_LEFT]==0){
                 //Apply the unarmed weapon skill.
-                damage+=base_damage*(skills[SKILL_UNARMED]/10);
+                damage+=base_damage*(return_skill_unarmed()/10);
             }
 
             //Apply the strength bonus.
-            damage+=damage*(attributes[ATTRIBUTE_STRENGTH]/4);
+            damage+=damage*(return_attribute_strength()/4);
 
             //We have finished determining the maximum damage the attacker can do.
             //Now, we determine the damage reduction based on the target's stats.
@@ -89,7 +89,7 @@ void Creature::attack_melee(Creature* target){
             }
 
             //If the attacker succeeds in a critical strike.
-            if(rc_attack_critical_strike(attributes[ATTRIBUTE_AGILITY],experience_level,target)){
+            if(rc_attack_critical_strike(return_attribute_agility(),experience_level,target)){
                 damage+=random_range(damage/4,damage/2);
             }
        }
