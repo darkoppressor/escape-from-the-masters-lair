@@ -91,8 +91,8 @@ class Creature: public Object{
     //The creature's base attribute values.
     short attributes[ATTRIBUTE_LUCK+1];
 
-    //The creature's base skill values.
-    double skills[SKILL_MAGIC_SUMMONING+1];
+    //The creature's base skill values, and their experience and experience max values.
+    int skills[SKILL_MAGIC_SUMMONING+1][3];
 
     //The base speed of this creature, used for the turns system.
     //Lower numbers are faster.
@@ -220,6 +220,12 @@ class Creature: public Object{
 
     //Gain experience points.
     void gain_experience(int points_gained);
+
+    //Level up a skill.
+    void level_up_skill(short skill);
+
+    //Gain skill experience points.
+    void gain_skill_experience(short skill,int points_gained);
 
     //Evaluate the tile the creature is trying to move to.
     //Returns true if the creature can move, false if the creature can not move.

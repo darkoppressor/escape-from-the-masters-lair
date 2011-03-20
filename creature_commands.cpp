@@ -709,6 +709,15 @@ void Creature::execute_command_directional(short direction){
 
         //If the item's stack is not 0.
         if(inventory[inventory_item_index].stack!=0){
+            //Exercise the fighting skill.
+            gain_skill_experience(SKILL_FIGHTING,1);
+
+            //If the item is an actual thrown weapon.
+            if(inventory[inventory_item_index].category==ITEM_WEAPON && inventory[inventory_item_index].governing_skill_weapon==SKILL_THROWN_WEAPONS){
+                //Exercise the thrown weapons skill.
+                gain_skill_experience(SKILL_THROWN_WEAPONS,1);
+            }
+
             //If the item's stack is 1 and the item is not money.
             if(inventory[inventory_item_index].stack==1 && inventory[inventory_item_index].inventory_letter!='$'){
                 //Return the item's inventory letter.
@@ -802,6 +811,12 @@ void Creature::execute_command_directional(short direction){
 
         //If the quivered item's stack is not 0.
         if(inventory[quivered_item].stack!=0){
+            //Exercise the fighting skill.
+            gain_skill_experience(SKILL_FIGHTING,1);
+
+            //Exercise the launcher weapons skill.
+            gain_skill_experience(SKILL_LAUNCHER_WEAPONS,1);
+
             //If the item's stack is 1 and the item is not money.
             if(inventory[quivered_item].stack==1 && inventory[quivered_item].inventory_letter!='$'){
                 //Return the item's inventory letter.

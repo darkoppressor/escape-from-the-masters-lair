@@ -59,7 +59,9 @@ Creature::Creature(){
     }
 
     for(int i=0;i<SKILL_MAGIC_SUMMONING+1;i++){
-        skills[i]=1.0;
+        skills[i][SKILL_EXPERIENCE_LEVEL]=1;
+        skills[i][SKILL_EXPERIENCE]=0;
+        skills[i][SKILL_EXPERIENCE_MAX]=50;
     }
 
     movement_speed=0;

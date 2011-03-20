@@ -35,13 +35,52 @@ void Creature::level_up(){
 void Creature::gain_experience(int points_gained){
     experience+=points_gained;
 
-    ss.clear();ss.str("");ss<<"You gain ";ss<<points_gained;ss<<" experience points!";msg=ss.str();
+    ///ss.clear();ss.str("");ss<<"You gain ";ss<<points_gained;ss<<" experience points!";msg=ss.str();
 
-    update_text_log(msg.c_str(),is_player);
+    ///update_text_log(msg.c_str(),is_player);
 
     //If experience reaches the current maximum experience.
     if(experience>=experience_max){
         //The creature levels up.
         level_up();
+    }
+}
+
+void Creature::level_up_skill(short skill){
+    //The creature gains experience for gaining a skill level.
+    gain_experience(5);
+
+    //Increase the skill's max experience.
+    skills[skill][SKILL_EXPERIENCE_MAX]+=skills[skill][SKILL_EXPERIENCE_MAX]*0.5;
+
+    //Increase the skill's experience level.
+    skills[skill][SKILL_EXPERIENCE_LEVEL]++;
+
+    ///ss.clear();ss.str("");ss<<"You have gained a level!";msg=ss.str();
+
+    ///update_text_log(msg.c_str(),is_player);
+
+    //If the skill's experience reaches its current maximum experience.
+    if(skills[skill][SKILL_EXPERIENCE]>=skills[skill][SKILL_EXPERIENCE_MAX]){
+        //The skill levels up.
+        level_up_skill(skill);
+    }
+}
+
+void Creature::gain_skill_experience(short skill,int points_gained){
+    //The creature gains experience for gaining skill experience.
+    gain_experience(1);
+
+    //Add points_gained to the skill's experience.
+    skills[skill][SKILL_EXPERIENCE]+=points_gained;
+
+    ///ss.clear();ss.str("");ss<<"You gain ";ss<<points_gained;ss<<" experience points!";msg=ss.str();
+
+    ///update_text_log(msg.c_str(),is_player);
+
+    //If the skill's experience reaches its current maximum experience.
+    if(skills[skill][SKILL_EXPERIENCE]>=skills[skill][SKILL_EXPERIENCE_MAX]){
+        //The skill levels up.
+        level_up_skill(skill);
     }
 }

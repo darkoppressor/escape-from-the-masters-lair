@@ -15,6 +15,47 @@ void Creature::attack_melee(Creature* target){
 
     string outcome="";
 
+    //Handle the attacker's skill gains.
+
+    //Exercise the fighting skill.
+    gain_skill_experience(SKILL_FIGHTING,1);
+
+    //Check for items wielded in either hand.
+    for(int i=EQUIP_HOLD_RIGHT;i<EQUIP_HOLD_LEFT+1;i++){
+        //If there is an item wielded in this hand.
+        if(equipment[i]!=0){
+            //Determine the identifier for the item equipped in this slot.
+            int item_identifier=index_of_item_in_slot(i);
+
+            //If the item is governed by the bladed weapons skill.
+            if(inventory[item_identifier].category==ITEM_WEAPON && inventory[item_identifier].governing_skill_weapon==SKILL_BLADED_WEAPONS){
+                //Exercise the bladed weapons skill.
+                gain_skill_experience(SKILL_BLADED_WEAPONS,1);
+            }
+            //If the item is governed by the blunt weapons skill.
+            else if(inventory[item_identifier].category==ITEM_WEAPON && inventory[item_identifier].governing_skill_weapon==SKILL_BLUNT_WEAPONS){
+                //Exercise the blunt weapons skill.
+                gain_skill_experience(SKILL_BLUNT_WEAPONS,1);
+            }
+            //If the item is governed by the stabbing weapons skill.
+            else if(inventory[item_identifier].category==ITEM_WEAPON && inventory[item_identifier].governing_skill_weapon==SKILL_STABBING_WEAPONS){
+                //Exercise the stabbing weapons skill.
+                gain_skill_experience(SKILL_STABBING_WEAPONS,1);
+            }
+        }
+    }
+
+    //If items are being dual-wielded.
+    if(equipment[EQUIP_HOLD_RIGHT]!=0 && equipment[EQUIP_HOLD_LEFT]!=0){
+        //Exercise the dual wielding skill.
+        gain_skill_experience(SKILL_DUAL_WIELDING,1);
+    }
+    //If there are no items being wielded.
+    else if(equipment[EQUIP_HOLD_RIGHT]==0 && equipment[EQUIP_HOLD_LEFT]==0){
+        //Exercise the unarmed skill.
+        gain_skill_experience(SKILL_UNARMED,1);
+    }
+
     //If the attacker succeeds its hit check.
     if(rc_attack_hit(return_skill_fighting(),return_attribute_agility(),experience_level,target)){
        //If the defender fails its dodge check.
@@ -342,9 +383,6 @@ void Creature::attack_melee(Creature* target){
     //If the target's health drops to 0 or below, it has been killed.
     if(target->return_health()<=0){
         target->die(CAUSE_OF_DEATH_MELEE,return_full_name(),"");
-
-        //This creature gains experience.
-        ///gain_experience(target->experience_level);
     }
 }
 
