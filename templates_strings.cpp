@@ -5,6 +5,19 @@
 
 using namespace std;
 
+short Templates::string_to_use(string line){
+    short use=0;
+
+    if(line=="none"){
+        use=ITEM_USE_NONE;
+    }
+    else if(line=="light"){
+        use=ITEM_USE_LIGHT;
+    }
+
+    return use;
+}
+
 short Templates::string_to_material(string line){
     short material=0;
 

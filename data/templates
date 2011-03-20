@@ -50,10 +50,6 @@
 		material:iron
 		melee damage:24-31
 		thrown damage:1-1
-		ranged damage:0-0
-		light radius:0
-		light beam:0
-		beam angle:0
 		<weapon>
 			governing weapon skill:bladed weapons
 			weapon category:short blades
@@ -77,9 +73,6 @@
 		melee damage:1-1
 		thrown damage:1-1
 		ranged damage:14-19
-		light radius:0
-		light beam:0
-		beam angle:0
 		<weapon>
 			governing weapon skill:launcher weapons
 			weapon category:bows
@@ -102,10 +95,6 @@
 		material:iron
 		melee damage:1-1
 		thrown damage:12-16
-		ranged damage:0-0
-		light radius:0
-		light beam:0
-		beam angle:0
 		<weapon>
 			governing weapon skill:thrown weapons
 			weapon category:thrown
@@ -132,10 +121,6 @@
 		material:leather
 		melee damage:1-6
 		thrown damage:1-3
-		ranged damage:0-0
-		light radius:0
-		light beam:0
-		beam angle:0
 		<armor>
 			armor category:head
 			defense:8
@@ -158,10 +143,6 @@
 		material:leather
 		melee damage:1-8
 		thrown damage:1-4
-		ranged damage:0-0
-		light radius:0
-		light beam:0
-		beam angle:0
 		<armor>
 			armor category:shoulders
 			defense:9
@@ -184,10 +165,6 @@
 		material:leather
 		melee damage:1-26
 		thrown damage:1-13
-		ranged damage:0-0
-		light radius:0
-		light beam:0
-		beam angle:0
 		<armor>
 			armor category:chest
 			defense:17
@@ -210,10 +187,6 @@
 		material:leather
 		melee damage:1-18
 		thrown damage:1-9
-		ranged damage:0-0
-		light radius:0
-		light beam:0
-		beam angle:0
 		<armor>
 			armor category:back
 			defense:14
@@ -236,10 +209,6 @@
 		material:leather
 		melee damage:1-11
 		thrown damage:1-6
-		ranged damage:0-0
-		light radius:0
-		light beam:0
-		beam angle:0
 		<armor>
 			armor category:waist
 			defense:10
@@ -262,10 +231,6 @@
 		material:leather
 		melee damage:1-17
 		thrown damage:1-9
-		ranged damage:0-0
-		light radius:0
-		light beam:0
-		beam angle:0
 		<armor>
 			armor category:legs
 			defense:13
@@ -288,10 +253,6 @@
 		material:leather
 		melee damage:1-4
 		thrown damage:1-2
-		ranged damage:0-0
-		light radius:0
-		light beam:0
-		beam angle:0
 		<armor>
 			armor category:feet
 			defense:7
@@ -314,10 +275,6 @@
 		material:leather
 		melee damage:1-3
 		thrown damage:1-2
-		ranged damage:0-0
-		light radius:0
-		light beam:0
-		beam angle:0
 		<armor>
 			armor category:hands
 			defense:5
@@ -340,10 +297,6 @@
 		material:leather
 		melee damage:1-2
 		thrown damage:1-1
-		ranged damage:0-0
-		light radius:0
-		light beam:0
-		beam angle:0
 		<armor>
 			armor category:wrists
 			defense:4
@@ -366,10 +319,6 @@
 		material:leather
 		melee damage:1-14
 		thrown damage:1-7
-		ranged damage:0-0
-		light radius:0
-		light beam:0
-		beam angle:0
 		<armor>
 			armor category:shield
 			defense:12
@@ -392,10 +341,6 @@
 		material:cloth
 		melee damage:1-32
 		thrown damage:1-16
-		ranged damage:0-0
-		light radius:0
-		light beam:0
-		beam angle:0
 		<armor>
 			armor category:shirt
 			defense:1
@@ -418,10 +363,6 @@
 		material:copper
 		melee damage:1-1
 		thrown damage:1-1
-		ranged damage:0-0
-		light radius:0
-		light beam:0
-		beam angle:0
 		<armor>
 			armor category:neck
 			defense:0
@@ -444,10 +385,6 @@
 		material:copper
 		melee damage:1-1
 		thrown damage:1-1
-		ranged damage:0-0
-		light radius:0
-		light beam:0
-		beam angle:0
 		<armor>
 			armor category:fingers
 			defense:0
@@ -470,10 +407,6 @@
 	material:glass
 	melee damage:1-1
 	thrown damage:1-1
-	ranged damage:0-0
-	light radius:0
-	light beam:0
-	beam angle:0
 	<drink>
 		thirst quenched:100
 	</drink>
@@ -497,10 +430,6 @@
 	material:corpse
 	melee damage:1-1
 	thrown damage:1-1
-	ranged damage:0-0
-	light radius:0
-	light beam:0
-	beam angle:0
 	<food>
 		is corpse:1
 	</food>
@@ -518,10 +447,6 @@
 	material:food
 	melee damage:1-1
 	thrown damage:1-1
-	ranged damage:0-0
-	light radius:0
-	light beam:0
-	beam angle:0
 	<food>
 		is corpse:0
 	</food>
@@ -543,10 +468,6 @@
 	material:paper
 	melee damage:1-1
 	thrown damage:1-1
-	ranged damage:0-0
-	light radius:0
-	light beam:0
-	beam angle:0
 	//<scroll>
 		//is corpse:0
 	//</scroll>
@@ -568,10 +489,6 @@
 	material:paper
 	melee damage:1-1
 	thrown damage:1-1
-	ranged damage:0-0
-	light radius:0
-	light beam:0
-	beam angle:0
 	//<book>
 		//is corpse:0
 	//</book>
@@ -593,10 +510,6 @@
 	material:cloth
 	melee damage:1-8
 	thrown damage:1-4
-	ranged damage:0-0
-	light radius:0
-	light beam:0
-	beam angle:0
 	//<container>
 		//is corpse:0
 	//</container>
@@ -618,18 +531,11 @@
 	material:gold
 	melee damage:1-1
 	thrown damage:1-1
-	ranged damage:0-0
-	light radius:0
-	light beam:0
-	beam angle:0
-	<other>
-		fuel:0
-	</other>
 </item>
 
 <item category:other>
-	name:lantern
-	plural name:lanterns
+	name:brass lantern
+	plural name:brass lanterns
 	writing:
 	appearance:è
 	stackable:0
@@ -639,11 +545,11 @@
 	material:brass
 	melee damage:1-69
 	thrown damage:1-35
-	ranged damage:0-0
 	light radius:10
 	light beam:0
 	beam angle:90
+	use:light
 	<other>
-		fuel:500
+		fuel:0
 	</other>
 </item>

@@ -21,6 +21,8 @@ Item::Item(){
 
     momentum=0;
 
+    use=ITEM_USE_NONE;
+
     stack=1;
 
     stackable=false;

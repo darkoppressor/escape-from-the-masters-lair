@@ -68,6 +68,10 @@ class Templates{
     //Pass a string representing a material.
     //Returns the short for that material.
     short string_to_material(std::string line);
+
+    //Pass a string representing an item use.
+    //Returns the short for that item use.
+    short string_to_use(std::string line);
 };
 
 #endif

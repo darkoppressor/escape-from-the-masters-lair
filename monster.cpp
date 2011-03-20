@@ -344,6 +344,11 @@ void Monster::handle_input(){
             input_inventory=INVENTORY_COMMAND_QUAFF_ITEM;
         }
 
+        //Use item.
+        else if(ai_keystates[AIK_USE_ITEM]){
+            input_inventory=INVENTORY_COMMAND_USE_ITEM;
+        }
+
         //If a directional command has been given.
         if(input_directional!=DIRECTIONAL_COMMAND_NONE && move_state!=NONE){
             check_command_directional(move_state);

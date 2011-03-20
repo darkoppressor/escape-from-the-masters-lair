@@ -1255,6 +1255,35 @@ void Creature::check_command_inventory(char inventory_letter){
             inventory_input_state=0;
         }
     }
+
+    else if(command==INVENTORY_COMMAND_USE_ITEM){
+        //If the item can be used.
+        if(inventory[inventory_item_index].use==ITEM_USE_LIGHT && inventory[inventory_item_index].fuel>0){
+            initiate_move=true;
+        }
+        //If the item is a light source with no fuel.
+        else if(inventory[inventory_item_index].use==ITEM_USE_LIGHT && inventory[inventory_item_index].fuel==0){
+            string message="The ";
+            message+=inventory[inventory_item_index].return_full_name(1);
+            message+=" is out of fuel.";
+            update_text_log(message.c_str(),is_player);
+
+            //No inventory command will be executed.
+            input_inventory=0;
+            inventory_input_state=0;
+        }
+        //If the item cannot be used.
+        else{
+            string message="You have no idea what to do with the ";
+            message+=inventory[inventory_item_index].return_full_name(1);
+            message+=".";
+            update_text_log(message.c_str(),is_player);
+
+            //No inventory command will be executed.
+            input_inventory=0;
+            inventory_input_state=0;
+        }
+    }
 }
 
 void Creature::execute_command_inventory(char inventory_letter){
@@ -1524,6 +1553,48 @@ void Creature::execute_command_inventory(char inventory_letter){
 
             //Remove the item from the inventory items vector.
             inventory.erase(inventory.begin()+inventory_item_index);
+        }
+    }
+
+    else if(command==INVENTORY_COMMAND_USE_ITEM){
+        //Setup a message.
+
+        string str_item="";
+
+        if(inventory[inventory_item_index].use==ITEM_USE_LIGHT){
+            //If the creature is the player.
+            if(is_player){
+                if(inventory[inventory_item_index].light_on){
+                    str_item="You snuff out the ";
+                }
+                else{
+                    str_item="You light the ";
+                }
+            }
+            //If the creature is not the player.
+            else{
+                if(inventory[inventory_item_index].light_on){
+                    str_item="The ";
+                    str_item+=return_full_name();
+                    str_item+=" snuffs out the ";
+                }
+                else{
+                    str_item="The ";
+                    str_item+=return_full_name();
+                    str_item+=" lights the ";
+                }
+            }
+
+            str_item+=inventory[inventory_item_index].return_full_name(1);
+            str_item+=".";
+        }
+
+        update_text_log(str_item.c_str(),true);
+
+        //Use the item.
+
+        if(inventory[inventory_item_index].use==ITEM_USE_LIGHT){
+            inventory[inventory_item_index].light_on=!inventory[inventory_item_index].light_on;
         }
     }
 }

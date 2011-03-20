@@ -96,6 +96,9 @@ class Item: public Object{
     //This is the maximum number of tiles the item can move.
     short momentum;
 
+    //The special use of the item, if any.
+    short use;
+
     //The stacked number of this item.
     int stack;
 

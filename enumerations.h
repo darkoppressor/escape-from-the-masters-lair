@@ -314,6 +314,15 @@ enum{
     EQUIP_HOLD_LEFT
 };
 
+//************//
+// Item Uses: //
+//************//
+
+enum{
+    ITEM_USE_NONE,
+    ITEM_USE_LIGHT
+};
+
 //**********//
 // Genders: //
 //**********//
@@ -405,7 +414,8 @@ enum{
     INVENTORY_COMMAND_EQUIP_ARMOR,
     INVENTORY_COMMAND_UNEQUIP_ITEM,
     INVENTORY_COMMAND_THROW_ITEM,
-    INVENTORY_COMMAND_QUAFF_ITEM
+    INVENTORY_COMMAND_QUAFF_ITEM,
+    INVENTORY_COMMAND_USE_ITEM
 };
 
 //***************//

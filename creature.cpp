@@ -116,8 +116,8 @@ void Creature::create_light_item(){
 
     temp_item.light_on=true;
     temp_item.category=ITEM_OTHER;
-    temp_item.name="lantern";
-    temp_item.plural_name="lanterns";
+    temp_item.name="brass lantern";
+    temp_item.plural_name="brass lanterns";
     temp_item.writing="";
     temp_item.appearance='\xE8';
     temp_item.stackable=false;
@@ -138,6 +138,8 @@ void Creature::create_light_item(){
     temp_item.fov_radius=10;
     temp_item.beam=false;
     temp_item.fov_angle=90;
+
+    temp_item.use=ITEM_USE_LIGHT;
 
     temp_item.fuel=500;
 

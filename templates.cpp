@@ -377,6 +377,7 @@ void Templates::load_template_item(short category){
         string fov_radius="light radius:";
         string beam="light beam:";
         string fov_angle="beam angle:";
+        string use="use:";
 
         //Grab the next line of the file.
         getline(load,line);
@@ -579,6 +580,13 @@ void Templates::load_template_item(short category){
             line.erase(0,fov_angle.length());
 
             temp_item.fov_angle=atoi(line.c_str());
+        }
+        //Use.
+        else if(line.rfind(use.c_str())!=string::npos){
+            //Clear the data name.
+            line.erase(0,use.length());
+
+            temp_item.use=string_to_use(line);
         }
 
         //If the line begins weapon-specific data.
