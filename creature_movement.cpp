@@ -8,29 +8,43 @@ using namespace std;
 unsigned short Creature::return_movement_speed(){
     double speed=movement_speed;
 
+    //Subtract the agility bonus.
+    speed-=return_attribute_agility()*3;
+
+    //Subtract the hardiness bonus.
+    speed-=return_attribute_hardiness();
+
     //If the creature is bloated.
     if(thirst<=THIRST_BLOATED){
+        //Being bloated causes a penalty to speed.
         speed+=speed*0.25;
     }
 
-    if(speed<0.0){
-        speed=0.0;
+    if(speed<1.0){
+        speed=1.0;
     }
 
     return (unsigned short)speed;
 }
 
 short Creature::return_next_move(){
-    double nextmove=next_move;
+    double speed=next_move;
+
+    //Subtract the agility bonus.
+    speed-=return_attribute_agility()*3;
+
+    //Subtract the hardiness bonus.
+    speed-=return_attribute_hardiness();
 
     //If the creature is bloated.
     if(thirst<=THIRST_BLOATED){
-        nextmove+=nextmove*0.25;
+        //Being bloated causes a penalty to speed.
+        speed+=speed*0.25;
     }
 
-    if(nextmove<0.0){
-        nextmove=0.0;
+    if(speed<1.0){
+        speed=1.0;
     }
 
-    return (short)nextmove;
+    return (short)speed;
 }

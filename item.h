@@ -181,6 +181,9 @@ class Item: public Object{
     //The amount of thirst quenched by quaffing this drink.
     short thirst_quenched;
 
+    //The special drink effect of the item.
+    short drink_effect;
+
     //Scroll-specific//
 
     //Book-specific//
@@ -190,7 +193,6 @@ class Item: public Object{
     //Other-specific//
 
     //If this item is a light source, this is its fuel supply.
-    //If this item is a fuel item, this is the amount of fuel it can give.
     short fuel;
 
     //The maximum amount of fuel this item can hold.

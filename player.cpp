@@ -418,6 +418,13 @@ void Player::handle_input(){
                         input_inventory=INVENTORY_COMMAND_USE_ITEM;
                     }
 
+                    //Mix items, first item.
+                    else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.sym==SDLK_m){
+                        update_text_log("What do you want to mix?",is_player);
+
+                        input_inventory=INVENTORY_COMMAND_MIX_ITEMS_1;
+                    }
+
                     //Inventory letter.
                     else if(input_inventory!=INVENTORY_COMMAND_NONE && ((event.key.keysym.unicode>=(Uint16)'A' && event.key.keysym.unicode<=(Uint16)'Z') || (event.key.keysym.unicode>=(Uint16)'a' && event.key.keysym.unicode<=(Uint16)'z') || (event.key.keysym.unicode==(Uint16)'$'))){
                         inventory_input_state=(char)event.key.keysym.unicode;
@@ -608,8 +615,8 @@ void Player::move(){
         //Movement has been handled, now clear the move state.
         move_state=NONE;
 
-        //Remember the inventory_input_state in case it is needed for a directional inventory command.
-        directional_inventory_input_state=inventory_input_state;
+        //Remember the inventory_input_state in case it is needed for a two part inventory command.
+        two_part_inventory_input_state=inventory_input_state;
 
         inventory_input_state=0;
 

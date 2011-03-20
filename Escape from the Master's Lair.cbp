@@ -90,6 +90,7 @@
 		<Unit filename="combat_all.h" />
 		<Unit filename="creature.cpp" />
 		<Unit filename="creature.h" />
+		<Unit filename="creature_alchemy.cpp" />
 		<Unit filename="creature_attributes.cpp" />
 		<Unit filename="creature_combat.cpp" />
 		<Unit filename="creature_commands.cpp" />

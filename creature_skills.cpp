@@ -10,8 +10,8 @@ short Creature::return_skill_bladed_weapons(){
 
     ///
 
-    if(skill<0.0){
-        skill=0.0;
+    if(skill<1.0){
+        skill=1.0;
     }
 
     return (short)skill;
@@ -22,8 +22,8 @@ short Creature::return_skill_blunt_weapons(){
 
     ///
 
-    if(skill<0.0){
-        skill=0.0;
+    if(skill<1.0){
+        skill=1.0;
     }
 
     return (short)skill;
@@ -34,8 +34,8 @@ short Creature::return_skill_stabbing_weapons(){
 
     ///
 
-    if(skill<0.0){
-        skill=0.0;
+    if(skill<1.0){
+        skill=1.0;
     }
 
     return (short)skill;
@@ -46,8 +46,8 @@ short Creature::return_skill_unarmed(){
 
     ///
 
-    if(skill<0.0){
-        skill=0.0;
+    if(skill<1.0){
+        skill=1.0;
     }
 
     return (short)skill;
@@ -58,8 +58,8 @@ short Creature::return_skill_security(){
 
     ///
 
-    if(skill<0.0){
-        skill=0.0;
+    if(skill<1.0){
+        skill=1.0;
     }
 
     return (short)skill;
@@ -70,8 +70,8 @@ short Creature::return_skill_stealth(){
 
     ///
 
-    if(skill<0.0){
-        skill=0.0;
+    if(skill<1.0){
+        skill=1.0;
     }
 
     return (short)skill;
@@ -82,8 +82,8 @@ short Creature::return_skill_launcher_weapons(){
 
     ///
 
-    if(skill<0.0){
-        skill=0.0;
+    if(skill<1.0){
+        skill=1.0;
     }
 
     return (short)skill;
@@ -94,8 +94,8 @@ short Creature::return_skill_thrown_weapons(){
 
     ///
 
-    if(skill<0.0){
-        skill=0.0;
+    if(skill<1.0){
+        skill=1.0;
     }
 
     return (short)skill;
@@ -106,8 +106,8 @@ short Creature::return_skill_dual_wielding(){
 
     ///
 
-    if(skill<0.0){
-        skill=0.0;
+    if(skill<1.0){
+        skill=1.0;
     }
 
     return (short)skill;
@@ -118,8 +118,8 @@ short Creature::return_skill_speed(){
 
     ///
 
-    if(skill<0.0){
-        skill=0.0;
+    if(skill<1.0){
+        skill=1.0;
     }
 
     return (short)skill;
@@ -130,8 +130,8 @@ short Creature::return_skill_fighting(){
 
     ///
 
-    if(skill<0.0){
-        skill=0.0;
+    if(skill<1.0){
+        skill=1.0;
     }
 
     return (short)skill;
@@ -142,8 +142,8 @@ short Creature::return_skill_dodging(){
 
     ///
 
-    if(skill<0.0){
-        skill=0.0;
+    if(skill<1.0){
+        skill=1.0;
     }
 
     return (short)skill;
@@ -154,8 +154,8 @@ short Creature::return_skill_armor(){
 
     ///
 
-    if(skill<0.0){
-        skill=0.0;
+    if(skill<1.0){
+        skill=1.0;
     }
 
     return (short)skill;
@@ -166,8 +166,8 @@ short Creature::return_skill_magic_air(){
 
     ///
 
-    if(skill<0.0){
-        skill=0.0;
+    if(skill<1.0){
+        skill=1.0;
     }
 
     return (short)skill;
@@ -178,8 +178,8 @@ short Creature::return_skill_magic_fire(){
 
     ///
 
-    if(skill<0.0){
-        skill=0.0;
+    if(skill<1.0){
+        skill=1.0;
     }
 
     return (short)skill;
@@ -190,8 +190,8 @@ short Creature::return_skill_magic_water(){
 
     ///
 
-    if(skill<0.0){
-        skill=0.0;
+    if(skill<1.0){
+        skill=1.0;
     }
 
     return (short)skill;
@@ -202,8 +202,8 @@ short Creature::return_skill_magic_cold(){
 
     ///
 
-    if(skill<0.0){
-        skill=0.0;
+    if(skill<1.0){
+        skill=1.0;
     }
 
     return (short)skill;
@@ -214,8 +214,8 @@ short Creature::return_skill_magic_earth(){
 
     ///
 
-    if(skill<0.0){
-        skill=0.0;
+    if(skill<1.0){
+        skill=1.0;
     }
 
     return (short)skill;
@@ -226,8 +226,8 @@ short Creature::return_skill_magic_conjuration(){
 
     ///
 
-    if(skill<0.0){
-        skill=0.0;
+    if(skill<1.0){
+        skill=1.0;
     }
 
     return (short)skill;
@@ -238,8 +238,8 @@ short Creature::return_skill_magic_enchantment(){
 
     ///
 
-    if(skill<0.0){
-        skill=0.0;
+    if(skill<1.0){
+        skill=1.0;
     }
 
     return (short)skill;
@@ -250,8 +250,8 @@ short Creature::return_skill_magic_summoning(){
 
     ///
 
-    if(skill<0.0){
-        skill=0.0;
+    if(skill<1.0){
+        skill=1.0;
     }
 
     return (short)skill;

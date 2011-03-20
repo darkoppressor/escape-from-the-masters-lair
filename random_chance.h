@@ -29,6 +29,8 @@ bool rc_discover_secret_door();
 
 bool rc_regain_mana();
 
+bool rc_regain_mana_bonus(short attribute);
+
 bool rc_gain_thirst();
 
 bool rc_thirst_faint();

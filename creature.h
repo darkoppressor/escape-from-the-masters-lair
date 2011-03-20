@@ -35,7 +35,7 @@ class Creature: public Object{
     char inventory_input_state;
 
     //Used to store the inventory item being affected by a directional command.
-    char directional_inventory_input_state;
+    char two_part_inventory_input_state;
 
     //A standard command to be executed on the next call to move().
     short command_standard;
@@ -238,6 +238,10 @@ class Creature: public Object{
     void change_thirst(bool increase,short amount);
 
     std::string return_thirst_state();
+
+    //Mix two items together.
+    //The first item is applied to the second item.
+    void mix_items(int item_index_1,int item_index_2);
 
     //Apply a race's benefits and negatives to the creature.
     void apply_race(short race_to_apply);

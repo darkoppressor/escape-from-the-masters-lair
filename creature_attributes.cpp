@@ -25,8 +25,8 @@ short Creature::return_attribute_strength(){
         attribute-=attribute*0.25;
     }
 
-    if(attribute<0.0){
-        attribute=0.0;
+    if(attribute<1.0){
+        attribute=1.0;
     }
 
     return (short)attribute;
@@ -44,8 +44,8 @@ short Creature::return_attribute_agility(){
         attribute-=attribute*0.25;
     }
 
-    if(attribute<0.0){
-        attribute=0.0;
+    if(attribute<1.0){
+        attribute=1.0;
     }
 
     return (short)attribute;
@@ -56,8 +56,8 @@ short Creature::return_attribute_hardiness(){
 
     ///
 
-    if(attribute<0.0){
-        attribute=0.0;
+    if(attribute<1.0){
+        attribute=1.0;
     }
 
     return (short)attribute;
@@ -68,8 +68,8 @@ short Creature::return_attribute_comprehension(){
 
     ///
 
-    if(attribute<0.0){
-        attribute=0.0;
+    if(attribute<1.0){
+        attribute=1.0;
     }
 
     return (short)attribute;
@@ -80,8 +80,8 @@ short Creature::return_attribute_acumen(){
 
     ///
 
-    if(attribute<0.0){
-        attribute=0.0;
+    if(attribute<1.0){
+        attribute=1.0;
     }
 
     return (short)attribute;
@@ -92,8 +92,8 @@ short Creature::return_attribute_luck(){
 
     ///
 
-    if(attribute<0.0){
-        attribute=0.0;
+    if(attribute<1.0){
+        attribute=1.0;
     }
 
     return (short)attribute;

@@ -98,6 +98,22 @@ bool rc_regain_mana(){
     }
 }
 
+bool rc_regain_mana_bonus(short attribute){
+    int max_chance_range=199-(double)attribute*1.5;
+    if(max_chance_range<0){
+        max_chance_range=0;
+    }
+
+    int random_attempt=random_range(0,max_chance_range);
+
+    if(random_attempt>=0 && random_attempt<10){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
 bool rc_gain_thirst(){
     int random_attempt=random_range(0,99);
 

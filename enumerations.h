@@ -203,6 +203,15 @@ enum{
     ITEM_OTHER
 };
 
+//****************//
+// Drink Effects: //
+//****************//
+
+enum{
+    DRINK_EFFECT_NONE,
+    DRINK_EFFECT_FUEL
+};
+
 //*************//
 // Attributes: //
 //*************//
@@ -415,7 +424,9 @@ enum{
     INVENTORY_COMMAND_UNEQUIP_ITEM,
     INVENTORY_COMMAND_THROW_ITEM,
     INVENTORY_COMMAND_QUAFF_ITEM,
-    INVENTORY_COMMAND_USE_ITEM
+    INVENTORY_COMMAND_USE_ITEM,
+    INVENTORY_COMMAND_MIX_ITEMS_1,
+    INVENTORY_COMMAND_MIX_ITEMS_2
 };
 
 //***************//

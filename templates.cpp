@@ -814,6 +814,7 @@ void Templates::load_template_item_drink(Item* temp_item){
         //The data name strings used in the file.
 
         string thirst_quenched="thirst quenched:";
+        string drink_effect="effect:";
 
         //Grab the next line of the file.
         getline(load,line);
@@ -845,6 +846,13 @@ void Templates::load_template_item_drink(Item* temp_item){
             line.erase(0,thirst_quenched.length());
 
             temp_item->thirst_quenched=atoi(line.c_str());
+        }
+        //Drink effect.
+        else if(line.rfind(drink_effect.c_str())!=string::npos){
+            //Clear the data name.
+            line.erase(0,drink_effect.length());
+
+            temp_item->drink_effect=string_to_drink_effect(line);
         }
 
         //If the line ends the drink.

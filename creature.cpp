@@ -18,6 +18,7 @@ Creature::Creature(){
     input_directional=DIRECTIONAL_COMMAND_NONE;
     input_inventory=INVENTORY_COMMAND_NONE;
     inventory_input_state=0;
+    two_part_inventory_input_state=0;
     command_standard=COMMAND_NONE;
 
     initiate_move=false;
@@ -324,7 +325,21 @@ void Creature::process_turn(){
 
 void Creature::process_move(){
     if(rc_regain_mana()){
-        if(++mana>mana_max){
+        int mana_regen=1;
+
+        //Apply the acumen bonus.
+        if(rc_regain_mana_bonus(return_attribute_acumen())){
+            mana_regen+=2;
+        }
+
+        //Apply the comprehension bonus.
+        if(rc_regain_mana_bonus(return_attribute_comprehension())){
+            mana_regen++;
+        }
+
+        mana+=mana_regen;
+
+        if(mana>mana_max){
             mana=mana_max;
         }
     }

@@ -149,8 +149,8 @@ void Player::render_inventory(){
                             }
                         }
 
-                        //If the item has a light radius.
-                        if(inventory[i].fov_radius!=LIGHT_NONE){
+                        //If the item has fuel.
+                        if(inventory[i].fuel_max>0){
                             if(inventory[i].light_on){
                                 str_item=" (lit) (";
                             }

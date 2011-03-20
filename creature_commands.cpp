@@ -633,18 +633,18 @@ void Creature::execute_command_directional(short direction){
 
     int inventory_item_index=0;
 
-    //If a directional inventory command has been given.
-    if(directional_inventory_input_state!=0){
-        //Determine the index of the inventory item represented by directional_inventory_input_state.
+    //If a two part inventory command has been given.
+    if(two_part_inventory_input_state!=0){
+        //Determine the index of the inventory item represented by two_part_inventory_input_state.
 
         for(int i=0;i<inventory.size();i++){
-            if(inventory[i].inventory_letter==directional_inventory_input_state){
+            if(inventory[i].inventory_letter==two_part_inventory_input_state){
                 inventory_item_index=i;
                 break;
             }
         }
 
-        directional_inventory_input_state=0;
+        two_part_inventory_input_state=0;
     }
 
     if(command==DIRECTIONAL_COMMAND_OPEN_DOOR){
@@ -1284,6 +1284,42 @@ void Creature::check_command_inventory(char inventory_letter){
             inventory_input_state=0;
         }
     }
+
+    else if(command==INVENTORY_COMMAND_MIX_ITEMS_1){
+        //If the item can be mixed.
+        if(true){
+            initiate_move=true;
+        }
+        //If the item cannot be mixed.
+        else{
+            /**string message="You have no idea what to do with the ";
+            message+=inventory[inventory_item_index].return_full_name(1);
+            message+=".";
+            update_text_log(message.c_str(),is_player);*/
+
+            //No inventory command will be executed.
+            input_inventory=0;
+            inventory_input_state=0;
+        }
+    }
+
+    else if(command==INVENTORY_COMMAND_MIX_ITEMS_2){
+        //If the item can be mixed.
+        if(true){
+            initiate_move=true;
+        }
+        //If the item cannot be mixed.
+        else{
+            /**string message="You have no idea what to do with the ";
+            message+=inventory[inventory_item_index].return_full_name(1);
+            message+=".";
+            update_text_log(message.c_str(),is_player);*/
+
+            //No inventory command will be executed.
+            input_inventory=0;
+            inventory_input_state=0;
+        }
+    }
 }
 
 void Creature::execute_command_inventory(char inventory_letter){
@@ -1300,6 +1336,22 @@ void Creature::execute_command_inventory(char inventory_letter){
             inventory_item_index=i;
             break;
         }
+    }
+
+    int first_inventory_item_index=0;
+
+    //If a two part inventory command has been given.
+    if(two_part_inventory_input_state!=0){
+        //Determine the index of the inventory item represented by two_part_inventory_input_state.
+
+        for(int i=0;i<inventory.size();i++){
+            if(inventory[i].inventory_letter==two_part_inventory_input_state){
+                first_inventory_item_index=i;
+                break;
+            }
+        }
+
+        two_part_inventory_input_state=0;
     }
 
     if(command==INVENTORY_COMMAND_DROP_ITEM){
@@ -1596,5 +1648,25 @@ void Creature::execute_command_inventory(char inventory_letter){
         if(inventory[inventory_item_index].use==ITEM_USE_LIGHT){
             inventory[inventory_item_index].light_on=!inventory[inventory_item_index].light_on;
         }
+    }
+
+    else if(command==INVENTORY_COMMAND_MIX_ITEMS_1){
+        //Setup a throw message.
+
+        string str_item="";
+
+        //If the creature is the player.
+        if(is_player){
+            str_item="With what?";
+        }
+
+        update_text_log(str_item.c_str(),is_player);
+
+        input_inventory=INVENTORY_COMMAND_MIX_ITEMS_2;
+    }
+
+    else if(command==INVENTORY_COMMAND_MIX_ITEMS_2){
+        //Mix the items.
+        mix_items(first_inventory_item_index,inventory_item_index);
     }
 }

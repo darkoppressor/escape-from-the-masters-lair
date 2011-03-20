@@ -78,6 +78,8 @@ Item::Item(){
 
     thirst_quenched=0;
 
+    drink_effect=DRINK_EFFECT_NONE;
+
     //Scroll-specific//
 
     //Book-specific//

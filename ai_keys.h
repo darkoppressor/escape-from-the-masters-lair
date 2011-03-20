@@ -29,7 +29,8 @@ enum{
     AIK_THROW_ITEM,
     AIK_FIRE_ITEM,
     AIK_QUAFF_ITEM,
-    AIK_USE_ITEM
+    AIK_USE_ITEM,
+    AIK_MIX_ITEMS
 };
 
 #endif

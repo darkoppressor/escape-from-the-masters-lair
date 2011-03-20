@@ -18,6 +18,19 @@ short Templates::string_to_use(string line){
     return use;
 }
 
+short Templates::string_to_drink_effect(string line){
+    short effect=0;
+
+    if(line=="none"){
+        effect=DRINK_EFFECT_NONE;
+    }
+    else if(line=="fuel"){
+        effect=DRINK_EFFECT_FUEL;
+    }
+
+    return effect;
+}
+
 short Templates::string_to_material(string line){
     short material=0;
 

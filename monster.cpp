@@ -352,6 +352,11 @@ void Monster::handle_input(){
             input_inventory=INVENTORY_COMMAND_USE_ITEM;
         }
 
+        //Mix items.
+        else if(ai_keystates[AIK_MIX_ITEMS]){
+            input_inventory=INVENTORY_COMMAND_MIX_ITEMS_1;
+        }
+
         //If a directional command has been given.
         if(input_directional!=DIRECTIONAL_COMMAND_NONE && move_state!=NONE){
             check_command_directional(move_state);
@@ -383,8 +388,8 @@ void Monster::move(){
         //Movement has been handled, now clear the move state.
         move_state=NONE;
 
-        //Remember the inventory_input_state in case it is needed for a directional inventory command.
-        directional_inventory_input_state=inventory_input_state;
+        //Remember the inventory_input_state in case it is needed for a two part inventory command.
+        two_part_inventory_input_state=inventory_input_state;
 
         inventory_input_state=0;
 
