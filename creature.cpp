@@ -531,8 +531,12 @@ void Creature::execute_movement(short check_x,short check_y){
             }
         }
 
-        //If no attack occurred, move the creature.
+        //If no attack occurred.
         if(!combat_occurred){
+            //Exercise the speed skill.
+            gain_skill_experience(SKILL_SPEED,1);
+
+            //Move the creature.
             x=check_x;
             y=check_y;
         }

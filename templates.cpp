@@ -14,98 +14,101 @@ Templates::Templates(){
 }
 
 bool Templates::load_templates(){
-    load.open("data/templates",ifstream::in);
+    //
+    for(int i=0;i<;i++){
+        load.open("data/templates",ifstream::in);
 
-    if(load!=NULL){
-        //As long as we haven't reached the end of the file.
-        while(!load.eof()){
-            string line="";
+        if(load!=NULL){
+            //As long as we haven't reached the end of the file.
+            while(!load.eof()){
+                string line="";
 
-            //Grab the next line of the file.
-            getline(load,line);
+                //Grab the next line of the file.
+                getline(load,line);
 
-            //Clear initial whitespace from the line.
+                //Clear initial whitespace from the line.
 
-            //While the line still has text.
-            while(line.length()>0){
-                //If the character is a space or tab, delete it.
-                if(line[0]==' ' || line[0]=='\x09'){
-                    line.erase(0,1);
+                //While the line still has text.
+                while(line.length()>0){
+                    //If the character is a space or tab, delete it.
+                    if(line[0]==' ' || line[0]=='\x09'){
+                        line.erase(0,1);
+                    }
+                    //If the character is anything else, stop checking the line.
+                    else{
+                        break;
+                    }
                 }
-                //If the character is anything else, stop checking the line.
-                else{
-                    break;
+
+                //If the line is a comment.
+                if(line.rfind("//")!=string::npos){
+                    //Ignore this line.
+                }
+
+                //If the line begins an item.
+                else if(line.rfind("<item")!=string::npos){
+                    //Determine the item's category.
+
+                    //If the line begins a weapon item.
+                    if(line.rfind("weapon")!=string::npos){
+                        load_template_item(ITEM_WEAPON);
+                    }
+                    //If the line begins an armor item.
+                    else if(line.rfind("armor")!=string::npos){
+                        load_template_item(ITEM_ARMOR);
+                    }
+                    //If the line begins a food item.
+                    else if(line.rfind("food")!=string::npos){
+                        load_template_item(ITEM_FOOD);
+                    }
+                    //If the line begins a drink item.
+                    else if(line.rfind("drink")!=string::npos){
+                        load_template_item(ITEM_DRINK);
+                    }
+                    //If the line begins a scroll item.
+                    else if(line.rfind("scroll")!=string::npos){
+                        load_template_item(ITEM_SCROLL);
+                    }
+                    //If the line begins a book item.
+                    else if(line.rfind("book")!=string::npos){
+                        load_template_item(ITEM_BOOK);
+                    }
+                    //If the line begins a container item.
+                    else if(line.rfind("container")!=string::npos){
+                        load_template_item(ITEM_CONTAINER);
+                    }
+                    //If the line begins an other item.
+                    else if(line.rfind("other")!=string::npos){
+                        load_template_item(ITEM_OTHER);
+                    }
+                    else{
+                        load.close();
+                        load.clear();
+                        fprintf(stderr,"Error while loading templates: Attempted to load an item with an unknown category.\n");
+                        return false;
+                    }
+                }
+
+                //If the line begins a race.
+                else if(line.rfind("<race>")!=string::npos){
+                    load_template_race();
+                }
+
+                //If the line begins a base stats block.
+                else if(line.rfind("<base stats>")!=string::npos){
+                    load_base_stats();
                 }
             }
 
-            //If the line is a comment.
-            if(line.rfind("//")!=string::npos){
-                //Ignore this line.
-            }
-
-            //If the line begins an item.
-            else if(line.rfind("<item")!=string::npos){
-                //Determine the item's category.
-
-                //If the line begins a weapon item.
-                if(line.rfind("weapon")!=string::npos){
-                    load_template_item(ITEM_WEAPON);
-                }
-                //If the line begins an armor item.
-                else if(line.rfind("armor")!=string::npos){
-                    load_template_item(ITEM_ARMOR);
-                }
-                //If the line begins a food item.
-                else if(line.rfind("food")!=string::npos){
-                    load_template_item(ITEM_FOOD);
-                }
-                //If the line begins a drink item.
-                else if(line.rfind("drink")!=string::npos){
-                    load_template_item(ITEM_DRINK);
-                }
-                //If the line begins a scroll item.
-                else if(line.rfind("scroll")!=string::npos){
-                    load_template_item(ITEM_SCROLL);
-                }
-                //If the line begins a book item.
-                else if(line.rfind("book")!=string::npos){
-                    load_template_item(ITEM_BOOK);
-                }
-                //If the line begins a container item.
-                else if(line.rfind("container")!=string::npos){
-                    load_template_item(ITEM_CONTAINER);
-                }
-                //If the line begins an other item.
-                else if(line.rfind("other")!=string::npos){
-                    load_template_item(ITEM_OTHER);
-                }
-                else{
-                    load.close();
-                    load.clear();
-                    fprintf(stderr,"Error while loading templates: Attempted to load an item with an unknown category.\n");
-                    return false;
-                }
-            }
-
-            //If the line begins a race.
-            else if(line.rfind("<race>")!=string::npos){
-                load_template_race();
-            }
-
-            //If the line begins a base stats block.
-            else if(line.rfind("<base stats>")!=string::npos){
-                load_base_stats();
-            }
+            load.close();
+            load.clear();
         }
-
-        load.close();
-        load.clear();
-    }
-    else{
-        load.close();
-        load.clear();
-        fprintf(stderr,"Error loading templates file.\n");
-        return false;
+        else{
+            load.close();
+            load.clear();
+            fprintf(stderr,"Error loading templates file.\n");
+            return false;
+        }
     }
 
     return true;
