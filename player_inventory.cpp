@@ -230,10 +230,10 @@ void Player::render_inventory(){
 
                             if(inventory[i].fuel>0){
                                 ss.clear();ss.str("");ss<<inventory[i].fuel;ss<<"/";ss<<inventory[i].fuel_max;str_item+=ss.str();
-                                str_item+=" fuel)";
+                                str_item+=" oil)";
                             }
                             else{
-                                str_item+="out of fuel)";
+                                str_item+="out of oil)";
                             }
                         }
 

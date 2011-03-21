@@ -262,7 +262,7 @@ class Creature: public Object{
     void remove_race(short race_to_remove);
 
     //Returns the total weight of all items in the creature's inventory.
-    int return_inventory_weight();
+    int return_inventory_weight(short item_category=-1);
 
     //Returns the full name of the creature, which is:
     //race_name + " named " + name

@@ -90,6 +90,27 @@ short Creature::return_next_move(){
     return (short)speed;
 }
 
+int Creature::return_inventory_weight(short item_category){
+    int total_weight=0;
+
+    for(int i=0;i<inventory.size();i++){
+        //If all categories are being checked, or the item's category is the one being checked.
+        if(item_category==-1 || item_category==inventory[i].category){
+            int item_weight=inventory[i].weight;
+
+            //Apply the Armor skill armor weight contribution bonus.
+            //This is only applied when the category being checked is not armor.
+            if(item_category!=ITEM_ARMOR && inventory[i].category==ITEM_ARMOR){
+                item_weight-=return_skill_armor()*0.5;
+            }
+
+            total_weight+=item_weight*inventory[i].stack;
+        }
+    }
+
+    return total_weight;
+}
+
 short Creature::return_carry_capacity(){
     double number=carry_capacity;
 

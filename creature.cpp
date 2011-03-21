@@ -198,16 +198,6 @@ void Creature::create_water_bottle(){
     inventory[inventory.size()-1].owner=identifier;
 }
 
-int Creature::return_inventory_weight(){
-    int total_weight=0;
-
-    for(int i=0;i<inventory.size();i++){
-        total_weight+=inventory[i].weight*inventory[i].stack;
-    }
-
-    return total_weight;
-}
-
 void Creature::assign_identifier(){
     identifier=game.assign_identifier(OBJECT_CREATURE);
 }
@@ -577,16 +567,23 @@ void Creature::execute_movement(short check_x,short check_y){
         //If no attack occurred.
         if(!combat_occurred){
             //Exercise the speed skill.
+
             int points_gained=1;
             double inventory_weight=return_inventory_weight();
             if(inventory_weight<10.0){
                 inventory_weight=10.0;
             }
-
             //Apply the encumbrance bonus to the speed skill increase.
             points_gained+=25.0/inventory_weight;
-
             gain_skill_experience(SKILL_SPEED,points_gained);
+
+            //Exercise the armor skill.
+
+            points_gained=1;
+            inventory_weight=return_inventory_weight(ITEM_ARMOR);
+            //Apply the encumbrance bonus to the armor skill increase.
+            points_gained+=inventory_weight/50.0;
+            gain_skill_experience(SKILL_ARMOR,points_gained);
 
             //Move the creature.
             x=check_x;

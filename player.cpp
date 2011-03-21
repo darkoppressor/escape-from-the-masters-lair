@@ -376,6 +376,13 @@ void Player::handle_input(){
                         input_inventory=INVENTORY_COMMAND_DROP_ITEM;
                     }
 
+                    //Quaff item.
+                    else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.sym==SDLK_q && (modstate&KMOD_SHIFT)!=0){
+                        update_text_log("What do you want to drink?",is_player);
+
+                        input_inventory=INVENTORY_COMMAND_QUAFF_ITEM;
+                    }
+
                     //Equip item in right hand.
                     else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.sym==SDLK_1){
                         update_text_log("What do you want to wield in your right hand?",is_player);
@@ -418,13 +425,6 @@ void Player::handle_input(){
                         input_inventory=INVENTORY_COMMAND_THROW_ITEM;
                     }
 
-                    //Quaff item.
-                    else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.sym==SDLK_r){
-                        update_text_log("What do you want to quaff?",is_player);
-
-                        input_inventory=INVENTORY_COMMAND_QUAFF_ITEM;
-                    }
-
                     //Use item.
                     else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.sym==SDLK_a){
                         update_text_log("What do you want to use?",is_player);
@@ -442,13 +442,6 @@ void Player::handle_input(){
                     //Inventory letter.
                     else if(input_inventory!=INVENTORY_COMMAND_NONE && ((event.key.keysym.unicode>=(Uint16)'A' && event.key.keysym.unicode<=(Uint16)'Z') || (event.key.keysym.unicode>=(Uint16)'a' && event.key.keysym.unicode<=(Uint16)'z') || (event.key.keysym.unicode==(Uint16)'$'))){
                         inventory_input_state=(char)event.key.keysym.unicode;
-                    }
-
-                    //Unknown inventory letter.
-                    else if(input_inventory!=INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE){
-                        update_text_log("That isn't an inventory letter!",is_player);
-
-                        input_inventory=INVENTORY_COMMAND_NONE;
                     }
 
                     //**************//

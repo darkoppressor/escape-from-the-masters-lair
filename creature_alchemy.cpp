@@ -17,6 +17,7 @@ void Creature::mix_items(int item_index_1,int item_index_2){
             str_item+=inventory[item_index_2].return_full_name();
             str_item+=" with the ";
             str_item+=inventory[item_index_1].return_full_name(1);
+            str_item+=".";
         }
         //If the creature is not the player.
         else{
@@ -26,6 +27,7 @@ void Creature::mix_items(int item_index_1,int item_index_2){
             str_item+=inventory[item_index_2].return_full_name();
             str_item+=" with the ";
             str_item+=inventory[item_index_1].return_full_name(1);
+            str_item+=".";
         }
 
         //Max out the second item's fuel supply.
