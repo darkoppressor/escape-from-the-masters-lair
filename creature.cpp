@@ -577,7 +577,16 @@ void Creature::execute_movement(short check_x,short check_y){
         //If no attack occurred.
         if(!combat_occurred){
             //Exercise the speed skill.
-            gain_skill_experience(SKILL_SPEED,1);
+            int points_gained=1;
+            double inventory_weight=return_inventory_weight();
+            if(inventory_weight<10.0){
+                inventory_weight=10.0;
+            }
+
+            //Apply the encumbrance bonus to the speed skill increase.
+            points_gained+=25.0/inventory_weight;
+
+            gain_skill_experience(SKILL_SPEED,points_gained);
 
             //Move the creature.
             x=check_x;

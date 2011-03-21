@@ -353,6 +353,13 @@ void Player::handle_input(){
                         }
                     }
 
+                    //Unknown direction.
+                    else if(input_directional!=DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE){
+                        update_text_log("That isn't a direction!",is_player);
+
+                        input_directional=DIRECTIONAL_COMMAND_NONE;
+                    }
+
                     //*********************//
                     // Inventory Commands: //
                     //*********************//
@@ -435,6 +442,13 @@ void Player::handle_input(){
                     //Inventory letter.
                     else if(input_inventory!=INVENTORY_COMMAND_NONE && ((event.key.keysym.unicode>=(Uint16)'A' && event.key.keysym.unicode<=(Uint16)'Z') || (event.key.keysym.unicode>=(Uint16)'a' && event.key.keysym.unicode<=(Uint16)'z') || (event.key.keysym.unicode==(Uint16)'$'))){
                         inventory_input_state=(char)event.key.keysym.unicode;
+                    }
+
+                    //Unknown inventory letter.
+                    else if(input_inventory!=INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE){
+                        update_text_log("That isn't an inventory letter!",is_player);
+
+                        input_inventory=INVENTORY_COMMAND_NONE;
                     }
 
                     //**************//
