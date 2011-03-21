@@ -133,6 +133,11 @@ void events(){
             //Assign an identifier to the new item.
             vector_levels[current_level].items[vector_levels[current_level].items.size()-1].assign_identifier();
 
+            //Remove the monster from the game.
+
+            //Return the monster's identifier.
+            vector_levels[current_level].monsters[i].return_identifier();
+
             //Erase the monster.
             vector_levels[current_level].monsters.erase(vector_levels[current_level].monsters.begin()+i);
 
