@@ -64,6 +64,8 @@ Creature::Creature(){
         skills[i][SKILL_EXPERIENCE_MAX]=50;
     }
 
+    carry_capacity=0;
+
     movement_speed=0;
     next_move=movement_speed;
 
@@ -194,6 +196,16 @@ void Creature::create_water_bottle(){
 
     //Assign an owner identifier to the item.
     inventory[inventory.size()-1].owner=identifier;
+}
+
+int Creature::return_inventory_weight(){
+    int total_weight=0;
+
+    for(int i=0;i<inventory.size();i++){
+        total_weight+=inventory[i].weight*inventory[i].stack;
+    }
+
+    return total_weight;
 }
 
 void Creature::assign_identifier(){
@@ -414,6 +426,37 @@ string Creature::return_thirst_state(){
     }
 
     return thirst_state;
+}
+
+string Creature::return_encumbrance_state(){
+    string state="";
+
+    //If the creature is unencumbered.
+    if(return_inventory_weight()<=return_carry_capacity()){
+        state="unencumbered";
+    }
+    //If the creature is burdened.
+    else if(return_inventory_weight()>=return_carry_capacity()+1 && return_inventory_weight()<=return_carry_capacity()*1.5){
+        state="burdened";
+    }
+    //If the creature is stressed.
+    else if(return_inventory_weight()>=return_carry_capacity()*1.5+1 && return_inventory_weight()<=return_carry_capacity()*2.0){
+        state="stressed";
+    }
+    //If the creature is strained.
+    else if(return_inventory_weight()>=return_carry_capacity()*2.0+1 && return_inventory_weight()<=return_carry_capacity()*2.5){
+        state="strained";
+    }
+    //If the creature is overtaxed.
+    else if(return_inventory_weight()>=return_carry_capacity()*2.5+1 && return_inventory_weight()<=return_carry_capacity()*3.0){
+        state="overtaxed";
+    }
+    //If the creature is overloaded.
+    else if(return_inventory_weight()>=return_carry_capacity()*3.0+1){
+        state="overloaded";
+    }
+
+    return state;
 }
 
 void Creature::apply_race(short race_to_apply){

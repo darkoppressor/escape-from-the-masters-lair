@@ -81,6 +81,12 @@ void Player::render_inventory(){
 
         render_rectangle(0,0,800,600,1.0,COLOR_BLACK);
 
+        ss.clear();ss.str("");ss<<"Weight/Capacity: ";ss<<return_inventory_weight();ss<<"/";ss<<return_carry_capacity();msg=ss.str();
+        font.show((main_window.SCREEN_WIDTH-msg.length()*11)/2,0,msg,render_color);
+
+        ss.clear();ss.str("");ss<<"You are currently ";ss<<return_encumbrance_state();ss<<".";msg=ss.str();
+        font.show((main_window.SCREEN_WIDTH-msg.length()*11)/2,22,msg,render_color);
+
         for(short n=ITEM_WEAPON;n<ITEM_OTHER+1;n++){
             if(item_category_in_inventory(n)>0){
                 string title="";
@@ -110,8 +116,8 @@ void Player::render_inventory(){
                     title="Others";
                 }
 
-                render_rectangle(5,7+22*lines_rendered,11*title.length()+3,22,1.0,COLOR_GRAY);
-                font.show(5,10+22*lines_rendered++,title,COLOR_BLACK);
+                render_rectangle(5,44+22*lines_rendered,11*title.length()+3,22,1.0,COLOR_GRAY);
+                font.show(5,47+22*lines_rendered++,title,COLOR_BLACK);
 
                 for(int i=0;i<inventory.size();i++){
                     if(inventory[i].category==n && inventory[i].inventory_letter!='$'){
@@ -233,7 +239,7 @@ void Player::render_inventory(){
 
                         ss.clear();ss.str("");ss<<" ";ss<<inventory[i].inventory_letter;ss<<" - ";ss<<item_amount_prefix;ss<<inventory[i].return_full_name();ss<<str_item;ss<<"\xA";msg=ss.str();
 
-                        font.show(5,10+22*lines_rendered++,msg,render_color);
+                        font.show(5,47+22*lines_rendered++,msg,render_color);
                     }
                 }
             }

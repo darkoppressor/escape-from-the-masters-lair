@@ -13,19 +13,19 @@ void Creature::mix_items(int item_index_1,int item_index_2){
     if(inventory[item_index_1].possesses_effect(ITEM_EFFECT_FUEL) && inventory[item_index_2].fuel_max>0){
         //If the creature is the player.
         if(is_player){
-            str_item="You mix the ";
-            str_item+=inventory[item_index_1].return_full_name();
-            str_item+=" with the ";
+            str_item="You fill the ";
             str_item+=inventory[item_index_2].return_full_name();
+            str_item+=" with the ";
+            str_item+=inventory[item_index_1].return_full_name(1);
         }
         //If the creature is not the player.
         else{
             str_item="The ";
             str_item+=return_full_name();
-            str_item+="mixes the ";
-            str_item+=inventory[item_index_1].return_full_name();
-            str_item+=" with the ";
+            str_item+="fills the ";
             str_item+=inventory[item_index_2].return_full_name();
+            str_item+=" with the ";
+            str_item+=inventory[item_index_1].return_full_name(1);
         }
 
         //Max out the second item's fuel supply.

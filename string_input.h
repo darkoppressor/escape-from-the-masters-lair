@@ -15,9 +15,10 @@ class string_input{
     //Storage string.
     std::string str1;
 
-    string_input();
+    //The last string entered.
+    std::string last_string;
 
-    ~string_input();
+    string_input();
 
     void handle_events();
 };

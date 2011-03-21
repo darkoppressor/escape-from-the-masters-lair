@@ -89,3 +89,15 @@ short Creature::return_next_move(){
 
     return (short)speed;
 }
+
+short Creature::return_carry_capacity(){
+    double number=carry_capacity;
+
+    //Add the strength bonus.
+    number+=return_attribute_strength()*3;
+
+    //Add the hardiness bonus.
+    number+=return_attribute_hardiness();
+
+    return (short)number;
+}

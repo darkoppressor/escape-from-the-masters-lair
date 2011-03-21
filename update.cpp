@@ -248,6 +248,10 @@ void render(int frame_rate, double ms_per_frame){
             if(!(player.thirst>=THIRST_NOT_THIRSTY && player.thirst<THIRST_THIRSTY)){
                 ss.clear();ss.str("");ss<<"You are ";ss<<player.return_thirst_state();ss<<".";ss<<"\xA";msg+=ss.str();
             }
+            //If the player is anything aside from unencumbered.
+            if(!(player.return_inventory_weight()<=player.return_carry_capacity())){
+                ss.clear();ss.str("");ss<<"You are ";ss<<player.return_encumbrance_state();ss<<".";ss<<"\xA";msg+=ss.str();
+            }
             font.show(15,15,msg,COLOR_WHITE);
         }
     }

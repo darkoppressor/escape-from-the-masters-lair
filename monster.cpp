@@ -110,6 +110,8 @@ void Monster::set_base_stats(short pass_level){
     movement_speed=templates.base_stats.movement_speed;
     next_move=movement_speed;
 
+    carry_capacity=templates.base_stats.carry_capacity;
+
     //Level the monster up an appropriate number of times.
 
     int lowest_level=home_level-3;

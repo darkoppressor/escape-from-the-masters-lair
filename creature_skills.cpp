@@ -116,7 +116,11 @@ short Creature::return_skill_dual_wielding(){
 short Creature::return_skill_speed(){
     double skill=skills[SKILL_SPEED][SKILL_EXPERIENCE_LEVEL];
 
-    ///
+    //If the creature is anything aside from unencumbered.
+    if(!(return_inventory_weight()<=return_carry_capacity())){
+        //Apply the encumbrance penalty.
+        skill-=(return_carry_capacity()-return_inventory_weight())*0.1;
+    }
 
     if(skill<1.0){
         skill=1.0;

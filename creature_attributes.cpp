@@ -35,12 +35,20 @@ short Creature::return_attribute_strength(){
 short Creature::return_attribute_agility(){
     double attribute=attributes[ATTRIBUTE_AGILITY];
 
+    //If the creature is anything aside from unencumbered.
+    if(!(return_inventory_weight()<=return_carry_capacity())){
+        //Apply the encumbrance penalty.
+        attribute-=(return_carry_capacity()-return_inventory_weight())*0.025;
+    }
+
     //If the creature is satiated.
     if(thirst>=THIRST_SATIATED && thirst<THIRST_NOT_THIRSTY){
+        //Apply a satiated bonus.
         attribute+=attribute*0.10;
     }
     //If the creature is fainting.
     else if(thirst>=THIRST_FAINTING && thirst<THIRST_DEATH){
+        //Apply a fainting penalty.
         attribute-=attribute*0.25;
     }
 

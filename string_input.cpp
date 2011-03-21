@@ -13,9 +13,7 @@ using namespace boost::algorithm;
 
 string_input::string_input(){
     str1="";
-}
-
-string_input::~string_input(){
+    last_string="";
 }
 
 void string_input::handle_events(){
@@ -30,8 +28,19 @@ void string_input::handle_events(){
             str1.erase(str1.length()-1);/**Remove one character from the end of the string.*/
         }
 
+        if(event.key.keysym.sym==SDLK_UP){
+            str1=last_string;
+        }
+        else if(event.key.keysym.sym==SDLK_DOWN){
+            str1.clear();
+        }
+
         if((event.key.keysym.sym==SDLK_RETURN || event.key.keysym.sym==SDLK_KP_ENTER) && str1.length()>0){/**If the player hits enter.*/
             string str_command=str1;
+
+            //Remember this string.
+            last_string=str_command;
+
             trim(str_command);
 
             if(istarts_with(str_command,"info")){

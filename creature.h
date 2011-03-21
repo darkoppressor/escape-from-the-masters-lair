@@ -76,9 +76,6 @@ class Creature: public Object{
     //Lower numbers are better.
     short thirst;
 
-    //
-    short carry_capacity_;
-
     //The base amount of damage the creature does with its bare hands.
     short base_damage_melee_min;
     short base_damage_melee_max;
@@ -96,6 +93,9 @@ class Creature: public Object{
 
     //The creature's base skill values, and their experience and experience max values.
     int skills[SKILL_MAGIC_SUMMONING+1][3];
+
+    //The creature's base carrying capacity.
+    short carry_capacity;
 
     //The base speed of this creature, used for the turns system.
     //Lower numbers are faster.
@@ -249,6 +249,8 @@ class Creature: public Object{
 
     std::string return_thirst_state();
 
+    std::string return_encumbrance_state();
+
     //Mix two items together.
     //The first item is applied to the second item.
     void mix_items(int item_index_1,int item_index_2);
@@ -258,6 +260,9 @@ class Creature: public Object{
 
     //Remove a race's benefits and negatives from the creature.
     void remove_race(short race_to_remove);
+
+    //Returns the total weight of all items in the creature's inventory.
+    int return_inventory_weight();
 
     //Returns the full name of the creature, which is:
     //race_name + " named " + name
@@ -270,6 +275,7 @@ class Creature: public Object{
     int return_mana_max();
     unsigned short return_movement_speed();
     short return_next_move();
+    short return_carry_capacity();
 
     //Each of these functions returns the current TRUE attribute value (with all relevant bonuses, penalties, etc.) for the corresponding attribute.
     short return_attribute_strength();

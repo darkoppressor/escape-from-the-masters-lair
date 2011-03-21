@@ -142,6 +142,7 @@ void Templates::load_base_stats(){
         string base_damage_ranged="base damage ranged:";
         string base_damage_thrown="base damage thrown:";
         string movement_speed="base movement speed:";
+        string carry_capacity="base carrying capacity:";
 
         //Grab the next line of the file.
         getline(load,line);
@@ -274,6 +275,13 @@ void Templates::load_base_stats(){
             line.erase(0,movement_speed.length());
 
             temp_creature.movement_speed=atoi(line.c_str());
+        }
+        //Carrying capacity.
+        else if(line.rfind(carry_capacity.c_str())!=string::npos){
+            //Clear the data name.
+            line.erase(0,carry_capacity.length());
+
+            temp_creature.carry_capacity=atoi(line.c_str());
         }
 
         //If the line ends the base stats.
