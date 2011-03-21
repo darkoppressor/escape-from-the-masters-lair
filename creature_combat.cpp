@@ -475,7 +475,7 @@ void Creature::die(short cause_of_death,string killer,string killer_item){
 
     //Drop the creature's inventory.
 
-    for(int i=0;i<inventory.size();i++){
+    /**for(int i=0;i<inventory.size();i++){
         //If the item is either not money, or is money but with at least 1 in the stack.
         if(inventory[i].inventory_letter!='$' || (inventory[i].inventory_letter=='$' && inventory[i].stack>0)){
             //Return the item's inventory letter.
@@ -529,5 +529,5 @@ void Creature::die(short cause_of_death,string killer,string killer_item){
     vector_levels[current_level].items.push_back(temp_item);
 
     //Assign an identifier to the new item.
-    vector_levels[current_level].items[vector_levels[current_level].items.size()-1].assign_identifier();
+    vector_levels[current_level].items[vector_levels[current_level].items.size()-1].assign_identifier();*/
 }
