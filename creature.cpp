@@ -348,7 +348,15 @@ void Creature::process_move(){
         }
     }
 
-    change_thirst(true,1);
+    int thirst_change=1;
+
+    //If the creature is anything aside from unencumbered.
+    if(!(return_inventory_weight()<=return_carry_capacity())){
+        //Apply the overencumbered thirst penalty.
+        thirst_change+=(return_carry_capacity()-return_inventory_weight())*0.025;
+    }
+
+    change_thirst(true,thirst_change);
 }
 
 void Creature::change_thirst(bool increase,short amount){

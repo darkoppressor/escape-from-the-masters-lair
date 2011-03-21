@@ -73,7 +73,10 @@ void events(){
     for(int i=0;i<vector_levels[current_level].monsters.size();i++){
         //If the monster is dead.
         if(!vector_levels[current_level].monsters[i].alive){
-            ///Drop the monster's items and corpse.
+            //Drop the monster's items and corpse.
+
+            //Drop the creature's inventory.
+
             for(int n=0;n<vector_levels[current_level].monsters[i].inventory.size();n++){
                 //If the item is either not money, or is money but with at least 1 in the stack.
                 if(vector_levels[current_level].monsters[i].inventory[n].inventory_letter!='$' || (vector_levels[current_level].monsters[i].inventory[n].inventory_letter=='$' && vector_levels[current_level].monsters[i].inventory[n].stack>0)){
@@ -130,10 +133,10 @@ void events(){
             //Assign an identifier to the new item.
             vector_levels[current_level].items[vector_levels[current_level].items.size()-1].assign_identifier();
 
-            ///Erase the monster.
+            //Erase the monster.
             vector_levels[current_level].monsters.erase(vector_levels[current_level].monsters.begin()+i);
 
-            ///Decrement i.
+            //Decrement i.
             i--;
         }
     }
