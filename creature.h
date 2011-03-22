@@ -89,7 +89,7 @@ class Creature: public Object{
     short base_damage_thrown_max;
 
     //The creature's base attribute values.
-    short attributes[ATTRIBUTE_LUCK+1];
+    int attributes[ATTRIBUTE_LUCK+1];
 
     //The creature's base skill values, and their experience and experience max values.
     int skills[SKILL_MAGIC_SUMMONING+1][3];
@@ -103,15 +103,14 @@ class Creature: public Object{
     short attribute_level_bonuses[ATTRIBUTE_LUCK+1];
 
     //The creature's base carrying capacity.
-    short carry_capacity;
+    int carry_capacity;
 
     //The base speed of this creature, used for the turns system.
     //Lower numbers are faster.
-    ///I am thinking about race determining the base value of this.
-    unsigned short movement_speed;
+    int movement_speed;
 
     //The base number of "turn ticks" until the next move for this creature.
-    short next_move;
+    int next_move;
 
     //The creature's inventory.
     std::vector<Item> inventory;
@@ -282,17 +281,17 @@ class Creature: public Object{
     int return_mana();
     int return_mana_max();
     int return_armor();
-    unsigned short return_movement_speed();
-    short return_next_move();
-    short return_carry_capacity();
+    int return_movement_speed();
+    int return_next_move();
+    int return_carry_capacity();
 
     //Each of these functions returns the current TRUE attribute value (with all relevant bonuses, penalties, etc.) for the corresponding attribute.
-    short return_attribute_strength();
-    short return_attribute_agility();
-    short return_attribute_hardiness();
-    short return_attribute_comprehension();
-    short return_attribute_acumen();
-    short return_attribute_luck();
+    int return_attribute_strength();
+    int return_attribute_agility();
+    int return_attribute_hardiness();
+    int return_attribute_comprehension();
+    int return_attribute_acumen();
+    int return_attribute_luck();
 
     //Each of these functions returns the current TRUE skill value (with all relevant bonuses, penalties, etc.) for the corresponding skill.
     int return_skill_bladed_weapons();

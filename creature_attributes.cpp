@@ -2,10 +2,11 @@
 /* Escape from the Master's Lair may be freely redistributed.  See license for details. */
 
 #include "creature.h"
+#include "world.h"
 
 using namespace std;
 
-short Creature::return_attribute_strength(){
+int Creature::return_attribute_strength(){
     double attribute=attributes[ATTRIBUTE_STRENGTH];
 
     //If the creature's thirst is satiated.
@@ -25,14 +26,17 @@ short Creature::return_attribute_strength(){
         attribute-=attribute*0.25;
     }
 
+    //Apply the racial modifier.
+    attribute+=templates.template_races[race].attributes[ATTRIBUTE_STRENGTH];
+
     if(attribute<1.0){
         attribute=1.0;
     }
 
-    return (short)attribute;
+    return (int)attribute;
 }
 
-short Creature::return_attribute_agility(){
+int Creature::return_attribute_agility(){
     double attribute=attributes[ATTRIBUTE_AGILITY];
 
     //If the creature is anything aside from unencumbered.
@@ -52,57 +56,64 @@ short Creature::return_attribute_agility(){
         attribute-=attribute*0.25;
     }
 
+    //Apply the racial modifier.
+    attribute+=templates.template_races[race].attributes[ATTRIBUTE_AGILITY];
+
     if(attribute<1.0){
         attribute=1.0;
     }
 
-    return (short)attribute;
+    return (int)attribute;
 }
 
-short Creature::return_attribute_hardiness(){
+int Creature::return_attribute_hardiness(){
     double attribute=attributes[ATTRIBUTE_HARDINESS];
 
-    ///
+    //Apply the racial modifier.
+    attribute+=templates.template_races[race].attributes[ATTRIBUTE_HARDINESS];
 
     if(attribute<1.0){
         attribute=1.0;
     }
 
-    return (short)attribute;
+    return (int)attribute;
 }
 
-short Creature::return_attribute_comprehension(){
+int Creature::return_attribute_comprehension(){
     double attribute=attributes[ATTRIBUTE_COMPREHENSION];
 
-    ///
+    //Apply the racial modifier.
+    attribute+=templates.template_races[race].attributes[ATTRIBUTE_COMPREHENSION];
 
     if(attribute<1.0){
         attribute=1.0;
     }
 
-    return (short)attribute;
+    return (int)attribute;
 }
 
-short Creature::return_attribute_acumen(){
+int Creature::return_attribute_acumen(){
     double attribute=attributes[ATTRIBUTE_ACUMEN];
 
-    ///
+    //Apply the racial modifier.
+    attribute+=templates.template_races[race].attributes[ATTRIBUTE_ACUMEN];
 
     if(attribute<1.0){
         attribute=1.0;
     }
 
-    return (short)attribute;
+    return (int)attribute;
 }
 
-short Creature::return_attribute_luck(){
+int Creature::return_attribute_luck(){
     double attribute=attributes[ATTRIBUTE_LUCK];
 
-    ///
+    //Apply the racial modifier.
+    attribute+=templates.template_races[race].attributes[ATTRIBUTE_LUCK];
 
     if(attribute<1.0){
         attribute=1.0;
     }
 
-    return (short)attribute;
+    return (int)attribute;
 }

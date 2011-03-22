@@ -311,6 +311,17 @@ void Templates::load_template_race(){
         string appearance="appearance:";
         string color="color:";
         string weight="weight:";
+        string hp_range="levelup hp range:";
+        string mana_range="levelup mana range:";
+        string health="health:";
+        string mana="mana:";
+        string movement_speed="movement speed:";
+        string strength="strength:";
+        string agility="agility:";
+        string hardiness="hardiness:";
+        string comprehension="comprehension:";
+        string acumen="acumen:";
+        string luck="luck:";
 
         //Grab the next line of the file.
         getline(load,line);
@@ -363,6 +374,127 @@ void Templates::load_template_race(){
             line.erase(0,weight.length());
 
             temp_race.weight=atoi(line.c_str());
+        }
+        //HP Range.
+        else if(line.rfind(hp_range.c_str())!=string::npos){
+            //Clear the data name.
+            line.erase(0,hp_range.length());
+
+            string min_number="";
+            string max_number="";
+
+            //Look through the characters remaining in line.
+            for(int i=0;i<line.length();i++){
+                //If the dash is encountered.
+                if(line[i]=='-'){
+                    //Erase the dash.
+                    line.erase(i,1);
+
+                    for(int n=i;n<line.length();n++){
+                        max_number+=line[n];
+                    }
+
+                    line.erase(i);
+
+                    min_number=line;
+                    break;
+                }
+            }
+
+            temp_race.levelup_hp_min=atoi(min_number.c_str());
+            temp_race.levelup_hp_max=atoi(max_number.c_str());
+        }
+        //Mana Range.
+        else if(line.rfind(mana_range.c_str())!=string::npos){
+            //Clear the data name.
+            line.erase(0,mana_range.length());
+
+            string min_number="";
+            string max_number="";
+
+            //Look through the characters remaining in line.
+            for(int i=0;i<line.length();i++){
+                //If the dash is encountered.
+                if(line[i]=='-'){
+                    //Erase the dash.
+                    line.erase(i,1);
+
+                    for(int n=i;n<line.length();n++){
+                        max_number+=line[n];
+                    }
+
+                    line.erase(i);
+
+                    min_number=line;
+                    break;
+                }
+            }
+
+            temp_race.levelup_mana_min=atoi(min_number.c_str());
+            temp_race.levelup_mana_max=atoi(max_number.c_str());
+        }
+        //Health.
+        else if(line.rfind(health.c_str())!=string::npos){
+            //Clear the data name.
+            line.erase(0,health.length());
+
+            temp_race.health_max=atoi(line.c_str());
+        }
+        //Mana.
+        else if(line.rfind(mana.c_str())!=string::npos){
+            //Clear the data name.
+            line.erase(0,mana.length());
+
+            temp_race.mana_max=atoi(line.c_str());
+        }
+        //Movement speed.
+        else if(line.rfind(movement_speed.c_str())!=string::npos){
+            //Clear the data name.
+            line.erase(0,movement_speed.length());
+
+            temp_race.movement_speed=atoi(line.c_str());
+        }
+        //Strength.
+        else if(line.rfind(strength.c_str())!=string::npos){
+            //Clear the data name.
+            line.erase(0,strength.length());
+
+            temp_race.attributes[ATTRIBUTE_STRENGTH]=atoi(line.c_str());
+        }
+        //Agility.
+        else if(line.rfind(agility.c_str())!=string::npos){
+            //Clear the data name.
+            line.erase(0,agility.length());
+
+            temp_race.attributes[ATTRIBUTE_AGILITY]=atoi(line.c_str());
+        }
+        //Hardiness.
+        else if(line.rfind(hardiness.c_str())!=string::npos){
+            //Clear the data name.
+            line.erase(0,hardiness.length());
+
+            temp_race.attributes[ATTRIBUTE_HARDINESS]=atoi(line.c_str());
+        }
+        //Comprehension.
+        else if(line.rfind(comprehension.c_str())!=string::npos){
+            //Clear the data name.
+            line.erase(0,comprehension.length());
+
+            temp_race.attributes[ATTRIBUTE_COMPREHENSION]=atoi(line.c_str());
+        }
+        //Acumen.
+        else if(line.rfind(acumen.c_str())!=string::npos){
+            //Clear the data name.
+            line.erase(0,acumen.length());
+
+            temp_race.attributes[ATTRIBUTE_ACUMEN]=atoi(line.c_str());
+        }
+        //Luck.
+        else if(line.rfind(luck.c_str())!=string::npos){
+            //Clear the data name.
+            line.erase(0,luck.length());
+
+            temp_race.attributes[ATTRIBUTE_LUCK]=atoi(line.c_str());
         }
 
         //If the line ends the race.

@@ -10,6 +10,12 @@ class Race: public Creature{
     private:
     public:
 
+    int levelup_hp_min;
+    int levelup_hp_max;
+
+    int levelup_mana_min;
+    int levelup_mana_max;
+
     Race();
 };
 

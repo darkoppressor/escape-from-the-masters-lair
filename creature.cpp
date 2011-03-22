@@ -477,6 +477,7 @@ void Creature::apply_race(short race_to_apply){
     race_name=templates.template_races[race_to_apply].name;
     appearance=templates.template_races[race_to_apply].appearance;
     color=templates.template_races[race_to_apply].color;
+    weight=templates.template_races[race_to_apply].weight;
 }
 
 void Creature::remove_race(short race_to_remove){

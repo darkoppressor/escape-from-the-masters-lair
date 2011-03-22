@@ -2,6 +2,7 @@
 /* Escape from the Master's Lair may be freely redistributed.  See license for details. */
 
 #include "creature.h"
+#include "world.h"
 
 using namespace std;
 
@@ -11,6 +12,9 @@ int Creature::return_health(){
     //Apply the hardiness bonus.
     number+=number*((double)return_attribute_hardiness()/100.0);
 
+    //Apply the racial modifier.
+    number+=templates.template_races[race].health_max;
+
     return (int)number;
 }
 
@@ -19,6 +23,9 @@ int Creature::return_health_max(){
 
     //Apply the hardiness bonus.
     number+=number*((double)return_attribute_hardiness()/100.0);
+
+    //Apply the racial modifier.
+    number+=templates.template_races[race].health_max;
 
     return (int)number;
 }
@@ -32,6 +39,9 @@ int Creature::return_mana(){
     //Apply the acumen bonus.
     number+=number*(((double)return_attribute_acumen()/2.0)/100.0);
 
+    //Apply the racial modifier.
+    number+=templates.template_races[race].mana_max;
+
     return (int)number;
 }
 
@@ -43,6 +53,9 @@ int Creature::return_mana_max(){
 
     //Apply the acumen bonus.
     number+=number*(((double)return_attribute_acumen()/2.0)/100.0);
+
+    //Apply the racial modifier.
+    number+=templates.template_races[race].mana_max;
 
     return (int)number;
 }
@@ -73,7 +86,7 @@ int Creature::return_armor(){
     return (int)number;
 }
 
-unsigned short Creature::return_movement_speed(){
+int Creature::return_movement_speed(){
     double speed=movement_speed;
 
     //Subtract the agility bonus.
@@ -91,21 +104,27 @@ unsigned short Creature::return_movement_speed(){
         speed+=speed*0.25;
     }
 
+    //Apply the racial modifier.
+    speed+=templates.template_races[race].movement_speed;
+
     if(speed<1.0){
         speed=1.0;
     }
 
-    return (unsigned short)speed;
+    return (int)speed;
 }
 
-short Creature::return_next_move(){
+int Creature::return_next_move(){
     double speed=next_move;
 
     //Subtract the agility bonus.
-    speed-=return_attribute_agility()*3;
+    speed-=return_attribute_agility()*2;
 
     //Subtract the hardiness bonus.
     speed-=return_attribute_hardiness();
+
+    //Subtract the speed skill bonus.
+    speed-=return_skill_speed()*3;
 
     //If the creature is bloated.
     if(thirst<=THIRST_BLOATED){
@@ -113,7 +132,10 @@ short Creature::return_next_move(){
         speed+=speed*0.25;
     }
 
-    return (short)speed;
+    //Apply the racial modifier.
+    speed+=templates.template_races[race].movement_speed;
+
+    return (int)speed;
 }
 
 int Creature::return_inventory_weight(short item_category){
@@ -137,7 +159,7 @@ int Creature::return_inventory_weight(short item_category){
     return total_weight;
 }
 
-short Creature::return_carry_capacity(){
+int Creature::return_carry_capacity(){
     double number=carry_capacity;
 
     //Add the strength bonus.
@@ -146,5 +168,8 @@ short Creature::return_carry_capacity(){
     //Add the hardiness bonus.
     number+=return_attribute_hardiness();
 
-    return (short)number;
+    //Apply the weight bonus.
+    number+=weight/4.0;
+
+    return (int)number;
 }

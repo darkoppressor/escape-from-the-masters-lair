@@ -16,10 +16,10 @@ void Creature::level_up(){
     experience_level++;
 
     //Increase max health.
-    health_max*=1.075;
+    health_max+=random_range(templates.template_races[race].levelup_hp_min,templates.template_races[race].levelup_hp_max);
 
     //Increase max mana.
-    mana_max*=1.075;
+    mana_max+=random_range(templates.template_races[race].levelup_mana_min,templates.template_races[race].levelup_mana_max);
 
     ///Determine whether 1, 2, or 3 attributes are to be improved this level.
     ///int attributes_to_improve=;

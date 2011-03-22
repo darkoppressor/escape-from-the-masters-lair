@@ -7,11 +7,33 @@
 	appearance:x
 	color:purple
 	weight:10
+	levelup hp range:2-7
+	levelup mana range:1-2
+	health:0
+	mana:0
+	movement speed:0
+	strength:0
+	agility:0
+	hardiness:0
+	comprehension:0
+	acumen:0
+	luck:0
 </race>
 
 <race>
 	name:human
 	appearance:@
 	color:white
-	weight:20
+	weight:115
+	levelup hp range:2-7
+	levelup mana range:1-2
+	health:0
+	mana:0
+	movement speed:-10
+	strength:0
+	agility:0
+	hardiness:0
+	comprehension:0
+	acumen:0
+	luck:0
 </race>
