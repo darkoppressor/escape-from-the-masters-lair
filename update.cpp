@@ -289,12 +289,11 @@ void render(int frame_rate, double ms_per_frame){
     }*/
 
     if(player.option_dev && player.chat_mode){
-        render_rectangle(0,0,450,275,0.75,COLOR_BLACK);
-        render_rectangle(10,10,430,255,0.75,COLOR_GRAY);
-        ss.clear();ss.str("");ss<<"Level: ";ss<<current_level+1;ss<<"\xA";msg=ss.str();
-        ss.clear();ss.str("");ss<<"Last Level: ";ss<<last_level+1;ss<<"\xA";msg+=ss.str();
-        ss.clear();ss.str("");ss<<"Max Level: ";ss<<max_level+1;ss<<"\xA";msg+=ss.str();
-        ss.clear();ss.str("");ss<<"Level Temp: ";ss<<vector_levels[current_level].temperature;ss<<"\xA";msg+=ss.str();
+        render_rectangle(0,0,275,205,0.75,COLOR_BLACK);
+        render_rectangle(5,5,265,195,0.75,COLOR_GRAY);
+        ss.clear();ss.str("");ss<<"Last Dungeon Level: ";ss<<last_level+1;ss<<"\xA";msg=ss.str();
+        ss.clear();ss.str("");ss<<"Max Dungeon Level: ";ss<<max_level+1;ss<<"\xA";msg+=ss.str();
+        ss.clear();ss.str("");ss<<"Level Temperature: ";ss<<vector_levels[current_level].temperature;ss<<"\xA";msg+=ss.str();
         ss.clear();ss.str("");ss<<"Player Position (in tiles): ";ss<<player.x;ss<<"/";ss<<player.y;ss<<"\xA";msg+=ss.str();
         ss.clear();ss.str("");ss<<"Camera Position (in pixels): ";ss<<player.camera_x;ss<<"/";ss<<player.camera_y;ss<<"\xA";msg+=ss.str();
         ss.clear();ss.str("");ss<<"Inventory Size: ";ss<<player.inventory.size();ss<<"\xA";msg+=ss.str();
@@ -303,7 +302,7 @@ void render(int frame_rate, double ms_per_frame){
         ss.clear();ss.str("");ss<<"Level Size: ";ss<<vector_levels[current_level].level_x;ss<<"/";ss<<vector_levels[current_level].level_y;ss<<"\xA";msg+=ss.str();
         ss.clear();ss.str("");ss<<"CPU Architecture: ";ss<<8*sizeof(void*);ss<<"-bit";ss<<"\xA";msg+=ss.str();
         ss.clear();ss.str("");ss<<"Thirst: ";ss<<player.thirst;ss<<"\xA";msg+=ss.str();
-        font_small.show(15,15,msg,COLOR_WHITE);
+        font_small.show(5,5,msg,COLOR_WHITE);
     }
 
     if(player.current_window==WINDOW_NONE){

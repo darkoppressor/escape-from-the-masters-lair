@@ -53,14 +53,14 @@ void game_loop(){
     player.update_fov();
 
     //The number of logic updates allowed each second.
-    const double UPDATE_LIMIT=60;
+    const double UPDATE_LIMIT=60.0;
 
     //Updates will be handled in SKIP_TICKS-sized chunks.
     //For instance, if UPDATE_LIMIT == 60, then SKIP_TICKS will be 16.66667, which is 1/60 of a second.
-    const double SKIP_TICKS=1000/UPDATE_LIMIT;
+    const double SKIP_TICKS=1000.0/UPDATE_LIMIT;
 
     //The maximum number of frames to be skipped.
-    const double MAX_FRAMESKIP=5;
+    const double MAX_FRAMESKIP=5.0;
 
     //In our logic update while() loop, we consume SKIP_TICKS sized chunks of time, which are added to next_game_tick.
     Uint32 next_game_tick=SDL_GetTicks();
@@ -81,7 +81,7 @@ void game_loop(){
     int frame_rate=0;
 
     //For added performance information, ms_per_frame takes the FPS value each second and converts it to the number of milliseconds spent on each frame in the past second.
-    double ms_per_frame=0;
+    double ms_per_frame=0.0;
 
     //Here we have the game loop. Only when loop==false will this while() loop end. This should never happen, as when the game is closed, quit_game() should be called.
     while(true){
@@ -90,10 +90,10 @@ void game_loop(){
         //Second, we reset the frame count to 0, to count the number of frames succesfully completed in the next second.
         //Third, we set the milliseconds per frame to 1000/our current frame rate. Since our frame rate is in seconds, this gives us the number of milliseconds being spent on
         //each frame. Finally, we restart the frame rate timer.
-        if(timer_frame_rate.get_ticks()>=1000){
+        if(timer_frame_rate.get_ticks()>=1000.0){
             frame_rate=frame_count;
             frame_count=0;
-            ms_per_frame=1000.0f/frame_rate;
+            ms_per_frame=1000.0/frame_rate;
             timer_frame_rate.start();
         }
 

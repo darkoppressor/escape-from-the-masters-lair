@@ -40,9 +40,9 @@ void Game::prepare_identifiers(){
 uint32_t Game::assign_identifier(short object_type){
     //If the identifiers list for this object type is not empty.
     if(identifiers[object_type].size()>0){
-        uint32_t new_identifier=identifiers[object_type][0];
+        uint32_t new_identifier=identifiers[object_type][identifiers[object_type].size()-1];
 
-        identifiers[object_type].erase(identifiers[object_type].begin());
+        identifiers[object_type].erase(identifiers[object_type].end()-1);
 
         return new_identifier;
     }
@@ -73,6 +73,12 @@ void Game::return_identifier(short object_type,uint32_t returning_identifier){
 }*/
 
 void Game::generate_level(){
+    //Start the level generation timer.
+    Timer timer_level_gen;
+    timer_level_gen.start();
+
+    fprintf(stdout,"Generating dungeon level...\n");
+
     //Clear the vectors.
     generated_items.clear();
     generated_monsters.clear();
@@ -669,6 +675,10 @@ void Game::generate_level(){
         vector_levels[vector_levels.size()-1].monsters.push_back(Monster());
         vector_levels[vector_levels.size()-1].monsters[i]=generated_monsters[i];
     }
+
+    unsigned int level_gen_time=timer_level_gen.get_ticks();
+    double seconds=(double)level_gen_time/1000.0;
+    fprintf(stdout,"Finished generating dungeon level in %f seconds.\n",seconds);
 }
 
 void Game::draw_rectangle_room(short start_x,short start_y,short size_x,short size_y,short type,short material){
