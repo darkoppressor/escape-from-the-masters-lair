@@ -14,7 +14,6 @@ using namespace std;
 void Item::clear_owner_data_all(){
     owner_data_thrown.clear();
     owner_data_fired.clear();
-    owner_data_kicked.clear();
 }
 
 void Item::assign_owner_data_thrown(Creature* creature){
@@ -59,11 +58,6 @@ void Item::attack(Creature* target){
     else if(owner_data_fired.size()>0){
         attack_fired(target);
     }
-
-    //If the item was kicked.
-    /**else if(owner_data_kicked.size()>0){
-        attack_kicked(target);
-    }*/
 }
 
 void Item::attack_thrown(Creature* target){

@@ -442,24 +442,6 @@ void Creature::die(short cause_of_death,string killer,string killer_item){
             message+="!";
         }
     }
-    else if(cause_of_death==CAUSE_OF_DEATH_KICKED){
-        if(is_player){
-            message="You have been slain!";
-            message+="\xA";
-            message+="Killed by a ";
-            message+=killer_item;
-            message+=" kicked by a ";
-            message+=killer;
-            message+=".";
-        }
-        else{
-            message="Your ";
-            message+=killer_item;
-            message+=" kills the ";
-            message+=return_full_name();
-            message+="!";
-        }
-    }
     else if(cause_of_death==CAUSE_OF_DEATH_THIRST){
         if(is_player){
             message="You have died of thirst!";

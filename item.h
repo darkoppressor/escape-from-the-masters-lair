@@ -41,11 +41,6 @@ struct Owner_Data_Fired{
     bool is_player;
 };
 
-//All of the special data needed by an Item after being kicked by a Creature.
-struct Owner_Data_Kicked{
-    ///
-};
-
 class Item: public Object{
     private:
     public:
@@ -62,9 +57,6 @@ class Item: public Object{
 
     //Used to store special data for when the item has been fired by a creature.
     std::vector<Owner_Data_Fired> owner_data_fired;
-
-    //Used to store special data for when the item has been kicked by a creature.
-    std::vector<Owner_Data_Kicked> owner_data_kicked;
 
     //Is the light currently on.
     bool light_on;
@@ -226,17 +218,12 @@ class Item: public Object{
     //Assign special fired data to the item.
     void assign_owner_data_fired(Creature* creature);
 
-    //Assign special kicked data to the item.
-    void assign_owner_data_kicked(Creature* creature);
-
     //Initiate an attack.
     void attack(Creature* target);
 
     void attack_thrown(Creature* target);
 
     void attack_fired(Creature* target);
-
-    void attack_kicked(Creature* target);
 
     void move();
 
