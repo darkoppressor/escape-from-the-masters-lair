@@ -26,6 +26,42 @@ Game::~Game(){
     music=NULL;
 }
 
+void Game::new_game(){
+    fprintf(stdout,"Starting new game for %s\n",player.name.c_str());
+
+    player.game_in_progress=true;
+    player.current_window=WINDOW_NONE;
+
+    prepare_identifiers();
+
+    player.assign_identifier();
+
+    player.set_inventory();
+
+    player.set_base_stats();
+
+    player.apply_race(1);
+
+    generate_level();
+
+    change_level(NONE);
+
+    //Update initial fov.
+    player.update_fov();
+}
+
+void Game::old_game(){
+    fprintf(stdout,"Loading game for %s\n",player.name.c_str());
+
+    player.game_in_progress=true;
+    player.current_window=WINDOW_NONE;
+
+    load_game();
+
+    //Update initial fov.
+    player.update_fov();
+}
+
 void Game::prepare_identifiers(){
     for(short i=0;i<OBJECT_ITEM+1;i++){
         identifiers.push_back(vector<uint32_t>());

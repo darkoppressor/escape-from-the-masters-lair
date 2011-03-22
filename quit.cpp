@@ -37,7 +37,7 @@ void quit_game(){
     }
 
     //Print a success message to stdout.txt.
-    printf("Exited successfully!\n");
+    printf("Exiting successfully.\n");
 
     //Tell the program to exit successfully.
     exit(EXIT_SUCCESS);

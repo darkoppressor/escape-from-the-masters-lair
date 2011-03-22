@@ -38,6 +38,12 @@ class Game{
     //The destructor frees all of the level files that need freeing.
     ~Game();
 
+    //Start a new game.
+    void new_game();
+
+    //Load a saved game.
+    void old_game();
+
     //Prepare the identifier lists.
     void prepare_identifiers();
 

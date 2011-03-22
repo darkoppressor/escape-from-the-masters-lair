@@ -4,8 +4,112 @@
 #include "player.h"
 #include "world.h"
 #include "render.h"
+#include "quit.h"
 
 using namespace std;
+using namespace boost::algorithm;
+
+void Player::handle_input_no_game(){
+    int mouse_x,mouse_y;
+
+    //Get the SDL keystates and store them in the keystates variable for evaluation.
+    keystates=SDL_GetKeyState(NULL);
+
+    modstate=SDL_GetModState();
+
+    SDL_GetMouseState(&mouse_x,&mouse_y);
+
+    while(SDL_PollEvent(&event)){
+        SDL_EnableUNICODE(SDL_ENABLE);
+
+        switch(event.type){
+            case SDL_QUIT:
+                quit_game();
+                break;
+
+            case SDL_KEYDOWN:
+                //If no player name has yet been entered.
+                if(player.name=="\x1F"){
+                    handle_input_get_name();
+                }
+                break;
+        }
+    }
+
+    //Toggle fullscreen.
+    //This is located here in the code because it needs to come before the chat toggle,
+    //which also uses SDLK_RETURN.
+    if((keystates[SDLK_LALT] || keystates[SDLK_RALT]) && keystates[SDLK_RETURN]){
+        main_window.toggle_fullscreen();
+
+        if(keystates[SDLK_LALT]){
+            keystates[SDLK_LALT]=NULL;
+        }
+        if(keystates[SDLK_RALT]){
+            keystates[SDLK_RALT]=NULL;
+        }
+        keystates[SDLK_RETURN]=NULL;
+    }
+
+    //If the player hits the screenshot key, take a screenshot.
+    if(keystates[SDLK_F5]){
+        main_window.screenshot();
+
+        //Once the screenshot key has been hit, the player must release it for it to function again.
+        keystates[SDLK_F5]=NULL;
+    }
+
+    //Quit the game.
+    if((keystates[SDLK_LALT] || keystates[SDLK_RALT]) && keystates[SDLK_F4]){
+        quit_game();
+
+        if(keystates[SDLK_LALT]){
+            keystates[SDLK_LALT]=NULL;
+        }
+        if(keystates[SDLK_RALT]){
+            keystates[SDLK_RALT]=NULL;
+        }
+        keystates[SDLK_F4]=NULL;
+    }
+}
+
+void Player::handle_input_get_name(){
+    if(get_name.length()<12){
+        if(event.key.keysym.unicode>=(Uint16)' ' && event.key.keysym.unicode<=(Uint16)'~'){
+            get_name+=(char)event.key.keysym.unicode;
+        }
+    }
+
+    if(event.key.keysym.sym==SDLK_BACKSPACE && get_name.length()>0){
+        //Remove one character from the end of the string.
+        get_name.erase(get_name.length()-1);
+    }
+
+    else if((event.key.keysym.sym==SDLK_RETURN || event.key.keysym.sym==SDLK_KP_ENTER) && get_name.length()>0){
+        trim(get_name);
+
+        name=get_name;
+
+        get_name.clear();
+
+        string check_name="saves/";
+        check_name+=name;
+
+        //If the name is associated with a character that already exists.
+        if(boost::filesystem3::is_regular_file(check_name)){
+            game.old_game();
+        }
+        //If the name is not associated with an existing saved character.
+        else{
+            game.new_game();
+        }
+
+        //Make sure that enter is cleared before moving to the next screen.
+        Uint8 *keystates=SDL_GetKeyState(NULL);
+        keystates[SDLK_RETURN]=NULL;
+        keystates[SDLK_KP_ENTER]=NULL;
+    }
+}
 
 void Player::handle_input_inventory(){
     //Close the window.
@@ -19,6 +123,22 @@ void Player::handle_input_stats(){
     if(event.key.keysym.sym==SDLK_F1 || event.key.keysym.sym==SDLK_ESCAPE || event.key.keysym.sym==SDLK_SPACE){
         current_window=WINDOW_NONE;
     }
+}
+
+void Player::render_no_game(){
+    //If no player name has yet been entered.
+    if(player.name=="\x1F"){
+        render_get_name();
+    }
+}
+
+void Player::render_get_name(){
+    ss.clear();ss.str("");ss<<"Welcome to Escape from the Master's Lair!";ss<<"\xA";ss<<"\xA";msg=ss.str();
+    ss.clear();ss.str("");ss<<"Who are you? ";ss<<get_name;ss<<"\xA";msg+=ss.str();
+
+    font_small.show(0,0,msg,COLOR_WHITE);
+
+    font_small.show(13*font_small.spacing_x+font_small.spacing_x*get_name.length(),font_small.spacing_y*2,"\x7F",COLOR_WHITE,player.cursor_opacity*0.1);
 }
 
 void Player::render_stats(){

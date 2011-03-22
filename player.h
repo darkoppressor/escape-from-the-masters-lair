@@ -26,6 +26,13 @@ class Player: public Creature{
 
     public:
 
+    //If true, a game is currently in progress.
+    //If false, a game is not currently in progress.
+    bool game_in_progress;
+
+    //String used for retrieving the player's name.
+    std::string get_name;
+
     Player();
 
     //Setup the player's starting inventory.
@@ -33,9 +40,6 @@ class Player: public Creature{
 
     //Set the base stats of the player.
     void set_base_stats();
-
-    //Load initial data for the player.
-    void load_data();
 
     //Get input.
     void handle_input();
@@ -53,10 +57,14 @@ class Player: public Creature{
     //Handle the windows' input.
     void handle_input_inventory();
     void handle_input_stats();
+    void handle_input_no_game();
+    void handle_input_get_name();
 
     //Render the windows.
     void render_inventory();
     void render_stats();
+    void render_no_game();
+    void render_get_name();
 
     //Render the player.
     void render(std::vector< std::vector<bool> >* tile_rendered);

@@ -23,7 +23,7 @@ bool Templates::load_templates(){
         string file_name=it->path().filename().string();
 
         //If the file is not a directory.
-        if(!boost::filesystem3::is_directory(it->path())){
+        if(boost::filesystem3::is_regular_file(it->path())){
             load.open(file_path.c_str(),ifstream::in);
 
             if(load!=NULL){

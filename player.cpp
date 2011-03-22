@@ -29,9 +29,11 @@ Player::Player(){
     //The camera starts out sticky.
     cam_state=CAM_STICKY;
 
-    current_window=WINDOW_NONE;
+    current_window=WINDOW_GET_NAME;
 
     turn=0;
+
+    game_in_progress=false;
 
     //Chat stuff:
 
@@ -173,14 +175,6 @@ void Player::set_base_stats(){
     }
 }
 
-void Player::load_data(){
-    /**if(name=="\x1F"){
-        unsigned int temp_i=random_range(0,99999);
-        ss.clear();ss.str("");ss<<"Player-";ss<<temp_i;msg=ss.str();
-        name=msg;
-    }*/
-}
-
 void Player::handle_input(){
     int mouse_x,mouse_y;
 
@@ -197,6 +191,7 @@ void Player::handle_input(){
         if(chat_mode){
             string_input_chat.handle_events();
         }
+
         switch(event.type){
             case SDL_QUIT:
                 quit_game();

@@ -24,18 +24,18 @@ void string_input::handle_events(){
             }
         }
 
-        if(event.key.keysym.sym==SDLK_BACKSPACE && str1.length()!=0){/**If the backspace key is pressed and the string is not empty.*/
+        if(event.key.keysym.sym==SDLK_BACKSPACE && str1.length()>0){/**If the backspace key is pressed and the string is not empty.*/
             str1.erase(str1.length()-1);/**Remove one character from the end of the string.*/
         }
 
-        if(event.key.keysym.sym==SDLK_UP){
+        else if(event.key.keysym.sym==SDLK_UP){
             str1=last_string;
         }
         else if(event.key.keysym.sym==SDLK_DOWN){
             str1.clear();
         }
 
-        if((event.key.keysym.sym==SDLK_RETURN || event.key.keysym.sym==SDLK_KP_ENTER) && str1.length()>0){/**If the player hits enter.*/
+        else if((event.key.keysym.sym==SDLK_RETURN || event.key.keysym.sym==SDLK_KP_ENTER) && str1.length()>0){/**If the player hits enter.*/
             string str_command=str1;
 
             //Remember this string.
@@ -341,7 +341,7 @@ void string_input::handle_events(){
             keystates[SDLK_KP_ENTER]=NULL;
         }
 
-        if(event.key.keysym.sym==SDLK_ESCAPE){
+        else if(event.key.keysym.sym==SDLK_ESCAPE){
             player.chat_mode=false;
             str1.clear();
 

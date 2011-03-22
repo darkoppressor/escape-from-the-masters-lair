@@ -15,8 +15,13 @@ using namespace std;
 void input(){
     tooltip.on=false;
 
-    //Gather input from the player.
-    player.handle_input();
+    if(player.game_in_progress){
+        //Gather input from the player.
+        player.handle_input();
+    }
+    else{
+        player.handle_input_no_game();
+    }
 }
 
 void turn(){
@@ -170,8 +175,10 @@ void animation(){
 
 //Handle camera movement.
 void camera(int frame_rate, double ms_per_frame){
-    //Handle camera movements for the players.
-    player.set_camera();
+    if(player.game_in_progress){
+        //Handle camera movements for the players.
+        player.set_camera();
+    }
 
     player.update_window_caption(frame_rate,ms_per_frame);
 }
@@ -181,167 +188,172 @@ void render(int frame_rate, double ms_per_frame){
     //Clear the screen, filling it with the clear color set in Window.init().
     glClear(GL_COLOR_BUFFER_BIT);
 
-    //Used to keep track of what spaces have something rendered on them this frame.
-    vector< vector<bool> > tile_rendered;
-    tile_rendered.resize(vector_levels[current_level].level_x,vector<bool>(vector_levels[current_level].level_y));
-    for(int x=0;x<vector_levels[current_level].level_x;x++){
-        for(int y=0;y<vector_levels[current_level].level_y;y++){
-            tile_rendered[x][y]=false;
-        }
-    }
-
-    //Set the camera's current tile position.
-    int camera_current_x=(int)((int)player.camera_x/TILE_SIZE);
-    int camera_current_y=(int)((int)player.camera_y/TILE_SIZE);
-
-    //Check all tiles in a rectangle around the camera.
-    int check_x_start=camera_current_x;
-    int check_x_end=camera_current_x+(int)((int)player.camera_w/TILE_SIZE)+2;
-    int check_y_start=camera_current_y;
-    int check_y_end=camera_current_y+(int)((int)player.camera_h/TILE_SIZE)+2;
-
-    //Render each player held in the player vector in sequence.
-    player.render(&tile_rendered);
-
-    for(int i=0;i<vector_levels[current_level].monsters.size();i++){
-        vector_levels[current_level].monsters[i].render(&tile_rendered);
-    }
-
-    for(int i=0;i<vector_levels[current_level].items.size();i++){
-        vector_levels[current_level].items[i].render(&tile_rendered);
-    }
-
-    //Render each tile held in the tile vector in sequence.
-    for(int int_y=check_y_start;int_y<check_y_end;int_y++){
-        for(int int_x=check_x_start;int_x<check_x_end;int_x++){
-            //As long as the current tile is within the level's boundaries.
-            if(int_x>=0 && int_x<=vector_levels[current_level].level_x-1 && int_y>=0 && int_y<=vector_levels[current_level].level_y-1){
-                vector_levels[current_level].tiles[int_x][int_y].render(&tile_rendered);
+    if(player.game_in_progress){
+        //Used to keep track of what spaces have something rendered on them this frame.
+        vector< vector<bool> > tile_rendered;
+        tile_rendered.resize(vector_levels[current_level].level_x,vector<bool>(vector_levels[current_level].level_y));
+        for(int x=0;x<vector_levels[current_level].level_x;x++){
+            for(int y=0;y<vector_levels[current_level].level_y;y++){
+                tile_rendered[x][y]=false;
             }
         }
-    }
 
-    //Render chat stuff:
+        //Set the camera's current tile position.
+        int camera_current_x=(int)((int)player.camera_x/TILE_SIZE);
+        int camera_current_y=(int)((int)player.camera_y/TILE_SIZE);
 
-    if(player.chat_mode){
-        render_rectangle(0,main_window.SCREEN_HEIGHT-120,800,120,1.0,COLOR_GRAY);
-        render_rectangle(2,main_window.SCREEN_HEIGHT-118,796,116,1.0,COLOR_BLACK);
-    }
+        //Check all tiles in a rectangle around the camera.
+        int check_x_start=camera_current_x;
+        int check_x_end=camera_current_x+(int)((int)player.camera_w/TILE_SIZE)+2;
+        int check_y_start=camera_current_y;
+        int check_y_end=camera_current_y+(int)((int)player.camera_h/TILE_SIZE)+2;
 
-    double opacity=1.0;
+        //Render each player held in the player vector in sequence.
+        player.render(&tile_rendered);
 
-    for(short i=player.text_limit-1;i>=0;i--){
-        //If the current text log line is not empty.
-        if(player.text_log[i]!=""){
-            //Set opacity.
-            if(i==player.text_limit-1){
-                opacity=1.0;
-            }
-            else if(i==player.text_limit-2){
-                opacity=.84;
-            }
-            else if(i==player.text_limit-3){
-                opacity=.68;
-            }
-            else if(i==player.text_limit-4){
-                opacity=.52;
-            }
-            else if(i==player.text_limit-5){
-                opacity=.36;
-            }
-            else if(i==player.text_limit-6){
-                opacity=.20;
-            }
-            else{
-                opacity=.15;
-            }
+        for(int i=0;i<vector_levels[current_level].monsters.size();i++){
+            vector_levels[current_level].monsters[i].render(&tile_rendered);
+        }
 
-            //If the message is a system message, print it to screen in yellow system message text.
-            if(player.text_log[i].rfind("\x1F",0,1)!=string::npos && player.text_log[i].rfind("\x1F",0,1)==0){
-                string temp_string=player.text_log[i].substr(1);
-                font_small.show(4,main_window.SCREEN_HEIGHT-36-i*font_small.spacing_y,temp_string,COLOR_SYSTEM,opacity);
-            }
-            //Otherwise, print it to screen normally.
-            else{
-                font_small.show(4,main_window.SCREEN_HEIGHT-36-i*font_small.spacing_y,player.text_log[i],COLOR_WHITE,opacity);
+        for(int i=0;i<vector_levels[current_level].items.size();i++){
+            vector_levels[current_level].items[i].render(&tile_rendered);
+        }
+
+        //Render each tile held in the tile vector in sequence.
+        for(int int_y=check_y_start;int_y<check_y_end;int_y++){
+            for(int int_x=check_x_start;int_x<check_x_end;int_x++){
+                //As long as the current tile is within the level's boundaries.
+                if(int_x>=0 && int_x<=vector_levels[current_level].level_x-1 && int_y>=0 && int_y<=vector_levels[current_level].level_y-1){
+                    vector_levels[current_level].tiles[int_x][int_y].render(&tile_rendered);
+                }
             }
         }
-    }
 
-    if(player.chat_mode){
-        short chat_input_height=main_window.SCREEN_HEIGHT-font_small.spacing_y-2;
-        font_small.show(4,chat_input_height,"> "+string_input_chat.str1,COLOR_WHITE,1.0);
-        font_small.show(14+font_small.spacing_x*string_input_chat.str1.length(),chat_input_height,"\x7F",COLOR_WHITE,player.cursor_opacity*0.1);
-    }
+        //Render chat stuff:
 
-    player.render_inventory();
-    player.render_stats();
+        if(player.chat_mode){
+            render_rectangle(0,main_window.SCREEN_HEIGHT-120,800,120,1.0,COLOR_GRAY);
+            render_rectangle(2,main_window.SCREEN_HEIGHT-118,796,116,1.0,COLOR_BLACK);
+        }
+
+        double opacity=1.0;
+
+        for(short i=player.text_limit-1;i>=0;i--){
+            //If the current text log line is not empty.
+            if(player.text_log[i]!=""){
+                //Set opacity.
+                if(i==player.text_limit-1){
+                    opacity=1.0;
+                }
+                else if(i==player.text_limit-2){
+                    opacity=.84;
+                }
+                else if(i==player.text_limit-3){
+                    opacity=.68;
+                }
+                else if(i==player.text_limit-4){
+                    opacity=.52;
+                }
+                else if(i==player.text_limit-5){
+                    opacity=.36;
+                }
+                else if(i==player.text_limit-6){
+                    opacity=.20;
+                }
+                else{
+                    opacity=.15;
+                }
+
+                //If the message is a system message, print it to screen in yellow system message text.
+                if(player.text_log[i].rfind("\x1F",0,1)!=string::npos && player.text_log[i].rfind("\x1F",0,1)==0){
+                    string temp_string=player.text_log[i].substr(1);
+                    font_small.show(4,main_window.SCREEN_HEIGHT-36-i*font_small.spacing_y,temp_string,COLOR_SYSTEM,opacity);
+                }
+                //Otherwise, print it to screen normally.
+                else{
+                    font_small.show(4,main_window.SCREEN_HEIGHT-36-i*font_small.spacing_y,player.text_log[i],COLOR_WHITE,opacity);
+                }
+            }
+        }
+
+        if(player.chat_mode){
+            short chat_input_height=main_window.SCREEN_HEIGHT-font_small.spacing_y-2;
+            font_small.show(4,chat_input_height,"> "+string_input_chat.str1,COLOR_WHITE,1.0);
+            font_small.show(17+font_small.spacing_x*string_input_chat.str1.length(),chat_input_height,"\x7F",COLOR_WHITE,player.cursor_opacity*0.1);
+        }
+
+        //Display the framerate and milliseconds per frame.
+        /**if(player.option_fps){
+            ss.clear();ss.str("");ss<<"FPS: ";ss<<frame_rate;ss<<"\xA";msg=ss.str();
+            ss.clear();ss.str("");ss<<"MS Per Frame: ";ss<<ms_per_frame;msg+=ss.str();
+            font_small.show(624,0,msg,COLOR_RED);
+        }*/
+
+        if(player.option_dev && player.chat_mode){
+            render_rectangle(0,0,275,205,0.75,COLOR_BLACK);
+            render_rectangle(5,5,265,195,0.75,COLOR_GRAY);
+            ss.clear();ss.str("");ss<<"Last Dungeon Level: ";ss<<last_level+1;ss<<"\xA";msg=ss.str();
+            ss.clear();ss.str("");ss<<"Max Dungeon Level: ";ss<<max_level+1;ss<<"\xA";msg+=ss.str();
+            ss.clear();ss.str("");ss<<"Level Temperature: ";ss<<vector_levels[current_level].temperature;ss<<"\xA";msg+=ss.str();
+            ss.clear();ss.str("");ss<<"Player Position (in tiles): ";ss<<player.x;ss<<"/";ss<<player.y;ss<<"\xA";msg+=ss.str();
+            ss.clear();ss.str("");ss<<"Camera Position (in pixels): ";ss<<player.camera_x;ss<<"/";ss<<player.camera_y;ss<<"\xA";msg+=ss.str();
+            ss.clear();ss.str("");ss<<"Inventory Size: ";ss<<player.inventory.size();ss<<"\xA";msg+=ss.str();
+            ss.clear();ss.str("");ss<<"Level Items Size: ";ss<<vector_levels[current_level].items.size();ss<<"\xA";msg+=ss.str();
+            ss.clear();ss.str("");ss<<"Level Monsters Size: ";ss<<vector_levels[current_level].monsters.size();ss<<"\xA";msg+=ss.str();
+            ss.clear();ss.str("");ss<<"Level Size: ";ss<<vector_levels[current_level].level_x;ss<<"/";ss<<vector_levels[current_level].level_y;ss<<"\xA";msg+=ss.str();
+            ss.clear();ss.str("");ss<<"CPU Architecture: ";ss<<8*sizeof(void*);ss<<"-bit";ss<<"\xA";msg+=ss.str();
+            ss.clear();ss.str("");ss<<"Thirst: ";ss<<player.thirst;ss<<"\xA";msg+=ss.str();
+            font_small.show(5,5,msg,COLOR_WHITE);
+        }
+
+        if(player.current_window==WINDOW_NONE){
+            bool thirsty=false;
+            bool burdened=false;
+
+            ss.clear();ss.str("");ss<<player.name;ss<<" the ";ss<<"<class>";msg=ss.str();
+
+            //If the player is anything other than not thirsty.
+            if(!(player.thirst>=THIRST_NOT_THIRSTY && player.thirst<THIRST_THIRSTY)){
+                thirsty=true;
+                ss.clear();ss.str("");ss<<" is ";ss<<player.return_thirst_state();msg+=ss.str();
+            }
+
+            //If the player is anything aside from unencumbered.
+            if(!(player.return_inventory_weight()<=player.return_carry_capacity())){
+                burdened=true;
+                if(thirsty){
+                    ss.clear();ss.str("");ss<<" and ";ss<<player.return_encumbrance_state();msg+=ss.str();
+                }
+                else{
+                    ss.clear();ss.str("");ss<<" is ";ss<<player.return_encumbrance_state();msg+=ss.str();
+                }
+            }
+
+            if(thirsty || burdened){
+                ss.clear();ss.str("");ss<<".";msg+=ss.str();
+            }
+
+            ss.clear();ss.str("");ss<<"\xA";msg+=ss.str();
+            ss.clear();ss.str("");ss<<"Experience Level:";ss<<player.experience_level;msg+=ss.str();
+            ss.clear();ss.str("");ss<<" (";ss<<player.experience;ss<<"/";ss<<player.experience_max;ss<<")";msg+=ss.str();
+            ss.clear();ss.str("");ss<<"  Dungeon Level:";ss<<current_level+1;msg+=ss.str();
+            ss.clear();ss.str("");ss<<"  Turn:";ss<<player.turn;msg+=ss.str();
+            ss.clear();ss.str("");ss<<"\xA";ss<<"Health:";ss<<player.return_health();ss<<"/";ss<<player.return_health_max();msg+=ss.str();
+            ss.clear();ss.str("");ss<<"  Mana:";ss<<player.return_mana();ss<<"/";ss<<player.return_mana_max();msg+=ss.str();
+            ss.clear();ss.str("");ss<<"  Armor:";ss<<player.return_armor();msg+=ss.str();
+            ss.clear();ss.str("");ss<<"  Money:";ss<<player.inventory[0].stack;msg+=ss.str();
+            font_small.show(5,main_window.SCREEN_HEIGHT-170,msg,COLOR_WHITE);
+        }
+
+        player.render_inventory();
+        player.render_stats();
+    }
+    else{
+        player.render_no_game();
+    }
 
     if(tooltip.on){
         tooltip.render();
-    }
-
-    //Display the framerate and milliseconds per frame.
-    /**if(player.option_fps){
-        ss.clear();ss.str("");ss<<"FPS: ";ss<<frame_rate;ss<<"\xA";msg=ss.str();
-        ss.clear();ss.str("");ss<<"MS Per Frame: ";ss<<ms_per_frame;msg+=ss.str();
-        font_small.show(624,0,msg,COLOR_RED);
-    }*/
-
-    if(player.option_dev && player.chat_mode){
-        render_rectangle(0,0,275,205,0.75,COLOR_BLACK);
-        render_rectangle(5,5,265,195,0.75,COLOR_GRAY);
-        ss.clear();ss.str("");ss<<"Last Dungeon Level: ";ss<<last_level+1;ss<<"\xA";msg=ss.str();
-        ss.clear();ss.str("");ss<<"Max Dungeon Level: ";ss<<max_level+1;ss<<"\xA";msg+=ss.str();
-        ss.clear();ss.str("");ss<<"Level Temperature: ";ss<<vector_levels[current_level].temperature;ss<<"\xA";msg+=ss.str();
-        ss.clear();ss.str("");ss<<"Player Position (in tiles): ";ss<<player.x;ss<<"/";ss<<player.y;ss<<"\xA";msg+=ss.str();
-        ss.clear();ss.str("");ss<<"Camera Position (in pixels): ";ss<<player.camera_x;ss<<"/";ss<<player.camera_y;ss<<"\xA";msg+=ss.str();
-        ss.clear();ss.str("");ss<<"Inventory Size: ";ss<<player.inventory.size();ss<<"\xA";msg+=ss.str();
-        ss.clear();ss.str("");ss<<"Level Items Size: ";ss<<vector_levels[current_level].items.size();ss<<"\xA";msg+=ss.str();
-        ss.clear();ss.str("");ss<<"Level Monsters Size: ";ss<<vector_levels[current_level].monsters.size();ss<<"\xA";msg+=ss.str();
-        ss.clear();ss.str("");ss<<"Level Size: ";ss<<vector_levels[current_level].level_x;ss<<"/";ss<<vector_levels[current_level].level_y;ss<<"\xA";msg+=ss.str();
-        ss.clear();ss.str("");ss<<"CPU Architecture: ";ss<<8*sizeof(void*);ss<<"-bit";ss<<"\xA";msg+=ss.str();
-        ss.clear();ss.str("");ss<<"Thirst: ";ss<<player.thirst;ss<<"\xA";msg+=ss.str();
-        font_small.show(5,5,msg,COLOR_WHITE);
-    }
-
-    if(player.current_window==WINDOW_NONE){
-        bool thirsty=false;
-        bool burdened=false;
-
-        ss.clear();ss.str("");ss<<player.name;ss<<" the ";ss<<"<class>";msg=ss.str();
-
-        //If the player is anything other than not thirsty.
-        if(!(player.thirst>=THIRST_NOT_THIRSTY && player.thirst<THIRST_THIRSTY)){
-            thirsty=true;
-            ss.clear();ss.str("");ss<<" is ";ss<<player.return_thirst_state();msg+=ss.str();
-        }
-
-        //If the player is anything aside from unencumbered.
-        if(!(player.return_inventory_weight()<=player.return_carry_capacity())){
-            burdened=true;
-            if(thirsty){
-                ss.clear();ss.str("");ss<<" and ";ss<<player.return_encumbrance_state();msg+=ss.str();
-            }
-            else{
-                ss.clear();ss.str("");ss<<" is ";ss<<player.return_encumbrance_state();msg+=ss.str();
-            }
-        }
-
-        if(thirsty || burdened){
-            ss.clear();ss.str("");ss<<".";msg+=ss.str();
-        }
-
-        ss.clear();ss.str("");ss<<"\xA";msg+=ss.str();
-        ss.clear();ss.str("");ss<<"Experience Level:";ss<<player.experience_level;msg+=ss.str();
-        ss.clear();ss.str("");ss<<" (";ss<<player.experience;ss<<"/";ss<<player.experience_max;ss<<")";msg+=ss.str();
-        ss.clear();ss.str("");ss<<"  Dungeon Level:";ss<<current_level+1;msg+=ss.str();
-        ss.clear();ss.str("");ss<<"  Turn:";ss<<player.turn;msg+=ss.str();
-        ss.clear();ss.str("");ss<<"\xA";ss<<"Health:";ss<<player.return_health();ss<<"/";ss<<player.return_health_max();msg+=ss.str();
-        ss.clear();ss.str("");ss<<"  Mana:";ss<<player.return_mana();ss<<"/";ss<<player.return_mana_max();msg+=ss.str();
-        ss.clear();ss.str("");ss<<"  Armor:";ss<<player.return_armor();msg+=ss.str();
-        ss.clear();ss.str("");ss<<"  Money:";ss<<player.inventory[0].stack;msg+=ss.str();
-        font_small.show(5,main_window.SCREEN_HEIGHT-170,msg,COLOR_WHITE);
     }
 
     //Swap the buffers, updating the screen.

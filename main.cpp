@@ -21,36 +21,7 @@ void game_loop(){
 
     SDL_EnableUNICODE(SDL_ENABLE);
 
-    //This function loads any textures, fonts, etc. that are not loaded in their respective classes. It then loads the first level.
     load_world();
-
-    /**for(short i=0;i<99;i++){
-        player.current_level++;
-        player.max_level++;
-        game.generate_level();
-    }
-
-    player.current_level=0;
-    game.change_level();*/
-
-    player.load_data();
-
-    //Load the first level.
-    ///New game.
-    game.prepare_identifiers();
-    player.assign_identifier();
-    player.set_inventory();
-    player.set_base_stats();
-    player.apply_race(1);
-    game.generate_level();
-    game.change_level(NONE);
-
-    ///Load game.
-    ///player.name="Player-90437";
-    ///load_game();
-
-    //Update initial fov.
-    player.update_fov();
 
     //The number of logic updates allowed each second.
     const double UPDATE_LIMIT=60.0;
@@ -120,15 +91,17 @@ void game_loop(){
             //First, we check for input from the player.
             input();
 
-            //Then, we move all of the objects, if the player has initiated a move.
-            if(player.initiate_move){
-                turn();
-                player.turn++;
-                player.initiate_move=false;
-            }
+            if(player.game_in_progress){
+                //Then, we move all of the objects, if the player has initiated a move.
+                if(player.initiate_move){
+                    turn();
+                    player.turn++;
+                    player.initiate_move=false;
+                }
 
-            //Once everything has had its chance to move, we handle events (collision detection).
-            events();
+                //Once everything has had its chance to move, we handle events (collision detection).
+                events();
+            }
 
             //Handle camera movement.
             camera(frame_rate,ms_per_frame);
