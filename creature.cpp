@@ -68,6 +68,10 @@ Creature::Creature(){
         focused_skills[i]=-1;
     }
 
+    for(int i=0;i<ATTRIBUTE_LUCK+1;i++){
+        attribute_level_bonuses[i]=0;
+    }
+
     carry_capacity=0;
 
     movement_speed=0;

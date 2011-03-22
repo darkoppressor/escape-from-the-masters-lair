@@ -34,11 +34,12 @@ Gender is selectable, but does not affect anything.\par
 Race can be chosen, and increases some skills, attributes, and grants abilities and more.\par
 All races in the game should be available to both the player and the monster generator.\par
 When you level up, you can select between 1 and 3 attributes to increase. The 1-3 range is determined by some function of the level.\par
-As a skill increases during a given level, it adds to a multiplier for the associated skill.\par
-This multiplier increases the amount by which the attribute is increased if selected during level-up.\par
+\strike As a skill increases during a given level, it adds to a multiplier for the associated skill.\strike0\par
+\strike This multiplier increases the amount by which the attribute is increased if selected during level-up.\par
 For example, a x2 multiplier is on strength. The player levels up, and chooses to increase strength. Instead of only gaining 1 point of strength, you gain 2.\par
+Instead of a multiplier, I am going with a straight up number increase. Like, a +1 bonus, for instance.\strike0\par
 \par
-Attributes increase much more slowly than skills.\par
+\strike Attributes increase much more slowly than skills.\strike0\par
 \par
 \cf1\strike Attributes, skills, etc., should be doubles, and can increase by a decimal amount. UPDATE: I think I am changing them back to simple shorts.\cf0\strike0\par
 \par
@@ -80,8 +81,6 @@ Attributes:\par
 \strike\tab -Increases mana regeneration rate.\strike0\par
 \strike\tab -Increases mana slightly.\strike0\par
 \tab -Increases magic resistance.\par
--Charisma (Only used if I implement trading)\par
-\tab -Improves deals in trades. (Increases selling price, decreases buying price)\par
 -Luck\par
 \tab -Affects chances for lots of things.\par
 \par
@@ -97,9 +96,9 @@ Encumbrances:\par
 \tab Overloaded\par
 \par
 Each skill is governed by one attribute.\par
-Luck does not govern any skills.\par
-Skills increase by using the associated stuff.\par
-The Comprehension and Acumen skills are the schools of magic.\par
+\strike Luck does not govern any skills.\strike0\par
+\strike Skills increase by using the associated stuff.\strike0\par
+\strike The Comprehension and Acumen skills are the schools of magic.\strike0\par
 \par
 \strike Experience should have diminishing returns when fighting monsters far below your level.\strike0\par
 \cf1\strike The same should be true of skills that require fighting enemies.\cf0\strike0\par
@@ -178,9 +177,6 @@ Skills:\par
 \tab\tab -Increased by using summoning magic (regardless of success).\par
 \tab\tab -Increases effectiveness of summoning magic.\par
 \tab\tab -Decreases chance of spell failure for summoning magic.\par
--Governed by Charisma\par
-\tab -Increased by selling items.\par
-\tab -Allows buying items more cheaply and selling them for more money.\par
 \par
 Abilities:\par
 -\par

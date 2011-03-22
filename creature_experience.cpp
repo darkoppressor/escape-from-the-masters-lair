@@ -21,6 +21,11 @@ void Creature::level_up(){
     //Increase max mana.
     mana_max*=1.075;
 
+    ///Determine whether 1, 2, or 3 attributes are to be improved this level.
+    ///int attributes_to_improve=;
+
+    ///The creature must now select its attributes to improve.
+
     ss.clear();ss.str("");ss<<"You have gained a level!";msg=ss.str();
 
     update_text_log(msg.c_str(),is_player);
@@ -61,6 +66,30 @@ void Creature::level_up_skill(short skill,int experience_gained){
 
     //Increase the skill's experience level.
     skills[skill][SKILL_EXPERIENCE_LEVEL]++;
+
+    //Increment the appropriate attribute bonus.
+
+    //If the skill is governed by strength.
+    if(skill==SKILL_BLADED_WEAPONS || skill==SKILL_BLUNT_WEAPONS || skill==SKILL_STABBING_WEAPONS || skill==SKILL_UNARMED){
+        attribute_level_bonuses[ATTRIBUTE_STRENGTH]++;
+    }
+    //If the skill is governed by agility.
+    else if(skill==SKILL_SECURITY || skill==SKILL_STEALTH || skill==SKILL_LAUNCHER_WEAPONS || skill==SKILL_THROWN_WEAPONS ||
+            skill==SKILL_DUAL_WIELDING || skill==SKILL_SPEED || skill==SKILL_FIGHTING || skill==SKILL_DODGING){
+        attribute_level_bonuses[ATTRIBUTE_AGILITY]++;
+    }
+    //If the skill is governed by hardiness.
+    else if(skill==SKILL_ARMOR){
+        attribute_level_bonuses[ATTRIBUTE_HARDINESS]++;
+    }
+    //If the skill is governed by comprehension.
+    else if(skill==SKILL_MAGIC_AIR || skill==SKILL_MAGIC_FIRE || skill==SKILL_MAGIC_WATER || skill==SKILL_MAGIC_COLD){
+        attribute_level_bonuses[ATTRIBUTE_COMPREHENSION]++;
+    }
+    //If the skill is governed by acumen.
+    else if(skill==SKILL_MAGIC_EARTH || skill==SKILL_MAGIC_CONJURATION || skill==SKILL_MAGIC_ENCHANTMENT || skill==SKILL_MAGIC_SUMMONING){
+        attribute_level_bonuses[ATTRIBUTE_ACUMEN]++;
+    }
 
     ///ss.clear();ss.str("");ss<<"You have gained a skill level!";msg=ss.str();
 
