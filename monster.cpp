@@ -9,9 +9,6 @@
 
 using namespace std;
 
-Monster::Monster(){
-}
-
 void Monster::set_inventory(){
     create_money_item();
 
@@ -111,6 +108,25 @@ void Monster::set_base_stats(short pass_level){
     next_move=movement_speed;
 
     carry_capacity=templates.base_stats.carry_capacity;
+
+    //Set the monster's focused skills.
+    for(int i=0;i<3;){
+        //Choose a random skill.
+        short random_skill=random_range(SKILL_BLADED_WEAPONS,SKILL_MAGIC_SUMMONING);
+
+        //If the random skill is different from all of the focused skills.
+        if(random_skill!=focused_skills[0] && random_skill!=focused_skills[1] && random_skill!=focused_skills[2]){
+            focused_skills[i]=random_skill;
+            i++;
+        }
+    }
+
+    //Once the focused skills are set, apply their initial bonuses to their corresponding skills.
+    for(int i=0;i<3;i++){
+        for(int n=0;n<1;n++){
+            gain_skill_experience(focused_skills[i],skills[focused_skills[i]][SKILL_EXPERIENCE_MAX]-skills[focused_skills[i]][SKILL_EXPERIENCE],0);
+        }
+    }
 
     //Level the monster up an appropriate number of times.
 

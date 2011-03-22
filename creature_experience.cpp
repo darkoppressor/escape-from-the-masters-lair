@@ -46,30 +46,42 @@ void Creature::gain_experience(int points_gained){
     }
 }
 
-void Creature::level_up_skill(short skill){
+void Creature::level_up_skill(short skill,int experience_gained){
+    //If this skill is a focused skill.
+    if(skill==focused_skills[0] || skill==focused_skills[1] || skill==focused_skills[2]){
+        //Apply the focused skill bonus to creature experience gain.
+        experience_gained*=2.0;
+    }
+
     //The creature gains experience for gaining a skill level.
-    gain_experience(5);
+    gain_experience(experience_gained);
 
     //Increase the skill's max experience.
-    skills[skill][SKILL_EXPERIENCE_MAX]+=skills[skill][SKILL_EXPERIENCE_MAX]*0.5;
+    skills[skill][SKILL_EXPERIENCE_MAX]+=skills[skill][SKILL_EXPERIENCE_MAX]*0.25;
 
     //Increase the skill's experience level.
     skills[skill][SKILL_EXPERIENCE_LEVEL]++;
 
-    ///ss.clear();ss.str("");ss<<"You have gained a level!";msg=ss.str();
+    ///ss.clear();ss.str("");ss<<"You have gained a skill level!";msg=ss.str();
 
     ///update_text_log(msg.c_str(),is_player);
 
     //If the skill's experience reaches its current maximum experience.
     if(skills[skill][SKILL_EXPERIENCE]>=skills[skill][SKILL_EXPERIENCE_MAX]){
         //The skill levels up.
-        level_up_skill(skill);
+        level_up_skill(skill,experience_gained);
     }
 }
 
-void Creature::gain_skill_experience(short skill,int points_gained){
+void Creature::gain_skill_experience(short skill,int points_gained,int experience_gained){
+    //If this skill is a focused skill.
+    if(skill==focused_skills[0] || skill==focused_skills[1] || skill==focused_skills[2]){
+        //Apply the focused skill bonus to this skill's experience gain.
+        points_gained*=2.0;
+    }
+
     //The creature gains experience for gaining skill experience.
-    gain_experience(1);
+    gain_experience(experience_gained);
 
     //Add points_gained to the skill's experience.
     skills[skill][SKILL_EXPERIENCE]+=points_gained;
@@ -81,6 +93,6 @@ void Creature::gain_skill_experience(short skill,int points_gained){
     //If the skill's experience reaches its current maximum experience.
     if(skills[skill][SKILL_EXPERIENCE]>=skills[skill][SKILL_EXPERIENCE_MAX]){
         //The skill levels up.
-        level_up_skill(skill);
+        level_up_skill(skill,experience_gained*5.0);
     }
 }

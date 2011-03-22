@@ -5,7 +5,7 @@
 
 using namespace std;
 
-short Creature::return_skill_bladed_weapons(){
+int Creature::return_skill_bladed_weapons(){
     double skill=skills[SKILL_BLADED_WEAPONS][SKILL_EXPERIENCE_LEVEL];
 
     ///
@@ -14,10 +14,10 @@ short Creature::return_skill_bladed_weapons(){
         skill=1.0;
     }
 
-    return (short)skill;
+    return (int)skill;
 }
 
-short Creature::return_skill_blunt_weapons(){
+int Creature::return_skill_blunt_weapons(){
     double skill=skills[SKILL_BLUNT_WEAPONS][SKILL_EXPERIENCE_LEVEL];
 
     ///
@@ -26,10 +26,10 @@ short Creature::return_skill_blunt_weapons(){
         skill=1.0;
     }
 
-    return (short)skill;
+    return (int)skill;
 }
 
-short Creature::return_skill_stabbing_weapons(){
+int Creature::return_skill_stabbing_weapons(){
     double skill=skills[SKILL_STABBING_WEAPONS][SKILL_EXPERIENCE_LEVEL];
 
     ///
@@ -38,10 +38,10 @@ short Creature::return_skill_stabbing_weapons(){
         skill=1.0;
     }
 
-    return (short)skill;
+    return (int)skill;
 }
 
-short Creature::return_skill_unarmed(){
+int Creature::return_skill_unarmed(){
     double skill=skills[SKILL_UNARMED][SKILL_EXPERIENCE_LEVEL];
 
     ///
@@ -50,10 +50,10 @@ short Creature::return_skill_unarmed(){
         skill=1.0;
     }
 
-    return (short)skill;
+    return (int)skill;
 }
 
-short Creature::return_skill_security(){
+int Creature::return_skill_security(){
     double skill=skills[SKILL_SECURITY][SKILL_EXPERIENCE_LEVEL];
 
     ///
@@ -62,10 +62,10 @@ short Creature::return_skill_security(){
         skill=1.0;
     }
 
-    return (short)skill;
+    return (int)skill;
 }
 
-short Creature::return_skill_stealth(){
+int Creature::return_skill_stealth(){
     double skill=skills[SKILL_STEALTH][SKILL_EXPERIENCE_LEVEL];
 
     ///
@@ -74,10 +74,10 @@ short Creature::return_skill_stealth(){
         skill=1.0;
     }
 
-    return (short)skill;
+    return (int)skill;
 }
 
-short Creature::return_skill_launcher_weapons(){
+int Creature::return_skill_launcher_weapons(){
     double skill=skills[SKILL_LAUNCHER_WEAPONS][SKILL_EXPERIENCE_LEVEL];
 
     ///
@@ -86,10 +86,10 @@ short Creature::return_skill_launcher_weapons(){
         skill=1.0;
     }
 
-    return (short)skill;
+    return (int)skill;
 }
 
-short Creature::return_skill_thrown_weapons(){
+int Creature::return_skill_thrown_weapons(){
     double skill=skills[SKILL_THROWN_WEAPONS][SKILL_EXPERIENCE_LEVEL];
 
     ///
@@ -98,10 +98,10 @@ short Creature::return_skill_thrown_weapons(){
         skill=1.0;
     }
 
-    return (short)skill;
+    return (int)skill;
 }
 
-short Creature::return_skill_dual_wielding(){
+int Creature::return_skill_dual_wielding(){
     double skill=skills[SKILL_DUAL_WIELDING][SKILL_EXPERIENCE_LEVEL];
 
     ///
@@ -110,26 +110,26 @@ short Creature::return_skill_dual_wielding(){
         skill=1.0;
     }
 
-    return (short)skill;
+    return (int)skill;
 }
 
-short Creature::return_skill_speed(){
+int Creature::return_skill_speed(){
     double skill=skills[SKILL_SPEED][SKILL_EXPERIENCE_LEVEL];
 
     //If the creature is anything aside from unencumbered.
     if(!(return_inventory_weight()<=return_carry_capacity())){
         //Apply the encumbrance penalty.
-        skill-=(return_carry_capacity()-return_inventory_weight())*0.1;
+        skill-=(return_inventory_weight()-return_carry_capacity())*0.1;
     }
 
     if(skill<1.0){
         skill=1.0;
     }
 
-    return (short)skill;
+    return (int)skill;
 }
 
-short Creature::return_skill_fighting(){
+int Creature::return_skill_fighting(){
     double skill=skills[SKILL_FIGHTING][SKILL_EXPERIENCE_LEVEL];
 
     ///
@@ -138,10 +138,10 @@ short Creature::return_skill_fighting(){
         skill=1.0;
     }
 
-    return (short)skill;
+    return (int)skill;
 }
 
-short Creature::return_skill_dodging(){
+int Creature::return_skill_dodging(){
     double skill=skills[SKILL_DODGING][SKILL_EXPERIENCE_LEVEL];
 
     ///
@@ -150,10 +150,10 @@ short Creature::return_skill_dodging(){
         skill=1.0;
     }
 
-    return (short)skill;
+    return (int)skill;
 }
 
-short Creature::return_skill_armor(){
+int Creature::return_skill_armor(){
     double skill=skills[SKILL_ARMOR][SKILL_EXPERIENCE_LEVEL];
 
     ///
@@ -162,10 +162,10 @@ short Creature::return_skill_armor(){
         skill=1.0;
     }
 
-    return (short)skill;
+    return (int)skill;
 }
 
-short Creature::return_skill_magic_air(){
+int Creature::return_skill_magic_air(){
     double skill=skills[SKILL_MAGIC_AIR][SKILL_EXPERIENCE_LEVEL];
 
     ///
@@ -174,10 +174,10 @@ short Creature::return_skill_magic_air(){
         skill=1.0;
     }
 
-    return (short)skill;
+    return (int)skill;
 }
 
-short Creature::return_skill_magic_fire(){
+int Creature::return_skill_magic_fire(){
     double skill=skills[SKILL_MAGIC_FIRE][SKILL_EXPERIENCE_LEVEL];
 
     ///
@@ -186,10 +186,10 @@ short Creature::return_skill_magic_fire(){
         skill=1.0;
     }
 
-    return (short)skill;
+    return (int)skill;
 }
 
-short Creature::return_skill_magic_water(){
+int Creature::return_skill_magic_water(){
     double skill=skills[SKILL_MAGIC_WATER][SKILL_EXPERIENCE_LEVEL];
 
     ///
@@ -198,10 +198,10 @@ short Creature::return_skill_magic_water(){
         skill=1.0;
     }
 
-    return (short)skill;
+    return (int)skill;
 }
 
-short Creature::return_skill_magic_cold(){
+int Creature::return_skill_magic_cold(){
     double skill=skills[SKILL_MAGIC_COLD][SKILL_EXPERIENCE_LEVEL];
 
     ///
@@ -210,10 +210,10 @@ short Creature::return_skill_magic_cold(){
         skill=1.0;
     }
 
-    return (short)skill;
+    return (int)skill;
 }
 
-short Creature::return_skill_magic_earth(){
+int Creature::return_skill_magic_earth(){
     double skill=skills[SKILL_MAGIC_EARTH][SKILL_EXPERIENCE_LEVEL];
 
     ///
@@ -222,10 +222,10 @@ short Creature::return_skill_magic_earth(){
         skill=1.0;
     }
 
-    return (short)skill;
+    return (int)skill;
 }
 
-short Creature::return_skill_magic_conjuration(){
+int Creature::return_skill_magic_conjuration(){
     double skill=skills[SKILL_MAGIC_CONJURATION][SKILL_EXPERIENCE_LEVEL];
 
     ///
@@ -234,10 +234,10 @@ short Creature::return_skill_magic_conjuration(){
         skill=1.0;
     }
 
-    return (short)skill;
+    return (int)skill;
 }
 
-short Creature::return_skill_magic_enchantment(){
+int Creature::return_skill_magic_enchantment(){
     double skill=skills[SKILL_MAGIC_ENCHANTMENT][SKILL_EXPERIENCE_LEVEL];
 
     ///
@@ -246,10 +246,10 @@ short Creature::return_skill_magic_enchantment(){
         skill=1.0;
     }
 
-    return (short)skill;
+    return (int)skill;
 }
 
-short Creature::return_skill_magic_summoning(){
+int Creature::return_skill_magic_summoning(){
     double skill=skills[SKILL_MAGIC_SUMMONING][SKILL_EXPERIENCE_LEVEL];
 
     ///
@@ -258,5 +258,5 @@ short Creature::return_skill_magic_summoning(){
         skill=1.0;
     }
 
-    return (short)skill;
+    return (int)skill;
 }

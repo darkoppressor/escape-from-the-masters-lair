@@ -64,6 +64,10 @@ Creature::Creature(){
         skills[i][SKILL_EXPERIENCE_MAX]=50;
     }
 
+    for(int i=0;i<3;i++){
+        focused_skills[i]=-1;
+    }
+
     carry_capacity=0;
 
     movement_speed=0;
@@ -353,7 +357,7 @@ void Creature::process_move(){
     //If the creature is anything aside from unencumbered.
     if(!(return_inventory_weight()<=return_carry_capacity())){
         //Apply the overencumbered thirst penalty.
-        thirst_change+=(return_carry_capacity()-return_inventory_weight())*0.025;
+        thirst_change+=(return_inventory_weight()-return_carry_capacity())*0.025;
     }
 
     change_thirst(true,thirst_change);

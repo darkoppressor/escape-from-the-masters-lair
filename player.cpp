@@ -169,6 +169,18 @@ void Player::set_base_stats(){
     next_move=movement_speed;
 
     carry_capacity=templates.base_stats.carry_capacity;
+
+    ///This will be handled in character creation when I've implemented that.
+    focused_skills[0]=SKILL_SPEED;
+    focused_skills[1]=SKILL_ARMOR;
+    focused_skills[2]=SKILL_UNARMED;
+
+    ///Once the focused skills are set, apply their initial bonuses to their corresponding skills.
+    for(int i=0;i<3;i++){
+        for(int n=0;n<1;n++){
+            gain_skill_experience(focused_skills[i],skills[focused_skills[i]][SKILL_EXPERIENCE_MAX]-skills[focused_skills[i]][SKILL_EXPERIENCE],0);
+        }
+    }
 }
 
 void Player::load_data(){

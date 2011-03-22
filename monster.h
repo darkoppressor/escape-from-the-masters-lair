@@ -14,8 +14,6 @@ class Monster: public Creature{
 
     public:
 
-    Monster();
-
     //Setup the monster's starting inventory.
     void set_inventory();
 

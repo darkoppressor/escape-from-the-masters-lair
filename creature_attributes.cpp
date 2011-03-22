@@ -38,7 +38,7 @@ short Creature::return_attribute_agility(){
     //If the creature is anything aside from unencumbered.
     if(!(return_inventory_weight()<=return_carry_capacity())){
         //Apply the encumbrance penalty.
-        attribute-=(return_carry_capacity()-return_inventory_weight())*0.025;
+        attribute-=(return_inventory_weight()-return_carry_capacity())*0.025;
     }
 
     //If the creature is satiated.

@@ -94,6 +94,9 @@ class Creature: public Object{
     //The creature's base skill values, and their experience and experience max values.
     int skills[SKILL_MAGIC_SUMMONING+1][3];
 
+    //The creature's 3 focused skills.
+    short focused_skills[3];
+
     //The creature's base carrying capacity.
     short carry_capacity;
 
@@ -225,10 +228,10 @@ class Creature: public Object{
     void gain_experience(int points_gained);
 
     //Level up a skill.
-    void level_up_skill(short skill);
+    void level_up_skill(short skill,int experience_gained);
 
     //Gain skill experience points.
-    void gain_skill_experience(short skill,int points_gained);
+    void gain_skill_experience(short skill,int points_gained,int experience_gained=1);
 
     //Evaluate the tile the creature is trying to move to.
     //Returns true if the creature can move, false if the creature can not move.
@@ -286,27 +289,27 @@ class Creature: public Object{
     short return_attribute_luck();
 
     //Each of these functions returns the current TRUE skill value (with all relevant bonuses, penalties, etc.) for the corresponding skill.
-    short return_skill_bladed_weapons();
-    short return_skill_blunt_weapons();
-    short return_skill_stabbing_weapons();
-    short return_skill_unarmed();
-    short return_skill_security();
-    short return_skill_stealth();
-    short return_skill_launcher_weapons();
-    short return_skill_thrown_weapons();
-    short return_skill_dual_wielding();
-    short return_skill_speed();
-    short return_skill_fighting();
-    short return_skill_dodging();
-    short return_skill_armor();
-    short return_skill_magic_air();
-    short return_skill_magic_fire();
-    short return_skill_magic_water();
-    short return_skill_magic_cold();
-    short return_skill_magic_earth();
-    short return_skill_magic_conjuration();
-    short return_skill_magic_enchantment();
-    short return_skill_magic_summoning();
+    int return_skill_bladed_weapons();
+    int return_skill_blunt_weapons();
+    int return_skill_stabbing_weapons();
+    int return_skill_unarmed();
+    int return_skill_security();
+    int return_skill_stealth();
+    int return_skill_launcher_weapons();
+    int return_skill_thrown_weapons();
+    int return_skill_dual_wielding();
+    int return_skill_speed();
+    int return_skill_fighting();
+    int return_skill_dodging();
+    int return_skill_armor();
+    int return_skill_magic_air();
+    int return_skill_magic_fire();
+    int return_skill_magic_water();
+    int return_skill_magic_cold();
+    int return_skill_magic_earth();
+    int return_skill_magic_conjuration();
+    int return_skill_magic_enchantment();
+    int return_skill_magic_summoning();
 };
 
 #endif
