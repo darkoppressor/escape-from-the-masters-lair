@@ -285,81 +285,81 @@ void Player::handle_input(){
                         }
 
                         //Move left.
-                        else if(event.key.keysym.sym==SDLK_LEFT || event.key.keysym.sym==SDLK_KP4){
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && (event.key.keysym.sym==SDLK_LEFT || event.key.keysym.sym==SDLK_KP4 || event.key.keysym.sym==SDLK_h)){
                             move_state=LEFT;
 
                             //If no directional command is waiting on a direction.
-                            if(input_directional==DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE){
+                            if(input_directional==DIRECTIONAL_COMMAND_NONE){
                                 input_directional=DIRECTIONAL_COMMAND_MOVE_LEFT;
                             }
                         }
 
                         //Move up.
-                        else if(event.key.keysym.sym==SDLK_UP || event.key.keysym.sym==SDLK_KP8){
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && (event.key.keysym.sym==SDLK_UP || event.key.keysym.sym==SDLK_KP8 || event.key.keysym.sym==SDLK_k)){
                             move_state=UP;
 
                             //If no directional command is waiting on a direction.
-                            if(input_directional==DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE){
+                            if(input_directional==DIRECTIONAL_COMMAND_NONE){
                                 input_directional=DIRECTIONAL_COMMAND_MOVE_UP;
                             }
                         }
 
                         //Move right.
-                        else if(event.key.keysym.sym==SDLK_RIGHT || event.key.keysym.sym==SDLK_KP6){
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && (event.key.keysym.sym==SDLK_RIGHT || event.key.keysym.sym==SDLK_KP6 || event.key.keysym.sym==SDLK_l)){
                             move_state=RIGHT;
 
                             //If no directional command is waiting on a direction.
-                            if(input_directional==DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE){
+                            if(input_directional==DIRECTIONAL_COMMAND_NONE){
                                 input_directional=DIRECTIONAL_COMMAND_MOVE_RIGHT;
                             }
                         }
 
                         //Move down.
-                        else if(event.key.keysym.sym==SDLK_DOWN || event.key.keysym.sym==SDLK_KP2){
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && (event.key.keysym.sym==SDLK_DOWN || event.key.keysym.sym==SDLK_KP2 || event.key.keysym.sym==SDLK_j)){
                             move_state=DOWN;
 
                             //If no directional command is waiting on a direction.
-                            if(input_directional==DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE){
+                            if(input_directional==DIRECTIONAL_COMMAND_NONE){
                                 input_directional=DIRECTIONAL_COMMAND_MOVE_DOWN;
                             }
                         }
 
                         //Move left up.
-                        else if(event.key.keysym.sym==SDLK_KP7){
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && (event.key.keysym.sym==SDLK_KP7 || event.key.keysym.sym==SDLK_y)){
                             move_state=LEFT_UP;
 
                             //If no directional command is waiting on a direction.
-                            if(input_directional==DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE){
+                            if(input_directional==DIRECTIONAL_COMMAND_NONE){
                                 input_directional=DIRECTIONAL_COMMAND_MOVE_LEFT_UP;
                             }
                         }
 
                         //Move right up.
-                        else if(event.key.keysym.sym==SDLK_KP9){
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && (event.key.keysym.sym==SDLK_KP9 || event.key.keysym.sym==SDLK_u)){
                             move_state=RIGHT_UP;
 
                             //If no directional command is waiting on a direction.
-                            if(input_directional==DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE){
+                            if(input_directional==DIRECTIONAL_COMMAND_NONE){
                                 input_directional=DIRECTIONAL_COMMAND_MOVE_RIGHT_UP;
                             }
                         }
 
                         //Move right down.
-                        else if(event.key.keysym.sym==SDLK_KP3){
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && (event.key.keysym.sym==SDLK_KP3 || event.key.keysym.sym==SDLK_n)){
                             move_state=RIGHT_DOWN;
 
                             //If no directional command is waiting on a direction.
-                            if(input_directional==DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE){
+                            if(input_directional==DIRECTIONAL_COMMAND_NONE){
                                 input_directional=DIRECTIONAL_COMMAND_MOVE_RIGHT_DOWN;
                             }
                         }
 
                         //Move left down.
-                        else if(event.key.keysym.sym==SDLK_KP1){
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && (event.key.keysym.sym==SDLK_KP1 || event.key.keysym.sym==SDLK_b)){
                             move_state=LEFT_DOWN;
 
                             //If no directional command is waiting on a direction.
-                            if(input_directional==DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE){
+                            if(input_directional==DIRECTIONAL_COMMAND_NONE){
                                 input_directional=DIRECTIONAL_COMMAND_MOVE_LEFT_DOWN;
                             }
                         }
@@ -418,8 +418,8 @@ void Player::handle_input(){
                         }
 
                         //Unequip item.
-                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.sym==SDLK_u){
-                            update_text_log("What do you want to unequip?",is_player);
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.sym==SDLK_r){
+                            update_text_log("What do you want to remove?",is_player);
 
                             input_inventory=INVENTORY_COMMAND_UNEQUIP_ITEM;
                         }
