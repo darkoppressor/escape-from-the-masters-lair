@@ -41,6 +41,8 @@
 					<Add library="..\..\SDL\SDL_mixer\lib\SDL_mixer.lib" />
 					<Add library="..\..\Boost\stage\lib\libboost_system-mgw45-mt-1_46_1.a" />
 					<Add library="..\..\Boost\stage\lib\libboost_filesystem-mgw45-mt-1_46_1.a" />
+					<Add library="..\..\Boost\stage\lib\libboost_iostreams-mgw45-mt-1_46_1.a" />
+					<Add library="..\..\Boost\stage\lib\libboost_bzip2-mgw45-mt-1_46_1.a" />
 					<Add directory="..\..\SDL\lib" />
 					<Add directory="..\..\glew\lib" />
 					<Add directory="..\..\Boost\stage\lib" />

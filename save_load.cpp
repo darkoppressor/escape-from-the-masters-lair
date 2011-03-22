@@ -5,6 +5,10 @@
 #include "world.h"
 #include "quit.h"
 
+#include <boost/iostreams/filtering_streambuf.hpp>
+#include <boost/iostreams/copy.hpp>
+#include <boost/iostreams/filter/bzip2.hpp>
+
 using namespace std;
 
 void create_top_level_directories(){
@@ -33,157 +37,172 @@ void delete_file(string file){
 void save_game(){
     fprintf(stdout,"Saving %s's game...\n",player.name.c_str());
 
-    //Setup the save file for the player.
+    //Setup a string stream to hold the save data.
+    stringstream save("");
+    save.clear();save.str("");
 
+    //*****************//
+    // Save game data. //
+    //*****************//
+
+    //Identifiers.
+    for(short i=0;i<OBJECT_ITEM+1;i++){
+        save<<game.identifiers[i].size()<<"\n";
+    }
+
+    for(short i=0;i<OBJECT_ITEM+1;i++){
+        for(uint32_t n=0;n<game.identifiers[i].size();n++){
+            save<<game.identifiers[i][n]<<"\n";
+        }
+    }
+
+    //Level information.
+    save<<current_level<<"\n";
+    save<<max_level<<"\n";
+    save<<last_level<<"\n";
+
+    //*******************//
+    // Save player data. //
+    //*******************//
+
+    save<<player.identifier<<"\n";
+
+    save<<player.x<<"\n";
+    save<<player.y<<"\n";
+
+    save<<player.name<<"\n";
+    save<<player.appearance<<"\n";
+    save<<player.color<<"\n";
+    save<<player.weight<<"\n";
+
+    save<<player.gender<<"\n";
+
+    save<<player.race<<"\n";
+    save<<player.race_name<<"\n";
+
+    save<<player.health<<"\n";
+    save<<player.health_max<<"\n";
+
+    save<<player.mana<<"\n";
+    save<<player.mana_max<<"\n";
+
+    save<<player.experience_level<<"\n";
+    save<<player.experience<<"\n";
+    save<<player.experience_max<<"\n";
+
+    save<<player.thirst<<"\n";
+
+    save<<player.base_damage_melee_min<<"\n";
+    save<<player.base_damage_melee_max<<"\n";
+
+    save<<player.base_damage_ranged_min<<"\n";
+    save<<player.base_damage_ranged_max<<"\n";
+
+    save<<player.base_damage_thrown_min<<"\n";
+    save<<player.base_damage_thrown_max<<"\n";
+
+    for(int i=0;i<ATTRIBUTE_LUCK+1;i++){
+        save<<player.attributes[i]<<"\n";
+    }
+
+    for(int i=0;i<SKILL_MAGIC_SUMMONING+1;i++){
+        save<<player.skills[i][SKILL_EXPERIENCE_LEVEL]<<"\n";
+        save<<player.skills[i][SKILL_EXPERIENCE]<<"\n";
+        save<<player.skills[i][SKILL_EXPERIENCE_MAX]<<"\n";
+    }
+
+    for(int i=0;i<3;i++){
+        save<<player.focused_skills[i]<<"\n";
+    }
+
+    for(int i=0;i<ATTRIBUTE_LUCK+1;i++){
+        save<<player.attribute_level_bonuses[i]<<"\n";
+    }
+
+    save<<player.carry_capacity<<"\n";
+
+    save<<player.movement_speed<<"\n";
+    save<<player.next_move<<"\n";
+
+    //Inventory.
+    /**save<<player.inventory.size()<<"\n";
+
+    for(int i=0;i<;i++){
+    }
+
+    for(int i=EQUIP_HEAD;i<EQUIP_HOLD_LEFT+1;i++){
+        save<<(short)player.equipment[i]<<"\n";
+    }*/
+
+    save<<player.facing<<"\n";
+
+    save<<player.inventory_letters.size()<<"\n";
+
+    for(int i=0;i<player.inventory_letters.size();i++){
+        save<<(short)player.inventory_letters[i]<<"\n";
+    }
+
+    save<<player.turn<<"\n";
+
+    //******************//
+    // Save level data. //
+    //******************//
+
+    //Number of levels.
+    save<<vector_levels.size()<<"\n";
+
+    //Loop through all levels, saving their data.
+    for(int i=0;i<vector_levels.size();i++){
+        save<<vector_levels[i].level_x<<"\n";
+        save<<vector_levels[i].level_y<<"\n";
+
+        save<<vector_levels[i].temperature<<"\n";
+
+        //Tile array.
+        for(int x=0;x<vector_levels[i].level_x;x++){
+            for(int y=0;y<vector_levels[i].level_y;y++){
+                save<<vector_levels[i].tiles[x][y].x<<"\n";
+                save<<vector_levels[i].tiles[x][y].y<<"\n";
+                save<<vector_levels[i].tiles[x][y].type<<"\n";
+                save<<vector_levels[i].tiles[x][y].material<<"\n";
+            }
+        }
+
+        //Fog array.
+        for(int x=0;x<vector_levels[i].level_x;x++){
+            for(int y=0;y<vector_levels[i].level_y;y++){
+                save<<vector_levels[i].fog[x][y]<<"\n";
+            }
+        }
+    }
+
+    //Setup the save file.
     string save_directory="saves/";
-
     create_directory(save_directory);
-
-    ofstream save;
     string save_file="";
-
     save_file=save_directory;
     save_file+=boost::algorithm::to_lower_copy(player.name);
-    save.open(save_file.c_str());
 
-    if(save!=NULL){
+    //Open the save file for writing.
+    ofstream save_to_file;
+    save_to_file.open(save_file.c_str(),ios_base::out|ios_base::binary);
 
-        //*****************//
-        // Save game data. //
-        //*****************//
+    //If the save file was opened successfully.
+    if(save_to_file!=NULL){
+        //Prepare the output with bzip2 compression.
+        boost::iostreams::filtering_streambuf<boost::iostreams::output> out;
+        out.push(boost::iostreams::bzip2_compressor());
+        out.push(save_to_file);
 
-        //Identifiers.
-        for(short i=0;i<OBJECT_ITEM+1;i++){
-            save<<game.identifiers[i].size()<<"\n";
-        }
+        //Copy the save data to the output file.
+        boost::iostreams::copy(save,out);
 
-        for(short i=0;i<OBJECT_ITEM+1;i++){
-            for(uint32_t n=0;n<game.identifiers[i].size();n++){
-                save<<game.identifiers[i][n]<<"\n";
-            }
-        }
-
-        //Level information.
-        save<<current_level<<"\n";
-        save<<max_level<<"\n";
-        save<<last_level<<"\n";
-
-        //*******************//
-        // Save player data. //
-        //*******************//
-
-        save<<player.identifier<<"\n";
-
-        save<<player.x<<"\n";
-        save<<player.y<<"\n";
-
-        save<<player.name<<"\n";
-        save<<player.appearance<<"\n";
-        save<<player.color<<"\n";
-        save<<player.weight<<"\n";
-
-        save<<player.gender<<"\n";
-
-        save<<player.race<<"\n";
-        save<<player.race_name<<"\n";
-
-        save<<player.health<<"\n";
-        save<<player.health_max<<"\n";
-
-        save<<player.mana<<"\n";
-        save<<player.mana_max<<"\n";
-
-        save<<player.experience_level<<"\n";
-        save<<player.experience<<"\n";
-        save<<player.experience_max<<"\n";
-
-        save<<player.thirst<<"\n";
-
-        save<<player.base_damage_melee_min<<"\n";
-        save<<player.base_damage_melee_max<<"\n";
-
-        save<<player.base_damage_ranged_min<<"\n";
-        save<<player.base_damage_ranged_max<<"\n";
-
-        save<<player.base_damage_thrown_min<<"\n";
-        save<<player.base_damage_thrown_max<<"\n";
-
-        for(int i=0;i<ATTRIBUTE_LUCK+1;i++){
-            save<<player.attributes[i]<<"\n";
-        }
-
-        for(int i=0;i<SKILL_MAGIC_SUMMONING+1;i++){
-            save<<player.skills[i][SKILL_EXPERIENCE_LEVEL]<<"\n";
-            save<<player.skills[i][SKILL_EXPERIENCE]<<"\n";
-            save<<player.skills[i][SKILL_EXPERIENCE_MAX]<<"\n";
-        }
-
-        for(int i=0;i<3;i++){
-            save<<player.focused_skills[i]<<"\n";
-        }
-
-        for(int i=0;i<ATTRIBUTE_LUCK+1;i++){
-            save<<player.attribute_level_bonuses[i]<<"\n";
-        }
-
-        save<<player.carry_capacity<<"\n";
-
-        save<<player.movement_speed<<"\n";
-        save<<player.next_move<<"\n";
-
-        ///Inventory.
-
-        /**for(int i=EQUIP_HEAD;i<EQUIP_HOLD_LEFT+1;i++){
-            save<<(short)player.equipment[i]<<"\n";
-        }*/
-
-        save<<player.facing<<"\n";
-
-        save<<player.inventory_letters.size()<<"\n";
-
-        for(int i=0;i<player.inventory_letters.size();i++){
-            save<<(short)player.inventory_letters[i]<<"\n";
-        }
-
-        save<<player.turn<<"\n";
-
-        //******************//
-        // Save level data. //
-        //******************//
-
-        //Number of levels.
-        save<<vector_levels.size()<<"\n";
-
-        //Loop through all levels, saving their data.
-        for(int i=0;i<vector_levels.size();i++){
-            save<<vector_levels[i].level_x<<"\n";
-            save<<vector_levels[i].level_y<<"\n";
-
-            save<<vector_levels[i].temperature<<"\n";
-
-            //Tile array.
-            for(int x=0;x<vector_levels[i].level_x;x++){
-                for(int y=0;y<vector_levels[i].level_y;y++){
-                    save<<vector_levels[i].tiles[x][y].x<<"\n";
-                    save<<vector_levels[i].tiles[x][y].y<<"\n";
-                    save<<vector_levels[i].tiles[x][y].type<<"\n";
-                    save<<vector_levels[i].tiles[x][y].material<<"\n";
-                }
-            }
-
-            //Fog array.
-            for(int x=0;x<vector_levels[i].level_x;x++){
-                for(int y=0;y<vector_levels[i].level_y;y++){
-                    save<<vector_levels[i].fog[x][y]<<"\n";
-                }
-            }
-        }
-
-        save.close();
-        save.clear();
+        save_to_file.close();
+        save_to_file.clear();
     }
+    //If there was a problem opening the save file.
     else{
-        fprintf(stderr,"Error saving game.\n");
+        fprintf(stderr,"Error saving %s's game.\n",player.name.c_str());
     }
 
     quit_game();

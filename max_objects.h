@@ -4,6 +4,6 @@
 #ifndef max_objects_h
 #define max_objects_h
 
-const uint32_t MAX_OBJECTS=100000;
+const uint32_t MAX_OBJECTS=1000000;
 
 #endif
