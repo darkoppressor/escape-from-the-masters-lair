@@ -34,7 +34,7 @@ class Level{
 
     std::vector< std::vector<Tile> > tiles;
 
-    std::vector< std::vector<char> > fog;
+    std::vector< std::vector<short> > fog;
 
     std::vector<Item> items;
     std::vector<Monster> monsters;

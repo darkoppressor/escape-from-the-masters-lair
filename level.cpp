@@ -16,7 +16,7 @@ Level::Level(short get_level_x,short get_level_y){
 
     temperature=TEMP_ROOM_TEMPERATURE;
 
-    fog.resize(level_x,vector<char>(level_y));
+    fog.resize(level_x,vector<short>(level_y));
     tiles.resize(level_x,vector<Tile>(level_y));
 }
 

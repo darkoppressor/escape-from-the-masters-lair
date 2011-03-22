@@ -27,7 +27,7 @@ Game::~Game(){
 }
 
 void Game::new_game(){
-    fprintf(stdout,"Starting new game for %s\n",player.name.c_str());
+    fprintf(stdout,"Starting new game for %s...\n",player.name.c_str());
 
     player.game_in_progress=true;
     player.current_window=WINDOW_NONE;
@@ -51,12 +51,15 @@ void Game::new_game(){
 }
 
 void Game::old_game(){
-    fprintf(stdout,"Loading game for %s\n",player.name.c_str());
+    fprintf(stdout,"Loading game for %s...\n",player.name.c_str());
 
     player.game_in_progress=true;
     player.current_window=WINDOW_NONE;
 
     load_game();
+
+    ///
+    player.set_inventory();
 
     //Update initial fov.
     player.update_fov();

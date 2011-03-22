@@ -51,11 +51,11 @@ class Creature: public Object{
 
     bool alive;
 
-    short gender;
-
     //*****************//
     // Game variables: //
     //*****************//
+
+    short gender;
 
     short race;
     std::string race_name;

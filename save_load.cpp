@@ -31,6 +31,8 @@ void delete_file(string file){
 }
 
 void save_game(){
+    fprintf(stdout,"Saving %s's game...\n",player.name.c_str());
+
     //Setup the save file for the player.
 
     string save_directory="saves/";
@@ -41,26 +43,109 @@ void save_game(){
     string save_file="";
 
     save_file=save_directory;
-    save_file+=player.name;
+    save_file+=boost::algorithm::to_lower_copy(player.name);
     save.open(save_file.c_str());
 
     if(save!=NULL){
 
-        //*******************//
-        // Save player data. //
-        //*******************//
+        //*****************//
+        // Save game data. //
+        //*****************//
+
+        //Identifiers.
+        for(short i=0;i<OBJECT_ITEM+1;i++){
+            save<<game.identifiers[i].size()<<"\n";
+        }
+
+        for(short i=0;i<OBJECT_ITEM+1;i++){
+            for(uint32_t n=0;n<game.identifiers[i].size();n++){
+                save<<game.identifiers[i][n]<<"\n";
+            }
+        }
 
         //Level information.
         save<<current_level<<"\n";
         save<<max_level<<"\n";
         save<<last_level<<"\n";
 
-        //Location.
+        //*******************//
+        // Save player data. //
+        //*******************//
+
+        save<<player.identifier<<"\n";
+
         save<<player.x<<"\n";
         save<<player.y<<"\n";
 
-        //Fov data.
+        save<<player.name<<"\n";
+        save<<player.appearance<<"\n";
+        save<<player.color<<"\n";
+        save<<player.weight<<"\n";
+
+        save<<player.gender<<"\n";
+
+        save<<player.race<<"\n";
+        save<<player.race_name<<"\n";
+
+        save<<player.health<<"\n";
+        save<<player.health_max<<"\n";
+
+        save<<player.mana<<"\n";
+        save<<player.mana_max<<"\n";
+
+        save<<player.experience_level<<"\n";
+        save<<player.experience<<"\n";
+        save<<player.experience_max<<"\n";
+
+        save<<player.thirst<<"\n";
+
+        save<<player.base_damage_melee_min<<"\n";
+        save<<player.base_damage_melee_max<<"\n";
+
+        save<<player.base_damage_ranged_min<<"\n";
+        save<<player.base_damage_ranged_max<<"\n";
+
+        save<<player.base_damage_thrown_min<<"\n";
+        save<<player.base_damage_thrown_max<<"\n";
+
+        for(int i=0;i<ATTRIBUTE_LUCK+1;i++){
+            save<<player.attributes[i]<<"\n";
+        }
+
+        for(int i=0;i<SKILL_MAGIC_SUMMONING+1;i++){
+            save<<player.skills[i][SKILL_EXPERIENCE_LEVEL]<<"\n";
+            save<<player.skills[i][SKILL_EXPERIENCE]<<"\n";
+            save<<player.skills[i][SKILL_EXPERIENCE_MAX]<<"\n";
+        }
+
+        for(int i=0;i<3;i++){
+            save<<player.focused_skills[i]<<"\n";
+        }
+
+        for(int i=0;i<ATTRIBUTE_LUCK+1;i++){
+            save<<player.attribute_level_bonuses[i]<<"\n";
+        }
+
+        save<<player.carry_capacity<<"\n";
+
+        save<<player.movement_speed<<"\n";
+        save<<player.next_move<<"\n";
+
+        ///Inventory.
+
+        /**for(int i=EQUIP_HEAD;i<EQUIP_HOLD_LEFT+1;i++){
+            save<<(short)player.equipment[i]<<"\n";
+        }*/
+
         save<<player.facing<<"\n";
+
+        save<<player.inventory_letters.size()<<"\n";
+
+        for(int i=0;i<player.inventory_letters.size();i++){
+            save<<(short)player.inventory_letters[i]<<"\n";
+        }
+
+        save<<player.turn<<"\n";
 
         //******************//
         // Save level data. //
@@ -71,11 +156,9 @@ void save_game(){
 
         //Loop through all levels, saving their data.
         for(int i=0;i<vector_levels.size();i++){
-            //Level dimensions.
             save<<vector_levels[i].level_x<<"\n";
             save<<vector_levels[i].level_y<<"\n";
 
-            //Temperature.
             save<<vector_levels[i].temperature<<"\n";
 
             //Tile array.
@@ -115,50 +198,143 @@ void load_game(){
     string load_file="";
 
     load_file=save_directory;
-    load_file+=player.name;
+    load_file+=boost::algorithm::to_lower_copy(player.name);
     load.open(load_file.c_str(),ifstream::in);
 
     if(load!=NULL){
 
-        //*******************//
-        // Load player data. //
-        //*******************//
+        //*****************//
+        // Load game data. //
+        //*****************//
+
+        int identifiers_sizes[OBJECT_ITEM+1];
+
+        //Identifiers.
+        for(short i=0;i<OBJECT_ITEM+1;i++){
+            game.identifiers.push_back(vector<uint32_t>());
+
+            load>>identifiers_sizes[i];
+        }
+
+        for(short i=0;i<OBJECT_ITEM+1;i++){
+            for(uint32_t n=0;n<identifiers_sizes[i];n++){
+                int this_identifier=0;
+
+                load>>this_identifier;
+
+                game.identifiers[i].push_back(this_identifier);
+            }
+        }
 
         //Level information.
         load>>current_level;
         load>>max_level;
         load>>last_level;
 
-        //Location.
+        //*******************//
+        // Load player data. //
+        //*******************//
+
+        load>>player.identifier;
+
         load>>player.x;
         load>>player.y;
 
-        //Fov data.
-        short facing=0;
+        load>>player.name;
+        load>>player.appearance;
+        load>>player.color;
+        load>>player.weight;
+
+        load>>player.gender;
+
+        load>>player.race;
+        load>>player.race_name;
+
+        load>>player.health;
+        load>>player.health_max;
+
+        load>>player.mana;
+        load>>player.mana_max;
+
+        load>>player.experience_level;
+        load>>player.experience;
+        load>>player.experience_max;
+
+        load>>player.thirst;
+
+        load>>player.base_damage_melee_min;
+        load>>player.base_damage_melee_max;
+
+        load>>player.base_damage_ranged_min;
+        load>>player.base_damage_ranged_max;
+
+        load>>player.base_damage_thrown_min;
+        load>>player.base_damage_thrown_max;
+
+        for(int i=0;i<ATTRIBUTE_LUCK+1;i++){
+            load>>player.attributes[i];
+        }
+
+        for(int i=0;i<SKILL_MAGIC_SUMMONING+1;i++){
+            load>>player.skills[i][SKILL_EXPERIENCE_LEVEL];
+            load>>player.skills[i][SKILL_EXPERIENCE];
+            load>>player.skills[i][SKILL_EXPERIENCE_MAX];
+        }
+
+        for(int i=0;i<3;i++){
+            load>>player.focused_skills[i];
+        }
+
+        for(int i=0;i<ATTRIBUTE_LUCK+1;i++){
+            load>>player.attribute_level_bonuses[i];
+        }
+
+        load>>player.carry_capacity;
+
+        load>>player.movement_speed;
+        load>>player.next_move;
+
+        ///Inventory.
+
+        /**for(int i=EQUIP_HEAD;i<EQUIP_HOLD_LEFT+1;i++){
+            load>>player.equipment[i];
+        }*/
+
+        short facing;
         load>>facing;
         player.facing=(fov_direction_type)facing;
+
+        int inventory_letters_size=0;
+        player.inventory_letters.clear();
+
+        load>>inventory_letters_size;
+
+        for(int i=0;i<inventory_letters_size;i++){
+            int number=0;
+            load>>number;
+            player.inventory_letters.push_back(number);
+        }
+
+        load>>player.turn;
 
         //******************//
         // Load level data. //
         //******************//
 
-        //Number of levels.
         int number_of_levels=0;
+
         load>>number_of_levels;
 
-        //Loop through all levels, creating them and then loading their data.
+        //Loop through all levels, saving their data.
         for(int i=0;i<number_of_levels;i++){
-            short level_x=0;
-            short level_y=0;
+            int level_x=0;
+            int level_y=0;
 
-            //Level dimensions.
             load>>level_x;
             load>>level_y;
 
-            //Create the level.
             vector_levels.push_back(Level(level_x,level_y));
 
-            //Temperature.
             load>>vector_levels[i].temperature;
 
             //Tile array.
@@ -184,6 +360,8 @@ void load_game(){
 
         //Delete save file.
         delete_file(load_file);
+
+        fprintf(stdout,"%s's game was loaded successfully.\n",player.name.c_str());
     }
     else{
         fprintf(stderr,"Error loading game.\n");
