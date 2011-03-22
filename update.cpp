@@ -221,15 +221,11 @@ void render(int frame_rate, double ms_per_frame){
         }
     }
 
-    /**if(window_inventory.on){
-        window_inventory.render();
-    }*/
-
     //Render chat stuff:
 
     if(player.chat_mode){
-        render_rectangle(0,main_window.SCREEN_HEIGHT-174,800,174,1.0,COLOR_GRAY);
-        render_rectangle(10,main_window.SCREEN_HEIGHT-164,780,156,1.0,COLOR_BLACK);
+        render_rectangle(0,main_window.SCREEN_HEIGHT-120,800,120,1.0,COLOR_GRAY);
+        render_rectangle(2,main_window.SCREEN_HEIGHT-118,796,116,1.0,COLOR_BLACK);
     }
 
     double opacity=1.0;
@@ -257,25 +253,25 @@ void render(int frame_rate, double ms_per_frame){
                 opacity=.20;
             }
             else{
-                opacity=.04;
+                opacity=.15;
             }
 
             //If the message is a system message, print it to screen in yellow system message text.
             if(player.text_log[i].rfind("\x1F",0,1)!=string::npos && player.text_log[i].rfind("\x1F",0,1)==0){
                 string temp_string=player.text_log[i].substr(1);
-                font.show(10,main_window.SCREEN_HEIGHT-50-i*22,temp_string,COLOR_SYSTEM,opacity);
+                font_small.show(4,main_window.SCREEN_HEIGHT-36-i*font_small.spacing_y,temp_string,COLOR_SYSTEM,opacity);
             }
             //Otherwise, print it to screen normally.
             else{
-                font.show(10,main_window.SCREEN_HEIGHT-50-i*22,player.text_log[i],COLOR_WHITE,opacity);
+                font_small.show(4,main_window.SCREEN_HEIGHT-36-i*font_small.spacing_y,player.text_log[i],COLOR_WHITE,opacity);
             }
         }
     }
 
     if(player.chat_mode){
-        short chat_input_height=main_window.SCREEN_HEIGHT-26;
-        font.show(10,chat_input_height,"> "+string_input_chat.str1,COLOR_WHITE,1.0);
-        font.show(32+11*string_input_chat.str1.length(),chat_input_height-1,"\x7F",COLOR_WHITE,player.cursor_opacity*0.1);
+        short chat_input_height=main_window.SCREEN_HEIGHT-font_small.spacing_y-2;
+        font_small.show(4,chat_input_height,"> "+string_input_chat.str1,COLOR_WHITE,1.0);
+        font_small.show(14+font_small.spacing_x*string_input_chat.str1.length(),chat_input_height,"\x7F",COLOR_WHITE,player.cursor_opacity*0.1);
     }
 
     player.render_inventory();
@@ -289,7 +285,7 @@ void render(int frame_rate, double ms_per_frame){
     /**if(player.option_fps){
         ss.clear();ss.str("");ss<<"FPS: ";ss<<frame_rate;ss<<"\xA";msg=ss.str();
         ss.clear();ss.str("");ss<<"MS Per Frame: ";ss<<ms_per_frame;msg+=ss.str();
-        font.show(624,0,msg,COLOR_RED);
+        font_small.show(624,0,msg,COLOR_RED);
     }*/
 
     if(player.option_dev && player.chat_mode){
@@ -307,30 +303,46 @@ void render(int frame_rate, double ms_per_frame){
         ss.clear();ss.str("");ss<<"Level Size: ";ss<<vector_levels[current_level].level_x;ss<<"/";ss<<vector_levels[current_level].level_y;ss<<"\xA";msg+=ss.str();
         ss.clear();ss.str("");ss<<"CPU Architecture: ";ss<<8*sizeof(void*);ss<<"-bit";ss<<"\xA";msg+=ss.str();
         ss.clear();ss.str("");ss<<"Thirst: ";ss<<player.thirst;ss<<"\xA";msg+=ss.str();
-        font.show(15,15,msg,COLOR_WHITE);
+        font_small.show(15,15,msg,COLOR_WHITE);
     }
-    else{
-        //Only show the game info when no windows are open.
-        if(player.current_window==WINDOW_NONE){
-            ///render_rectangle(0,0,450,275,0.75,COLOR_BLACK);
-            ///render_rectangle(10,10,430,255,0.75,COLOR_GRAY);
-            ss.clear();ss.str("");ss<<"Dungeon Level: ";ss<<current_level+1;ss<<"\xA";msg=ss.str();
-            ss.clear();ss.str("");ss<<"Turn: ";ss<<player.turn;ss<<"\xA";msg+=ss.str();
-            ss.clear();ss.str("");ss<<"Experience Level: ";ss<<player.experience_level;ss<<"\xA";msg+=ss.str();
-            ss.clear();ss.str("");ss<<"Experience: ";ss<<player.experience;ss<<"/";ss<<player.experience_max;ss<<"\xA";msg+=ss.str();
-            ss.clear();ss.str("");ss<<"Health: ";ss<<player.return_health();ss<<"/";ss<<player.return_health_max();ss<<"\xA";msg+=ss.str();
-            ss.clear();ss.str("");ss<<"Mana: ";ss<<player.return_mana();ss<<"/";ss<<player.return_mana_max();ss<<"\xA";msg+=ss.str();
-            ss.clear();ss.str("");ss<<"Money: ";ss<<player.inventory[0].stack;ss<<"\xA";msg+=ss.str();
-            //If the player is anything other than not thirsty.
-            if(!(player.thirst>=THIRST_NOT_THIRSTY && player.thirst<THIRST_THIRSTY)){
-                ss.clear();ss.str("");ss<<"You are ";ss<<player.return_thirst_state();ss<<".";ss<<"\xA";msg+=ss.str();
-            }
-            //If the player is anything aside from unencumbered.
-            if(!(player.return_inventory_weight()<=player.return_carry_capacity())){
-                ss.clear();ss.str("");ss<<"You are ";ss<<player.return_encumbrance_state();ss<<".";ss<<"\xA";msg+=ss.str();
-            }
-            font.show(15,15,msg,COLOR_WHITE);
+
+    if(player.current_window==WINDOW_NONE){
+        bool thirsty=false;
+        bool burdened=false;
+
+        ss.clear();ss.str("");ss<<player.name;ss<<" the ";ss<<"<class>";msg=ss.str();
+
+        //If the player is anything other than not thirsty.
+        if(!(player.thirst>=THIRST_NOT_THIRSTY && player.thirst<THIRST_THIRSTY)){
+            thirsty=true;
+            ss.clear();ss.str("");ss<<" is ";ss<<player.return_thirst_state();msg+=ss.str();
         }
+
+        //If the player is anything aside from unencumbered.
+        if(!(player.return_inventory_weight()<=player.return_carry_capacity())){
+            burdened=true;
+            if(thirsty){
+                ss.clear();ss.str("");ss<<" and ";ss<<player.return_encumbrance_state();msg+=ss.str();
+            }
+            else{
+                ss.clear();ss.str("");ss<<" is ";ss<<player.return_encumbrance_state();msg+=ss.str();
+            }
+        }
+
+        if(thirsty || burdened){
+            ss.clear();ss.str("");ss<<".";msg+=ss.str();
+        }
+
+        ss.clear();ss.str("");ss<<"\xA";msg+=ss.str();
+        ss.clear();ss.str("");ss<<"Experience Level:";ss<<player.experience_level;msg+=ss.str();
+        ss.clear();ss.str("");ss<<" (";ss<<player.experience;ss<<"/";ss<<player.experience_max;ss<<")";msg+=ss.str();
+        ss.clear();ss.str("");ss<<"  Dungeon Level:";ss<<current_level+1;msg+=ss.str();
+        ss.clear();ss.str("");ss<<"  Turn:";ss<<player.turn;msg+=ss.str();
+        ss.clear();ss.str("");ss<<"\xA";ss<<"Health:";ss<<player.return_health();ss<<"/";ss<<player.return_health_max();msg+=ss.str();
+        ss.clear();ss.str("");ss<<"  Mana:";ss<<player.return_mana();ss<<"/";ss<<player.return_mana_max();msg+=ss.str();
+        ss.clear();ss.str("");ss<<"  Armor:";ss<<player.return_armor();msg+=ss.str();
+        ss.clear();ss.str("");ss<<"  Money:";ss<<player.inventory[0].stack;msg+=ss.str();
+        font_small.show(5,main_window.SCREEN_HEIGHT-170,msg,COLOR_WHITE);
     }
 
     //Swap the buffers, updating the screen.

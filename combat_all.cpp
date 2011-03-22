@@ -20,25 +20,7 @@ int determine_damage_reduction(Creature* target){
 
     //Add in target's armor damage reduction.
 
-    //Look through all of the target's armor slots.
-    for(int i=EQUIP_HEAD;i<EQUIP_FINGER_LEFT+1;i++){
-        //If this slot has an item equipped.
-        if(target->equipment[i]!=0){
-            //Determine the identifier for the item equipped in this slot.
-            int item_identifier=target->index_of_item_in_slot(i);
-
-            //Determine the base amount of damage absorbed by this item.
-            int armor_absorption=target->inventory[item_identifier].defense;
-
-            //Apply the armor skill.
-            armor_absorption+=armor_absorption*(target->return_skill_armor()/10);
-
-            damage_reduction+=armor_absorption;
-        }
-    }
-
-    //Apply the hardiness bonus.
-    damage_reduction+=damage_reduction*(target->return_attribute_hardiness()/4);
+    damage_reduction=target->return_armor();
 
     return damage_reduction;
 }

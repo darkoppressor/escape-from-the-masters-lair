@@ -428,7 +428,7 @@ string Creature::return_thirst_state(){
     }
     //If the creature is dead.
     else if(thirst>=THIRST_DEATH){
-        thirst_state="dead of thirst";
+        thirst_state="dead from thirst";
     }
 
     return thirst_state;
@@ -439,27 +439,27 @@ string Creature::return_encumbrance_state(){
 
     //If the creature is unencumbered.
     if(return_inventory_weight()<=return_carry_capacity()){
-        state="unencumbered";
+        state="unburdened";
     }
     //If the creature is burdened.
     else if(return_inventory_weight()>=return_carry_capacity()+1 && return_inventory_weight()<=return_carry_capacity()*1.5){
-        state="burdened";
+        state="slightly burdened";
     }
     //If the creature is stressed.
     else if(return_inventory_weight()>=return_carry_capacity()*1.5+1 && return_inventory_weight()<=return_carry_capacity()*2.0){
-        state="stressed";
+        state="somewhat burdened";
     }
     //If the creature is strained.
     else if(return_inventory_weight()>=return_carry_capacity()*2.0+1 && return_inventory_weight()<=return_carry_capacity()*2.5){
-        state="strained";
+        state="quite burdened";
     }
     //If the creature is overtaxed.
     else if(return_inventory_weight()>=return_carry_capacity()*2.5+1 && return_inventory_weight()<=return_carry_capacity()*3.0){
-        state="overtaxed";
+        state="heavily burdened";
     }
     //If the creature is overloaded.
     else if(return_inventory_weight()>=return_carry_capacity()*3.0+1){
-        state="overloaded";
+        state="overburdened";
     }
 
     return state;

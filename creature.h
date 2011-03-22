@@ -281,6 +281,7 @@ class Creature: public Object{
     int return_health_max();
     int return_mana();
     int return_mana_max();
+    int return_armor();
     unsigned short return_movement_speed();
     short return_next_move();
     short return_carry_capacity();

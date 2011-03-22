@@ -49,8 +49,8 @@ Image image;
 //This function is called at the beginning of the game.
 void load_world(){
     //Generate the fonts.
-    font.build_font("data/images/bitmap_font.png",4096,16);
-    font_small.build_font("data/images/bitmap_font_small.png",2048,8);
+    font.build_font("data/images/bitmap_font.png",4096,16,11,24);
+    font_small.build_font("data/images/bitmap_font_small.png",2048,12,7,16);
 
     //Load the surfaces and textures.
     image.load_images_global();

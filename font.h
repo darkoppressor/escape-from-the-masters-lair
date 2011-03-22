@@ -21,10 +21,17 @@ class BitmapFont{
     //The width and height of the entire texture.
     double w,h;
 
-    //The individual characters in the surface.
+    //The individual characters.
     SDL_Rect chars[256];
 
     public:
+
+    //Character spacing.
+    short spacing_x;
+
+    //Line spacing.
+    short spacing_y;
+
     //The default constructor.
     BitmapFont();
 
@@ -32,7 +39,7 @@ class BitmapFont{
     void unload_font();
 
     //Generates the font.
-    void build_font(std::string font_location,double get_w,double get_h);
+    void build_font(std::string font_location,double get_w,double get_h,short get_spacing_x,short get_spacing_y);
 
     //Shows the text.
     void show(double x,double y,std::string text,short font_color,double opacity=1.0,double scale=1.0);

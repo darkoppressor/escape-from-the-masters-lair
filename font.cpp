@@ -11,13 +11,15 @@ BitmapFont::BitmapFont(){
     //Initialize the variables:
     w=0;
     h=0;
+    spacing_x=0;
+    spacing_y=0;
 }
 
 void BitmapFont::unload_font(){
     glDeleteTextures(1,&bitmap_font_texture.texture);
 }
 
-void BitmapFont::build_font(string font_location,double get_w,double get_h){
+void BitmapFont::build_font(string font_location,double get_w,double get_h,short get_spacing_x,short get_spacing_y){
     bitmap_font_texture.texture=load_texture(font_location);
 
     //Set the texture dimensions:
@@ -26,8 +28,12 @@ void BitmapFont::build_font(string font_location,double get_w,double get_h){
     bitmap_font_texture.w=w;
     bitmap_font_texture.h=h;
 
+    //Set the spacing amounts.
+    spacing_x=get_spacing_x;
+    spacing_y=get_spacing_y;
+
     //Set the cell dimensions:
-    double cellW=h;
+    double cellW=w/256;
     double cellH=h;
 
     //The current character we are setting.
@@ -64,11 +70,11 @@ void BitmapFont::show(double x,double y,string text,short font_color,double opac
             //Show the character.
             render_font((int)X,(int)Y,bitmap_font_texture,&chars[ascii],font_color,opacity,scale);
 
-            //Move over the width of the character with one pixel of padding.
-            X+=chars[ascii].w-5;
+            //Move over the character space amount.
+            X+=spacing_x;
         }
         else{
-            Y+=chars[ascii].h+8;
+            Y+=spacing_y;
             X=x;
         }
     }

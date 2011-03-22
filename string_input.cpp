@@ -18,7 +18,7 @@ string_input::string_input(){
 
 void string_input::handle_events(){
     if(event.type==SDL_KEYDOWN){
-        if(str1.length()<67){/**If the string is less than the maximum size.*/
+        if(str1.length()<109){/**If the string is less than the maximum size.*/
             if(event.key.keysym.unicode>=(Uint16)' ' && event.key.keysym.unicode<=(Uint16)'~'){
                 str1+=(char)event.key.keysym.unicode;
             }
@@ -185,6 +185,79 @@ void string_input::handle_events(){
                 }
 
                 update_text_log(message.c_str(),true,MESSAGE_SYSTEM);
+            }
+
+            else if(player.option_dev && istarts_with(str_command,"set")){
+                ierase_first(str_command,"set");
+                trim(str_command);
+
+                if(istarts_with(str_command,"att")){
+                    ierase_first(str_command,"att");
+                    trim(str_command);
+
+                    string message="";
+
+                    short stat=-1;
+                    int stat_number=1;
+                    string stat_being_set="";
+
+                    if(istarts_with(str_command,"strength")){
+                        stat_being_set="strength";
+                        ierase_first(str_command,stat_being_set);
+                        stat=ATTRIBUTE_STRENGTH;
+                    }
+                    else if(istarts_with(str_command,"agility")){
+                        stat_being_set="agility";
+                        ierase_first(str_command,stat_being_set);
+                        stat=ATTRIBUTE_AGILITY;
+                    }
+                    else if(istarts_with(str_command,"hardiness")){
+                        stat_being_set="hardiness";
+                        ierase_first(str_command,stat_being_set);
+                        stat=ATTRIBUTE_HARDINESS;
+                    }
+                    else if(istarts_with(str_command,"comprehension")){
+                        stat_being_set="comprehension";
+                        ierase_first(str_command,stat_being_set);
+                        stat=ATTRIBUTE_COMPREHENSION;
+                    }
+                    else if(istarts_with(str_command,"acumen")){
+                        stat_being_set="acumen";
+                        ierase_first(str_command,stat_being_set);
+                        stat=ATTRIBUTE_ACUMEN;
+                    }
+                    else if(istarts_with(str_command,"luck")){
+                        stat_being_set="luck";
+                        ierase_first(str_command,stat_being_set);
+                        stat=ATTRIBUTE_LUCK;
+                    }
+
+                    //If the stat is valid.
+                    if(stat!=-1){
+                        trim(str_command);
+                        stat_number=atoi(str_command.c_str());
+
+                        string temp="";
+                        ss.clear();ss.str("");ss<<stat_number;temp=ss.str();
+
+                        message="Setting ";
+                        message+=stat_being_set;
+                        message+=" to ";
+                        message+=temp;
+                        message+=".";
+
+                        update_text_log(message.c_str(),true,MESSAGE_SYSTEM);
+
+                        player.attributes[stat]=stat_number;
+                    }
+                    //If the stat is invalid.
+                    else{
+                        update_text_log("That is an invalid stat.",true,MESSAGE_SYSTEM);
+                    }
+                }
+                else{
+                    update_text_log("That isn't something that can be set.",true,MESSAGE_SYSTEM);
+                }
             }
 
             else if(istarts_with(str_command,"save")){

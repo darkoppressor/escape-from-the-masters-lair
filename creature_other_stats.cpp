@@ -47,6 +47,32 @@ int Creature::return_mana_max(){
     return (int)number;
 }
 
+int Creature::return_armor(){
+    double number=0.0;
+
+    //Look through all of the armor slots.
+    for(int i=EQUIP_HEAD;i<EQUIP_FINGER_LEFT+1;i++){
+        //If this slot has an item equipped.
+        if(equipment[i]!=0){
+            //Determine the identifier for the item equipped in this slot.
+            int item_identifier=index_of_item_in_slot(i);
+
+            //Determine the base amount of damage absorbed by this item.
+            double armor_absorption=inventory[item_identifier].defense;
+
+            //Apply the armor skill.
+            armor_absorption+=armor_absorption*(return_skill_armor()/10);
+
+            //Apply the hardiness bonus.
+            armor_absorption+=armor_absorption*(return_attribute_hardiness()/12);
+
+            number+=armor_absorption;
+        }
+    }
+
+    return (int)number;
+}
+
 unsigned short Creature::return_movement_speed(){
     double speed=movement_speed;
 
