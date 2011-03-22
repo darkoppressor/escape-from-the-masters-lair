@@ -442,6 +442,16 @@ enum{
     MESSAGE_STANDARD
 };
 
+//**********//
+// Windows: //
+//**********//
+
+enum{
+    WINDOW_NONE,
+    WINDOW_INVENTORY,
+    WINDOW_STATS
+};
+
 //*************//
 // Directions: //
 //*************//

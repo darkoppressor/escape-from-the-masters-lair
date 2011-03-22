@@ -7,8 +7,22 @@
 
 using namespace std;
 
+void Player::handle_input_inventory(){
+    //Close the window.
+    if(event.key.keysym.sym==SDLK_i || event.key.keysym.sym==SDLK_ESCAPE || event.key.keysym.sym==SDLK_SPACE){
+        current_window=WINDOW_NONE;
+    }
+}
+
+void Player::handle_input_stats(){
+    //Close the window.
+    if(event.key.keysym.sym==SDLK_F1 || event.key.keysym.sym==SDLK_ESCAPE || event.key.keysym.sym==SDLK_SPACE){
+        current_window=WINDOW_NONE;
+    }
+}
+
 void Player::render_stats(){
-    if(display_stats){
+    if(current_window==WINDOW_STATS){
         string title="";
 
         render_rectangle(0,0,800,600,1.0,COLOR_BLACK);
@@ -72,7 +86,7 @@ void Player::render_stats(){
 }
 
 void Player::render_inventory(){
-    if(display_inventory){
+    if(current_window==WINDOW_INVENTORY){
         msg="";
         short render_color=COLOR_WHITE;
 

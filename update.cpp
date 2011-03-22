@@ -310,8 +310,8 @@ void render(int frame_rate, double ms_per_frame){
         font.show(15,15,msg,COLOR_WHITE);
     }
     else{
-        //Only show the game info when the inventory is closed.
-        if(!player.display_inventory && !player.display_stats){
+        //Only show the game info when no windows are open.
+        if(player.current_window==WINDOW_NONE){
             ///render_rectangle(0,0,450,275,0.75,COLOR_BLACK);
             ///render_rectangle(10,10,430,255,0.75,COLOR_GRAY);
             ss.clear();ss.str("");ss<<"Dungeon Level: ";ss<<current_level+1;ss<<"\xA";msg=ss.str();

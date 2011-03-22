@@ -50,18 +50,19 @@ class Player: public Creature{
 
     void update_window_caption(int frame_rate,double ms_per_frame);
 
-    //Render the inventory.
-    void render_inventory();
+    //Handle the windows' input.
+    void handle_input_inventory();
+    void handle_input_stats();
 
-    //
+    //Render the windows.
+    void render_inventory();
     void render_stats();
 
     //Render the player.
     void render(std::vector< std::vector<bool> >* tile_rendered);
 
-    //
-    bool display_inventory;
-    bool display_stats;
+    //The currently displayed window.
+    short current_window;
 
     int turn;
 

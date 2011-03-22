@@ -137,7 +137,7 @@
 		<Unit filename="pixels.h" />
 		<Unit filename="player.cpp" />
 		<Unit filename="player.h" />
-		<Unit filename="player_inventory.cpp" />
+		<Unit filename="player_windows.cpp" />
 		<Unit filename="quit.cpp" />
 		<Unit filename="quit.h" />
 		<Unit filename="race.cpp" />
