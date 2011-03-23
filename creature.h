@@ -5,6 +5,7 @@
 #define creature_h
 
 #include <vector>
+#include <sstream>
 
 #include "fov.h"
 #include "light_data.h"
@@ -315,6 +316,12 @@ class Creature: public Object{
     int return_skill_magic_conjuration();
     int return_skill_magic_enchantment();
     int return_skill_magic_summoning();
+
+    //Returns a stringstream containing all of this creature's save data.
+    std::string return_save_data();
+
+    //Load data from a save file.
+    void load_data(std::stringstream* load);
 };
 
 #endif

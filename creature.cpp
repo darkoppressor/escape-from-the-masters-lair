@@ -30,7 +30,7 @@ Creature::Creature(){
     gender=GENDER_MALE;
 
     race=-1;
-    race_name="";
+    race_name=" ";
 
     health_max=100;
     health=health_max;
@@ -103,7 +103,7 @@ void Creature::create_money_item(){
     temp_item.category=ITEM_OTHER;
     temp_item.name="gold piece";
     temp_item.plural_name="gold pieces";
-    temp_item.writing="";
+    temp_item.writing=" ";
     temp_item.appearance='$';
     temp_item.stackable=true;
     temp_item.weight=0;
@@ -131,7 +131,7 @@ void Creature::create_light_item(){
     temp_item.category=ITEM_OTHER;
     temp_item.name="brass lantern";
     temp_item.plural_name="brass lanterns";
-    temp_item.writing="";
+    temp_item.writing=" ";
     temp_item.appearance='\xE8';
     temp_item.stackable=false;
     temp_item.weight=59;
@@ -175,7 +175,7 @@ void Creature::create_water_bottle(){
     temp_item.category=ITEM_DRINK;
     temp_item.name="bottle of water";
     temp_item.plural_name="bottles of water";
-    temp_item.writing="";
+    temp_item.writing=" ";
     temp_item.appearance='!';
     temp_item.stackable=true;
     temp_item.weight=1;
@@ -486,7 +486,7 @@ void Creature::remove_race(short race_to_remove){
 string Creature::return_full_name(){
     string full_name=race_name;
 
-    if(name.length()>0){
+    if(boost::algorithm::trim_copy(name).length()>0){
         full_name+=" named ";
         full_name+=name;
     }

@@ -99,6 +99,7 @@
 		<Unit filename="creature_equipment.cpp" />
 		<Unit filename="creature_experience.cpp" />
 		<Unit filename="creature_other_stats.cpp" />
+		<Unit filename="creature_save_load.cpp" />
 		<Unit filename="creature_skills.cpp" />
 		<Unit filename="dungeon_location.cpp" />
 		<Unit filename="dungeon_location.h" />
@@ -122,6 +123,7 @@
 		<Unit filename="item.cpp" />
 		<Unit filename="item.h" />
 		<Unit filename="item_combat.cpp" />
+		<Unit filename="item_save_load.cpp" />
 		<Unit filename="level.cpp" />
 		<Unit filename="level.h" />
 		<Unit filename="level_size.h" />

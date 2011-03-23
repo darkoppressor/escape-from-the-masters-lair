@@ -10,6 +10,7 @@
 #include "fov.h"
 
 #include <vector>
+#include <sstream>
 
 //Incomplete declaration of Creature.
 //We have to do this here, because a Creature object is used by a function in Item, but Creature relies on Item.
@@ -237,6 +238,12 @@ class Item: public Object{
     bool possesses_effect(short effect);
 
     void render(std::vector< std::vector<bool> >* tile_rendered);
+
+    //Returns a stringstream containing all of this item's save data.
+    std::string return_save_data();
+
+    //Load data from a save file.
+    void load_data(std::stringstream* load);
 };
 
 #endif

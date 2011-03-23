@@ -58,9 +58,6 @@ void Game::old_game(){
 
     load_game();
 
-    ///
-    player.set_inventory();
-
     //Update initial fov.
     player.update_fov();
 }

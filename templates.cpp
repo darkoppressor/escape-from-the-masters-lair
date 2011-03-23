@@ -353,6 +353,9 @@ void Templates::load_template_race(){
             line.erase(0,name.length());
 
             temp_race.name=line;
+            if(temp_race.name.length()==0){
+                temp_race.name=" ";
+            }
         }
         //Appearance.
         else if(line.rfind(appearance.c_str())!=string::npos){
@@ -578,6 +581,9 @@ void Templates::load_template_item(short category){
             line.erase(0,plural_name.length());
 
             temp_item.plural_name=line;
+            if(temp_item.plural_name.length()==0){
+                temp_item.plural_name=" ";
+            }
         }
         //Writing.
         else if(line.rfind(writing.c_str())!=string::npos){
@@ -585,6 +591,9 @@ void Templates::load_template_item(short category){
             line.erase(0,writing.length());
 
             temp_item.writing=line;
+            if(temp_item.writing.length()==0){
+                temp_item.writing=" ";
+            }
         }
         //Name.
         else if(line.rfind(name.c_str())!=string::npos){
@@ -592,6 +601,9 @@ void Templates::load_template_item(short category){
             line.erase(0,name.length());
 
             temp_item.name=line;
+            if(temp_item.name.length()==0){
+                temp_item.name=" ";
+            }
         }
         //Appearance.
         else if(line.rfind(appearance.c_str())!=string::npos){

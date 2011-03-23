@@ -65,83 +65,10 @@ void save_game(){
     // Save player data. //
     //*******************//
 
-    save<<player.identifier<<"\n";
+    //Save the player's data from Creature.
+    save<<player.return_save_data();
 
-    save<<player.x<<"\n";
-    save<<player.y<<"\n";
-
-    save<<player.name<<"\n";
-    save<<player.appearance<<"\n";
-    save<<player.color<<"\n";
-    save<<player.weight<<"\n";
-
-    save<<player.gender<<"\n";
-
-    save<<player.race<<"\n";
-    save<<player.race_name<<"\n";
-
-    save<<player.health<<"\n";
-    save<<player.health_max<<"\n";
-
-    save<<player.mana<<"\n";
-    save<<player.mana_max<<"\n";
-
-    save<<player.experience_level<<"\n";
-    save<<player.experience<<"\n";
-    save<<player.experience_max<<"\n";
-
-    save<<player.thirst<<"\n";
-
-    save<<player.base_damage_melee_min<<"\n";
-    save<<player.base_damage_melee_max<<"\n";
-
-    save<<player.base_damage_ranged_min<<"\n";
-    save<<player.base_damage_ranged_max<<"\n";
-
-    save<<player.base_damage_thrown_min<<"\n";
-    save<<player.base_damage_thrown_max<<"\n";
-
-    for(int i=0;i<ATTRIBUTE_LUCK+1;i++){
-        save<<player.attributes[i]<<"\n";
-    }
-
-    for(int i=0;i<SKILL_MAGIC_SUMMONING+1;i++){
-        save<<player.skills[i][SKILL_EXPERIENCE_LEVEL]<<"\n";
-        save<<player.skills[i][SKILL_EXPERIENCE]<<"\n";
-        save<<player.skills[i][SKILL_EXPERIENCE_MAX]<<"\n";
-    }
-
-    for(int i=0;i<3;i++){
-        save<<player.focused_skills[i]<<"\n";
-    }
-
-    for(int i=0;i<ATTRIBUTE_LUCK+1;i++){
-        save<<player.attribute_level_bonuses[i]<<"\n";
-    }
-
-    save<<player.carry_capacity<<"\n";
-
-    save<<player.movement_speed<<"\n";
-    save<<player.next_move<<"\n";
-
-    //Inventory.
-    /**save<<player.inventory.size()<<"\n";
-
-    for(int i=0;i<;i++){
-    }
-
-    for(int i=EQUIP_HEAD;i<EQUIP_HOLD_LEFT+1;i++){
-        save<<(short)player.equipment[i]<<"\n";
-    }*/
-
-    save<<player.facing<<"\n";
-
-    save<<player.inventory_letters.size()<<"\n";
-
-    for(int i=0;i<player.inventory_letters.size();i++){
-        save<<(short)player.inventory_letters[i]<<"\n";
-    }
-
+    //Save the player's data from Player.
     save<<player.turn<<"\n";
 
     //******************//
@@ -173,6 +100,26 @@ void save_game(){
             for(int y=0;y<vector_levels[i].level_y;y++){
                 save<<vector_levels[i].fog[x][y]<<"\n";
             }
+        }
+
+        save<<vector_levels[i].monsters.size()<<"\n";
+
+        //Monsters.
+        for(int n=0;n<vector_levels[i].monsters.size();n++){
+            //Save the monster's data from Creature.
+            save<<vector_levels[i].monsters[n].return_save_data();
+
+            //Save the monster's data from Monster.
+            ///Nothing right now.
+            ///save<<vector_levels[i].monsters[n].<<"\n";
+        }
+
+        save<<vector_levels[i].items.size()<<"\n";
+
+        //Items.
+        for(int n=0;n<vector_levels[i].items.size();n++){
+            //Save the item's data from Item.
+            save<<vector_levels[i].items[n].return_save_data();
         }
     }
 
@@ -209,18 +156,29 @@ void save_game(){
 }
 
 void load_game(){
-    //Setup the load file for the player.
-
+    //Setup the load file.
     string save_directory="saves/";
-
-    ifstream load;
     string load_file="";
-
     load_file=save_directory;
     load_file+=boost::algorithm::to_lower_copy(player.name);
-    load.open(load_file.c_str(),ifstream::in);
 
-    if(load!=NULL){
+    //Open the load file for reading.
+    ifstream load_from_file;
+    load_from_file.open(load_file.c_str(),ios_base::in|ios_base::binary);
+
+    if(load_from_file!=NULL){
+
+        //Prepare the input with bzip2 decompression.
+        boost::iostreams::filtering_streambuf<boost::iostreams::input> in;
+        in.push(boost::iostreams::bzip2_decompressor());
+        in.push(load_from_file);
+
+        //Setup a string stream to hold the load data.
+        stringstream load("");
+        load.clear();load.str("");
+
+        //Copy the load data from the input file.
+        boost::iostreams::copy(in,load);
 
         //*****************//
         // Load game data. //
@@ -254,86 +212,10 @@ void load_game(){
         // Load player data. //
         //*******************//
 
-        load>>player.identifier;
+        //Load the player's data from Creature.
+        player.load_data(&load);
 
-        load>>player.x;
-        load>>player.y;
-
-        load>>player.name;
-        load>>player.appearance;
-        load>>player.color;
-        load>>player.weight;
-
-        load>>player.gender;
-
-        load>>player.race;
-        load>>player.race_name;
-
-        load>>player.health;
-        load>>player.health_max;
-
-        load>>player.mana;
-        load>>player.mana_max;
-
-        load>>player.experience_level;
-        load>>player.experience;
-        load>>player.experience_max;
-
-        load>>player.thirst;
-
-        load>>player.base_damage_melee_min;
-        load>>player.base_damage_melee_max;
-
-        load>>player.base_damage_ranged_min;
-        load>>player.base_damage_ranged_max;
-
-        load>>player.base_damage_thrown_min;
-        load>>player.base_damage_thrown_max;
-
-        for(int i=0;i<ATTRIBUTE_LUCK+1;i++){
-            load>>player.attributes[i];
-        }
-
-        for(int i=0;i<SKILL_MAGIC_SUMMONING+1;i++){
-            load>>player.skills[i][SKILL_EXPERIENCE_LEVEL];
-            load>>player.skills[i][SKILL_EXPERIENCE];
-            load>>player.skills[i][SKILL_EXPERIENCE_MAX];
-        }
-
-        for(int i=0;i<3;i++){
-            load>>player.focused_skills[i];
-        }
-
-        for(int i=0;i<ATTRIBUTE_LUCK+1;i++){
-            load>>player.attribute_level_bonuses[i];
-        }
-
-        load>>player.carry_capacity;
-
-        load>>player.movement_speed;
-        load>>player.next_move;
-
-        ///Inventory.
-
-        /**for(int i=EQUIP_HEAD;i<EQUIP_HOLD_LEFT+1;i++){
-            load>>player.equipment[i];
-        }*/
-
-        short facing;
-        load>>facing;
-        player.facing=(fov_direction_type)facing;
-
-        int inventory_letters_size=0;
-        player.inventory_letters.clear();
-
-        load>>inventory_letters_size;
-
-        for(int i=0;i<inventory_letters_size;i++){
-            int number=0;
-            load>>number;
-            player.inventory_letters.push_back(number);
-        }
-
+        //Load the player's data from Player.
         load>>player.turn;
 
         //******************//
@@ -372,10 +254,36 @@ void load_game(){
                     load>>vector_levels[i].fog[x][y];
                 }
             }
+
+            int number_of_monsters=0;
+            load>>number_of_monsters;
+
+            //Monsters.
+            for(int n=0;n<number_of_monsters;n++){
+                vector_levels[i].monsters.push_back(Monster());
+
+                //Load the monster's data from Creature.
+                vector_levels[i].monsters[n].load_data(&load);
+
+                //Load the monster's data from Monster.
+                ///Nothing right now.
+                ///load>>vector_levels[i].monsters[n].;
+            }
+
+            int number_of_items=0;
+            load>>number_of_items;
+
+            //Items.
+            for(int n=0;n<number_of_items;n++){
+                vector_levels[i].items.push_back(Item());
+
+                //Load the item's data from Item.
+                vector_levels[i].items[n].load_data(&load);
+            }
         }
 
-        load.close();
-        load.clear();
+        load_from_file.close();
+        load_from_file.clear();
 
         //Delete save file.
         delete_file(load_file);
@@ -383,7 +291,7 @@ void load_game(){
         fprintf(stdout,"%s's game was loaded successfully.\n",player.name.c_str());
     }
     else{
-        fprintf(stderr,"Error loading game.\n");
+        fprintf(stderr,"Error loading %s's game.\n",player.name.c_str());
     }
 }
 

@@ -28,9 +28,9 @@ Item::Item(){
 
     spawnable=true;
 
-    writing="";
+    writing=" ";
 
-    plural_name="";
+    plural_name=" ";
 
     monetary_value=1;
 
