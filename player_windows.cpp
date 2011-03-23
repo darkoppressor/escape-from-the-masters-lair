@@ -29,8 +29,12 @@ void Player::handle_input_no_game(){
 
             case SDL_KEYDOWN:
                 //If no player name has yet been entered.
-                if(player.name=="\x1F"){
+                if(name=="\x1F"){
                     handle_input_get_name();
+                }
+                //If no race has been selected.
+                else if(race==-1){
+                    handle_input_get_race();
                 }
                 break;
         }
@@ -80,7 +84,11 @@ void Player::handle_input_get_name(){
         }
     }
 
-    if(event.key.keysym.sym==SDLK_BACKSPACE && get_name.length()>0){
+    if(event.key.keysym.sym==SDLK_ESCAPE){
+        quit_game();
+    }
+
+    else if(event.key.keysym.sym==SDLK_BACKSPACE && get_name.length()>0){
         //Remove one character from the end of the string.
         get_name.erase(get_name.length()-1);
     }
@@ -90,8 +98,6 @@ void Player::handle_input_get_name(){
 
         name=get_name;
 
-        get_name.clear();
-
         string check_name="saves/";
         check_name+=name;
 
@@ -99,10 +105,36 @@ void Player::handle_input_get_name(){
         if(boost::filesystem3::is_regular_file(to_lower_copy(check_name))){
             game.old_game();
         }
-        //If the name is not associated with an existing saved character.
-        else{
-            game.new_game();
+
+        //Make sure that enter is cleared before moving to the next screen.
+        Uint8 *keystates=SDL_GetKeyState(NULL);
+        keystates[SDLK_RETURN]=NULL;
+        keystates[SDLK_KP_ENTER]=NULL;
+    }
+}
+
+void Player::handle_input_get_race(){
+    if(get_race.length()<3){
+        if(event.key.keysym.unicode>=(Uint16)'0' && event.key.keysym.unicode<=(Uint16)'9'){
+            get_race+=(char)event.key.keysym.unicode;
         }
+    }
+
+    if(event.key.keysym.sym==SDLK_ESCAPE){
+        //Go back one screen.
+        name="\x1F";
+        get_race.clear();
+    }
+
+    else if(event.key.keysym.sym==SDLK_BACKSPACE && get_race.length()>0){
+        //Remove one character from the end of the string.
+        get_race.erase(get_race.length()-1);
+    }
+
+    else if((event.key.keysym.sym==SDLK_RETURN || event.key.keysym.sym==SDLK_KP_ENTER) && get_race.length()>0 && atoi(get_race.c_str())<templates.template_races.size()){
+        race=atoi(get_race.c_str());
+
+        game.new_game();
 
         //Make sure that enter is cleared before moving to the next screen.
         Uint8 *keystates=SDL_GetKeyState(NULL);
@@ -127,8 +159,12 @@ void Player::handle_input_stats(){
 
 void Player::render_no_game(){
     //If no player name has yet been entered.
-    if(player.name=="\x1F"){
+    if(name=="\x1F"){
         render_get_name();
+    }
+    //If no race has been selected.
+    else if(race==-1){
+        render_get_race();
     }
 }
 
@@ -138,7 +174,43 @@ void Player::render_get_name(){
 
     font_small.show(0,0,msg,COLOR_WHITE);
 
-    font_small.show(13*font_small.spacing_x+font_small.spacing_x*get_name.length(),font_small.spacing_y*2,"\x7F",COLOR_WHITE,player.cursor_opacity*0.1);
+    font_small.show(13*font_small.spacing_x+font_small.spacing_x*get_name.length(),font_small.spacing_y*2,"\x7F",COLOR_WHITE,cursor_opacity*0.1);
+}
+
+void Player::render_get_race(){
+    ss.clear();ss.str("");ss<<"What race do you want to be? ";ss<<get_race;ss<<"\xA";msg=ss.str();
+
+    font_small.show(0,0,msg,COLOR_WHITE);
+
+    font_small.show(29*font_small.spacing_x+font_small.spacing_x*get_race.length(),0,"\x7F",COLOR_WHITE,cursor_opacity*0.1);
+
+    msg="";
+
+    //Keeps track of the number of lines of inventory text rendered.
+    int lines_rendered=0;
+
+    //The maximum number of lines before a new column is started.
+    int max_lines=35;
+
+    //The current column.
+    int column=0;
+
+    //The width of each column.
+    int column_width=200;
+
+    for(int i=0;i<templates.template_races.size();i++){
+        //If the maximum number of lines for this column have been rendered.
+        if(lines_rendered>=max_lines){
+            lines_rendered=0;
+            column++;
+            i--;
+            continue;
+        }
+
+        ss.clear();ss.str("");ss<<i;ss<<" - ";ss<<templates.template_races[i].name;ss<<"\xA";msg=ss.str();
+
+        font_small.show(5+column*column_width,font_small.spacing_y+font_small.spacing_y*lines_rendered++,msg,COLOR_WHITE);
+    }
 }
 
 void Player::render_stats(){

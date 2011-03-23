@@ -40,7 +40,7 @@ void Game::new_game(){
 
     player.set_base_stats();
 
-    player.apply_race(1);
+    player.apply_race(player.race);
 
     generate_level();
 

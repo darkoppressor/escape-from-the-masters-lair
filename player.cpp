@@ -22,6 +22,8 @@ Player::Player(){
 
     source_data.permanent=true;
 
+    race=-1;
+
     // From Player: //
 
     keystates=NULL;
@@ -29,7 +31,7 @@ Player::Player(){
     //The camera starts out sticky.
     cam_state=CAM_STICKY;
 
-    current_window=WINDOW_GET_NAME;
+    current_window=WINDOW_NONE;
 
     turn=0;
 

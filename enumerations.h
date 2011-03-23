@@ -448,8 +448,7 @@ enum{
 enum{
     WINDOW_NONE,
     WINDOW_INVENTORY,
-    WINDOW_STATS,
-    WINDOW_GET_NAME
+    WINDOW_STATS
 };
 
 //*************//

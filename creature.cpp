@@ -481,6 +481,7 @@ void Creature::apply_race(short race_to_apply){
 }
 
 void Creature::remove_race(short race_to_remove){
+    race=-1;
 }
 
 string Creature::return_full_name(){

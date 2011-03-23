@@ -33,6 +33,9 @@ class Player: public Creature{
     //String used for retrieving the player's name.
     std::string get_name;
 
+    //String used for retrieving the player's race.
+    std::string get_race;
+
     Player();
 
     //Setup the player's starting inventory.
@@ -59,12 +62,14 @@ class Player: public Creature{
     void handle_input_stats();
     void handle_input_no_game();
     void handle_input_get_name();
+    void handle_input_get_race();
 
     //Render the windows.
     void render_inventory();
     void render_stats();
     void render_no_game();
     void render_get_name();
+    void render_get_race();
 
     //Render the player.
     void render(std::vector< std::vector<bool> >* tile_rendered);
