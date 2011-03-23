@@ -150,6 +150,11 @@ int Creature::return_inventory_weight(short item_category){
             //This is only applied when the category being checked is not armor.
             if(item_category!=ITEM_ARMOR && inventory[i].category==ITEM_ARMOR){
                 item_weight-=return_skill_armor()*0.5;
+
+                //The armor skill bonus cannot make an item weight less than 1.
+                if(item_weight<1){
+                    item_weight=1;
+                }
             }
 
             total_weight+=item_weight*inventory[i].stack;

@@ -317,6 +317,10 @@ class Creature: public Object{
     int return_skill_magic_enchantment();
     int return_skill_magic_summoning();
 
+    //Returns true if the passed skill is a focused skill.
+    //Returns false if the passed skill is not a focused skill.
+    bool is_focused_skill(short skill);
+
     //Returns a stringstream containing all of this creature's save data.
     std::string return_save_data();
 

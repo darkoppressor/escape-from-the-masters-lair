@@ -53,7 +53,7 @@ void Creature::gain_experience(int points_gained){
 
 void Creature::level_up_skill(short skill,int experience_gained){
     //If this skill is a focused skill.
-    if(skill==focused_skills[0] || skill==focused_skills[1] || skill==focused_skills[2]){
+    if(is_focused_skill(skill)){
         //Apply the focused skill bonus to creature experience gain.
         experience_gained*=2.0;
     }
@@ -104,7 +104,7 @@ void Creature::level_up_skill(short skill,int experience_gained){
 
 void Creature::gain_skill_experience(short skill,int points_gained,int experience_gained){
     //If this skill is a focused skill.
-    if(skill==focused_skills[0] || skill==focused_skills[1] || skill==focused_skills[2]){
+    if(is_focused_skill(skill)){
         //Apply the focused skill bonus to this skill's experience gain.
         points_gained*=2.0;
     }

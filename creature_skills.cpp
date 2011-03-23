@@ -5,6 +5,15 @@
 
 using namespace std;
 
+bool Creature::is_focused_skill(short skill){
+    //If this skill is a focused skill.
+    if(skill==focused_skills[0] || skill==focused_skills[1] || skill==focused_skills[2]){
+        return true;
+    }
+
+    return false;
+}
+
 int Creature::return_skill_bladed_weapons(){
     double skill=skills[SKILL_BLADED_WEAPONS][SKILL_EXPERIENCE_LEVEL];
 

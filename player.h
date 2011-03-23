@@ -63,6 +63,7 @@ class Player: public Creature{
     void handle_input_no_game();
     void handle_input_get_name();
     void handle_input_get_race();
+    void handle_input_get_focused_skills();
 
     //Render the windows.
     void render_inventory();
@@ -70,6 +71,7 @@ class Player: public Creature{
     void render_no_game();
     void render_get_name();
     void render_get_race();
+    void render_get_focused_skills();
 
     //Render the player.
     void render(std::vector< std::vector<bool> >* tile_rendered);
