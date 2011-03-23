@@ -3,11 +3,11 @@
 //*************//
 
 <base stats>
-	health:100
-	mana:10
-	base damage melee:5-10
-	base damage ranged:8-15
-	base damage thrown:3-5
+	health:50
+	mana:5
+	base damage melee:2-3
+	base damage ranged:3-5
+	base damage thrown:1-2
 	base movement speed:500
 	base carrying capacity:300
 </base stats>
