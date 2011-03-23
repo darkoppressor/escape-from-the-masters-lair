@@ -18,7 +18,7 @@ string_input::string_input(){
 
 void string_input::handle_events(){
     if(event.type==SDL_KEYDOWN){
-        if(str1.length()<109){/**If the string is less than the maximum size.*/
+        if(str1.length()<110){/**If the string is less than the maximum size.*/
             if(event.key.keysym.unicode>=(Uint16)' ' && event.key.keysym.unicode<=(Uint16)'~'){
                 str1+=(char)event.key.keysym.unicode;
             }

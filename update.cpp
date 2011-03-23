@@ -231,9 +231,12 @@ void render(int frame_rate, double ms_per_frame){
 
         //Render chat stuff:
 
+        render_rectangle(0,main_window.SCREEN_HEIGHT-122,800,122,1.0,COLOR_GRAY);
+        render_rectangle(2,main_window.SCREEN_HEIGHT-120,796,118,1.0,COLOR_BLACK);
+
         if(player.chat_mode){
-            render_rectangle(0,main_window.SCREEN_HEIGHT-120,800,120,1.0,COLOR_GRAY);
-            render_rectangle(2,main_window.SCREEN_HEIGHT-118,796,116,1.0,COLOR_BLACK);
+            render_rectangle(2,main_window.SCREEN_HEIGHT-font_small.spacing_y-6,796,font.spacing_y-4,1.0,COLOR_GRAY);
+            render_rectangle(4,main_window.SCREEN_HEIGHT-font_small.spacing_y-4,792,font.spacing_y-8,1.0,COLOR_BLACK);
         }
 
         double opacity=1.0;
@@ -309,6 +312,9 @@ void render(int frame_rate, double ms_per_frame){
         if(player.current_window==WINDOW_NONE){
             bool thirsty=false;
             bool burdened=false;
+
+            render_rectangle(0,main_window.SCREEN_HEIGHT-174,800,54,1.0,COLOR_GRAY);
+            render_rectangle(2,main_window.SCREEN_HEIGHT-172,796,50,1.0,COLOR_BLACK);
 
             ss.clear();ss.str("");ss<<player.name;ss<<" the ";ss<<"<class>";msg=ss.str();
 
