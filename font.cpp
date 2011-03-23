@@ -66,6 +66,7 @@ void BitmapFont::show(double x,double y,string text,short font_color,double opac
     for(short show=0;text[show]!='\0';show++){
         //Get the ASCII value of the character.
         short ascii=(unsigned char)text[show];
+
         if(text[show]!='\xA'){
             //Show the character.
             render_font((int)X,(int)Y,bitmap_font_texture,&chars[ascii],font_color,opacity,scale);
