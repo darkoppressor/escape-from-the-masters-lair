@@ -5,6 +5,7 @@
 #define object_h
 
 #include <string>
+#include <stdint.h>
 
 //An object is anything that is going to be rendered in the world. This means the tiles, the items, and even the player and npcs.
 class Object{

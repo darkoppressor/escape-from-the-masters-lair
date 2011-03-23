@@ -793,13 +793,17 @@ void Player::update_window_caption(int frame_rate,double ms_per_frame){
 
     //Set the window caption.
     if(option_dev){
-        msg="Escape from the Master's Lair (DEV Mode) - ";
+        msg="Escape from the Master's Lair (DEV Mode)";
     }
     else{
-        msg="Escape from the Master's Lair - ";
+        msg="Escape from the Master's Lair";
     }
 
-    msg+=player.name;
+    //If the player has a name.
+    if(player.name!="\x1F"){
+        msg+=" - ";
+        msg+=player.name;
+    }
 
     msg+=buff;
 

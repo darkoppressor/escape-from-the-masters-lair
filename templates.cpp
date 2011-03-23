@@ -6,6 +6,7 @@
 #include "render.h"
 
 using namespace std;
+using namespace boost::algorithm;
 
 Templates::Templates(){
     for(int i=ITEM_WEAPON;i<ITEM_OTHER+1;i++){
@@ -37,9 +38,10 @@ bool Templates::load_templates(){
                     getline(load,line);
 
                     //Clear initial whitespace from the line.
+                    trim(line);
 
                     //While the line still has text.
-                    while(line.length()>0){
+                    /**while(line.length()>0){
                         //If the character is a space or tab, delete it.
                         if(line[0]==' ' || line[0]=='\x09'){
                             line.erase(0,1);
@@ -48,47 +50,47 @@ bool Templates::load_templates(){
                         else{
                             break;
                         }
-                    }
+                    }*/
 
                     //If the line is a comment.
-                    if(line.rfind("//")!=string::npos){
+                    if(istarts_with(line,"//")){
                         //Ignore this line.
                     }
 
                     //If the line begins an item.
-                    else if(line.rfind("<item")!=string::npos){
+                    else if(icontains(line,"<item")){
                         //Determine the item's category.
 
                         //If the line begins a weapon item.
-                        if(line.rfind("weapon")!=string::npos){
+                        if(icontains(line,"weapon")){
                             load_template_item(ITEM_WEAPON);
                         }
                         //If the line begins an armor item.
-                        else if(line.rfind("armor")!=string::npos){
+                        else if(icontains(line,"armor")){
                             load_template_item(ITEM_ARMOR);
                         }
                         //If the line begins a food item.
-                        else if(line.rfind("food")!=string::npos){
+                        else if(icontains(line,"food")){
                             load_template_item(ITEM_FOOD);
                         }
                         //If the line begins a drink item.
-                        else if(line.rfind("drink")!=string::npos){
+                        else if(icontains(line,"drink")){
                             load_template_item(ITEM_DRINK);
                         }
                         //If the line begins a scroll item.
-                        else if(line.rfind("scroll")!=string::npos){
+                        else if(icontains(line,"scroll")){
                             load_template_item(ITEM_SCROLL);
                         }
                         //If the line begins a book item.
-                        else if(line.rfind("book")!=string::npos){
+                        else if(icontains(line,"book")){
                             load_template_item(ITEM_BOOK);
                         }
                         //If the line begins a container item.
-                        else if(line.rfind("container")!=string::npos){
+                        else if(icontains(line,"container")){
                             load_template_item(ITEM_CONTAINER);
                         }
                         //If the line begins an other item.
-                        else if(line.rfind("other")!=string::npos){
+                        else if(icontains(line,"other")){
                             load_template_item(ITEM_OTHER);
                         }
                         else{
@@ -100,12 +102,12 @@ bool Templates::load_templates(){
                     }
 
                     //If the line begins a race.
-                    else if(line.rfind("<race>")!=string::npos){
+                    else if(icontains(line,"<race>")){
                         load_template_race();
                     }
 
                     //If the line begins a base stats block.
-                    else if(line.rfind("<base stats>")!=string::npos){
+                    else if(icontains(line,"<base stats>")){
                         load_base_stats();
                     }
                 }
@@ -148,42 +150,31 @@ void Templates::load_base_stats(){
         getline(load,line);
 
         //Clear initial whitespace from the line.
-
-        //While the line still has text.
-        while(line.length()>0){
-            //If the character is a space or tab, delete it.
-            if(line[0]==' ' || line[0]=='\x09'){
-                line.erase(0,1);
-            }
-            //If the character is anything else, stop checking the line.
-            else{
-                break;
-            }
-        }
+        trim(line);
 
         //If the line is a comment.
-        if(line.rfind("//")!=string::npos){
+        if(istarts_with(line,"//")){
             //Ignore this line.
         }
 
         //Load race data based on the line.
 
         //Health.
-        else if(line.rfind(health.c_str())!=string::npos){
+        else if(icontains(line,health)){
             //Clear the data name.
             line.erase(0,health.length());
 
             temp_creature.health_max=atoi(line.c_str());
         }
         //Mana.
-        else if(line.rfind(mana.c_str())!=string::npos){
+        else if(icontains(line,mana)){
             //Clear the data name.
             line.erase(0,mana.length());
 
             temp_creature.mana_max=atoi(line.c_str());
         }
         //Base melee damage.
-        else if(line.rfind(base_damage_melee.c_str())!=string::npos){
+        else if(icontains(line,base_damage_melee)){
             //Clear the data name.
             line.erase(0,base_damage_melee.length());
 
@@ -212,7 +203,7 @@ void Templates::load_base_stats(){
             temp_creature.base_damage_melee_max=atoi(max_damage.c_str());
         }
         //Base ranged damage.
-        else if(line.rfind(base_damage_ranged.c_str())!=string::npos){
+        else if(icontains(line,base_damage_ranged)){
             //Clear the data name.
             line.erase(0,base_damage_ranged.length());
 
@@ -241,7 +232,7 @@ void Templates::load_base_stats(){
             temp_creature.base_damage_ranged_max=atoi(max_damage.c_str());
         }
         //Base thrown damage.
-        else if(line.rfind(base_damage_thrown.c_str())!=string::npos){
+        else if(icontains(line,base_damage_thrown)){
             //Clear the data name.
             line.erase(0,base_damage_thrown.length());
 
@@ -270,14 +261,14 @@ void Templates::load_base_stats(){
             temp_creature.base_damage_thrown_max=atoi(max_damage.c_str());
         }
         //Movement speed.
-        else if(line.rfind(movement_speed.c_str())!=string::npos){
+        else if(icontains(line,movement_speed)){
             //Clear the data name.
             line.erase(0,movement_speed.length());
 
             temp_creature.movement_speed=atoi(line.c_str());
         }
         //Carrying capacity.
-        else if(line.rfind(carry_capacity.c_str())!=string::npos){
+        else if(icontains(line,carry_capacity)){
             //Clear the data name.
             line.erase(0,carry_capacity.length());
 
@@ -285,7 +276,7 @@ void Templates::load_base_stats(){
         }
 
         //If the line ends the base stats.
-        else if(line.rfind("</base stats>")!=string::npos){
+        else if(icontains(line,"</base stats>")){
             ///Ensure the base stats are legitimate.
 
             //Apply these base stats to the base_stats object.
@@ -327,28 +318,17 @@ void Templates::load_template_race(){
         getline(load,line);
 
         //Clear initial whitespace from the line.
-
-        //While the line still has text.
-        while(line.length()>0){
-            //If the character is a space or tab, delete it.
-            if(line[0]==' ' || line[0]=='\x09'){
-                line.erase(0,1);
-            }
-            //If the character is anything else, stop checking the line.
-            else{
-                break;
-            }
-        }
+        trim(line);
 
         //If the line is a comment.
-        if(line.rfind("//")!=string::npos){
+        if(istarts_with(line,"//")){
             //Ignore this line.
         }
 
         //Load race data based on the line.
 
         //Name.
-        else if(line.rfind(name.c_str())!=string::npos){
+        else if(icontains(line,name)){
             //Clear the data name.
             line.erase(0,name.length());
 
@@ -358,28 +338,28 @@ void Templates::load_template_race(){
             }
         }
         //Appearance.
-        else if(line.rfind(appearance.c_str())!=string::npos){
+        else if(icontains(line,appearance)){
             //Clear the data name.
             line.erase(0,appearance.length());
 
             temp_race.appearance=line;
         }
         //Color.
-        else if(line.rfind(color.c_str())!=string::npos){
+        else if(icontains(line,color)){
             //Clear the data name.
             line.erase(0,color.length());
 
             temp_race.color=string_to_color(line);
         }
         //Weight.
-        else if(line.rfind(weight.c_str())!=string::npos){
+        else if(icontains(line,weight)){
             //Clear the data name.
             line.erase(0,weight.length());
 
             temp_race.weight=atoi(line.c_str());
         }
         //HP Range.
-        else if(line.rfind(hp_range.c_str())!=string::npos){
+        else if(icontains(line,hp_range)){
             //Clear the data name.
             line.erase(0,hp_range.length());
 
@@ -408,7 +388,7 @@ void Templates::load_template_race(){
             temp_race.levelup_hp_max=atoi(max_number.c_str());
         }
         //Mana Range.
-        else if(line.rfind(mana_range.c_str())!=string::npos){
+        else if(icontains(line,mana_range)){
             //Clear the data name.
             line.erase(0,mana_range.length());
 
@@ -437,63 +417,63 @@ void Templates::load_template_race(){
             temp_race.levelup_mana_max=atoi(max_number.c_str());
         }
         //Health.
-        else if(line.rfind(health.c_str())!=string::npos){
+        else if(icontains(line,health)){
             //Clear the data name.
             line.erase(0,health.length());
 
             temp_race.health_max=atoi(line.c_str());
         }
         //Mana.
-        else if(line.rfind(mana.c_str())!=string::npos){
+        else if(icontains(line,mana)){
             //Clear the data name.
             line.erase(0,mana.length());
 
             temp_race.mana_max=atoi(line.c_str());
         }
         //Movement speed.
-        else if(line.rfind(movement_speed.c_str())!=string::npos){
+        else if(icontains(line,movement_speed)){
             //Clear the data name.
             line.erase(0,movement_speed.length());
 
             temp_race.movement_speed=atoi(line.c_str());
         }
         //Strength.
-        else if(line.rfind(strength.c_str())!=string::npos){
+        else if(icontains(line,strength)){
             //Clear the data name.
             line.erase(0,strength.length());
 
             temp_race.attributes[ATTRIBUTE_STRENGTH]=atoi(line.c_str());
         }
         //Agility.
-        else if(line.rfind(agility.c_str())!=string::npos){
+        else if(icontains(line,agility)){
             //Clear the data name.
             line.erase(0,agility.length());
 
             temp_race.attributes[ATTRIBUTE_AGILITY]=atoi(line.c_str());
         }
         //Hardiness.
-        else if(line.rfind(hardiness.c_str())!=string::npos){
+        else if(icontains(line,hardiness)){
             //Clear the data name.
             line.erase(0,hardiness.length());
 
             temp_race.attributes[ATTRIBUTE_HARDINESS]=atoi(line.c_str());
         }
         //Comprehension.
-        else if(line.rfind(comprehension.c_str())!=string::npos){
+        else if(icontains(line,comprehension)){
             //Clear the data name.
             line.erase(0,comprehension.length());
 
             temp_race.attributes[ATTRIBUTE_COMPREHENSION]=atoi(line.c_str());
         }
         //Acumen.
-        else if(line.rfind(acumen.c_str())!=string::npos){
+        else if(icontains(line,acumen)){
             //Clear the data name.
             line.erase(0,acumen.length());
 
             temp_race.attributes[ATTRIBUTE_ACUMEN]=atoi(line.c_str());
         }
         //Luck.
-        else if(line.rfind(luck.c_str())!=string::npos){
+        else if(icontains(line,luck)){
             //Clear the data name.
             line.erase(0,luck.length());
 
@@ -501,7 +481,7 @@ void Templates::load_template_race(){
         }
 
         //If the line ends the race.
-        else if(line.rfind("</race>")!=string::npos){
+        else if(icontains(line,"</race>")){
             ///Ensure the race is legitimate.
 
             //Add this race to its templates vector.
@@ -548,35 +528,24 @@ void Templates::load_template_item(short category){
         getline(load,line);
 
         //Clear initial whitespace from the line.
-
-        //While the line still has text.
-        while(line.length()>0){
-            //If the character is a space or tab, delete it.
-            if(line[0]==' ' || line[0]=='\x09'){
-                line.erase(0,1);
-            }
-            //If the character is anything else, stop checking the line.
-            else{
-                break;
-            }
-        }
+        trim(line);
 
         //If the line is a comment.
-        if(line.rfind("//")!=string::npos){
+        if(istarts_with(line,"//")){
             //Ignore this line.
         }
 
         //Load item data based on the line.
 
         //Spawnable.
-        else if(line.rfind(spawnable.c_str())!=string::npos){
+        else if(icontains(line,spawnable)){
             //Clear the data name.
             line.erase(0,spawnable.length());
 
             temp_item.spawnable=false;
         }
         //Plural name.
-        else if(line.rfind(plural_name.c_str())!=string::npos){
+        else if(icontains(line,plural_name)){
             //Clear the data name.
             line.erase(0,plural_name.length());
 
@@ -586,7 +555,7 @@ void Templates::load_template_item(short category){
             }
         }
         //Writing.
-        else if(line.rfind(writing.c_str())!=string::npos){
+        else if(icontains(line,writing)){
             //Clear the data name.
             line.erase(0,writing.length());
 
@@ -596,7 +565,7 @@ void Templates::load_template_item(short category){
             }
         }
         //Name.
-        else if(line.rfind(name.c_str())!=string::npos){
+        else if(icontains(line,name)){
             //Clear the data name.
             line.erase(0,name.length());
 
@@ -606,49 +575,49 @@ void Templates::load_template_item(short category){
             }
         }
         //Appearance.
-        else if(line.rfind(appearance.c_str())!=string::npos){
+        else if(icontains(line,appearance)){
             //Clear the data name.
             line.erase(0,appearance.length());
 
             temp_item.appearance=line;
         }
         //Color.
-        else if(line.rfind(color.c_str())!=string::npos){
+        else if(icontains(line,color)){
             //Clear the data name.
             line.erase(0,color.length());
 
             temp_item.color=string_to_color(line);
         }
         //Stackable.
-        else if(line.rfind(stackable.c_str())!=string::npos){
+        else if(icontains(line,stackable)){
             //Clear the data name.
             line.erase(0,stackable.length());
 
             temp_item.stackable=(bool)atoi(line.c_str());
         }
         //Weight.
-        else if(line.rfind(weight.c_str())!=string::npos){
+        else if(icontains(line,weight)){
             //Clear the data name.
             line.erase(0,weight.length());
 
             temp_item.weight=atoi(line.c_str());
         }
         //Monetary value.
-        else if(line.rfind(monetary_value.c_str())!=string::npos){
+        else if(icontains(line,monetary_value)){
             //Clear the data name.
             line.erase(0,monetary_value.length());
 
             temp_item.monetary_value=atoi(line.c_str());
         }
         //Material.
-        else if(line.rfind(material.c_str())!=string::npos){
+        else if(icontains(line,material)){
             //Clear the data name.
             line.erase(0,material.length());
 
             temp_item.material=string_to_material(line);
         }
         //Melee damage.
-        else if(line.rfind(damage_melee.c_str())!=string::npos){
+        else if(icontains(line,damage_melee)){
             //Clear the data name.
             line.erase(0,damage_melee.length());
 
@@ -677,7 +646,7 @@ void Templates::load_template_item(short category){
             temp_item.damage_max_melee=atoi(max_damage.c_str());
         }
         //Thrown damage.
-        else if(line.rfind(damage_thrown.c_str())!=string::npos){
+        else if(icontains(line,damage_thrown)){
             //Clear the data name.
             line.erase(0,damage_thrown.length());
 
@@ -706,7 +675,7 @@ void Templates::load_template_item(short category){
             temp_item.damage_max_thrown=atoi(max_damage.c_str());
         }
         //Ranged damage.
-        else if(line.rfind(damage_ranged.c_str())!=string::npos){
+        else if(icontains(line,damage_ranged)){
             //Clear the data name.
             line.erase(0,damage_ranged.length());
 
@@ -735,28 +704,28 @@ void Templates::load_template_item(short category){
             temp_item.damage_max_ranged=atoi(max_damage.c_str());
         }
         //Light radius.
-        else if(line.rfind(fov_radius.c_str())!=string::npos){
+        else if(icontains(line,fov_radius)){
             //Clear the data name.
             line.erase(0,fov_radius.length());
 
             temp_item.fov_radius=atoi(line.c_str());
         }
         //Light beam.
-        else if(line.rfind(beam.c_str())!=string::npos){
+        else if(icontains(line,beam)){
             //Clear the data name.
             line.erase(0,beam.length());
 
             temp_item.beam=(bool)atoi(line.c_str());
         }
         //Beam angle.
-        else if(line.rfind(fov_angle.c_str())!=string::npos){
+        else if(icontains(line,fov_angle)){
             //Clear the data name.
             line.erase(0,fov_angle.length());
 
             temp_item.fov_angle=atoi(line.c_str());
         }
         //Effect.
-        else if(line.rfind(effect.c_str())!=string::npos){
+        else if(icontains(line,effect)){
             //Clear the data name.
             line.erase(0,effect.length());
 
@@ -764,47 +733,47 @@ void Templates::load_template_item(short category){
         }
 
         //If the line begins weapon-specific data.
-        else if(line.rfind("<weapon")!=string::npos){
+        else if(icontains(line,"<weapon")){
             load_template_item_weapon(&temp_item);
         }
 
         //If the line begins armor-specific data.
-        else if(line.rfind("<armor")!=string::npos){
+        else if(icontains(line,"<armor")){
             load_template_item_armor(&temp_item);
         }
 
         //If the line begins food-specific data.
-        else if(line.rfind("<food")!=string::npos){
+        else if(icontains(line,"<food")){
             load_template_item_food(&temp_item);
         }
 
         //If the line begins drink-specific data.
-        else if(line.rfind("<drink")!=string::npos){
+        else if(icontains(line,"<drink")){
             load_template_item_drink(&temp_item);
         }
 
         //If the line begins scroll-specific data.
-        else if(line.rfind("<scroll")!=string::npos){
+        else if(icontains(line,"<scroll")){
             load_template_item_scroll(&temp_item);
         }
 
         //If the line begins book-specific data.
-        else if(line.rfind("<book")!=string::npos){
+        else if(icontains(line,"<book")){
             load_template_item_book(&temp_item);
         }
 
         //If the line begins container-specific data.
-        else if(line.rfind("<container")!=string::npos){
+        else if(icontains(line,"<container")){
             load_template_item_container(&temp_item);
         }
 
         //If the line begins other-specific data.
-        else if(line.rfind("<other")!=string::npos){
+        else if(icontains(line,"<other")){
             load_template_item_other(&temp_item);
         }
 
         //If the line ends the item.
-        else if(line.rfind("</item>")!=string::npos){
+        else if(icontains(line,"</item>")){
             ///Ensure the item is legitimate.
 
             //Add this item to its templates vector.
@@ -831,35 +800,24 @@ void Templates::load_template_item_weapon(Item* temp_item){
         getline(load,line);
 
         //Clear initial whitespace from the line.
-
-        //While the line still has text.
-        while(line.length()>0){
-            //If the character is a space or tab, delete it.
-            if(line[0]==' ' || line[0]=='\x09'){
-                line.erase(0,1);
-            }
-            //If the character is anything else, stop checking the line.
-            else{
-                break;
-            }
-        }
+        trim(line);
 
         //If the line is a comment.
-        if(line.rfind("//")!=string::npos){
+        if(istarts_with(line,"//")){
             //Ignore this line.
         }
 
         //Load data based on the line.
 
         //Governing weapon skill.
-        else if(line.rfind(governing_skill_weapon.c_str())!=string::npos){
+        else if(icontains(line,governing_skill_weapon)){
             //Clear the data name.
             line.erase(0,governing_skill_weapon.length());
 
             temp_item->governing_skill_weapon=string_to_skill(line);
         }
         //Weapon category.
-        else if(line.rfind(weapon_category.c_str())!=string::npos){
+        else if(icontains(line,weapon_category)){
             //Clear the data name.
             line.erase(0,weapon_category.length());
 
@@ -867,7 +825,7 @@ void Templates::load_template_item_weapon(Item* temp_item){
         }
 
         //If the line ends the weapon.
-        else if(line.rfind("</weapon>")!=string::npos){
+        else if(icontains(line,"</weapon>")){
             //Done reading weapon data.
             return;
         }
@@ -888,35 +846,24 @@ void Templates::load_template_item_armor(Item* temp_item){
         getline(load,line);
 
         //Clear initial whitespace from the line.
-
-        //While the line still has text.
-        while(line.length()>0){
-            //If the character is a space or tab, delete it.
-            if(line[0]==' ' || line[0]=='\x09'){
-                line.erase(0,1);
-            }
-            //If the character is anything else, stop checking the line.
-            else{
-                break;
-            }
-        }
+        trim(line);
 
         //If the line is a comment.
-        if(line.rfind("//")!=string::npos){
+        if(istarts_with(line,"//")){
             //Ignore this line.
         }
 
         //Load data based on the line.
 
         //Armor category.
-        else if(line.rfind(armor_category.c_str())!=string::npos){
+        else if(icontains(line,armor_category)){
             //Clear the data name.
             line.erase(0,armor_category.length());
 
             temp_item->armor_category=string_to_armor_category(line);
         }
         //Defense.
-        else if(line.rfind(defense.c_str())!=string::npos){
+        else if(icontains(line,defense)){
             //Clear the data name.
             line.erase(0,defense.length());
 
@@ -924,7 +871,7 @@ void Templates::load_template_item_armor(Item* temp_item){
         }
 
         //If the line ends the armor.
-        else if(line.rfind("</armor>")!=string::npos){
+        else if(icontains(line,"</armor>")){
             //Done reading armor data.
             return;
         }
@@ -944,28 +891,17 @@ void Templates::load_template_item_food(Item* temp_item){
         getline(load,line);
 
         //Clear initial whitespace from the line.
-
-        //While the line still has text.
-        while(line.length()>0){
-            //If the character is a space or tab, delete it.
-            if(line[0]==' ' || line[0]=='\x09'){
-                line.erase(0,1);
-            }
-            //If the character is anything else, stop checking the line.
-            else{
-                break;
-            }
-        }
+        trim(line);
 
         //If the line is a comment.
-        if(line.rfind("//")!=string::npos){
+        if(istarts_with(line,"//")){
             //Ignore this line.
         }
 
         //Load data based on the line.
 
         //Is corpse.
-        else if(line.rfind(is_corpse.c_str())!=string::npos){
+        else if(icontains(line,is_corpse)){
             //Clear the data name.
             line.erase(0,is_corpse.length());
 
@@ -973,7 +909,7 @@ void Templates::load_template_item_food(Item* temp_item){
         }
 
         //If the line ends the food.
-        else if(line.rfind("</food>")!=string::npos){
+        else if(icontains(line,"</food>")){
             //Done reading food data.
             return;
         }
@@ -993,28 +929,17 @@ void Templates::load_template_item_drink(Item* temp_item){
         getline(load,line);
 
         //Clear initial whitespace from the line.
-
-        //While the line still has text.
-        while(line.length()>0){
-            //If the character is a space or tab, delete it.
-            if(line[0]==' ' || line[0]=='\x09'){
-                line.erase(0,1);
-            }
-            //If the character is anything else, stop checking the line.
-            else{
-                break;
-            }
-        }
+        trim(line);
 
         //If the line is a comment.
-        if(line.rfind("//")!=string::npos){
+        if(istarts_with(line,"//")){
             //Ignore this line.
         }
 
         //Load data based on the line.
 
         //Thirst quenched.
-        else if(line.rfind(thirst_quenched.c_str())!=string::npos){
+        else if(icontains(line,thirst_quenched)){
             //Clear the data name.
             line.erase(0,thirst_quenched.length());
 
@@ -1022,7 +947,7 @@ void Templates::load_template_item_drink(Item* temp_item){
         }
 
         //If the line ends the drink.
-        else if(line.rfind("</drink>")!=string::npos){
+        else if(icontains(line,"</drink>")){
             //Done reading drink data.
             return;
         }
@@ -1042,28 +967,17 @@ void Templates::load_template_item_scroll(Item* temp_item){
         getline(load,line);
 
         //Clear initial whitespace from the line.
-
-        //While the line still has text.
-        while(line.length()>0){
-            //If the character is a space or tab, delete it.
-            if(line[0]==' ' || line[0]=='\x09'){
-                line.erase(0,1);
-            }
-            //If the character is anything else, stop checking the line.
-            else{
-                break;
-            }
-        }
+        trim(line);
 
         //If the line is a comment.
-        if(line.rfind("//")!=string::npos){
+        if(istarts_with(line,"//")){
             //Ignore this line.
         }
 
         //Load data based on the line.
 
         //Is corpse.
-        /**else if(line.rfind(is_corpse.c_str())!=string::npos){
+        /**else if(icontains(line,is_corpse)){
             //Clear the data name.
             line.erase(0,is_corpse.length());
 
@@ -1071,7 +985,7 @@ void Templates::load_template_item_scroll(Item* temp_item){
         }*/
 
         //If the line ends the scroll.
-        else if(line.rfind("</scroll>")!=string::npos){
+        else if(icontains(line,"</scroll>")){
             //Done reading scroll data.
             return;
         }
@@ -1091,28 +1005,17 @@ void Templates::load_template_item_book(Item* temp_item){
         getline(load,line);
 
         //Clear initial whitespace from the line.
-
-        //While the line still has text.
-        while(line.length()>0){
-            //If the character is a space or tab, delete it.
-            if(line[0]==' ' || line[0]=='\x09'){
-                line.erase(0,1);
-            }
-            //If the character is anything else, stop checking the line.
-            else{
-                break;
-            }
-        }
+        trim(line);
 
         //If the line is a comment.
-        if(line.rfind("//")!=string::npos){
+        if(istarts_with(line,"//")){
             //Ignore this line.
         }
 
         //Load data based on the line.
 
         //Is corpse.
-        /**else if(line.rfind(is_corpse.c_str())!=string::npos){
+        /**else if(icontains(line,is_corpse)){
             //Clear the data name.
             line.erase(0,is_corpse.length());
 
@@ -1120,7 +1023,7 @@ void Templates::load_template_item_book(Item* temp_item){
         }*/
 
         //If the line ends the book.
-        else if(line.rfind("</book>")!=string::npos){
+        else if(icontains(line,"</book>")){
             //Done reading book data.
             return;
         }
@@ -1140,28 +1043,17 @@ void Templates::load_template_item_container(Item* temp_item){
         getline(load,line);
 
         //Clear initial whitespace from the line.
-
-        //While the line still has text.
-        while(line.length()>0){
-            //If the character is a space or tab, delete it.
-            if(line[0]==' ' || line[0]=='\x09'){
-                line.erase(0,1);
-            }
-            //If the character is anything else, stop checking the line.
-            else{
-                break;
-            }
-        }
+        trim(line);
 
         //If the line is a comment.
-        if(line.rfind("//")!=string::npos){
+        if(istarts_with(line,"//")){
             //Ignore this line.
         }
 
         //Load data based on the line.
 
         //Is corpse.
-        /**else if(line.rfind(is_corpse.c_str())!=string::npos){
+        /**else if(icontains(line,is_corpse)){
             //Clear the data name.
             line.erase(0,is_corpse.length());
 
@@ -1169,7 +1061,7 @@ void Templates::load_template_item_container(Item* temp_item){
         }*/
 
         //If the line ends the container.
-        else if(line.rfind("</container>")!=string::npos){
+        else if(icontains(line,"</container>")){
             //Done reading container data.
             return;
         }
@@ -1189,28 +1081,17 @@ void Templates::load_template_item_other(Item* temp_item){
         getline(load,line);
 
         //Clear initial whitespace from the line.
-
-        //While the line still has text.
-        while(line.length()>0){
-            //If the character is a space or tab, delete it.
-            if(line[0]==' ' || line[0]=='\x09'){
-                line.erase(0,1);
-            }
-            //If the character is anything else, stop checking the line.
-            else{
-                break;
-            }
-        }
+        trim(line);
 
         //If the line is a comment.
-        if(line.rfind("//")!=string::npos){
+        if(istarts_with(line,"//")){
             //Ignore this line.
         }
 
         //Load data based on the line.
 
         //Max fuel amount.
-        else if(line.rfind(fuel_max.c_str())!=string::npos){
+        else if(icontains(line,fuel_max)){
             //Clear the data name.
             line.erase(0,fuel_max.length());
 
@@ -1218,7 +1099,7 @@ void Templates::load_template_item_other(Item* temp_item){
         }
 
         //If the line ends the other.
-        else if(line.rfind("</other>")!=string::npos){
+        else if(icontains(line,"</other>")){
             //Done reading other data.
             return;
         }

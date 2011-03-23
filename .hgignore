@@ -1,8 +1,10 @@
 syntax: glob
 bin
 obj
+.objs
 message_log.txt
 *.cfg
 *.depend
 saves
 screenshots
+Escape
