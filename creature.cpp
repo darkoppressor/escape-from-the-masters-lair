@@ -358,10 +358,23 @@ void Creature::process_move(){
 
     int thirst_change=1;
 
-    //If the creature is anything aside from unencumbered.
-    if(!(return_inventory_weight()<=return_carry_capacity())){
-        //Apply the overencumbered thirst penalty.
-        thirst_change+=(return_inventory_weight()-return_carry_capacity())*0.0025;
+    //Apply the overencumbered thirst penalty, if any.
+
+    //If the creature is somewhat burdened.
+    if(return_inventory_weight()>=return_carry_capacity()*1.5+1 && return_inventory_weight()<=return_carry_capacity()*2.0){
+        thirst_change=random_range(1,2);
+    }
+    //If the creature is quite burdened.
+    else if(return_inventory_weight()>=return_carry_capacity()*2.0+1 && return_inventory_weight()<=return_carry_capacity()*2.5){
+        thirst_change=random_range(1,2);
+    }
+    //If the creature is heavily burdened.
+    else if(return_inventory_weight()>=return_carry_capacity()*2.5+1 && return_inventory_weight()<=return_carry_capacity()*3.0){
+        thirst_change=2;
+    }
+    //If the creature is overburdened.
+    else if(return_inventory_weight()>=return_carry_capacity()*3.0+1){
+        thirst_change=random_range(2,3);
     }
 
     change_thirst(true,thirst_change);
@@ -437,27 +450,27 @@ string Creature::return_thirst_state(){
 string Creature::return_encumbrance_state(){
     string state="";
 
-    //If the creature is unencumbered.
+    //If the creature is unburdened.
     if(return_inventory_weight()<=return_carry_capacity()){
         state="unburdened";
     }
-    //If the creature is burdened.
+    //If the creature is slightly burdened.
     else if(return_inventory_weight()>=return_carry_capacity()+1 && return_inventory_weight()<=return_carry_capacity()*1.5){
         state="slightly burdened";
     }
-    //If the creature is stressed.
+    //If the creature is somewhat burdened.
     else if(return_inventory_weight()>=return_carry_capacity()*1.5+1 && return_inventory_weight()<=return_carry_capacity()*2.0){
         state="somewhat burdened";
     }
-    //If the creature is strained.
+    //If the creature is quite burdened.
     else if(return_inventory_weight()>=return_carry_capacity()*2.0+1 && return_inventory_weight()<=return_carry_capacity()*2.5){
         state="quite burdened";
     }
-    //If the creature is overtaxed.
+    //If the creature is heavily burdened.
     else if(return_inventory_weight()>=return_carry_capacity()*2.5+1 && return_inventory_weight()<=return_carry_capacity()*3.0){
         state="heavily burdened";
     }
-    //If the creature is overloaded.
+    //If the creature is overburdened.
     else if(return_inventory_weight()>=return_carry_capacity()*3.0+1){
         state="overburdened";
     }
