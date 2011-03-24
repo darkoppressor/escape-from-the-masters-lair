@@ -313,6 +313,27 @@ void Templates::load_template_race(){
         string comprehension="comprehension:";
         string acumen="acumen:";
         string luck="luck:";
+        string bladed_weapons="bladed weapons:";
+        string blunt_weapons="blunt weapons:";
+        string stabbing_weapons="stabbing weapons:";
+        string unarmed="unarmed:";
+        string security="security:";
+        string stealth="stealth:";
+        string launcher_weapons="launcher weapons:";
+        string thrown_weapons="thrown weapons:";
+        string dual_wielding="dual wielding:";
+        string speed="speed:";
+        string fighting="fighting:";
+        string dodging="dodging:";
+        string armor="armor:";
+        string air_magic="air magic:";
+        string fire_magic="fire magic:";
+        string water_magic="water magic:";
+        string cold_magic="cold magic:";
+        string earth_magic="earth magic:";
+        string conjuration_magic="conjuration magic:";
+        string enchantment_magic="enchantment magic:";
+        string summoning_magic="summoning magic:";
 
         //Grab the next line of the file.
         getline(load,line);
@@ -478,6 +499,153 @@ void Templates::load_template_race(){
             line.erase(0,luck.length());
 
             temp_race.attributes[ATTRIBUTE_LUCK]=atoi(line.c_str());
+        }
+        //Bladed weapons
+        else if(icontains(line,bladed_weapons)){
+            //Clear the data name.
+            line.erase(0,bladed_weapons.length());
+
+            temp_race.skills[SKILL_BLADED_WEAPONS][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+        }
+        //Blunt weapons
+        else if(icontains(line,blunt_weapons)){
+            //Clear the data name.
+            line.erase(0,blunt_weapons.length());
+
+            temp_race.skills[SKILL_BLUNT_WEAPONS][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+        }
+        //Stabbing weapons
+        else if(icontains(line,stabbing_weapons)){
+            //Clear the data name.
+            line.erase(0,stabbing_weapons.length());
+
+            temp_race.skills[SKILL_STABBING_WEAPONS][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+        }
+        //Unarmed
+        else if(icontains(line,unarmed)){
+            //Clear the data name.
+            line.erase(0,unarmed.length());
+
+            temp_race.skills[SKILL_UNARMED][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+        }
+        //Security
+        else if(icontains(line,security)){
+            //Clear the data name.
+            line.erase(0,security.length());
+
+            temp_race.skills[SKILL_SECURITY][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+        }
+        //Stealth
+        else if(icontains(line,stealth)){
+            //Clear the data name.
+            line.erase(0,stealth.length());
+
+            temp_race.skills[SKILL_STEALTH][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+        }
+        //Launcher weapons
+        else if(icontains(line,launcher_weapons)){
+            //Clear the data name.
+            line.erase(0,launcher_weapons.length());
+
+            temp_race.skills[SKILL_LAUNCHER_WEAPONS][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+        }
+        //Thrown weapons
+        else if(icontains(line,thrown_weapons)){
+            //Clear the data name.
+            line.erase(0,thrown_weapons.length());
+
+            temp_race.skills[SKILL_THROWN_WEAPONS][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+        }
+        //Dual wielding
+        else if(icontains(line,dual_wielding)){
+            //Clear the data name.
+            line.erase(0,dual_wielding.length());
+
+            temp_race.skills[SKILL_DUAL_WIELDING][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+        }
+        //Speed
+        else if(icontains(line,speed)){
+            //Clear the data name.
+            line.erase(0,speed.length());
+
+            temp_race.skills[SKILL_SPEED][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+        }
+        //Fighting
+        else if(icontains(line,fighting)){
+            //Clear the data name.
+            line.erase(0,fighting.length());
+
+            temp_race.skills[SKILL_FIGHTING][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+        }
+        //Dodging
+        else if(icontains(line,dodging)){
+            //Clear the data name.
+            line.erase(0,dodging.length());
+
+            temp_race.skills[SKILL_DODGING][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+        }
+        //Armor
+        else if(icontains(line,armor)){
+            //Clear the data name.
+            line.erase(0,armor.length());
+
+            temp_race.skills[SKILL_ARMOR][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+        }
+        //Air magic
+        else if(icontains(line,air_magic)){
+            //Clear the data name.
+            line.erase(0,air_magic.length());
+
+            temp_race.skills[SKILL_MAGIC_AIR][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+        }
+        //Fire magic
+        else if(icontains(line,fire_magic)){
+            //Clear the data name.
+            line.erase(0,fire_magic.length());
+
+            temp_race.skills[SKILL_MAGIC_FIRE][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+        }
+        //Water magic
+        else if(icontains(line,water_magic)){
+            //Clear the data name.
+            line.erase(0,water_magic.length());
+
+            temp_race.skills[SKILL_MAGIC_WATER][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+        }
+        //Cold magic
+        else if(icontains(line,cold_magic)){
+            //Clear the data name.
+            line.erase(0,cold_magic.length());
+
+            temp_race.skills[SKILL_MAGIC_COLD][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+        }
+        //Earth magic
+        else if(icontains(line,earth_magic)){
+            //Clear the data name.
+            line.erase(0,earth_magic.length());
+
+            temp_race.skills[SKILL_MAGIC_EARTH][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+        }
+        //Conjuration magic
+        else if(icontains(line,conjuration_magic)){
+            //Clear the data name.
+            line.erase(0,conjuration_magic.length());
+
+            temp_race.skills[SKILL_MAGIC_CONJURATION][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+        }
+        //Enchantment magic
+        else if(icontains(line,enchantment_magic)){
+            //Clear the data name.
+            line.erase(0,enchantment_magic.length());
+
+            temp_race.skills[SKILL_MAGIC_ENCHANTMENT][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+        }
+        //Summoning magic
+        else if(icontains(line,summoning_magic)){
+            //Clear the data name.
+            line.erase(0,summoning_magic.length());
+
+            temp_race.skills[SKILL_MAGIC_SUMMONING][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
         }
 
         //If the line ends the race.

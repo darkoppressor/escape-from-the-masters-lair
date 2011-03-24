@@ -36,6 +36,9 @@ class Player: public Creature{
     //String used for retrieving the player's race.
     std::string get_race;
 
+    //Stores the attribute(s) being selected for improvement when leveling up.
+    short levelup_attributes[3];
+
     Player();
 
     //Setup the player's starting inventory.
@@ -60,6 +63,7 @@ class Player: public Creature{
     //Handle the windows' input.
     void handle_input_inventory();
     void handle_input_stats();
+    void handle_input_levelup();
     void handle_input_no_game();
     void handle_input_get_name();
     void handle_input_get_race();
@@ -68,6 +72,7 @@ class Player: public Creature{
     //Render the windows.
     void render_inventory();
     void render_stats();
+    void render_levelup();
     void render_no_game();
     void render_get_name();
     void render_get_race();

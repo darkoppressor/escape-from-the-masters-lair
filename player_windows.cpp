@@ -283,6 +283,74 @@ void Player::handle_input_stats(){
     }
 }
 
+void Player::handle_input_levelup(){
+    if(event.key.keysym.unicode>=(Uint16)'a' && event.key.keysym.unicode<=(Uint16)'f'){
+        short attribute=-1;
+
+        switch(event.key.keysym.unicode){
+        case (Uint16)'a':
+            attribute=ATTRIBUTE_STRENGTH;
+            break;
+        case (Uint16)'b':
+            attribute=ATTRIBUTE_AGILITY;
+            break;
+        case (Uint16)'c':
+            attribute=ATTRIBUTE_HARDINESS;
+            break;
+        case (Uint16)'d':
+            attribute=ATTRIBUTE_COMPREHENSION;
+            break;
+        case (Uint16)'e':
+            attribute=ATTRIBUTE_ACUMEN;
+            break;
+        case (Uint16)'f':
+            attribute=ATTRIBUTE_LUCK;
+            break;
+        }
+
+        //If the skill is already a focused skill.
+        if(is_focused_skill(skill)){
+            //Look through the focused skills.
+            for(int i=0;i<3;i++){
+                //If this skill is associated with this focused skill.
+                if(skill==focused_skills[i]){
+                    //Clear this focused skill.
+                    focused_skills[i]=-1;
+                }
+            }
+        }
+        //If the skill is not already a focused skill.
+        else{
+            //Look through the focused skills.
+            for(int i=0;i<3;i++){
+                //If this focused skill slot is empty.
+                if(focused_skills[i]==-1){
+                    //Set this focused skill slot to the skill.
+                    focused_skills[i]=skill;
+
+                    break;
+                }
+            }
+        }
+    }
+
+    else if((event.key.keysym.sym==SDLK_RETURN || event.key.keysym.sym==SDLK_KP_ENTER) && focused_skills[0]!=-1 && focused_skills[1]!=-1 && focused_skills[2]!=-1){
+        //Once the focused skills are set, apply their initial bonuses to their corresponding skills.
+        for(int i=0;i<3;i++){
+            for(int n=0;n<1;n++){
+                gain_skill_experience(focused_skills[i],skills[focused_skills[i]][SKILL_EXPERIENCE_MAX]-skills[focused_skills[i]][SKILL_EXPERIENCE],0);
+            }
+        }
+
+        game.new_game();
+
+        //Make sure that enter is cleared before moving to the next screen.
+        Uint8 *keystates=SDL_GetKeyState(NULL);
+        keystates[SDLK_RETURN]=NULL;
+        keystates[SDLK_KP_ENTER]=NULL;
+    }
+}
+
 void Player::render_no_game(){
     //If no player name has yet been entered.
     if(name=="\x1F"){

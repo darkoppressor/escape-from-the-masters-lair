@@ -37,6 +37,14 @@ Player::Player(){
 
     game_in_progress=false;
 
+    get_name="";
+
+    get_race="";
+
+    for(int i=0;i<3;i++){
+        levelup_attributes[i]=-1;
+    }
+
     //Chat stuff:
 
     chat_mode=false;
