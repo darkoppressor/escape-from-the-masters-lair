@@ -39,5 +39,11 @@ The difficulty of monsters generated should be dungeon level-dependent, NOT play
 Necromancy sorts of spells that raise corpses and such as undead minions should take the kind of corpse into account. For instance, a grid bug corpse would become a grid bug zombie. Also, since corpses rot and leave behind skeletons, those should be raised as skeletons and not zombies.\par
 \strike Perhaps a creature's weight, which is an indicator of its size, should give a small bonus to carrying capacity.\strike0\par
 You should gain max hp when drinking a healing potion at full health.\par
+Perhaps the type of monsters should be determined by the level theme. Each monster could even have a theme number, which would tie it to a given theme. Should I also sort monsters by difficulty? I could have the game calculate each monster's difficulty after loading the templates. Both theme and difficulty could be taken into account, and most monsters generated could be of the corresponding types/ranges. However, it should be possible for monsters to be generated outside of both their theme and difficulty. Since monsters can level up just like the player, maybe the difficulty sorting can be left out at load time. Instead, a monster's starting inventory/base stats/starting experience level could be scaled depending on how difficult the monster should be. So, based on dungeon level, player level, both, whatever, a difficulty number is determined for each monster as it is generated. Then, its stuff is all scaled by this. Each race should have some AI stuff defined, too, like preferred attributes and skills.\par
+I need to add monsters spawning over time. Also, dark-spawning monsters.\par
+Some possible conditions: lycanthropy, vampirism, various diseases and poisons.\par
+After loading the templates, the game can make several sorted lists of the races. Sorting by category, perhaps a list of lycanthropes, level theme, etc.\par
+Following from the idea of level themes, there should also be special rooms that can be generated. Also, I like Nethack's level sounds.\par
+Instead of the single level theme number for races, they should be able to have a list, so a race can be associated with more than one level theme. They should have a similar list of special room numbers.\par
 }
  
