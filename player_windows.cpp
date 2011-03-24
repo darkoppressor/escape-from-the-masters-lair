@@ -255,9 +255,7 @@ void Player::handle_input_get_focused_skills(){
     else if((event.key.keysym.sym==SDLK_RETURN || event.key.keysym.sym==SDLK_KP_ENTER) && focused_skills[0]!=-1 && focused_skills[1]!=-1 && focused_skills[2]!=-1){
         //Once the focused skills are set, apply their initial bonuses to their corresponding skills.
         for(int i=0;i<3;i++){
-            for(int n=0;n<1;n++){
-                gain_skill_experience(focused_skills[i],skills[focused_skills[i]][SKILL_EXPERIENCE_MAX]-skills[focused_skills[i]][SKILL_EXPERIENCE],0);
-            }
+            gain_skill_experience(focused_skills[i],skills[focused_skills[i]][SKILL_EXPERIENCE_MAX]-skills[focused_skills[i]][SKILL_EXPERIENCE],0,false);
         }
 
         game.new_game();
@@ -308,30 +306,25 @@ void Player::handle_input_levelup(){
             break;
         }
 
-        //If this skill is a focused skill.
-        if(attribute==focused_skills[0] || attribute==focused_skills[1] || attribute==focused_skills[2]){
-            ///
-        }
-
-        //If the skill is already a focused skill.
-        if(is_focused_skill(skill)){
-            //Look through the focused skills.
-            for(int i=0;i<3;i++){
-                //If this skill is associated with this focused skill.
-                if(skill==focused_skills[i]){
-                    //Clear this focused skill.
-                    focused_skills[i]=-1;
+        //If this attribute has already been selected.
+        if(levelup_is_selected_attribute(attribute)){
+            //Look through the selected attributes.
+            for(int i=0;i<levelup_attributes.size();i++){
+                //If this attribute is associated with this selected attribute.
+                if(attribute==levelup_attributes[i]){
+                    //Clear this selected attribute.
+                    levelup_attributes[i]=-1;
                 }
             }
         }
-        //If the skill is not already a focused skill.
+        //If the attribute has not been selected.
         else{
-            //Look through the focused skills.
-            for(int i=0;i<3;i++){
-                //If this focused skill slot is empty.
-                if(focused_skills[i]==-1){
-                    //Set this focused skill slot to the skill.
-                    focused_skills[i]=skill;
+            //Look through the selected attributes.
+            for(int i=0;i<levelup_attributes.size();i++){
+                //If this attribute slot is empty.
+                if(levelup_attributes[i]==-1){
+                    //Set this attribute slot to the attribute.
+                    levelup_attributes[i]=attribute;
 
                     break;
                 }
@@ -339,15 +332,24 @@ void Player::handle_input_levelup(){
         }
     }
 
-    else if((event.key.keysym.sym==SDLK_RETURN || event.key.keysym.sym==SDLK_KP_ENTER) && focused_skills[0]!=-1 && focused_skills[1]!=-1 && focused_skills[2]!=-1){
-        //Once the focused skills are set, apply their initial bonuses to their corresponding skills.
-        for(int i=0;i<3;i++){
-            for(int n=0;n<1;n++){
-                gain_skill_experience(focused_skills[i],skills[focused_skills[i]][SKILL_EXPERIENCE_MAX]-skills[focused_skills[i]][SKILL_EXPERIENCE],0);
-            }
+    else if((event.key.keysym.sym==SDLK_RETURN || event.key.keysym.sym==SDLK_KP_ENTER) && levelup_all_attributes_set()){
+        //Apply the selected attribute bonuses.
+        for(int i=0;i<levelup_attributes.size();i++){
+            attributes[levelup_attributes[i]]+=1+attribute_level_bonuses[levelup_attributes[i]];
         }
 
-        game.new_game();
+        current_window=WINDOW_NONE;
+
+        //Clear the attribute bonuses.
+        for(int i=0;i<ATTRIBUTE_LUCK+1;i++){
+            attribute_level_bonuses[i]=0;
+        }
+
+        //If experience reaches the current maximum experience.
+        if(experience>=experience_max){
+            //The creature levels up again.
+            level_up();
+        }
 
         //Make sure that enter is cleared before moving to the next screen.
         Uint8 *keystates=SDL_GetKeyState(NULL);
@@ -416,9 +418,9 @@ void Player::render_get_race(){
 }
 
 void Player::render_get_focused_skills(){
-    ss.clear();ss.str("");ss<<"Select three skills to focus in.";ss<<"\xA";msg=ss.str();
+    ss.clear();ss.str("");ss<<"Select 3 skills to focus in.";ss<<"\xA";msg=ss.str();
 
-    font_small.show(0,0,msg,COLOR_WHITE);
+    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2,0,msg,COLOR_WHITE);
 
     msg="";
 
@@ -637,292 +639,372 @@ void Player::render_get_focused_skills(){
     font_small.show(450,60,msg,COLOR_WHITE);
 }
 
-void Player::render_stats(){
-    if(current_window==WINDOW_STATS){
-        string title="";
+void Player::render_levelup(){
+    ss.clear();ss.str("");ss<<"You have gained a level!";msg=ss.str();
 
-        render_rectangle(0,0,800,600,1.0,COLOR_BLACK);
+    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2,0,msg,COLOR_WHITE);
 
-        title=name;
-        title+=" the ";
-        title+="<class>";
-        render_rectangle(5,5,font_small.spacing_x*title.length()+3,font_small.spacing_y,1.0,COLOR_GRAY);
-        font_small.show(6,8,title,COLOR_BLACK);
-
-        ss.clear();ss.str("");ss<<"Experience Level: ";ss<<experience_level;ss<<"\xA";msg=ss.str();
-        ss.clear();ss.str("");ss<<"Experience: ";ss<<experience;ss<<"/";ss<<experience_max;ss<<"\xA";msg+=ss.str();
-        ss.clear();ss.str("");ss<<"Health: ";ss<<return_health();ss<<"/";ss<<return_health_max();ss<<"\xA";msg+=ss.str();
-        ss.clear();ss.str("");ss<<"Mana: ";ss<<return_mana();ss<<"/";ss<<return_mana_max();ss<<"\xA";msg+=ss.str();
-        ss.clear();ss.str("");ss<<"Armor: ";ss<<return_armor();ss<<"\xA";msg+=ss.str();
-        ss.clear();ss.str("");ss<<"Money: ";ss<<inventory[0].stack;ss<<"\xA";msg+=ss.str();
-
-        font_small.show(5,30,msg,COLOR_WHITE);
-
-        title="Attributes";
-        render_rectangle(5,200,font_small.spacing_x*title.length()+3,font_small.spacing_y,1.0,COLOR_GRAY);
-        font_small.show(6,203,title,COLOR_BLACK);
-
-        ss.clear();ss.str("");ss<<"Strength - ";ss<<return_attribute_strength();ss<<"\xA";msg=ss.str();
-        ss.clear();ss.str("");ss<<"Agility - ";ss<<return_attribute_agility();ss<<"\xA";msg+=ss.str();
-        ss.clear();ss.str("");ss<<"Hardiness - ";ss<<return_attribute_hardiness();ss<<"\xA";msg+=ss.str();
-        ss.clear();ss.str("");ss<<"Comprehension - ";ss<<return_attribute_comprehension();ss<<"\xA";msg+=ss.str();
-        ss.clear();ss.str("");ss<<"Acumen - ";ss<<return_attribute_acumen();ss<<"\xA";msg+=ss.str();
-        ss.clear();ss.str("");ss<<"Luck - ";ss<<return_attribute_luck();ss<<"\xA";msg+=ss.str();
-
-        font_small.show(5,225,msg,COLOR_WHITE);
-
-        title="Skills";
-        render_rectangle(400,5,font_small.spacing_x*title.length()+3,font_small.spacing_y,1.0,COLOR_GRAY);
-        font_small.show(401,8,title,COLOR_BLACK);
-
-        ss.clear();ss.str("");ss<<"Bladed Weapons - ";ss<<return_skill_bladed_weapons();ss<<" (";ss<<skills[SKILL_BLADED_WEAPONS][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_BLADED_WEAPONS][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg=ss.str();
-        msg+="\xA";
-        ss.clear();ss.str("");ss<<"Blunt Weapons - ";ss<<return_skill_blunt_weapons();ss<<" (";ss<<skills[SKILL_BLUNT_WEAPONS][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_BLUNT_WEAPONS][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
-        msg+="\xA";
-        ss.clear();ss.str("");ss<<"Stabbing Weapons - ";ss<<return_skill_stabbing_weapons();ss<<" (";ss<<skills[SKILL_STABBING_WEAPONS][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_STABBING_WEAPONS][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
-        msg+="\xA";
-        ss.clear();ss.str("");ss<<"Unarmed - ";ss<<return_skill_unarmed();ss<<" (";ss<<skills[SKILL_UNARMED][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_UNARMED][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
-        msg+="\xA";
-
-        ss.clear();ss.str("");ss<<"Security - ";ss<<return_skill_security();ss<<" (";ss<<skills[SKILL_SECURITY][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_SECURITY][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
-        msg+="\xA";
-        ss.clear();ss.str("");ss<<"Stealth - ";ss<<return_skill_stealth();ss<<" (";ss<<skills[SKILL_STEALTH][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_STEALTH][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
-        msg+="\xA";
-        ss.clear();ss.str("");ss<<"Launcher Weapons - ";ss<<return_skill_launcher_weapons();ss<<" (";ss<<skills[SKILL_LAUNCHER_WEAPONS][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_LAUNCHER_WEAPONS][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
-        msg+="\xA";
-        ss.clear();ss.str("");ss<<"Thrown Weapons - ";ss<<return_skill_thrown_weapons();ss<<" (";ss<<skills[SKILL_THROWN_WEAPONS][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_THROWN_WEAPONS][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
-        msg+="\xA";
-        ss.clear();ss.str("");ss<<"Dual Wielding - ";ss<<return_skill_dual_wielding();ss<<" (";ss<<skills[SKILL_DUAL_WIELDING][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_DUAL_WIELDING][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
-        msg+="\xA";
-        ss.clear();ss.str("");ss<<"Speed - ";ss<<return_skill_speed();ss<<" (";ss<<skills[SKILL_SPEED][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_SPEED][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
-
-        font_small.show(200,30,msg,COLOR_WHITE);
-
-        ss.clear();ss.str("");ss<<"Fighting - ";ss<<return_skill_fighting();ss<<" (";ss<<skills[SKILL_FIGHTING][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_FIGHTING][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg=ss.str();
-        msg+="\xA";
-        ss.clear();ss.str("");ss<<"Dodging - ";ss<<return_skill_dodging();ss<<" (";ss<<skills[SKILL_DODGING][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_DODGING][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
-        msg+="\xA";
-
-        ss.clear();ss.str("");ss<<"Armor - ";ss<<return_skill_armor();ss<<" (";ss<<skills[SKILL_ARMOR][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_ARMOR][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
-        msg+="\xA";
-
-        ss.clear();ss.str("");ss<<"Air Magic - ";ss<<return_skill_magic_air();ss<<" (";ss<<skills[SKILL_MAGIC_AIR][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_MAGIC_AIR][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
-        msg+="\xA";
-        ss.clear();ss.str("");ss<<"Fire Magic - ";ss<<return_skill_magic_fire();ss<<" (";ss<<skills[SKILL_MAGIC_FIRE][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_MAGIC_FIRE][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
-        msg+="\xA";
-        ss.clear();ss.str("");ss<<"Water Magic - ";ss<<return_skill_magic_water();ss<<" (";ss<<skills[SKILL_MAGIC_WATER][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_MAGIC_WATER][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
-        msg+="\xA";
-        ss.clear();ss.str("");ss<<"Cold Magic - ";ss<<return_skill_magic_cold();ss<<" (";ss<<skills[SKILL_MAGIC_COLD][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_MAGIC_COLD][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
-        msg+="\xA";
-
-        ss.clear();ss.str("");ss<<"Earth Magic - ";ss<<return_skill_magic_earth();ss<<" (";ss<<skills[SKILL_MAGIC_EARTH][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_MAGIC_EARTH][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
-        msg+="\xA";
-        ss.clear();ss.str("");ss<<"Conjuration Magic - ";ss<<return_skill_magic_conjuration();ss<<" (";ss<<skills[SKILL_MAGIC_CONJURATION][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_MAGIC_CONJURATION][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
-        msg+="\xA";
-        ss.clear();ss.str("");ss<<"Enchantment Magic - ";ss<<return_skill_magic_enchantment();ss<<" (";ss<<skills[SKILL_MAGIC_ENCHANTMENT][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_MAGIC_ENCHANTMENT][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
-        msg+="\xA";
-        ss.clear();ss.str("");ss<<"Summoning Magic - ";ss<<return_skill_magic_summoning();ss<<" (";ss<<skills[SKILL_MAGIC_SUMMONING][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_MAGIC_SUMMONING][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
-
-        font_small.show(500,30,msg,COLOR_WHITE);
+    ss.clear();ss.str("");ss<<"Select ";msg=ss.str();
+    ss.clear();ss.str("");ss<<levelup_attributes.size();msg+=ss.str();
+    if(levelup_attributes.size()==1){
+        ss.clear();ss.str("");ss<<" attribute ";msg+=ss.str();
     }
+    else{
+        ss.clear();ss.str("");ss<<" attributes ";msg+=ss.str();
+    }
+    ss.clear();ss.str("");ss<<"to improve.";ss<<"\xA";msg+=ss.str();
+
+    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2,font.spacing_y,msg,COLOR_WHITE);
+
+    msg="";
+
+    ss.clear();ss.str("");ss<<"(a) ";msg+=ss.str();
+    if(levelup_is_selected_attribute(ATTRIBUTE_STRENGTH)){
+        ss.clear();ss.str("");ss<<"+ ";msg+=ss.str();
+    }
+    else{
+        ss.clear();ss.str("");ss<<"- ";msg+=ss.str();
+    }
+    ss.clear();ss.str("");ss<<"Strength";msg+=ss.str();
+    ss.clear();ss.str("");ss<<" (+";ss<<1+attribute_level_bonuses[ATTRIBUTE_STRENGTH];ss<<")";ss<<"\xA";msg+=ss.str();
+    msg+="\xA";
+
+    ss.clear();ss.str("");ss<<"(b) ";msg+=ss.str();
+    if(levelup_is_selected_attribute(ATTRIBUTE_AGILITY)){
+        ss.clear();ss.str("");ss<<"+ ";msg+=ss.str();
+    }
+    else{
+        ss.clear();ss.str("");ss<<"- ";msg+=ss.str();
+    }
+    ss.clear();ss.str("");ss<<"Agility";msg+=ss.str();
+    ss.clear();ss.str("");ss<<" (+";ss<<1+attribute_level_bonuses[ATTRIBUTE_AGILITY];ss<<")";ss<<"\xA";msg+=ss.str();
+    msg+="\xA";
+
+    ss.clear();ss.str("");ss<<"(c) ";msg+=ss.str();
+    if(levelup_is_selected_attribute(ATTRIBUTE_HARDINESS)){
+        ss.clear();ss.str("");ss<<"+ ";msg+=ss.str();
+    }
+    else{
+        ss.clear();ss.str("");ss<<"- ";msg+=ss.str();
+    }
+    ss.clear();ss.str("");ss<<"Hardiness";msg+=ss.str();
+    ss.clear();ss.str("");ss<<" (+";ss<<1+attribute_level_bonuses[ATTRIBUTE_HARDINESS];ss<<")";ss<<"\xA";msg+=ss.str();
+    msg+="\xA";
+
+    ss.clear();ss.str("");ss<<"(d) ";msg+=ss.str();
+    if(levelup_is_selected_attribute(ATTRIBUTE_COMPREHENSION)){
+        ss.clear();ss.str("");ss<<"+ ";msg+=ss.str();
+    }
+    else{
+        ss.clear();ss.str("");ss<<"- ";msg+=ss.str();
+    }
+    ss.clear();ss.str("");ss<<"Comprehension";msg+=ss.str();
+    ss.clear();ss.str("");ss<<" (+";ss<<1+attribute_level_bonuses[ATTRIBUTE_COMPREHENSION];ss<<")";ss<<"\xA";msg+=ss.str();
+    msg+="\xA";
+
+    ss.clear();ss.str("");ss<<"(e) ";msg+=ss.str();
+    if(levelup_is_selected_attribute(ATTRIBUTE_ACUMEN)){
+        ss.clear();ss.str("");ss<<"+ ";msg+=ss.str();
+    }
+    else{
+        ss.clear();ss.str("");ss<<"- ";msg+=ss.str();
+    }
+    ss.clear();ss.str("");ss<<"Acumen";msg+=ss.str();
+    ss.clear();ss.str("");ss<<" (+";ss<<1+attribute_level_bonuses[ATTRIBUTE_ACUMEN];ss<<")";ss<<"\xA";msg+=ss.str();
+    msg+="\xA";
+
+    ss.clear();ss.str("");ss<<"(f) ";msg+=ss.str();
+    if(levelup_is_selected_attribute(ATTRIBUTE_LUCK)){
+        ss.clear();ss.str("");ss<<"+ ";msg+=ss.str();
+    }
+    else{
+        ss.clear();ss.str("");ss<<"- ";msg+=ss.str();
+    }
+    ss.clear();ss.str("");ss<<"Luck";msg+=ss.str();
+    ss.clear();ss.str("");ss<<" (+";ss<<1+attribute_level_bonuses[ATTRIBUTE_LUCK];ss<<")";ss<<"\xA";msg+=ss.str();
+    msg+="\xA";
+
+    font_small.show(340,60,msg,COLOR_WHITE);
+}
+
+void Player::render_stats(){
+    string title="";
+
+    title=name;
+    title+=" the ";
+    title+="<class>";
+    render_rectangle(5,5,font_small.spacing_x*title.length()+3,font_small.spacing_y,1.0,COLOR_GRAY);
+    font_small.show(6,8,title,COLOR_BLACK);
+
+    ss.clear();ss.str("");ss<<"Experience Level: ";ss<<experience_level;ss<<"\xA";msg=ss.str();
+    ss.clear();ss.str("");ss<<"Experience: ";ss<<experience;ss<<"/";ss<<experience_max;ss<<"\xA";msg+=ss.str();
+    ss.clear();ss.str("");ss<<"Health: ";ss<<return_health();ss<<"/";ss<<return_health_max();ss<<"\xA";msg+=ss.str();
+    ss.clear();ss.str("");ss<<"Mana: ";ss<<return_mana();ss<<"/";ss<<return_mana_max();ss<<"\xA";msg+=ss.str();
+    ss.clear();ss.str("");ss<<"Armor: ";ss<<return_armor();ss<<"\xA";msg+=ss.str();
+    ss.clear();ss.str("");ss<<"Money: ";ss<<inventory[0].stack;ss<<"\xA";msg+=ss.str();
+
+    font_small.show(5,30,msg,COLOR_WHITE);
+
+    title="Attributes";
+    render_rectangle(5,200,font_small.spacing_x*title.length()+3,font_small.spacing_y,1.0,COLOR_GRAY);
+    font_small.show(6,203,title,COLOR_BLACK);
+
+    ss.clear();ss.str("");ss<<"Strength - ";ss<<return_attribute_strength();ss<<"\xA";msg=ss.str();
+    ss.clear();ss.str("");ss<<"Agility - ";ss<<return_attribute_agility();ss<<"\xA";msg+=ss.str();
+    ss.clear();ss.str("");ss<<"Hardiness - ";ss<<return_attribute_hardiness();ss<<"\xA";msg+=ss.str();
+    ss.clear();ss.str("");ss<<"Comprehension - ";ss<<return_attribute_comprehension();ss<<"\xA";msg+=ss.str();
+    ss.clear();ss.str("");ss<<"Acumen - ";ss<<return_attribute_acumen();ss<<"\xA";msg+=ss.str();
+    ss.clear();ss.str("");ss<<"Luck - ";ss<<return_attribute_luck();ss<<"\xA";msg+=ss.str();
+
+    font_small.show(5,225,msg,COLOR_WHITE);
+
+    title="Skills";
+    render_rectangle(400,5,font_small.spacing_x*title.length()+3,font_small.spacing_y,1.0,COLOR_GRAY);
+    font_small.show(401,8,title,COLOR_BLACK);
+
+    ss.clear();ss.str("");ss<<"Bladed Weapons - ";ss<<return_skill_bladed_weapons();ss<<" (";ss<<skills[SKILL_BLADED_WEAPONS][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_BLADED_WEAPONS][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg=ss.str();
+    msg+="\xA";
+    ss.clear();ss.str("");ss<<"Blunt Weapons - ";ss<<return_skill_blunt_weapons();ss<<" (";ss<<skills[SKILL_BLUNT_WEAPONS][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_BLUNT_WEAPONS][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
+    msg+="\xA";
+    ss.clear();ss.str("");ss<<"Stabbing Weapons - ";ss<<return_skill_stabbing_weapons();ss<<" (";ss<<skills[SKILL_STABBING_WEAPONS][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_STABBING_WEAPONS][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
+    msg+="\xA";
+    ss.clear();ss.str("");ss<<"Unarmed - ";ss<<return_skill_unarmed();ss<<" (";ss<<skills[SKILL_UNARMED][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_UNARMED][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
+    msg+="\xA";
+
+    ss.clear();ss.str("");ss<<"Security - ";ss<<return_skill_security();ss<<" (";ss<<skills[SKILL_SECURITY][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_SECURITY][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
+    msg+="\xA";
+    ss.clear();ss.str("");ss<<"Stealth - ";ss<<return_skill_stealth();ss<<" (";ss<<skills[SKILL_STEALTH][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_STEALTH][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
+    msg+="\xA";
+    ss.clear();ss.str("");ss<<"Launcher Weapons - ";ss<<return_skill_launcher_weapons();ss<<" (";ss<<skills[SKILL_LAUNCHER_WEAPONS][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_LAUNCHER_WEAPONS][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
+    msg+="\xA";
+    ss.clear();ss.str("");ss<<"Thrown Weapons - ";ss<<return_skill_thrown_weapons();ss<<" (";ss<<skills[SKILL_THROWN_WEAPONS][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_THROWN_WEAPONS][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
+    msg+="\xA";
+    ss.clear();ss.str("");ss<<"Dual Wielding - ";ss<<return_skill_dual_wielding();ss<<" (";ss<<skills[SKILL_DUAL_WIELDING][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_DUAL_WIELDING][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
+    msg+="\xA";
+    ss.clear();ss.str("");ss<<"Speed - ";ss<<return_skill_speed();ss<<" (";ss<<skills[SKILL_SPEED][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_SPEED][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
+
+    font_small.show(200,30,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"Fighting - ";ss<<return_skill_fighting();ss<<" (";ss<<skills[SKILL_FIGHTING][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_FIGHTING][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg=ss.str();
+    msg+="\xA";
+    ss.clear();ss.str("");ss<<"Dodging - ";ss<<return_skill_dodging();ss<<" (";ss<<skills[SKILL_DODGING][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_DODGING][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
+    msg+="\xA";
+
+    ss.clear();ss.str("");ss<<"Armor - ";ss<<return_skill_armor();ss<<" (";ss<<skills[SKILL_ARMOR][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_ARMOR][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
+    msg+="\xA";
+
+    ss.clear();ss.str("");ss<<"Air Magic - ";ss<<return_skill_magic_air();ss<<" (";ss<<skills[SKILL_MAGIC_AIR][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_MAGIC_AIR][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
+    msg+="\xA";
+    ss.clear();ss.str("");ss<<"Fire Magic - ";ss<<return_skill_magic_fire();ss<<" (";ss<<skills[SKILL_MAGIC_FIRE][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_MAGIC_FIRE][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
+    msg+="\xA";
+    ss.clear();ss.str("");ss<<"Water Magic - ";ss<<return_skill_magic_water();ss<<" (";ss<<skills[SKILL_MAGIC_WATER][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_MAGIC_WATER][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
+    msg+="\xA";
+    ss.clear();ss.str("");ss<<"Cold Magic - ";ss<<return_skill_magic_cold();ss<<" (";ss<<skills[SKILL_MAGIC_COLD][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_MAGIC_COLD][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
+    msg+="\xA";
+
+    ss.clear();ss.str("");ss<<"Earth Magic - ";ss<<return_skill_magic_earth();ss<<" (";ss<<skills[SKILL_MAGIC_EARTH][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_MAGIC_EARTH][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
+    msg+="\xA";
+    ss.clear();ss.str("");ss<<"Conjuration Magic - ";ss<<return_skill_magic_conjuration();ss<<" (";ss<<skills[SKILL_MAGIC_CONJURATION][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_MAGIC_CONJURATION][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
+    msg+="\xA";
+    ss.clear();ss.str("");ss<<"Enchantment Magic - ";ss<<return_skill_magic_enchantment();ss<<" (";ss<<skills[SKILL_MAGIC_ENCHANTMENT][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_MAGIC_ENCHANTMENT][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
+    msg+="\xA";
+    ss.clear();ss.str("");ss<<"Summoning Magic - ";ss<<return_skill_magic_summoning();ss<<" (";ss<<skills[SKILL_MAGIC_SUMMONING][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_MAGIC_SUMMONING][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
+
+    font_small.show(500,30,msg,COLOR_WHITE);
 }
 
 void Player::render_inventory(){
-    if(current_window==WINDOW_INVENTORY){
-        msg="";
-        short render_color=COLOR_WHITE;
+    msg="";
+    short render_color=COLOR_WHITE;
 
-        //Keeps track of the number of lines of inventory text rendered.
-        int lines_rendered=0;
+    //Keeps track of the number of lines of inventory text rendered.
+    int lines_rendered=0;
 
-        //The maximum number of lines before a new column is started.
-        int max_lines=35;
+    //The maximum number of lines before a new column is started.
+    int max_lines=35;
 
-        //The current column.
-        int column=0;
+    //The current column.
+    int column=0;
 
-        //The width of each column.
-        int column_width=400;
+    //The width of each column.
+    int column_width=400;
 
-        render_rectangle(0,0,800,600,1.0,COLOR_BLACK);
+    ss.clear();ss.str("");ss<<"Weight/Capacity: ";ss<<return_inventory_weight();ss<<"/";ss<<return_carry_capacity();msg=ss.str();
+    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2,0,msg,render_color);
 
-        ss.clear();ss.str("");ss<<"Weight/Capacity: ";ss<<return_inventory_weight();ss<<"/";ss<<return_carry_capacity();msg=ss.str();
-        font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2,0,msg,render_color);
+    ss.clear();ss.str("");ss<<"You are currently ";ss<<return_encumbrance_state();ss<<".";msg=ss.str();
+    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2,font_small.spacing_y,msg,render_color);
 
-        ss.clear();ss.str("");ss<<"You are currently ";ss<<return_encumbrance_state();ss<<".";msg=ss.str();
-        font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2,font_small.spacing_y,msg,render_color);
+    for(short n=ITEM_WEAPON;n<ITEM_OTHER+1;n++){
+        //If the maximum number of lines for this column have been rendered.
+        if(lines_rendered>=max_lines){
+            lines_rendered=0;
+            column++;
+            n--;
+            continue;
+        }
 
-        for(short n=ITEM_WEAPON;n<ITEM_OTHER+1;n++){
-            //If the maximum number of lines for this column have been rendered.
-            if(lines_rendered>=max_lines){
-                lines_rendered=0;
-                column++;
-                n--;
-                continue;
+        if(item_category_in_inventory(n)>0){
+
+            string title="";
+
+            if(n==ITEM_WEAPON){
+                title="Weapons";
+            }
+            else if(n==ITEM_ARMOR){
+                title="Armor";
+            }
+            else if(n==ITEM_FOOD){
+                title="Food";
+            }
+            else if(n==ITEM_DRINK){
+                title="Drinks";
+            }
+            else if(n==ITEM_SCROLL){
+                title="Scrolls";
+            }
+            else if(n==ITEM_BOOK){
+                title="Books";
+            }
+            else if(n==ITEM_CONTAINER){
+                title="Containers";
+            }
+            else if(n==ITEM_OTHER){
+                title="Others";
             }
 
-            if(item_category_in_inventory(n)>0){
+            render_rectangle(5+column*column_width,font_small.spacing_y*2+font_small.spacing_y*lines_rendered,font_small.spacing_x*title.length()+3,font_small.spacing_y,1.0,COLOR_GRAY);
+            font_small.show(6+column*column_width,font_small.spacing_y*2+3+font_small.spacing_y*lines_rendered++,title,COLOR_BLACK);
 
-                string title="";
-
-                if(n==ITEM_WEAPON){
-                    title="Weapons";
-                }
-                else if(n==ITEM_ARMOR){
-                    title="Armor";
-                }
-                else if(n==ITEM_FOOD){
-                    title="Food";
-                }
-                else if(n==ITEM_DRINK){
-                    title="Drinks";
-                }
-                else if(n==ITEM_SCROLL){
-                    title="Scrolls";
-                }
-                else if(n==ITEM_BOOK){
-                    title="Books";
-                }
-                else if(n==ITEM_CONTAINER){
-                    title="Containers";
-                }
-                else if(n==ITEM_OTHER){
-                    title="Others";
+            for(int i=0;i<inventory.size();i++){
+                //If the maximum number of lines for this column have been rendered.
+                if(lines_rendered>=max_lines){
+                    lines_rendered=0;
+                    column++;
+                    i--;
+                    continue;
                 }
 
-                render_rectangle(5+column*column_width,font_small.spacing_y*2+font_small.spacing_y*lines_rendered,font_small.spacing_x*title.length()+3,font_small.spacing_y,1.0,COLOR_GRAY);
-                font_small.show(6+column*column_width,font_small.spacing_y*2+3+font_small.spacing_y*lines_rendered++,title,COLOR_BLACK);
+                if(inventory[i].category==n && inventory[i].inventory_letter!='$'){
+                    render_color=inventory[i].color;
 
-                for(int i=0;i<inventory.size();i++){
-                    //If the maximum number of lines for this column have been rendered.
-                    if(lines_rendered>=max_lines){
-                        lines_rendered=0;
-                        column++;
-                        i--;
-                        continue;
+                    //If the item is dyed.
+                    if(inventory[i].dye!=0){
+                        render_color=inventory[i].dye;
                     }
 
-                    if(inventory[i].category==n && inventory[i].inventory_letter!='$'){
-                        render_color=inventory[i].color;
+                    string item_amount_prefix="";
 
-                        //If the item is dyed.
-                        if(inventory[i].dye!=0){
-                            render_color=inventory[i].dye;
+                    if(inventory[i].stack==1){
+                        item_amount_prefix="a ";
+                    }
+
+                    string str_item="";
+
+                    //If the item is equipped.
+                    if(inventory[i].equipped){
+                        //Determine what slot the item is equipped in.
+                        short equip_slot=item_equipped_in_which_slot(i);
+
+                        str_item=" (";
+
+                        //If the item is a stack larger than 1 and the equipment slot is a hold slot or the light source slot.
+                        if(inventory[i].stack>1 && (equip_slot==EQUIP_HOLD_RIGHT || equip_slot==EQUIP_HOLD_LEFT)){
+                            str_item+="one ";
                         }
 
-                        string item_amount_prefix="";
+                        switch(equip_slot){
+                        case EQUIP_HOLD_RIGHT:
+                            str_item+="being wielded in right hand)";
+                            break;
 
-                        if(inventory[i].stack==1){
-                            item_amount_prefix="a ";
+                        case EQUIP_HOLD_LEFT:
+                            str_item+="being wielded in left hand)";
+                            break;
+
+                        case EQUIP_QUIVER:
+                            str_item+="in quiver)";
+                            break;
+
+                        case EQUIP_HEAD:
+                            str_item+="being worn on head)";
+                            break;
+
+                        case EQUIP_SHOULDER:
+                            str_item+="being worn on shoulders)";
+                            break;
+
+                        case EQUIP_CHEST:
+                            str_item+="being worn on chest)";
+                            break;
+
+                        case EQUIP_BACK:
+                            str_item+="being worn on back)";
+                            break;
+
+                        case EQUIP_WAIST:
+                            str_item+="being worn on waist)";
+                            break;
+
+                        case EQUIP_LEG:
+                            str_item+="being worn on legs)";
+                            break;
+
+                        case EQUIP_FOOT:
+                            str_item+="being worn on feet)";
+                            break;
+
+                        case EQUIP_HAND:
+                            str_item+="being worn on hands)";
+                            break;
+
+                        case EQUIP_SHIELD:
+                            str_item+="being worn on arm)";
+                            break;
+
+                        case EQUIP_NECK:
+                            str_item+="being worn around neck)";
+                            break;
+
+                        case EQUIP_WRIST:
+                            str_item+="being worn on wrists)";
+                            break;
+
+                        case EQUIP_SHIRT:
+                            str_item+="being worn on chest as a shirt)";
+                            break;
+
+                        case EQUIP_FINGER_RIGHT:
+                            str_item+="being worn on right ring finger)";
+                            break;
+
+                        case EQUIP_FINGER_LEFT:
+                            str_item+="being worn on left ring finger)";
+                            break;
                         }
+                    }
 
-                        string str_item="";
-
-                        //If the item is equipped.
-                        if(inventory[i].equipped){
-                            //Determine what slot the item is equipped in.
-                            short equip_slot=item_equipped_in_which_slot(i);
-
+                    //If the item has fuel.
+                    if(inventory[i].fuel_max>0){
+                        if(inventory[i].light_on){
+                            str_item=" (lit) (";
+                        }
+                        else{
                             str_item=" (";
-
-                            //If the item is a stack larger than 1 and the equipment slot is a hold slot or the light source slot.
-                            if(inventory[i].stack>1 && (equip_slot==EQUIP_HOLD_RIGHT || equip_slot==EQUIP_HOLD_LEFT)){
-                                str_item+="one ";
-                            }
-
-                            switch(equip_slot){
-                            case EQUIP_HOLD_RIGHT:
-                                str_item+="being wielded in right hand)";
-                                break;
-
-                            case EQUIP_HOLD_LEFT:
-                                str_item+="being wielded in left hand)";
-                                break;
-
-                            case EQUIP_QUIVER:
-                                str_item+="in quiver)";
-                                break;
-
-                            case EQUIP_HEAD:
-                                str_item+="being worn on head)";
-                                break;
-
-                            case EQUIP_SHOULDER:
-                                str_item+="being worn on shoulders)";
-                                break;
-
-                            case EQUIP_CHEST:
-                                str_item+="being worn on chest)";
-                                break;
-
-                            case EQUIP_BACK:
-                                str_item+="being worn on back)";
-                                break;
-
-                            case EQUIP_WAIST:
-                                str_item+="being worn on waist)";
-                                break;
-
-                            case EQUIP_LEG:
-                                str_item+="being worn on legs)";
-                                break;
-
-                            case EQUIP_FOOT:
-                                str_item+="being worn on feet)";
-                                break;
-
-                            case EQUIP_HAND:
-                                str_item+="being worn on hands)";
-                                break;
-
-                            case EQUIP_SHIELD:
-                                str_item+="being worn on arm)";
-                                break;
-
-                            case EQUIP_NECK:
-                                str_item+="being worn around neck)";
-                                break;
-
-                            case EQUIP_WRIST:
-                                str_item+="being worn on wrists)";
-                                break;
-
-                            case EQUIP_SHIRT:
-                                str_item+="being worn on chest as a shirt)";
-                                break;
-
-                            case EQUIP_FINGER_RIGHT:
-                                str_item+="being worn on right ring finger)";
-                                break;
-
-                            case EQUIP_FINGER_LEFT:
-                                str_item+="being worn on left ring finger)";
-                                break;
-                            }
                         }
 
-                        //If the item has fuel.
-                        if(inventory[i].fuel_max>0){
-                            if(inventory[i].light_on){
-                                str_item=" (lit) (";
-                            }
-                            else{
-                                str_item=" (";
-                            }
-
-                            if(inventory[i].fuel>0){
-                                ss.clear();ss.str("");ss<<inventory[i].fuel;ss<<"/";ss<<inventory[i].fuel_max;str_item+=ss.str();
-                                str_item+=" oil)";
-                            }
-                            else{
-                                str_item+="out of oil)";
-                            }
+                        if(inventory[i].fuel>0){
+                            ss.clear();ss.str("");ss<<inventory[i].fuel;ss<<"/";ss<<inventory[i].fuel_max;str_item+=ss.str();
+                            str_item+=" oil)";
                         }
-
-                        ss.clear();ss.str("");ss<<" ";ss<<inventory[i].inventory_letter;ss<<" - ";ss<<item_amount_prefix;ss<<inventory[i].return_full_name();ss<<str_item;ss<<"\xA";msg=ss.str();
-
-                        font_small.show(5+column*column_width,font_small.spacing_y*2+2+font_small.spacing_y*lines_rendered++,msg,render_color);
+                        else{
+                            str_item+="out of oil)";
+                        }
                     }
+
+                    ss.clear();ss.str("");ss<<" ";ss<<inventory[i].inventory_letter;ss<<" - ";ss<<item_amount_prefix;ss<<inventory[i].return_full_name();ss<<str_item;ss<<"\xA";msg=ss.str();
+
+                    font_small.show(5+column*column_width,font_small.spacing_y*2+2+font_small.spacing_y*lines_rendered++,msg,render_color);
                 }
             }
         }

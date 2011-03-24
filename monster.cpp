@@ -123,9 +123,7 @@ void Monster::set_base_stats(short pass_level){
 
     //Once the focused skills are set, apply their initial bonuses to their corresponding skills.
     for(int i=0;i<3;i++){
-        for(int n=0;n<1;n++){
-            gain_skill_experience(focused_skills[i],skills[focused_skills[i]][SKILL_EXPERIENCE_MAX]-skills[focused_skills[i]][SKILL_EXPERIENCE],0);
-        }
+        gain_skill_experience(focused_skills[i],skills[focused_skills[i]][SKILL_EXPERIENCE_MAX]-skills[focused_skills[i]][SKILL_EXPERIENCE],0,false);
     }
 
     //Level the monster up an appropriate number of times.

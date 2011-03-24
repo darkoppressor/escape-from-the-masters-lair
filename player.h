@@ -36,9 +36,6 @@ class Player: public Creature{
     //String used for retrieving the player's race.
     std::string get_race;
 
-    //Stores the attribute(s) being selected for improvement when leveling up.
-    short levelup_attributes[3];
-
     Player();
 
     //Setup the player's starting inventory.

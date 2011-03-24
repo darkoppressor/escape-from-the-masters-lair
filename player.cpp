@@ -41,10 +41,6 @@ Player::Player(){
 
     get_race="";
 
-    for(int i=0;i<3;i++){
-        levelup_attributes[i]=-1;
-    }
-
     //Chat stuff:
 
     chat_mode=false;
@@ -205,6 +201,10 @@ void Player::handle_input(){
                     //If the stats window is open.
                     else if(current_window==WINDOW_STATS){
                         handle_input_stats();
+                    }
+                    //If the levelup window is open.
+                    else if(current_window==WINDOW_LEVELUP){
+                        handle_input_levelup();
                     }
                     //If no windows are open.
                     else{

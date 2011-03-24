@@ -8,6 +8,29 @@
 
 using namespace std;
 
+bool Creature::levelup_is_selected_attribute(short attribute){
+    //Look through all of the selected attributes.
+    for(int i=0;i<levelup_attributes.size();i++){
+        if(attribute==levelup_attributes[i]){
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool Creature::levelup_all_attributes_set(){
+    //Look through all of the selected attributes.
+    for(int i=0;i<levelup_attributes.size();i++){
+        //If the attribute is not set.
+        if(levelup_attributes[i]==-1){
+            return false;
+        }
+    }
+
+    return true;
+}
+
 void Creature::level_up(){
     //Increase the max experience.
     experience_max+=experience_max*1.1;
@@ -21,19 +44,46 @@ void Creature::level_up(){
     //Increase max mana.
     mana_max+=random_range(templates.template_races[race].levelup_mana_min,templates.template_races[race].levelup_mana_max);
 
-    ///Determine whether 1, 2, or 3 attributes are to be improved this level.
-    ///int attributes_to_improve=;
+    //Determine whether 1, 2, or 3 attributes are to be improved this level.
+    int attributes_to_improve=(experience_level%3)+1;
 
-    ///The creature must now select its attributes to improve.
+    levelup_attributes.clear();
+
+    for(int i=0;i<attributes_to_improve;i++){
+        levelup_attributes.push_back(-1);
+    }
 
     ss.clear();ss.str("");ss<<"You have gained a level!";msg=ss.str();
 
     update_text_log(msg.c_str(),is_player);
 
-    //If experience reaches the current maximum experience.
-    if(experience>=experience_max){
-        //The creature levels up.
-        level_up();
+    if(is_player){
+        player.current_window=WINDOW_LEVELUP;
+    }
+    else{
+        //Select the monster's attributes to improve and improve them.
+
+        ///Right now this is random, but the monster should be somewhat intelligent about this.
+        //Determine the attributes to improve.
+        for(int i=0;i<levelup_attributes.size();i++){
+            levelup_attributes[i]=random_range(ATTRIBUTE_STRENGTH,ATTRIBUTE_LUCK);
+        }
+
+        //Apply the selected attribute bonuses.
+        for(int i=0;i<levelup_attributes.size();i++){
+            attributes[levelup_attributes[i]]+=1+attribute_level_bonuses[levelup_attributes[i]];
+        }
+
+        //Clear the attribute bonuses.
+        for(int i=0;i<ATTRIBUTE_LUCK+1;i++){
+            attribute_level_bonuses[i]=0;
+        }
+
+        //If experience reaches the current maximum experience.
+        if(experience>=experience_max){
+            //The creature levels up again.
+            level_up();
+        }
     }
 }
 
@@ -102,9 +152,9 @@ void Creature::level_up_skill(short skill,int experience_gained){
     }
 }
 
-void Creature::gain_skill_experience(short skill,int points_gained,int experience_gained){
+void Creature::gain_skill_experience(short skill,int points_gained,int experience_gained,bool allow_focused_bonus){
     //If this skill is a focused skill.
-    if(is_focused_skill(skill)){
+    if(allow_focused_bonus && is_focused_skill(skill)){
         //Apply the focused skill bonus to this skill's experience gain.
         points_gained*=2.0;
     }

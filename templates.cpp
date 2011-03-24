@@ -292,6 +292,20 @@ void Templates::load_template_race(){
 
     Race temp_race;
 
+    //Set all of the bonuses to 0.
+
+    temp_race.health_max=0;
+    temp_race.mana_max=0;
+    temp_race.movement_speed=0;
+
+    for(int i=0;i<ATTRIBUTE_LUCK+1;i++){
+        temp_race.attributes[i]=0;
+    }
+
+    for(int i=0;i<SKILL_MAGIC_SUMMONING+1;i++){
+        temp_race.skills[i][SKILL_EXPERIENCE_LEVEL]=0;
+    }
+
     //As long as we haven't reached the end of the file.
     while(!load.eof()){
         string line="";

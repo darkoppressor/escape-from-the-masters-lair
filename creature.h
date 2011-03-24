@@ -50,6 +50,9 @@ class Creature: public Object{
     //If false, this creature is not the player.
     bool is_player;
 
+    //Stores the attribute(s) being selected for improvement when leveling up.
+    std::vector<short> levelup_attributes;
+
     bool alive;
 
     //*****************//
@@ -236,7 +239,7 @@ class Creature: public Object{
     void level_up_skill(short skill,int experience_gained);
 
     //Gain skill experience points.
-    void gain_skill_experience(short skill,int points_gained,int experience_gained=1);
+    void gain_skill_experience(short skill,int points_gained,int experience_gained=1,bool allow_focused_bonus=true);
 
     //Evaluate the tile the creature is trying to move to.
     //Returns true if the creature can move, false if the creature can not move.
@@ -320,6 +323,14 @@ class Creature: public Object{
     //Returns true if the passed skill is a focused skill.
     //Returns false if the passed skill is not a focused skill.
     bool is_focused_skill(short skill);
+
+    //Returns true if the passed attribute is currently selected for improvement.
+    //Returns false if the passed attribute is not currently selected for improvement.
+    bool levelup_is_selected_attribute(short attribute);
+
+    //Returns true if all attributes have been set.
+    //Returns false if all attributes have not been set.
+    bool levelup_all_attributes_set();
 
     //Returns a stringstream containing all of this creature's save data.
     std::string return_save_data();

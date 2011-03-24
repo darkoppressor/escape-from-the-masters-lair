@@ -333,9 +333,7 @@ void Creature::process_turn(){
             }
         }
     }
-}
 
-void Creature::process_move(){
     if(rc_regain_mana()){
         int mana_regen=1;
 
@@ -355,7 +353,9 @@ void Creature::process_move(){
             mana=mana_max;
         }
     }
+}
 
+void Creature::process_move(){
     int thirst_change=1;
 
     //Apply the overencumbered thirst penalty, if any.
