@@ -308,6 +308,11 @@ void Player::handle_input_levelup(){
             break;
         }
 
+        //If this skill is a focused skill.
+        if(attribute==focused_skills[0] || attribute==focused_skills[1] || attribute==focused_skills[2]){
+            ///
+        }
+
         //If the skill is already a focused skill.
         if(is_focused_skill(skill)){
             //Look through the focused skills.
