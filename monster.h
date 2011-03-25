@@ -6,6 +6,16 @@
 
 #include "creature.h"
 
+struct coordinates{
+    short x;
+    short y;
+};
+
+struct ai_action{
+    short action;
+    coordinates coords;
+};
+
 class Monster: public Creature{
     private:
 
@@ -20,7 +30,7 @@ class Monster: public Creature{
     //Set the base stats of the monster.
     void set_base_stats(short pass_level);
 
-    //Get AI.
+    //Handle AI.
     void handle_ai();
 
     //Handle input.
@@ -31,6 +41,25 @@ class Monster: public Creature{
 
     //Render the monster.
     void render(std::vector< std::vector<bool> >* tile_rendered);
+
+    //Check states and determine the action the ai wishes to carry out.
+    ai_action ai_determine_action();
+
+    //
+    coordinates ai_nearest_hostile();
+
+    //
+    coordinates ai_opposite_direction(short target_x,short target_y);
+
+    //AI States:
+    //
+    //
+
+    bool ai_state_thirsty();
+    bool ai_state_encumbered();
+    bool ai_state_overencumbered();
+    bool ai_state_low_health();
+    bool ai_state_hostile_nearby(short hostile_x,short hostile_y);
 };
 
 #endif

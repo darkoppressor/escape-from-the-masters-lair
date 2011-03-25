@@ -23,6 +23,10 @@ class Object{
     //Returns the absolute (i.e., not in terms of tiles, but of pixels) y position of the object.
     double return_absolute_y();
 
+    //Returns true if the object with passed coordinates is within 1 tile.
+    //Returns false if the object is farther away.
+    bool object_nearby(short object_x,short object_y,int range);
+
     //The current coordinates of the object, in tiles.
     short x,y;
 

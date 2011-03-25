@@ -11,7 +11,7 @@
 	levelup mana range:1-2
 	health:0
 	mana:0
-	movement speed:0
+	movement speed:100
 	strength:0
 	agility:0
 	hardiness:0
@@ -29,7 +29,7 @@
 	levelup mana range:1-2
 	health:0
 	mana:0
-	movement speed:-10
+	movement speed:0
 	strength:0
 	agility:0
 	hardiness:0

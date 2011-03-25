@@ -87,7 +87,6 @@
 			<Add option="-static-libstdc++" />
 		</Linker>
 		<Unit filename="MersenneTwister.h" />
-		<Unit filename="ai.h" />
 		<Unit filename="ai_keys.h" />
 		<Unit filename="collision.cpp" />
 		<Unit filename="collision.h" />
@@ -139,7 +138,6 @@
 		<Unit filename="monster.cpp" />
 		<Unit filename="monster.h" />
 		<Unit filename="monster_ai.cpp" />
-		<Unit filename="monster_ai_states.cpp" />
 		<Unit filename="object.cpp" />
 		<Unit filename="object.h" />
 		<Unit filename="pixels.cpp" />
@@ -179,16 +177,16 @@
 		<Unit filename="world.cpp" />
 		<Unit filename="world.h" />
 		<Extensions>
-			<code_completion />
-			<envvars />
-			<debugger />
-			<lib_finder disable_auto="1" />
 			<AutoVersioning>
 				<Scheme minor_max="10" build_max="0" rev_max="0" rev_rand_max="10" build_times_to_increment_minor="100" />
 				<Settings autoincrement="1" date_declarations="1" update_manifest="1" do_auto_increment="1" ask_to_increment="0" language="C++" svn="0" svn_directory="" header_path="version.h" />
 				<Changes_Log show_changes_editor="0" app_title="released version %M.%m.%b of %p" changeslog_path="ChangesLog.txt" />
 				<Code header_guard="VERSION_H" namespace="AutoVersion" prefix="" />
 			</AutoVersioning>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

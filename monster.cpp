@@ -142,64 +142,6 @@ void Monster::set_base_stats(short pass_level){
     }
 }
 
-void Monster::handle_ai(){
-    if(alive){
-        //Reset AI keystates.
-        for(short i=0;i<256;i++){
-            ai_keystates[i]=false;
-        }
-
-        //Select a random direction to move.
-        int random=random_range(AIK_LEFT,AIK_LEFT_DOWN);
-        ///ai_keystates[random]=true;
-
-        short target_x=0;
-        short target_y=0;
-
-        target_x=player.x;
-        target_y=player.y;
-
-        ///target_x=vector_levels[current_level].items[0].x;
-        ///target_y=vector_levels[current_level].items[0].y;
-
-        ///if(inventory.size()==0){
-            /**if(x!=target_x || y!=target_y){
-                if(target_x<x && target_y<y){
-                    ai_keystates[AIK_LEFT_UP]=true;
-                }
-                else if(target_x>x && target_y<y){
-                    ai_keystates[AIK_RIGHT_UP]=true;
-                }
-                else if(target_x>x && target_y>y){
-                    ai_keystates[AIK_RIGHT_DOWN]=true;
-                }
-                else if(target_x<x && target_y>y){
-                    ai_keystates[AIK_LEFT_DOWN]=true;
-                }
-                else if(target_x<x){
-                    ai_keystates[AIK_LEFT]=true;
-                }
-                else if(target_y<y){
-                    ai_keystates[AIK_UP]=true;
-                }
-                else if(target_x>x){
-                    ai_keystates[AIK_RIGHT]=true;
-                }
-                else if(target_y>y){
-                    ai_keystates[AIK_DOWN]=true;
-                }
-            }
-            /**else{
-                ai_keystates[AIK_PICK_UP]=true;
-            }*/
-        ///}
-        /**else{
-            ai_keystates[AIK_DROP_ITEM]=true;
-            inventory_input_state=inventory[0].inventory_letter;
-        }*/
-    }
-}
-
 void Monster::handle_input(){
     if(alive){
         //********************//

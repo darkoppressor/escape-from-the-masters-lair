@@ -394,11 +394,10 @@ void Creature::die(short cause_of_death,string killer,string killer_item){
 
     if(cause_of_death==CAUSE_OF_DEATH_MELEE){
         if(is_player){
-            message="You have been slain!";
-            message+="\xA";
-            message+="Killed by a ";
+            message="You die...";
+            /**message+="Killed by a ";
             message+=killer;
-            message+=".";
+            message+=".";*/
         }
         else{
             message="You have slain the ";
@@ -408,13 +407,12 @@ void Creature::die(short cause_of_death,string killer,string killer_item){
     }
     else if(cause_of_death==CAUSE_OF_DEATH_THROWN){
         if(is_player){
-            message="You have been slain!";
-            message+="\xA";
-            message+="Killed by a ";
+            message="You die...";
+            /**message+="Killed by a ";
             message+=killer_item;
             message+=" thrown by a ";
             message+=killer;
-            message+=".";
+            message+=".";*/
         }
         else{
             message="Your ";
@@ -426,13 +424,12 @@ void Creature::die(short cause_of_death,string killer,string killer_item){
     }
     else if(cause_of_death==CAUSE_OF_DEATH_RANGED){
         if(is_player){
-            message="You have been slain!";
-            message+="\xA";
-            message+="Killed by a ";
+            message="You die...";
+            /**message+="Killed by a ";
             message+=killer_item;
             message+=" fired by a ";
             message+=killer;
-            message+=".";
+            message+=".";*/
         }
         else{
             message="Your ";
@@ -444,7 +441,8 @@ void Creature::die(short cause_of_death,string killer,string killer_item){
     }
     else if(cause_of_death==CAUSE_OF_DEATH_THIRST){
         if(is_player){
-            message="You have died of thirst!";
+            message="You die...";
+            ///message="You have died of thirst!";
         }
         else{
             message="The ";
