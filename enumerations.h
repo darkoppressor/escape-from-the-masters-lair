@@ -457,7 +457,8 @@ enum{
     WINDOW_NONE,
     WINDOW_INVENTORY,
     WINDOW_STATS,
-    WINDOW_LEVELUP
+    WINDOW_LEVELUP,
+    WINDOW_DEATH
 };
 
 //*************//

@@ -73,6 +73,17 @@ void string_input::handle_events(){
                 }
             }
 
+            else if(istarts_with(str_command,"health bars")){
+                player.option_healthbars=!player.option_healthbars;
+                options_save();
+                if(player.option_healthbars){
+                    update_text_log("Health bar display on.",true,MESSAGE_SYSTEM);
+                }
+                else{
+                    update_text_log("Health bar display off.",true,MESSAGE_SYSTEM);
+                }
+            }
+
             else if(player.option_dev && istarts_with(str_command,"add")){
                 ierase_first(str_command,"add");
                 trim(str_command);

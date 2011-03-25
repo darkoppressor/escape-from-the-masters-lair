@@ -102,7 +102,7 @@ class Creature: public Object{
     short focused_skills[3];
 
     //Keeps track of the bonus for each attribute per level.
-    //Each number represents the number of skill-ups for skills governed by that attribute for the last level.
+    //Each number represents the number of skill-ups for skills governed by that attribute over the last level.
     //These are all reset to 0 after each level up.
     short attribute_level_bonuses[ATTRIBUTE_LUCK+1];
 

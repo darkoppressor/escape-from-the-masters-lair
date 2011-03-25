@@ -362,6 +362,7 @@ bool options_load(){
         load>>player.option_fullscreen;
         load>>player.option_dev;
         load>>player.option_fps;
+        load>>player.option_healthbars;
 
         load.close();
         load.clear();
@@ -382,6 +383,7 @@ bool options_save(){
         save<<player.option_fullscreen<<"\n";
         save<<player.option_dev<<"\n";
         save<<player.option_fps<<"\n";
+        save<<player.option_healthbars<<"\n";
 
         save.close();
         save.clear();

@@ -93,6 +93,7 @@ class Player: public Creature{
     bool option_fullscreen;
     bool option_dev;
     bool option_fps;
+    bool option_healthbars;
 
     //The coordinates and dimensions of the camera.
     double camera_x,camera_y;

@@ -53,15 +53,29 @@ void Creature::level_up(){
     //Determine whether 1, 2, or 3 attributes are to be improved this level.
     int attributes_to_improve=(experience_level%3)+1;
 
+    //Prepare the level up attributes vector for this level.
     levelup_attributes.clear();
-
     for(int i=0;i<attributes_to_improve;i++){
         levelup_attributes.push_back(-1);
     }
 
-    ss.clear();ss.str("");ss<<"You have gained a level!";msg=ss.str();
+    //Don't allow any attribute bonus to pass the maximum.
+    for(int i=ATTRIBUTE_STRENGTH;i<ATTRIBUTE_LUCK+1;i++){
+        if(attribute_level_bonuses[i]>2){
+            attribute_level_bonuses[i]=2;
+        }
+    }
 
-    update_text_log(msg.c_str(),is_player);
+    ///if(is_player){
+        ss.clear();ss.str("");ss<<"You have gained a level!";msg=ss.str();
+
+        update_text_log(msg.c_str(),is_player);
+    ///}
+    /**else{
+        ss.clear();ss.str("");ss<<"The ";ss<<return_full_name();ss<<" has gained a level!";msg=ss.str();
+
+        update_text_log(msg.c_str(),true);
+    }**/
 
     if(is_player){
         player.current_window=WINDOW_LEVELUP;

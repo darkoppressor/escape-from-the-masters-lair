@@ -14,9 +14,9 @@ void Monster::set_inventory(){
     create_money_item();
 
     //The maximum number of items.
-    int max_items=random_range(1,12);
+    int max_items=random_range(1,8);
 
-    for(int i=0;i<100;i++){
+    for(int i=0;i<20;i++){
         //Randomly determine the item category.
         ///For now, equal chance for all categories.
         int random_item_category=random_range(ITEM_WEAPON,ITEM_OTHER);
@@ -145,8 +145,9 @@ void Monster::set_base_stats(short pass_level){
         gain_experience(experience_max-experience);
     }
 
-    //Re-max the monster's health.
+    //Re-max the monster's health and mana.
     health=health_max;
+    mana=mana_max;
 }
 
 void Monster::handle_input(){
@@ -387,21 +388,28 @@ void Monster::render(vector< vector<bool> >* tile_rendered){
                 if(vector_levels[current_level].fog[x][y]>FOG_FOG || player.option_dev){
                     font.show((int)(return_absolute_x()-player.camera_x),(int)(return_absolute_y()-player.camera_y),appearance,color);
 
-                    short health_bar_color=COLOR_GREEN;
-                    if(return_health()>=return_health_max()*0.75){
-                        health_bar_color=COLOR_GREEN;
+                    if(player.option_healthbars){
+                        short health_bar_color=COLOR_GREEN;
+                        if(return_health()>=return_health_max()*0.75){
+                            health_bar_color=COLOR_GREEN;
+                        }
+                        else if(return_health()>=return_health_max()*0.50 && return_health()<return_health_max()*0.75){
+                            health_bar_color=COLOR_YELLOW;
+                        }
+                        else if(return_health()>=return_health_max()*0.25 && return_health()<return_health_max()*0.50){
+                            health_bar_color=COLOR_ORANGE;
+                        }
+                        else{
+                            health_bar_color=COLOR_RED;
+                        }
+                        double health_bar_width=((double)((double)health/(double)health_max)*100)/6.25;
+                        render_rectangle((int)(return_absolute_x()-player.camera_x),(int)(return_absolute_y()-player.camera_y),health_bar_width,5,0.75,health_bar_color);
                     }
-                    else if(return_health()>=return_health_max()*0.50 && return_health()<return_health_max()*0.75){
-                        health_bar_color=COLOR_YELLOW;
+
+                    if(player.option_dev){
+                        ss.clear();ss.str("");ss<<return_health();ss<<"/";ss<<return_health_max();msg=ss.str();
+                        font.show((int)(return_absolute_x()-player.camera_x),(int)(return_absolute_y()-player.camera_y),msg,COLOR_GREEN);
                     }
-                    else if(return_health()>=return_health_max()*0.25 && return_health()<return_health_max()*0.50){
-                        health_bar_color=COLOR_ORANGE;
-                    }
-                    else{
-                        health_bar_color=COLOR_RED;
-                    }
-                    double health_bar_width=((double)((double)health/(double)health_max)*100)/6.25;
-                    render_rectangle((int)(return_absolute_x()-player.camera_x),(int)(return_absolute_y()-player.camera_y),health_bar_width,5,0.75,health_bar_color);
 
                     tile_rendered->at(x)[y]=true;
                 }

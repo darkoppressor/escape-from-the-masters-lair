@@ -36,11 +36,11 @@ void Game::new_game(){
 
     player.assign_identifier();
 
-    player.set_inventory();
+    player.apply_race(player.race);
 
     player.set_base_stats();
 
-    player.apply_race(player.race);
+    player.set_inventory();
 
     generate_level();
 
@@ -648,11 +648,11 @@ void Game::generate_level(){
             //Assign an identifier to the monster.
             generated_monsters[generated_monsters.size()-1].assign_identifier();
 
-            //Set the monster's base stats.
-            generated_monsters[generated_monsters.size()-1].set_base_stats(vector_levels.size());
-
             //Apply the selected template to the monster.
             generated_monsters[generated_monsters.size()-1].apply_race(random_race_template);
+
+            //Set the monster's base stats.
+            generated_monsters[generated_monsters.size()-1].set_base_stats(vector_levels.size());
 
             //Set the newly generated monster's position.
             generated_monsters[generated_monsters.size()-1].x=x;

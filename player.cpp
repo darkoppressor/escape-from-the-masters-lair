@@ -59,6 +59,7 @@ Player::Player(){
     option_fullscreen=false;
     option_dev=false;
     option_fps=true;
+    option_healthbars=false;
 
     //Set the camera's initial location and its dimensions.
     camera_x=0.0;
@@ -75,9 +76,9 @@ void Player::set_inventory(){
     create_water_bottle();
 
     //The maximum number of items.
-    int max_items=random_range(1,12);
+    int max_items=random_range(1,8);
 
-    for(int i=0;i<100;i++){
+    for(int i=0;i<20;i++){
         //Randomly determine the item category.
         ///For now, equal chance for all categories.
         int random_item_category=random_range(ITEM_WEAPON,ITEM_OTHER);
@@ -196,18 +197,17 @@ void Player::handle_input(){
 
             case SDL_KEYDOWN:
                 if(!chat_mode){
-
-                    //If the inventory window is open.
                     if(current_window==WINDOW_INVENTORY){
                         handle_input_inventory();
                     }
-                    //If the stats window is open.
                     else if(current_window==WINDOW_STATS){
                         handle_input_stats();
                     }
-                    //If the levelup window is open.
                     else if(current_window==WINDOW_LEVELUP){
                         handle_input_levelup();
+                    }
+                    else if(current_window==WINDOW_DEATH){
+                        ///handle_input_death();
                     }
                     //If no windows are open.
                     else{

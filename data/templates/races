@@ -11,7 +11,7 @@
 	appearance:B
 	color:white
 	weight:350
-	movement speed:45
+	movement speed:-1
 </race>
 
 <race>
@@ -19,7 +19,7 @@
 	appearance:B
 	color:dark blue
 	weight:125
-	movement speed:45
+	movement speed:-1
 </race>
 
 <race>
@@ -27,7 +27,7 @@
 	appearance:B
 	color:brown
 	weight:300
-	movement speed:45
+	movement speed:-1
 </race>
 
 <race>
@@ -35,7 +35,7 @@
 	appearance:B
 	color:blue
 	weight:125
-	movement speed:45
+	movement speed:-1
 </race>
 
 //**************//
@@ -47,7 +47,7 @@
 	appearance:r
 	color:dark gray
 	weight:0.5
-	movement speed:170
+	movement speed:120
 </race>
 
 <race>
@@ -55,7 +55,7 @@
 	appearance:r
 	color:light gray
 	weight:0.02
-	movement speed:170
+	movement speed:120
 </race>
 
 //**************//
@@ -67,7 +67,7 @@
 	appearance:f
 	color:orange
 	weight:300
-	movement speed:30
+	movement speed:-5
 </race>
 
 <race>
@@ -75,7 +75,7 @@
 	appearance:f
 	color:burnt orange
 	weight:250
-	movement speed:30
+	movement speed:-5
 </race>
 
 //*****************//
@@ -87,7 +87,7 @@
 	appearance:q
 	color:pale brown
 	weight:90
-	movement speed:60
+	movement speed:10
 </race>
 
 <race>
@@ -95,7 +95,7 @@
 	appearance:q
 	color:light gray
 	weight:4175
-	movement speed:60
+	movement speed:10
 </race>
 
 <race>
@@ -103,7 +103,7 @@
 	appearance:q
 	color:dark brown
 	weight:1760
-	movement speed:60
+	movement speed:10
 </race>
 
 <race>
@@ -111,7 +111,7 @@
 	appearance:q
 	color:burnt sienna
 	weight:450
-	movement speed:60
+	movement speed:10
 </race>
 
 <race>
@@ -119,7 +119,7 @@
 	appearance:q
 	color:payne's gray
 	weight:850
-	movement speed:60
+	movement speed:10
 </race>
 
 <race>
@@ -127,7 +127,7 @@
 	appearance:x
 	color:purple
 	weight:0.07
-	movement speed:55
+	movement speed:5
 </race>
 
 <race>

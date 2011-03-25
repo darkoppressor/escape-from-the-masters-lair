@@ -31,9 +31,13 @@ bool rc_regain_mana();
 
 bool rc_regain_mana_bonus(short attribute);
 
+bool rc_regain_health();
+
 bool rc_gain_thirst();
 
 bool rc_thirst_faint();
+
+bool rc_thirst_lose_health();
 
 //Level generation//
 

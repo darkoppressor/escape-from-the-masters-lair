@@ -43,7 +43,7 @@ Creature::Creature(){
     experience=0;
     experience_max=300;
 
-    thirst=THIRST_NOT_THIRSTY;
+    thirst=THIRST_THIRSTY-500;
 
     base_damage_melee_min=0;
     base_damage_melee_max=0;
@@ -353,6 +353,14 @@ void Creature::process_turn(){
             mana=mana_max;
         }
     }
+
+    if(rc_regain_health()){
+        health++;
+
+        if(return_health()>return_health_max()){
+            health=health_max;
+        }
+    }
 }
 
 void Creature::process_move(){
@@ -386,6 +394,27 @@ void Creature::change_thirst(bool increase,short amount){
         if(rc_gain_thirst()){
             thirst+=amount;
         }
+
+        //Handle thirst states. These are only handled when thirst increases.
+
+        //If the creature is fainting.
+        if(thirst>=THIRST_FAINTING && thirst<THIRST_DEATH){
+            ///I need to add 'if the creature is not currently fainted' here.
+            if(rc_thirst_faint()){
+                ///Faint.
+            }
+        }
+        //If the creature has reached the point of death from thirst.
+        else if(thirst>=THIRST_DEATH+(return_attribute_hardiness()*15)){
+            if(rc_thirst_lose_health()){
+                health--;
+
+                if(return_health()<=0){
+                    //The creature dies of thirst.
+                    die(CAUSE_OF_DEATH_THIRST,"","");
+                }
+            }
+        }
     }
     //If thirst is decreasing.
     else{
@@ -396,19 +425,6 @@ void Creature::change_thirst(bool increase,short amount){
             //Set the thirst to the thirst floor.
             thirst=THIRST_FLOOR;
         }
-    }
-
-    //If the creature is fainting.
-    if(thirst>=THIRST_FAINTING && thirst<THIRST_DEATH){
-        ///I need to add 'if the creature is not currently fainted' here.
-        if(rc_thirst_faint()){
-            ///Faint.
-        }
-    }
-    //If the creature has reached the point of death from thirst.
-    else if(thirst>=THIRST_DEATH+(return_attribute_hardiness()*15)){
-        //The creature dies of thirst.
-        die(CAUSE_OF_DEATH_THIRST,"","");
     }
 }
 
@@ -441,7 +457,7 @@ string Creature::return_thirst_state(){
     }
     //If the creature is dead.
     else if(thirst>=THIRST_DEATH){
-        thirst_state="dead from thirst";
+        thirst_state="dying of thirst";
     }
 
     return thirst_state;

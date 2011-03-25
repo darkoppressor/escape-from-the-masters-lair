@@ -120,6 +120,17 @@ bool rc_regain_mana_bonus(short attribute){
     }
 }
 
+bool rc_regain_health(){
+    int random_attempt=random_range(0,99);
+
+    if(random_attempt>=0 && random_attempt<60){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
 bool rc_gain_thirst(){
     int random_attempt=random_range(0,99);
 
@@ -136,6 +147,17 @@ bool rc_thirst_faint(){
     int random_attempt=random_range(0,99);
 
     if(random_attempt>=0 && random_attempt<1){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+bool rc_thirst_lose_health(){
+    int random_attempt=random_range(0,99);
+
+    if(random_attempt>=0 && random_attempt<85){
         return true;
     }
     else{
