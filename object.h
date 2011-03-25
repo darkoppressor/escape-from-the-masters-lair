@@ -40,7 +40,7 @@ class Object{
     short color;
 
     //The weight of the object.
-    short weight;
+    double weight;
 };
 
 #endif

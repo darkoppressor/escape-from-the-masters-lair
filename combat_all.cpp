@@ -20,7 +20,7 @@ int determine_damage_reduction(Creature* target){
 
     //Add in target's armor damage reduction.
 
-    damage_reduction=target->return_armor();
+    damage_reduction=target->return_armor()/2.0;
 
     return damage_reduction;
 }

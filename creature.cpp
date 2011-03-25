@@ -106,7 +106,7 @@ void Creature::create_money_item(){
     temp_item.writing=" ";
     temp_item.appearance='$';
     temp_item.stackable=true;
-    temp_item.weight=0;
+    temp_item.weight=0.0;
     temp_item.monetary_value=1;
     temp_item.color=COLOR_GOLD;
     temp_item.material=MATERIAL_GOLD;
@@ -134,7 +134,7 @@ void Creature::create_light_item(){
     temp_item.writing=" ";
     temp_item.appearance='\xE8';
     temp_item.stackable=false;
-    temp_item.weight=59;
+    temp_item.weight=59.0;
     temp_item.monetary_value=1;
     temp_item.color=COLOR_BRASS;
     temp_item.material=MATERIAL_BRASS;
@@ -178,7 +178,7 @@ void Creature::create_water_bottle(){
     temp_item.writing=" ";
     temp_item.appearance='!';
     temp_item.stackable=true;
-    temp_item.weight=1;
+    temp_item.weight=1.0;
     temp_item.monetary_value=1;
     temp_item.color=COLOR_WATER;
     temp_item.material=MATERIAL_GLASS;

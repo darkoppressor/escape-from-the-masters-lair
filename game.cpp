@@ -586,7 +586,10 @@ void Game::generate_level(){
         int random_item_stack=1;
         //If the item is stackable.
         if(templates.template_items[random_item_category][random_item_template].stackable){
-            random_item_stack=random_range(1,8);
+            int stackable=random_range(0,99);
+            if(stackable<10){
+                random_item_stack=random_range(1,3);
+            }
         }
 
         //If the tile at the random position is an appropriate tile for an item.
@@ -621,9 +624,9 @@ void Game::generate_level(){
     //Add the monsters.
 
     //The maximum number of monsters.
-    int max_monsters=random_range((generated_level_x*generated_level_y)/500,(generated_level_x*generated_level_y)/250);
+    int max_monsters=random_range((generated_level_x*generated_level_y)/2000,(generated_level_x*generated_level_y)/1000);
     //The maximum number of tries.
-    int random_amount_monsters=random_range((generated_level_x*generated_level_y)/10,(generated_level_x*generated_level_y)/4);
+    int random_amount_monsters=random_range((generated_level_x*generated_level_y)/100,(generated_level_x*generated_level_y)/25);
 
     for(int i=0;i<random_amount_monsters;i++){
         short x,y;
@@ -635,8 +638,6 @@ void Game::generate_level(){
         //Randomly select a race from the races template.
         ///For now, equal chance of all races.
         int random_race_template=random_range(0,templates.template_races.size()-1);
-        ///
-        random_race_template=0;
 
         //If the tile at the random position is an appropriate tile for a monster.
         ///It should also check to make sure there is not more than one other monster within a small radius.

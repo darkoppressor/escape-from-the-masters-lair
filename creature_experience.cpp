@@ -39,9 +39,15 @@ void Creature::level_up(){
     experience_level++;
 
     //Increase max health.
+    //Apply the base increase.
+    health_max+=random_range(templates.base_stats.levelup_hp_min,templates.base_stats.levelup_hp_max);
+    //Apply the racial modifier.
     health_max+=random_range(templates.template_races[race].levelup_hp_min,templates.template_races[race].levelup_hp_max);
 
     //Increase max mana.
+    //Apply the base increase.
+    mana_max+=random_range(templates.base_stats.levelup_mana_min,templates.base_stats.levelup_mana_max);
+    //Apply the racial modifier.
     mana_max+=random_range(templates.template_races[race].levelup_mana_min,templates.template_races[race].levelup_mana_max);
 
     //Determine whether 1, 2, or 3 attributes are to be improved this level.

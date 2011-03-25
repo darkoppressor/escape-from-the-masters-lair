@@ -256,9 +256,20 @@ short Templates::string_to_color(string line){
     else if(line=="black"){
         color=COLOR_BLACK;
     }
+
     else if(line=="gray"){
         color=COLOR_GRAY;
     }
+    else if(line=="light gray"){
+        color=COLOR_LIGHT_GRAY;
+    }
+    else if(line=="dark gray"){
+        color=COLOR_DARK_GRAY;
+    }
+    else if(line=="payne's gray"){
+        color=COLOR_PAYNES_GRAY;
+    }
+
     else if(line=="white"){
         color=COLOR_WHITE;
     }
@@ -284,6 +295,9 @@ short Templates::string_to_color(string line){
     else if(line=="pale brown"){
         color=COLOR_PALE_BROWN;
     }
+    else if(line=="burnt sienna"){
+        color=COLOR_BURNT_SIENNA;
+    }
 
     else if(line=="yellow"){
         color=COLOR_YELLOW;
@@ -294,6 +308,15 @@ short Templates::string_to_color(string line){
 
     else if(line=="orange"){
         color=COLOR_ORANGE;
+    }
+    else if(line=="orange peel"){
+        color=COLOR_ORANGE_PEEL;
+    }
+    else if(line=="carrot orange"){
+        color=COLOR_ORANGE_CARROT;
+    }
+    else if(line=="burnt orange"){
+        color=COLOR_ORANGE_BURNT;
     }
     else if(line=="pumpkin"){
         color=COLOR_PUMPKIN;
@@ -331,6 +354,9 @@ short Templates::string_to_color(string line){
 
     else if(line=="blue"){
         color=COLOR_BLUE;
+    }
+    else if(line=="dark blue"){
+        color=COLOR_DARK_BLUE;
     }
     else if(line=="sky blue"){
         color=COLOR_SKY_BLUE;

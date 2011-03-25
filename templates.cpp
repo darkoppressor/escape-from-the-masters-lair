@@ -130,7 +130,7 @@ bool Templates::load_templates(){
 void Templates::load_base_stats(){
     //Create a temporary creature.
 
-    Creature temp_creature;
+    Race temp_race;
 
     //As long as we haven't reached the end of the file.
     while(!load.eof()){
@@ -140,11 +140,13 @@ void Templates::load_base_stats(){
 
         string health="health:";
         string mana="mana:";
-        string base_damage_melee="base damage melee:";
-        string base_damage_ranged="base damage ranged:";
-        string base_damage_thrown="base damage thrown:";
-        string movement_speed="base movement speed:";
-        string carry_capacity="base carrying capacity:";
+        string base_damage_melee="damage melee:";
+        string base_damage_ranged="damage ranged:";
+        string base_damage_thrown="damage thrown:";
+        string movement_speed="movement speed:";
+        string carry_capacity="carrying capacity:";
+        string hp_range="levelup hp range:";
+        string mana_range="levelup mana range:";
 
         //Grab the next line of the file.
         getline(load,line);
@@ -164,14 +166,14 @@ void Templates::load_base_stats(){
             //Clear the data name.
             line.erase(0,health.length());
 
-            temp_creature.health_max=atoi(line.c_str());
+            temp_race.health_max=atoi(line.c_str());
         }
         //Mana.
         else if(icontains(line,mana)){
             //Clear the data name.
             line.erase(0,mana.length());
 
-            temp_creature.mana_max=atoi(line.c_str());
+            temp_race.mana_max=atoi(line.c_str());
         }
         //Base melee damage.
         else if(icontains(line,base_damage_melee)){
@@ -199,8 +201,8 @@ void Templates::load_base_stats(){
                 }
             }
 
-            temp_creature.base_damage_melee_min=atoi(min_damage.c_str());
-            temp_creature.base_damage_melee_max=atoi(max_damage.c_str());
+            temp_race.base_damage_melee_min=atoi(min_damage.c_str());
+            temp_race.base_damage_melee_max=atoi(max_damage.c_str());
         }
         //Base ranged damage.
         else if(icontains(line,base_damage_ranged)){
@@ -228,8 +230,8 @@ void Templates::load_base_stats(){
                 }
             }
 
-            temp_creature.base_damage_ranged_min=atoi(min_damage.c_str());
-            temp_creature.base_damage_ranged_max=atoi(max_damage.c_str());
+            temp_race.base_damage_ranged_min=atoi(min_damage.c_str());
+            temp_race.base_damage_ranged_max=atoi(max_damage.c_str());
         }
         //Base thrown damage.
         else if(icontains(line,base_damage_thrown)){
@@ -257,22 +259,80 @@ void Templates::load_base_stats(){
                 }
             }
 
-            temp_creature.base_damage_thrown_min=atoi(min_damage.c_str());
-            temp_creature.base_damage_thrown_max=atoi(max_damage.c_str());
+            temp_race.base_damage_thrown_min=atoi(min_damage.c_str());
+            temp_race.base_damage_thrown_max=atoi(max_damage.c_str());
         }
         //Movement speed.
         else if(icontains(line,movement_speed)){
             //Clear the data name.
             line.erase(0,movement_speed.length());
 
-            temp_creature.movement_speed=atoi(line.c_str());
+            temp_race.movement_speed=atoi(line.c_str());
         }
         //Carrying capacity.
         else if(icontains(line,carry_capacity)){
             //Clear the data name.
             line.erase(0,carry_capacity.length());
 
-            temp_creature.carry_capacity=atoi(line.c_str());
+            temp_race.carry_capacity=atoi(line.c_str());
+        }
+        //Level up HP Range.
+        else if(icontains(line,hp_range)){
+            //Clear the data name.
+            line.erase(0,hp_range.length());
+
+            string min_number="";
+            string max_number="";
+
+            //Look through the characters remaining in line.
+            for(int i=0;i<line.length();i++){
+                //If the dash is encountered.
+                if(line[i]=='-'){
+                    //Erase the dash.
+                    line.erase(i,1);
+
+                    for(int n=i;n<line.length();n++){
+                        max_number+=line[n];
+                    }
+
+                    line.erase(i);
+
+                    min_number=line;
+                    break;
+                }
+            }
+
+            temp_race.levelup_hp_min=atoi(min_number.c_str());
+            temp_race.levelup_hp_max=atoi(max_number.c_str());
+        }
+        //Level up mana Range.
+        else if(icontains(line,mana_range)){
+            //Clear the data name.
+            line.erase(0,mana_range.length());
+
+            string min_number="";
+            string max_number="";
+
+            //Look through the characters remaining in line.
+            for(int i=0;i<line.length();i++){
+                //If the dash is encountered.
+                if(line[i]=='-'){
+                    //Erase the dash.
+                    line.erase(i,1);
+
+                    for(int n=i;n<line.length();n++){
+                        max_number+=line[n];
+                    }
+
+                    line.erase(i);
+
+                    min_number=line;
+                    break;
+                }
+            }
+
+            temp_race.levelup_mana_min=atoi(min_number.c_str());
+            temp_race.levelup_mana_max=atoi(max_number.c_str());
         }
 
         //If the line ends the base stats.
@@ -280,7 +340,7 @@ void Templates::load_base_stats(){
             ///Ensure the base stats are legitimate.
 
             //Apply these base stats to the base_stats object.
-            base_stats=temp_creature;
+            base_stats=temp_race;
 
             return;
         }
@@ -391,9 +451,9 @@ void Templates::load_template_race(){
             //Clear the data name.
             line.erase(0,weight.length());
 
-            temp_race.weight=atoi(line.c_str());
+            temp_race.weight=atof(line.c_str());
         }
-        //HP Range.
+        //Level up HP Range.
         else if(icontains(line,hp_range)){
             //Clear the data name.
             line.erase(0,hp_range.length());
@@ -422,7 +482,7 @@ void Templates::load_template_race(){
             temp_race.levelup_hp_min=atoi(min_number.c_str());
             temp_race.levelup_hp_max=atoi(max_number.c_str());
         }
-        //Mana Range.
+        //Level up mana Range.
         else if(icontains(line,mana_range)){
             //Clear the data name.
             line.erase(0,mana_range.length());

@@ -2,38 +2,137 @@
 // Races: //
 //********//
 
+//************//
+// B - bears: //
+//************//
+
+<race>
+	name:polar bear
+	appearance:B
+	color:white
+	weight:350
+	movement speed:45
+</race>
+
+<race>
+	name:black bear
+	appearance:B
+	color:dark blue
+	weight:125
+	movement speed:45
+</race>
+
+<race>
+	name:brown bear
+	appearance:B
+	color:brown
+	weight:300
+	movement speed:45
+</race>
+
+<race>
+	name:giant panda
+	appearance:B
+	color:blue
+	weight:125
+	movement speed:45
+</race>
+
+//**************//
+// r - rodents: //
+//**************//
+
+<race>
+	name:rat
+	appearance:r
+	color:dark gray
+	weight:0.5
+	movement speed:170
+</race>
+
+<race>
+	name:mouse
+	appearance:r
+	color:light gray
+	weight:0.02
+	movement speed:170
+</race>
+
+//**************//
+// f - felines: //
+//**************//
+
+<race>
+	name:tiger
+	appearance:f
+	color:orange
+	weight:300
+	movement speed:30
+</race>
+
+<race>
+	name:lion
+	appearance:f
+	color:burnt orange
+	weight:250
+	movement speed:30
+</race>
+
+//*****************//
+// q - quadrupeds: //
+//*****************//
+
+<race>
+	name:wild boar
+	appearance:q
+	color:pale brown
+	weight:90
+	movement speed:60
+</race>
+
+<race>
+	name:elephant
+	appearance:q
+	color:light gray
+	weight:4175
+	movement speed:60
+</race>
+
+<race>
+	name:buffalo
+	appearance:q
+	color:dark brown
+	weight:1760
+	movement speed:60
+</race>
+
+<race>
+	name:hippopotamus
+	appearance:q
+	color:burnt sienna
+	weight:450
+	movement speed:60
+</race>
+
+<race>
+	name:rhinoceros
+	appearance:q
+	color:payne's gray
+	weight:850
+	movement speed:60
+</race>
+
 <race>
 	name:grid bug
 	appearance:x
 	color:purple
-	weight:10
-	levelup hp range:2-7
-	levelup mana range:1-2
-	health:0
-	mana:0
-	movement speed:100
-	strength:0
-	agility:0
-	hardiness:0
-	comprehension:0
-	acumen:0
-	luck:0
+	weight:0.07
+	movement speed:55
 </race>
 
 <race>
 	name:human
 	appearance:@
 	color:white
-	weight:115
-	levelup hp range:2-7
-	levelup mana range:1-2
-	health:0
-	mana:0
-	movement speed:0
-	strength:0
-	agility:0
-	hardiness:0
-	comprehension:0
-	acumen:0
-	luck:0
+	weight:55
 </race>

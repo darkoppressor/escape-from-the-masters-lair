@@ -25,7 +25,7 @@ class Templates{
 
     std::vector<Race> template_races;
 
-    Creature base_stats;
+    Race base_stats;
 
     Templates();
 

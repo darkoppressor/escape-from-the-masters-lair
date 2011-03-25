@@ -124,9 +124,9 @@ void events(){
 
             temp_item.weight=templates.template_races[vector_levels[current_level].monsters[i].race].weight;
 
-            temp_item.damage_max_melee=temp_item.weight/6;
+            temp_item.damage_max_melee=temp_item.weight/6.0;
 
-            temp_item.damage_max_thrown=temp_item.damage_max_melee/2;
+            temp_item.damage_max_thrown=temp_item.damage_max_melee/2.0;
 
             //Set the item's position to the creature's current position.
             temp_item.x=vector_levels[current_level].monsters[i].x;
@@ -307,6 +307,7 @@ void render(int frame_rate, double ms_per_frame){
                 ss.clear();ss.str("");ss<<"Level Size: ";ss<<vector_levels[current_level].level_x;ss<<"/";ss<<vector_levels[current_level].level_y;ss<<"\xA";msg+=ss.str();
                 ss.clear();ss.str("");ss<<"CPU Architecture: ";ss<<8*sizeof(void*);ss<<"-bit";ss<<"\xA";msg+=ss.str();
                 ss.clear();ss.str("");ss<<"Thirst: ";ss<<player.thirst;ss<<"\xA";msg+=ss.str();
+                ss.clear();ss.str("");ss<<"Weight: ";ss<<player.weight;ss<<"\xA";msg+=ss.str();
                 font_small.show(5,5,msg,COLOR_WHITE);
             }
 

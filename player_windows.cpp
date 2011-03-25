@@ -724,7 +724,7 @@ void Player::render_levelup(){
     ss.clear();ss.str("");ss<<" (+";ss<<1+attribute_level_bonuses[ATTRIBUTE_LUCK];ss<<")";ss<<"\xA";msg+=ss.str();
     msg+="\xA";
 
-    font_small.show(340,60,msg,COLOR_WHITE);
+    font_small.show(330,60,msg,COLOR_WHITE);
 }
 
 void Player::render_stats(){

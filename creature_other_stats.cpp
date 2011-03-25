@@ -138,13 +138,13 @@ int Creature::return_next_move(){
     return (int)speed;
 }
 
-int Creature::return_inventory_weight(short item_category){
-    int total_weight=0;
+double Creature::return_inventory_weight(short item_category){
+    double total_weight=0.0;
 
     for(int i=0;i<inventory.size();i++){
         //If all categories are being checked, or the item's category is the one being checked.
         if(item_category==-1 || item_category==inventory[i].category){
-            int item_weight=inventory[i].weight;
+            double item_weight=inventory[i].weight;
 
             //Apply the Armor skill armor weight contribution bonus.
             //This is only applied when the category being checked is not armor.
@@ -152,8 +152,8 @@ int Creature::return_inventory_weight(short item_category){
                 item_weight-=return_skill_armor()*0.5;
 
                 //The armor skill bonus cannot make an item weight less than 1.
-                if(item_weight<1){
-                    item_weight=1;
+                if(item_weight<1.0){
+                    item_weight=1.0;
                 }
             }
 
@@ -164,7 +164,7 @@ int Creature::return_inventory_weight(short item_category){
     return total_weight;
 }
 
-int Creature::return_carry_capacity(){
+double Creature::return_carry_capacity(){
     double number=carry_capacity;
 
     //Add the strength bonus.
@@ -176,5 +176,5 @@ int Creature::return_carry_capacity(){
     //Apply the weight bonus.
     number+=weight/4.0;
 
-    return (int)number;
+    return number;
 }

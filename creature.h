@@ -273,7 +273,7 @@ class Creature: public Object{
     void remove_race(short race_to_remove);
 
     //Returns the total weight of all items in the creature's inventory.
-    int return_inventory_weight(short item_category=-1);
+    double return_inventory_weight(short item_category=-1);
 
     //Returns the full name of the creature, which is:
     //race_name + " named " + name
@@ -287,7 +287,7 @@ class Creature: public Object{
     int return_armor();
     int return_movement_speed();
     int return_next_move();
-    int return_carry_capacity();
+    double return_carry_capacity();
 
     //Each of these functions returns the current TRUE attribute value (with all relevant bonuses, penalties, etc.) for the corresponding attribute.
     int return_attribute_strength();

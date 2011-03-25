@@ -96,7 +96,10 @@ void Player::set_inventory(){
         int random_item_stack=1;
         //If the item is stackable.
         if(templates.template_items[random_item_category][random_item_template].stackable){
-            random_item_stack=random_range(1,8);
+            int stackable=random_range(0,99);
+            if(stackable<10){
+                random_item_stack=random_range(1,3);
+            }
         }
 
         //If the inventory is not full, or the item is money, add the item.
@@ -834,8 +837,24 @@ void Player::render(vector< vector<bool> >* tile_rendered){
         //If nothing has been rendered here yet.
         if(!tile_rendered->at(x)[y]){
             //Render the player if the player is in the camera bounds:
-            if(return_absolute_x()>=player.camera_x-TILE_SIZE && return_absolute_x()<=player.camera_x+player.camera_w && return_absolute_y()>=player.camera_y-TILE_SIZE && return_absolute_y()<=player.camera_y+player.camera_h){
-                font.show((int)(return_absolute_x()-player.camera_x),(int)(return_absolute_y()-player.camera_y),appearance,color);
+            if(return_absolute_x()>=camera_x-TILE_SIZE && return_absolute_x()<=camera_x+camera_w && return_absolute_y()>=camera_y-TILE_SIZE && return_absolute_y()<=camera_y+camera_h){
+                font.show((int)(return_absolute_x()-camera_x),(int)(return_absolute_y()-camera_y),appearance,color);
+
+                short health_bar_color=COLOR_GREEN;
+                if(return_health()>=return_health_max()*0.75){
+                    health_bar_color=COLOR_GREEN;
+                }
+                else if(return_health()>=return_health_max()*0.50 && return_health()<return_health_max()*0.75){
+                    health_bar_color=COLOR_YELLOW;
+                }
+                else if(return_health()>=return_health_max()*0.25 && return_health()<return_health_max()*0.50){
+                    health_bar_color=COLOR_ORANGE;
+                }
+                else{
+                    health_bar_color=COLOR_RED;
+                }
+                double health_bar_width=((double)((double)health/(double)health_max)*100)/6.25;
+                render_rectangle((int)(return_absolute_x()-camera_x),(int)(return_absolute_y()-camera_y),health_bar_width,5,0.75,health_bar_color);
 
                 tile_rendered->at(x)[y]=true;
             }

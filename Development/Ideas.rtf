@@ -47,5 +47,6 @@ Following from the idea of level themes, there should also be special rooms that
 Instead of the single level theme number for races, they should be able to have a list, so a race can be associated with more than one level theme. They should have a similar list of special room numbers.\par
 For the creature conditions, I can have a vector of Conditions. Each Condition can store the number of remaining turns for the condition (determined when the condition is applied to the creature) and the actual condition identifier. Every turn, all conditions' turn counter can be decremented. As conditions are removed, they are simply erased from the vector. Similarly, when they are added, they are added to the vector.\par
 Each race should have a number of ai traits set for it, so when the race is being controlled by AI, it will act in certain ways.\par
+Perhaps each race should have a "thirst need" variable of some kind, determining whether or not they need to drink anything.\par
 }
  

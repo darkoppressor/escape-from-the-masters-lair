@@ -212,6 +212,15 @@ color_data color_name_to_doubles(short color_number){
     case COLOR_GRAY:
         new_color=color_shorts_to_doubles(128,128,128);
         break;
+    case COLOR_LIGHT_GRAY:
+        new_color=color_shorts_to_doubles(211,211,211);
+        break;
+    case COLOR_DARK_GRAY:
+        new_color=color_shorts_to_doubles(105,105,105);
+        break;
+    case COLOR_PAYNES_GRAY:
+        new_color=color_shorts_to_doubles(64,64,72);
+        break;
 
     case COLOR_WHITE:
         new_color=color_shorts_to_doubles(255,255,255);
@@ -238,6 +247,9 @@ color_data color_name_to_doubles(short color_number){
     case COLOR_PALE_BROWN:
         new_color=color_shorts_to_doubles(152,118,84);
         break;
+    case COLOR_BURNT_SIENNA:
+        new_color=color_shorts_to_doubles(233,116,81);
+        break;
 
     case COLOR_YELLOW:
         new_color=color_shorts_to_doubles(255,205,0);
@@ -247,7 +259,16 @@ color_data color_name_to_doubles(short color_number){
         break;
 
     case COLOR_ORANGE:
+        new_color=color_shorts_to_doubles(255,127,0);
+        break;
+    case COLOR_ORANGE_PEEL:
         new_color=color_shorts_to_doubles(255,159,0);
+        break;
+    case COLOR_ORANGE_CARROT:
+        new_color=color_shorts_to_doubles(233,105,44);
+        break;
+    case COLOR_ORANGE_BURNT:
+        new_color=color_shorts_to_doubles(204,85,0);
         break;
     case COLOR_PUMPKIN:
         new_color=color_shorts_to_doubles(255,117,24);
@@ -285,6 +306,9 @@ color_data color_name_to_doubles(short color_number){
 
     case COLOR_BLUE:
         new_color=color_shorts_to_doubles(0,0,255);
+        break;
+    case COLOR_DARK_BLUE:
+        new_color=color_shorts_to_doubles(0,0,128);
         break;
     case COLOR_SKY_BLUE:
         new_color=color_shorts_to_doubles(135,206,250);

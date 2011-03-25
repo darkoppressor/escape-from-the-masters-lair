@@ -6,6 +6,7 @@
 #include "random_number_generator.h"
 #include "world.h"
 #include "ai_keys.h"
+#include "render.h"
 
 using namespace std;
 
@@ -34,7 +35,10 @@ void Monster::set_inventory(){
         int random_item_stack=1;
         //If the item is stackable.
         if(templates.template_items[random_item_category][random_item_template].stackable){
-            random_item_stack=random_range(1,8);
+            int stackable=random_range(0,99);
+            if(stackable<10){
+                random_item_stack=random_range(1,3);
+            }
         }
 
         //If the inventory is not full, or the item is money, add the item.
@@ -140,6 +144,9 @@ void Monster::set_base_stats(short pass_level){
     for(int i=0;i<levels_to_gain;i++){
         gain_experience(experience_max-experience);
     }
+
+    //Re-max the monster's health.
+    health=health_max;
 }
 
 void Monster::handle_input(){
@@ -379,6 +386,22 @@ void Monster::render(vector< vector<bool> >* tile_rendered){
                 //If the monster's position is seen.
                 if(vector_levels[current_level].fog[x][y]>FOG_FOG || player.option_dev){
                     font.show((int)(return_absolute_x()-player.camera_x),(int)(return_absolute_y()-player.camera_y),appearance,color);
+
+                    short health_bar_color=COLOR_GREEN;
+                    if(return_health()>=return_health_max()*0.75){
+                        health_bar_color=COLOR_GREEN;
+                    }
+                    else if(return_health()>=return_health_max()*0.50 && return_health()<return_health_max()*0.75){
+                        health_bar_color=COLOR_YELLOW;
+                    }
+                    else if(return_health()>=return_health_max()*0.25 && return_health()<return_health_max()*0.50){
+                        health_bar_color=COLOR_ORANGE;
+                    }
+                    else{
+                        health_bar_color=COLOR_RED;
+                    }
+                    double health_bar_width=((double)((double)health/(double)health_max)*100)/6.25;
+                    render_rectangle((int)(return_absolute_x()-player.camera_x),(int)(return_absolute_y()-player.camera_y),health_bar_width,5,0.75,health_bar_color);
 
                     tile_rendered->at(x)[y]=true;
                 }

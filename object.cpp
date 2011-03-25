@@ -14,7 +14,7 @@ Object::Object(){
     name=" ";
     appearance="";
     color=COLOR_WHITE;
-    weight=1;
+    weight=1.0;
 }
 
 double Object::return_absolute_x(){
@@ -26,27 +26,6 @@ double Object::return_absolute_y(){
 }
 
 bool Object::object_nearby(short object_x,short object_y,int range){
-    //Above left
-    /**if(x-1==object_x && y-1==object_y ||
-       //Above
-       x==object_x && y-1==object_y ||
-       //Above right
-       x+1==object_x && y-1==object_y ||
-       //Left
-       x-1==object_x && y==object_y ||
-       //Same
-       x==object_x && y==object_y ||
-       //Right
-       x+1==object_x && y==object_y ||
-       //Below left
-       x-1==object_x && y+1==object_y ||
-       //Below
-       x==object_x && y+1==object_y ||
-       //Below right
-       x+1==object_x && y+1==object_y){
-        return true;
-    }*/
-
     //Check all objects within range tiles of the object.
     for(int int_x=x-range;int_x<x+range+1;int_x++){
         for(int int_y=y-range;int_y<y+range+1;int_y++){
