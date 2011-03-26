@@ -70,6 +70,7 @@ void save_game(){
 
     //Save the player's data from Player.
     save<<player.turn<<"\n";
+    save<<player.start_date<<"\n";
 
     //******************//
     // Save level data. //
@@ -180,6 +181,8 @@ void load_game(){
         //Copy the load data from the input file.
         boost::iostreams::copy(in,load);
 
+        string line="";
+
         //*****************//
         // Load game data. //
         //*****************//
@@ -190,23 +193,30 @@ void load_game(){
         for(short i=0;i<OBJECT_ITEM+1;i++){
             game.identifiers.push_back(vector<uint32_t>());
 
-            load>>identifiers_sizes[i];
+            getline(load,line);
+            identifiers_sizes[i]=atoi(line.c_str());
         }
 
         for(short i=0;i<OBJECT_ITEM+1;i++){
             for(uint32_t n=0;n<identifiers_sizes[i];n++){
                 int this_identifier=0;
 
-                load>>this_identifier;
+                getline(load,line);
+                this_identifier=atoi(line.c_str());
 
                 game.identifiers[i].push_back(this_identifier);
             }
         }
 
         //Level information.
-        load>>current_level;
-        load>>max_level;
-        load>>last_level;
+        getline(load,line);
+        current_level=atoi(line.c_str());
+
+        getline(load,line);
+        max_level=atoi(line.c_str());
+
+        getline(load,line);
+        last_level=atoi(line.c_str());
 
         //*******************//
         // Load player data. //
@@ -216,7 +226,11 @@ void load_game(){
         player.load_data(&load);
 
         //Load the player's data from Player.
-        load>>player.turn;
+        getline(load,line);
+        player.turn=atoi(line.c_str());
+
+        getline(load,line);
+        player.start_date=line;
 
         //******************//
         // Load level data. //
@@ -224,39 +238,53 @@ void load_game(){
 
         int number_of_levels=0;
 
-        load>>number_of_levels;
+        getline(load,line);
+        number_of_levels=atoi(line.c_str());
 
         //Loop through all levels, saving their data.
         for(int i=0;i<number_of_levels;i++){
             int level_x=0;
             int level_y=0;
 
-            load>>level_x;
-            load>>level_y;
+            getline(load,line);
+            level_x=atoi(line.c_str());
+
+            getline(load,line);
+            level_y=atoi(line.c_str());
 
             vector_levels.push_back(Level(level_x,level_y));
 
-            load>>vector_levels[i].temperature;
+            getline(load,line);
+            vector_levels[i].temperature=atoi(line.c_str());
 
             //Tile array.
             for(int x=0;x<vector_levels[i].level_x;x++){
                 for(int y=0;y<vector_levels[i].level_y;y++){
-                    load>>vector_levels[i].tiles[x][y].x;
-                    load>>vector_levels[i].tiles[x][y].y;
-                    load>>vector_levels[i].tiles[x][y].type;
-                    load>>vector_levels[i].tiles[x][y].material;
+                    getline(load,line);
+                    vector_levels[i].tiles[x][y].x=atoi(line.c_str());
+
+                    getline(load,line);
+                    vector_levels[i].tiles[x][y].y=atoi(line.c_str());
+
+                    getline(load,line);
+                    vector_levels[i].tiles[x][y].type=atoi(line.c_str());
+
+                    getline(load,line);
+                    vector_levels[i].tiles[x][y].material=atoi(line.c_str());
                 }
             }
 
             //Fog array.
             for(int x=0;x<vector_levels[i].level_x;x++){
                 for(int y=0;y<vector_levels[i].level_y;y++){
-                    load>>vector_levels[i].fog[x][y];
+                    getline(load,line);
+                    vector_levels[i].fog[x][y]=atoi(line.c_str());
                 }
             }
 
             int number_of_monsters=0;
-            load>>number_of_monsters;
+            getline(load,line);
+            number_of_monsters=atoi(line.c_str());
 
             //Monsters.
             for(int n=0;n<number_of_monsters;n++){
@@ -271,7 +299,8 @@ void load_game(){
             }
 
             int number_of_items=0;
-            load>>number_of_items;
+            getline(load,line);
+            number_of_items=atoi(line.c_str());
 
             //Items.
             for(int n=0;n<number_of_items;n++){

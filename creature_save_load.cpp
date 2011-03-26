@@ -3,6 +3,8 @@
 
 #include "creature.h"
 
+#include <cstdlib>
+
 using namespace std;
 
 string Creature::return_save_data(){
@@ -15,11 +17,7 @@ string Creature::return_save_data(){
     save<<x<<"\n";
     save<<y<<"\n";
 
-    string send_name=name;
-    while(send_name.rfind(" ")!=string::npos){
-        send_name.replace(send_name.rfind(" "),1,"SPACE");
-    }
-    save<<send_name<<"\n";
+    save<<name<<"\n";
 
     save<<appearance<<"\n";
     save<<color<<"\n";
@@ -29,11 +27,7 @@ string Creature::return_save_data(){
 
     save<<race<<"\n";
 
-    send_name=race_name;
-    while(send_name.rfind(" ")!=string::npos){
-        send_name.replace(send_name.rfind(" "),1,"SPACE");
-    }
-    save<<send_name<<"\n";
+    save<<race_name<<"\n";
 
     save<<health<<"\n";
     save<<health_max<<"\n";
@@ -104,80 +98,119 @@ string Creature::return_save_data(){
 }
 
 void Creature::load_data(stringstream* load){
-    *load>>identifier;
+    string line="";
 
-    *load>>x;
-    *load>>y;
+    getline(*load,line);
+    identifier=atoi(line.c_str());
 
-    string get_name="";
-    *load>>get_name;
-    while(get_name.rfind("SPACE")!=string::npos){
-        get_name.replace(get_name.rfind("SPACE"),5," ");
-    }
-    name=get_name;
+    getline(*load,line);
+    x=atoi(line.c_str());
 
-    *load>>appearance;
-    *load>>color;
-    *load>>weight;
+    getline(*load,line);
+    y=atoi(line.c_str());
 
-    *load>>gender;
+    getline(*load,line);
+    name=line;
 
-    *load>>race;
+    getline(*load,line);
+    appearance=line;
 
-    get_name="";
-    *load>>get_name;
-    while(get_name.rfind("SPACE")!=string::npos){
-        get_name.replace(get_name.rfind("SPACE"),5," ");
-    }
-    race_name=get_name;
+    getline(*load,line);
+    color=atoi(line.c_str());
 
-    *load>>health;
-    *load>>health_max;
+    getline(*load,line);
+    weight=atof(line.c_str());
 
-    *load>>mana;
-    *load>>mana_max;
+    getline(*load,line);
+    gender=atoi(line.c_str());
 
-    *load>>experience_level;
-    *load>>experience;
-    *load>>experience_max;
+    getline(*load,line);
+    race=atoi(line.c_str());
 
-    *load>>thirst;
+    getline(*load,line);
+    race_name=line;
 
-    *load>>base_damage_melee_min;
-    *load>>base_damage_melee_max;
+    getline(*load,line);
+    health=atoi(line.c_str());
 
-    *load>>base_damage_ranged_min;
-    *load>>base_damage_ranged_max;
+    getline(*load,line);
+    health_max=atoi(line.c_str());
 
-    *load>>base_damage_thrown_min;
-    *load>>base_damage_thrown_max;
+    getline(*load,line);
+    mana=atoi(line.c_str());
+
+    getline(*load,line);
+    mana_max=atoi(line.c_str());
+
+    getline(*load,line);
+    experience_level=atoi(line.c_str());
+
+    getline(*load,line);
+    experience=atoi(line.c_str());
+
+    getline(*load,line);
+    experience_max=atoi(line.c_str());
+
+    getline(*load,line);
+    thirst=atoi(line.c_str());
+
+    getline(*load,line);
+    base_damage_melee_min=atoi(line.c_str());
+
+    getline(*load,line);
+    base_damage_melee_max=atoi(line.c_str());
+
+    getline(*load,line);
+    base_damage_ranged_min=atoi(line.c_str());
+
+    getline(*load,line);
+    base_damage_ranged_max=atoi(line.c_str());
+
+    getline(*load,line);
+    base_damage_thrown_min=atoi(line.c_str());
+
+    getline(*load,line);
+    base_damage_thrown_max=atoi(line.c_str());
 
     for(int i=0;i<ATTRIBUTE_LUCK+1;i++){
-        *load>>attributes[i];
+        getline(*load,line);
+        attributes[i]=atoi(line.c_str());
     }
 
     for(int i=0;i<SKILL_MAGIC_SUMMONING+1;i++){
-        *load>>skills[i][SKILL_EXPERIENCE_LEVEL];
-        *load>>skills[i][SKILL_EXPERIENCE];
-        *load>>skills[i][SKILL_EXPERIENCE_MAX];
+        getline(*load,line);
+        skills[i][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+
+        getline(*load,line);
+        skills[i][SKILL_EXPERIENCE]=atoi(line.c_str());
+
+        getline(*load,line);
+        skills[i][SKILL_EXPERIENCE_MAX]=atoi(line.c_str());
     }
 
     for(int i=0;i<3;i++){
-        *load>>focused_skills[i];
+        getline(*load,line);
+        focused_skills[i]=atoi(line.c_str());
     }
 
     for(int i=0;i<ATTRIBUTE_LUCK+1;i++){
-        *load>>attribute_level_bonuses[i];
+        getline(*load,line);
+        attribute_level_bonuses[i]=atoi(line.c_str());
     }
 
-    *load>>carry_capacity;
+    getline(*load,line);
+    carry_capacity=atoi(line.c_str());
 
-    *load>>movement_speed;
-    *load>>next_move;
+    getline(*load,line);
+    movement_speed=atoi(line.c_str());
+
+    getline(*load,line);
+    next_move=atoi(line.c_str());
 
     //Inventory.
     int number_of_items=0;
-    *load>>number_of_items;
+    getline(*load,line);
+    number_of_items=atoi(line.c_str());
 
     //Items.
     for(int n=0;n<number_of_items;n++){
@@ -188,23 +221,27 @@ void Creature::load_data(stringstream* load){
     }
 
     for(int i=EQUIP_HEAD;i<EQUIP_HOLD_LEFT+1;i++){
-        short number=0;
-        *load>>number;
-        equipment[i]=number;
+        getline(*load,line);
+        equipment[i]=atoi(line.c_str());
     }
 
     short get_facing;
-    *load>>get_facing;
+    getline(*load,line);
+    get_facing=atoi(line.c_str());
     facing=(fov_direction_type)get_facing;
 
     int inventory_letters_size=0;
     inventory_letters.clear();
 
-    *load>>inventory_letters_size;
+    getline(*load,line);
+    inventory_letters_size=atoi(line.c_str());
 
     for(int i=0;i<inventory_letters_size;i++){
         short number=0;
-        *load>>number;
+
+        getline(*load,line);
+        number=atoi(line.c_str());
+
         inventory_letters.push_back(number);
     }
 }

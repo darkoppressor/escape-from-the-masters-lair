@@ -1254,7 +1254,6 @@ void Creature::check_command_inventory(char inventory_letter){
         if((!inventory[inventory_item_index].equipped || (inventory[inventory_item_index].equipped && inventory[inventory_item_index].stack>1)) &&
         //And if the item is either not money, or is money with at least 1 piece.
         ((inventory[inventory_item_index].inventory_letter=='$' && inventory[inventory_item_index].stack>0) || (inventory[inventory_item_index].inventory_letter!='$'))){
-            ///initiate_move=true;
             input_inventory=0;
             two_part_inventory_input_state=inventory_input_state;
             inventory_input_state=0;
@@ -1293,8 +1292,8 @@ void Creature::check_command_inventory(char inventory_letter){
     else if(command==INVENTORY_COMMAND_QUAFF_ITEM){
         //If either the item is NOT equipped or it is equipped but has more than 1 stack.
         if((!inventory[inventory_item_index].equipped || (inventory[inventory_item_index].equipped && inventory[inventory_item_index].stack>1)) &&
-           //And if the item can quench thirst.
-           inventory[inventory_item_index].thirst_quenched>0){
+           //And if the item is a drink.
+           inventory[inventory_item_index].category==ITEM_DRINK){
             initiate_move=true;
         }
         //If the item is equipped and its stack size is 1.
@@ -1347,7 +1346,6 @@ void Creature::check_command_inventory(char inventory_letter){
     else if(command==INVENTORY_COMMAND_MIX_ITEMS_1){
         //If the item can be mixed.
         if(true){
-            ///initiate_move=true;
             //Setup a mix message.
 
             string str_item="";
@@ -1664,6 +1662,24 @@ void Creature::execute_command_inventory(char inventory_letter){
             //If health was healed past maximum health.
             if(return_health()>return_health_max()){
                 health_max++;
+                health=health_max;
+            }
+        }
+        else if(inventory[inventory_item_index].possesses_effect(ITEM_EFFECT_HEALING)){
+            //Heal the creature.
+            health+=random_range(HEALING_MIN,HEALING_MAX);
+            //If health was healed past maximum health.
+            if(return_health()>return_health_max()){
+                health_max+=2;
+                health=health_max;
+            }
+        }
+        else if(inventory[inventory_item_index].possesses_effect(ITEM_EFFECT_HEALING_CONSIDERABLE)){
+            //Heal the creature.
+            health+=random_range(HEALING_CONSIDERABLE_MIN,HEALING_CONSIDERABLE_MAX);
+            //If health was healed past maximum health.
+            if(return_health()>return_health_max()){
+                health_max+=4;
                 health=health_max;
             }
         }

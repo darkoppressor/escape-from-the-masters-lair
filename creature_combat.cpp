@@ -390,61 +390,36 @@ void Creature::die(short cause_of_death,string killer,string killer_item){
     //The creature is now dead.
     alive=false;
 
+    health=0;
+
     string message="";
 
-    if(cause_of_death==CAUSE_OF_DEATH_MELEE){
-        if(is_player){
-            message="You die...";
-            /**message+="Killed by a ";
-            message+=killer;
-            message+=".";*/
-        }
-        else{
+    if(is_player){
+        message="You die...";
+
+        player.save_game_log_entry(cause_of_death,killer,killer_item);
+    }
+    else{
+        if(cause_of_death==CAUSE_OF_DEATH_MELEE){
             message="You have slain the ";
             message+=return_full_name();
             message+="!";
         }
-    }
-    else if(cause_of_death==CAUSE_OF_DEATH_THROWN){
-        if(is_player){
-            message="You die...";
-            /**message+="Killed by a ";
-            message+=killer_item;
-            message+=" thrown by a ";
-            message+=killer;
-            message+=".";*/
-        }
-        else{
+        else if(cause_of_death==CAUSE_OF_DEATH_THROWN){
             message="Your ";
             message+=killer_item;
             message+=" kills the ";
             message+=return_full_name();
             message+="!";
         }
-    }
-    else if(cause_of_death==CAUSE_OF_DEATH_RANGED){
-        if(is_player){
-            message="You die...";
-            /**message+="Killed by a ";
-            message+=killer_item;
-            message+=" fired by a ";
-            message+=killer;
-            message+=".";*/
-        }
-        else{
+        else if(cause_of_death==CAUSE_OF_DEATH_RANGED){
             message="Your ";
             message+=killer_item;
             message+=" kills the ";
             message+=return_full_name();
             message+="!";
         }
-    }
-    else if(cause_of_death==CAUSE_OF_DEATH_THIRST){
-        if(is_player){
-            message="You die...";
-            ///message="You have died of thirst!";
-        }
-        else{
+        else if(cause_of_death==CAUSE_OF_DEATH_THIRST){
             message="The ";
             message+=return_full_name();
             message+=" dies of thirst!";

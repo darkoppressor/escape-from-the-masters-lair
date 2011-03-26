@@ -86,8 +86,14 @@ class Player: public Creature{
     //Render the player.
     void render(std::vector< std::vector<bool> >* tile_rendered);
 
+    //Saves an entry to the game log for this game.
+    void save_game_log_entry(short cause_of_death,std::string killer,std::string killer_item);
+
     //The currently displayed window.
     short current_window;
+
+    //The starting date/time for this game.
+    std::string start_date;
 
     int turn;
 

@@ -3,6 +3,8 @@
 
 #include "item.h"
 
+#include <cstdlib>
+
 using namespace std;
 
 string Item::return_save_data(){
@@ -15,11 +17,7 @@ string Item::return_save_data(){
     save<<x<<"\n";
     save<<y<<"\n";
 
-    string send_name=name;
-    while(send_name.rfind(" ")!=string::npos){
-        send_name.replace(send_name.rfind(" "),1,"SPACE");
-    }
-    save<<send_name<<"\n";
+    save<<name<<"\n";
 
     save<<appearance<<"\n";
     save<<color<<"\n";
@@ -45,17 +43,9 @@ string Item::return_save_data(){
 
     save<<spawnable<<"\n";
 
-    send_name=writing;
-    while(send_name.rfind(" ")!=string::npos){
-        send_name.replace(send_name.rfind(" "),1,"SPACE");
-    }
-    save<<send_name<<"\n";
+    save<<writing<<"\n";
 
-    send_name=plural_name;
-    while(send_name.rfind(" ")!=string::npos){
-        send_name.replace(send_name.rfind(" "),1,"SPACE");
-    }
-    save<<send_name<<"\n";
+    save<<plural_name<<"\n";
 
     save<<monetary_value<<"\n";
 
@@ -103,105 +93,141 @@ string Item::return_save_data(){
 }
 
 void Item::load_data(stringstream* load){
-    *load>>identifier;
+    string line="";
 
-    *load>>x;
-    *load>>y;
+    getline(*load,line);
+    identifier=atoi(line.c_str());
 
-    string get_name="";
-    *load>>get_name;
-    while(get_name.rfind("SPACE")!=string::npos){
-        get_name.replace(get_name.rfind("SPACE"),5," ");
-    }
-    name=get_name;
+    getline(*load,line);
+    x=atoi(line.c_str());
 
-    *load>>appearance;
-    *load>>color;
-    *load>>weight;
+    getline(*load,line);
+    y=atoi(line.c_str());
 
-    *load>>owner;
+    getline(*load,line);
+    name=line;
 
-    *load>>light_on;
+    getline(*load,line);
+    appearance=line;
+
+    getline(*load,line);
+    color=atoi(line.c_str());
+
+    getline(*load,line);
+    weight=atof(line.c_str());
+
+    getline(*load,line);
+    owner=atoi(line.c_str());
+
+    getline(*load,line);
+    light_on=(bool)atoi(line.c_str());
 
     short get_facing;
-    *load>>get_facing;
+
+    getline(*load,line);
+    get_facing=atoi(line.c_str());
+
     facing=(fov_direction_type)get_facing;
 
-    short get_inventory_letter;
-    *load>>get_inventory_letter;
-    inventory_letter=get_inventory_letter;
+    getline(*load,line);
+    inventory_letter=atoi(line.c_str());
 
-    *load>>equipped;
+    getline(*load,line);
+    equipped=(bool)atoi(line.c_str());
 
-    *load>>race;
+    getline(*load,line);
+    race=atoi(line.c_str());
 
-    *load>>dye;
+    getline(*load,line);
+    dye=atoi(line.c_str());
 
-    *load>>stack;
+    getline(*load,line);
+    stack=atoi(line.c_str());
 
-    *load>>stackable;
+    getline(*load,line);
+    stackable=(bool)atoi(line.c_str());
 
-    *load>>spawnable;
+    getline(*load,line);
+    spawnable=(bool)atoi(line.c_str());
 
-    get_name="";
-    *load>>get_name;
-    while(get_name.rfind("SPACE")!=string::npos){
-        get_name.replace(get_name.rfind("SPACE"),5," ");
-    }
-    writing=get_name;
+    getline(*load,line);
+    writing=line;
 
-    get_name="";
-    *load>>get_name;
-    while(get_name.rfind("SPACE")!=string::npos){
-        get_name.replace(get_name.rfind("SPACE"),5," ");
-    }
-    plural_name=get_name;
+    getline(*load,line);
+    plural_name=line;
 
-    *load>>monetary_value;
+    getline(*load,line);
+    monetary_value=atoi(line.c_str());
 
-    *load>>category;
+    getline(*load,line);
+    category=atoi(line.c_str());
 
-    *load>>material;
+    getline(*load,line);
+    material=atoi(line.c_str());
 
-    *load>>damage_min_melee;
-    *load>>damage_max_melee;
+    getline(*load,line);
+    damage_min_melee=atoi(line.c_str());
 
-    *load>>damage_min_ranged;
-    *load>>damage_max_ranged;
+    getline(*load,line);
+    damage_max_melee=atoi(line.c_str());
 
-    *load>>damage_min_thrown;
-    *load>>damage_max_thrown;
+    getline(*load,line);
+    damage_min_ranged=atoi(line.c_str());
 
-    *load>>fov_radius;
+    getline(*load,line);
+    damage_max_ranged=atoi(line.c_str());
 
-    *load>>beam;
+    getline(*load,line);
+    damage_min_thrown=atoi(line.c_str());
 
-    *load>>fov_angle;
+    getline(*load,line);
+    damage_max_thrown=atoi(line.c_str());
+
+    getline(*load,line);
+    fov_radius=atoi(line.c_str());
+
+    getline(*load,line);
+    beam=(bool)atoi(line.c_str());
+
+    getline(*load,line);
+    fov_angle=atof(line.c_str());
 
     int effects_size=0;
     effects.clear();
 
-    *load>>effects_size;
+    getline(*load,line);
+    effects_size=atoi(line.c_str());
 
     for(int i=0;i<effects_size;i++){
         short number=0;
-        *load>>number;
+
+        getline(*load,line);
+        number=atoi(line.c_str());
+
         effects.push_back(number);
     }
 
-    *load>>governing_skill_weapon;
+    getline(*load,line);
+    governing_skill_weapon=atoi(line.c_str());
 
-    *load>>weapon_category;
+    getline(*load,line);
+    weapon_category=atoi(line.c_str());
 
-    *load>>armor_category;
+    getline(*load,line);
+    armor_category=atoi(line.c_str());
 
-    *load>>defense;
+    getline(*load,line);
+    defense=atoi(line.c_str());
 
-    *load>>is_corpse;
+    getline(*load,line);
+    is_corpse=(bool)atoi(line.c_str());
 
-    *load>>thirst_quenched;
+    getline(*load,line);
+    thirst_quenched=atoi(line.c_str());
 
-    *load>>fuel;
+    getline(*load,line);
+    fuel=atoi(line.c_str());
 
-    *load>>fuel_max;
+    getline(*load,line);
+    fuel_max=atoi(line.c_str());
 }

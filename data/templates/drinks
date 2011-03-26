@@ -33,7 +33,7 @@
 	thrown damage:1-1
 	effect:fuel
 	<drink>
-		thirst quenched:10
+		thirst quenched:5
 	</drink>
 </item>
 
@@ -50,6 +50,42 @@
 	melee damage:1-1
 	thrown damage:1-1
 	effect:slight healing
+	<drink>
+		thirst quenched:10
+	</drink>
+</item>
+
+<item category:drink>
+	name:potion of healing
+	plural name:potions of healing
+	writing:
+	appearance:!
+	stackable:1
+	weight:1
+	value:1
+	color:glass
+	material:glass
+	melee damage:1-1
+	thrown damage:1-1
+	effect:healing
+	<drink>
+		thirst quenched:10
+	</drink>
+</item>
+
+<item category:drink>
+	name:potion of considerable healing
+	plural name:potions of considerable healing
+	writing:
+	appearance:!
+	stackable:1
+	weight:1
+	value:1
+	color:glass
+	material:glass
+	melee damage:1-1
+	thrown damage:1-1
+	effect:considerable healing
 	<drink>
 		thirst quenched:10
 	</drink>

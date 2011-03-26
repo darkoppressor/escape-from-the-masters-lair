@@ -29,6 +29,15 @@ Game::~Game(){
 void Game::new_game(){
     fprintf(stdout,"Starting new game for %s...\n",player.name.c_str());
 
+    time_t now;
+    struct tm *tm_now;
+    char buff[BUFSIZ];
+    now=time(NULL);
+    tm_now=localtime(&now);
+    strftime(buff,sizeof buff,"%Y-%m-%d %H:%M:%S",tm_now);
+
+    player.start_date=buff;
+
     player.game_in_progress=true;
     player.current_window=WINDOW_NONE;
 

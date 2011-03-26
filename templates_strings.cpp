@@ -17,6 +17,12 @@ short Templates::string_to_item_effect(string line){
     else if(line=="slight healing"){
         effect=ITEM_EFFECT_HEALING_SLIGHT;
     }
+    else if(line=="healing"){
+        effect=ITEM_EFFECT_HEALING;
+    }
+    else if(line=="considerable healing"){
+        effect=ITEM_EFFECT_HEALING_CONSIDERABLE;
+    }
 
     return effect;
 }
