@@ -21,19 +21,19 @@
 	</food>
 </item>
 
-<item category:food>
-	name:candy bar
-	plural name:candy bars
-	writing:
-	appearance:%
-	stackable:1
-	weight:1
-	value:1
-	color:brown
-	material:food
-	melee damage:1-1
-	thrown damage:1-1
-	<food>
-		is corpse:0
-	</food>
-</item>
+//<item category:food>
+//	name:candy bar
+//	plural name:candy bars
+//	writing:
+//	appearance:%
+//	stackable:1
+//	weight:1
+//	value:1
+//	color:brown
+//	material:food
+//	melee damage:1-1
+//	thrown damage:1-1
+//	<food>
+//		is corpse:0
+//	</food>
+//</item>

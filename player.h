@@ -36,6 +36,9 @@ class Player: public Creature{
     //String used for retrieving the player's race.
     std::string get_race;
 
+    //Keeps track of what item categories are to be rendered on the inventory window.
+    std::vector<short> inventory_categories_to_render;
+
     Player();
 
     //Setup the player's starting inventory.
@@ -65,15 +68,20 @@ class Player: public Creature{
     void handle_input_get_name();
     void handle_input_get_race();
     void handle_input_get_focused_skills();
+    void handle_input_interactive_inventory_relevant();
+    void handle_input_interactive_inventory_all();
 
     //Render the windows.
-    void render_inventory();
+    void render_inventory(bool all_categories);
     void render_stats();
     void render_levelup();
     void render_no_game();
     void render_get_name();
     void render_get_race();
     void render_get_focused_skills();
+
+    //Returns true if the passed category
+    bool render_inventory_category(short category);
 
     //Render the player.
     void render(std::vector< std::vector<bool> >* tile_rendered);

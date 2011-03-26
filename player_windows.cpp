@@ -358,6 +358,35 @@ void Player::handle_input_levelup(){
     }
 }
 
+void Player::handle_input_interactive_inventory_all(){
+    //Close the window.
+    if(event.key.keysym.sym==SDLK_ESCAPE || event.key.keysym.sym==SDLK_SPACE){
+        current_window=WINDOW_NONE;
+    }
+
+    //Inventory letter.
+    else if(input_inventory!=INVENTORY_COMMAND_NONE && ((event.key.keysym.unicode>=(Uint16)'A' && event.key.keysym.unicode<=(Uint16)'Z') || (event.key.keysym.unicode>=(Uint16)'a' && event.key.keysym.unicode<=(Uint16)'z') || (event.key.keysym.unicode==(Uint16)'$'))){
+        inventory_input_state=(char)event.key.keysym.unicode;
+
+        current_window=WINDOW_NONE;
+    }
+}
+
+void Player::handle_input_interactive_inventory_relevant(){
+    //Close the window.
+    if(event.key.keysym.sym==SDLK_ESCAPE || event.key.keysym.sym==SDLK_SPACE){
+        current_window=WINDOW_NONE;
+    }
+
+    //Inventory letter.
+    ///Maybe this should only take relevant inventory letters.
+    else if(input_inventory!=INVENTORY_COMMAND_NONE && ((event.key.keysym.unicode>=(Uint16)'A' && event.key.keysym.unicode<=(Uint16)'Z') || (event.key.keysym.unicode>=(Uint16)'a' && event.key.keysym.unicode<=(Uint16)'z') || (event.key.keysym.unicode==(Uint16)'$'))){
+        inventory_input_state=(char)event.key.keysym.unicode;
+
+        current_window=WINDOW_NONE;
+    }
+}
+
 void Player::render_no_game(){
     //If no player name has yet been entered.
     if(name=="\x1F"){
@@ -732,6 +761,8 @@ void Player::render_stats(){
 
     title=name;
     title+=" the ";
+    title+=race_name;
+    title+=" ";
     title+="<class>";
     render_rectangle(5,5,font_small.spacing_x*title.length()+3,font_small.spacing_y,1.0,COLOR_GRAY);
     font_small.show(6,8,title,COLOR_BLACK);
@@ -742,6 +773,7 @@ void Player::render_stats(){
     ss.clear();ss.str("");ss<<"Mana: ";ss<<return_mana();ss<<"/";ss<<return_mana_max();ss<<"\xA";msg+=ss.str();
     ss.clear();ss.str("");ss<<"Armor: ";ss<<return_armor();ss<<"\xA";msg+=ss.str();
     ss.clear();ss.str("");ss<<"Money: ";ss<<inventory[0].stack;ss<<"\xA";msg+=ss.str();
+    ss.clear();ss.str("");ss<<"Carrying: ";ss<<player.return_inventory_weight();ss<<"/";ss<<player.return_carry_capacity();msg+=ss.str();
 
     font_small.show(5,30,msg,COLOR_WHITE);
 
@@ -813,7 +845,18 @@ void Player::render_stats(){
     font_small.show(500,30,msg,COLOR_WHITE);
 }
 
-void Player::render_inventory(){
+bool Player::render_inventory_category(short category){
+    //Look through all of the inventory categories being rendered.
+    for(int i=0;i<inventory_categories_to_render.size();i++){
+        if(category==inventory_categories_to_render[i]){
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void Player::render_inventory(bool all_categories){
     msg="";
     short render_color=COLOR_WHITE;
 
@@ -844,7 +887,7 @@ void Player::render_inventory(){
             continue;
         }
 
-        if(item_category_in_inventory(n)>0){
+        if((all_categories || render_inventory_category(n)) && item_category_in_inventory(n)>0){
 
             string title="";
 

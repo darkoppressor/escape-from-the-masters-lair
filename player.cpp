@@ -209,6 +209,12 @@ void Player::handle_input(){
                     else if(current_window==WINDOW_DEATH){
                         ///handle_input_death();
                     }
+                    else if(current_window==WINDOW_INTERACTIVE_INVENTORY_RELEVANT){
+                        handle_input_interactive_inventory_relevant();
+                    }
+                    else if(current_window==WINDOW_INTERACTIVE_INVENTORY_ALL){
+                        handle_input_interactive_inventory_all();
+                    }
                     //If no windows are open.
                     else{
 
@@ -217,27 +223,27 @@ void Player::handle_input(){
                         //********************//
 
                         //Go down stairs.
-                        if(input_directional==DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE && event.key.keysym.sym==SDLK_PERIOD && (modstate&KMOD_SHIFT)!=0){
+                        if(input_directional==DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'>'){
                             check_command(COMMAND_GO_DOWN_STAIRS);
                         }
 
                         //Go up stairs.
-                        else if(input_directional==DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE && event.key.keysym.sym==SDLK_COMMA && (modstate&KMOD_SHIFT)!=0){
+                        else if(input_directional==DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'<'){
                             check_command(COMMAND_GO_UP_STAIRS);
                         }
 
                         //Pick up item.
-                        else if(input_directional==DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE && event.key.keysym.sym==SDLK_COMMA){
+                        else if(input_directional==DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE && event.key.keysym.unicode==(Uint16)','){
                             check_command(COMMAND_PICK_UP);
                         }
 
                         //Wait a turn.
-                        else if(input_directional==DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE && event.key.keysym.sym==SDLK_PERIOD){
+                        else if(input_directional==DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'.'){
                             check_command(COMMAND_WAIT);
                         }
 
                         //Search.
-                        else if(input_directional==DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE && event.key.keysym.sym==SDLK_s){
+                        else if(input_directional==DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'s'){
                             check_command(COMMAND_SEARCH);
                         }
 
@@ -260,28 +266,28 @@ void Player::handle_input(){
                         }
 
                         //Open door.
-                        else if(input_directional==DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE && event.key.keysym.sym==SDLK_o){
+                        else if(input_directional==DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'o'){
                             update_text_log(string_command_what_direction.c_str(),is_player);
 
                             input_directional=DIRECTIONAL_COMMAND_OPEN_DOOR;
                         }
 
                         //Close door.
-                        else if(input_directional==DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE && event.key.keysym.sym==SDLK_c){
+                        else if(input_directional==DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'c'){
                             update_text_log(string_command_what_direction.c_str(),is_player);
 
                             input_directional=DIRECTIONAL_COMMAND_CLOSE_DOOR;
                         }
 
                         //Fire item.
-                        else if(input_directional==DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE && event.key.keysym.sym==SDLK_f){
+                        else if(input_directional==DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'f'){
                             update_text_log(string_command_what_direction.c_str(),is_player);
 
                             input_directional=DIRECTIONAL_COMMAND_FIRE_ITEM;
                         }
 
                         //Move left.
-                        else if(input_inventory==INVENTORY_COMMAND_NONE && (event.key.keysym.sym==SDLK_LEFT || event.key.keysym.sym==SDLK_KP4 || event.key.keysym.sym==SDLK_h)){
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && (event.key.keysym.sym==SDLK_LEFT || event.key.keysym.sym==SDLK_KP4 || event.key.keysym.unicode==(Uint16)'h')){
                             move_state=LEFT;
 
                             //If no directional command is waiting on a direction.
@@ -291,7 +297,7 @@ void Player::handle_input(){
                         }
 
                         //Move up.
-                        else if(input_inventory==INVENTORY_COMMAND_NONE && (event.key.keysym.sym==SDLK_UP || event.key.keysym.sym==SDLK_KP8 || event.key.keysym.sym==SDLK_k)){
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && (event.key.keysym.sym==SDLK_UP || event.key.keysym.sym==SDLK_KP8 || event.key.keysym.unicode==(Uint16)'k')){
                             move_state=UP;
 
                             //If no directional command is waiting on a direction.
@@ -301,7 +307,7 @@ void Player::handle_input(){
                         }
 
                         //Move right.
-                        else if(input_inventory==INVENTORY_COMMAND_NONE && (event.key.keysym.sym==SDLK_RIGHT || event.key.keysym.sym==SDLK_KP6 || event.key.keysym.sym==SDLK_l)){
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && (event.key.keysym.sym==SDLK_RIGHT || event.key.keysym.sym==SDLK_KP6 || event.key.keysym.unicode==(Uint16)'l')){
                             move_state=RIGHT;
 
                             //If no directional command is waiting on a direction.
@@ -311,7 +317,7 @@ void Player::handle_input(){
                         }
 
                         //Move down.
-                        else if(input_inventory==INVENTORY_COMMAND_NONE && (event.key.keysym.sym==SDLK_DOWN || event.key.keysym.sym==SDLK_KP2 || event.key.keysym.sym==SDLK_j)){
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && (event.key.keysym.sym==SDLK_DOWN || event.key.keysym.sym==SDLK_KP2 || event.key.keysym.unicode==(Uint16)'j')){
                             move_state=DOWN;
 
                             //If no directional command is waiting on a direction.
@@ -321,7 +327,7 @@ void Player::handle_input(){
                         }
 
                         //Move left up.
-                        else if(input_inventory==INVENTORY_COMMAND_NONE && (event.key.keysym.sym==SDLK_KP7 || event.key.keysym.sym==SDLK_y)){
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && (event.key.keysym.sym==SDLK_KP7 || event.key.keysym.unicode==(Uint16)'y')){
                             move_state=LEFT_UP;
 
                             //If no directional command is waiting on a direction.
@@ -331,7 +337,7 @@ void Player::handle_input(){
                         }
 
                         //Move right up.
-                        else if(input_inventory==INVENTORY_COMMAND_NONE && (event.key.keysym.sym==SDLK_KP9 || event.key.keysym.sym==SDLK_u)){
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && (event.key.keysym.sym==SDLK_KP9 || event.key.keysym.unicode==(Uint16)'u')){
                             move_state=RIGHT_UP;
 
                             //If no directional command is waiting on a direction.
@@ -341,7 +347,7 @@ void Player::handle_input(){
                         }
 
                         //Move right down.
-                        else if(input_inventory==INVENTORY_COMMAND_NONE && (event.key.keysym.sym==SDLK_KP3 || event.key.keysym.sym==SDLK_n)){
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && (event.key.keysym.sym==SDLK_KP3 || event.key.keysym.unicode==(Uint16)'n')){
                             move_state=RIGHT_DOWN;
 
                             //If no directional command is waiting on a direction.
@@ -351,7 +357,7 @@ void Player::handle_input(){
                         }
 
                         //Move left down.
-                        else if(input_inventory==INVENTORY_COMMAND_NONE && (event.key.keysym.sym==SDLK_KP1 || event.key.keysym.sym==SDLK_b)){
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && (event.key.keysym.sym==SDLK_KP1 || event.key.keysym.unicode==(Uint16)'b')){
                             move_state=LEFT_DOWN;
 
                             //If no directional command is waiting on a direction.
@@ -372,71 +378,71 @@ void Player::handle_input(){
                         //*********************//
 
                         //Drop item.
-                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.sym==SDLK_d){
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'d'){
                             update_text_log(string_command_drop_what.c_str(),is_player);
 
                             input_inventory=INVENTORY_COMMAND_DROP_ITEM;
                         }
 
                         //Quaff item.
-                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.sym==SDLK_q && (modstate&KMOD_SHIFT)!=0){
-                            update_text_log("What do you want to drink?",is_player);
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'Q'){
+                            update_text_log("What do you want to drink? [?*]",is_player);
 
                             input_inventory=INVENTORY_COMMAND_QUAFF_ITEM;
                         }
 
                         //Equip item in right hand.
-                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.sym==SDLK_1){
-                            update_text_log("What do you want to wield in your right hand?",is_player);
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'1'){
+                            update_text_log("What do you want to wield in your right hand? [?*]",is_player);
 
                             input_inventory=INVENTORY_COMMAND_EQUIP_RIGHT_HAND;
                         }
 
                         //Equip item in left hand.
-                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.sym==SDLK_2){
-                            update_text_log("What do you want to wield in your left hand?",is_player);
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'2'){
+                            update_text_log("What do you want to wield in your left hand? [?*]",is_player);
 
                             input_inventory=INVENTORY_COMMAND_EQUIP_LEFT_HAND;
                         }
 
                         //Quiver item.
-                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.sym==SDLK_q){
-                            update_text_log("What do you want to quiver?",is_player);
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'q'){
+                            update_text_log("What do you want to quiver? [?*]",is_player);
 
                             input_inventory=INVENTORY_COMMAND_QUIVER_ITEM;
                         }
 
                         //Equip armor.
-                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.sym==SDLK_w){
-                            update_text_log("What do you want to wear?",is_player);
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'w'){
+                            update_text_log("What do you want to wear? [?*]",is_player);
 
                             input_inventory=INVENTORY_COMMAND_EQUIP_ARMOR;
                         }
 
                         //Unequip item.
-                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.sym==SDLK_r){
-                            update_text_log("What do you want to remove?",is_player);
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'r'){
+                            update_text_log("What do you want to remove? [?*]",is_player);
 
                             input_inventory=INVENTORY_COMMAND_UNEQUIP_ITEM;
                         }
 
                         //Throw item.
-                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.sym==SDLK_t){
-                            update_text_log("What do you want to throw?",is_player);
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'t'){
+                            update_text_log("What do you want to throw? [?*]",is_player);
 
                             input_inventory=INVENTORY_COMMAND_THROW_ITEM;
                         }
 
                         //Use item.
-                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.sym==SDLK_a){
-                            update_text_log("What do you want to use?",is_player);
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'a'){
+                            update_text_log("What do you want to use? [?*]",is_player);
 
                             input_inventory=INVENTORY_COMMAND_USE_ITEM;
                         }
 
                         //Mix items, first item.
-                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.sym==SDLK_m){
-                            update_text_log("What do you want to mix?",is_player);
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'m'){
+                            update_text_log("What do you want to mix? [?*]",is_player);
 
                             input_inventory=INVENTORY_COMMAND_MIX_ITEMS_1;
                         }
@@ -444,6 +450,50 @@ void Player::handle_input(){
                         //Inventory letter.
                         else if(input_inventory!=INVENTORY_COMMAND_NONE && ((event.key.keysym.unicode>=(Uint16)'A' && event.key.keysym.unicode<=(Uint16)'Z') || (event.key.keysym.unicode>=(Uint16)'a' && event.key.keysym.unicode<=(Uint16)'z') || (event.key.keysym.unicode==(Uint16)'$'))){
                             inventory_input_state=(char)event.key.keysym.unicode;
+                        }
+
+                        //Show interactive inventory with all items.
+                        else if(input_inventory!=INVENTORY_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'*'){
+                            current_window=WINDOW_INTERACTIVE_INVENTORY_ALL;
+                        }
+
+                        //Show interactive inventory with only relevant items.
+                        else if(input_inventory!=INVENTORY_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'?'){
+                            current_window=WINDOW_INTERACTIVE_INVENTORY_RELEVANT;
+
+                            inventory_categories_to_render.clear();
+
+                            switch(input_inventory){
+                            case INVENTORY_COMMAND_DROP_ITEM:
+                                for(short i=ITEM_WEAPON;i<ITEM_OTHER+1;i++){
+                                    inventory_categories_to_render.push_back(i);
+                                }
+                                break;
+                            case INVENTORY_COMMAND_EQUIP_RIGHT_HAND:case INVENTORY_COMMAND_EQUIP_LEFT_HAND:case INVENTORY_COMMAND_QUIVER_ITEM:
+                                inventory_categories_to_render.push_back(ITEM_WEAPON);
+                                break;
+                            case INVENTORY_COMMAND_EQUIP_ARMOR:
+                                inventory_categories_to_render.push_back(ITEM_ARMOR);
+                                break;
+                            case INVENTORY_COMMAND_UNEQUIP_ITEM:
+                                for(short i=ITEM_WEAPON;i<ITEM_ARMOR+1;i++){
+                                    inventory_categories_to_render.push_back(i);
+                                }
+                                break;
+                            case INVENTORY_COMMAND_THROW_ITEM:
+                                inventory_categories_to_render.push_back(ITEM_WEAPON);
+                                break;
+                            case INVENTORY_COMMAND_QUAFF_ITEM:
+                                inventory_categories_to_render.push_back(ITEM_DRINK);
+                                break;
+                            case INVENTORY_COMMAND_USE_ITEM:
+                                inventory_categories_to_render.push_back(ITEM_OTHER);
+                                break;
+                            case INVENTORY_COMMAND_MIX_ITEMS_1:case INVENTORY_COMMAND_MIX_ITEMS_2:
+                                inventory_categories_to_render.push_back(ITEM_DRINK);
+                                inventory_categories_to_render.push_back(ITEM_OTHER);
+                                break;
+                            }
                         }
 
                         //**************//
