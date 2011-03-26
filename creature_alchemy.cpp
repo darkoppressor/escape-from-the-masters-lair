@@ -52,9 +52,21 @@ void Creature::mix_items(int item_index_1,int item_index_2){
             inventory.erase(inventory.begin()+item_index_1);
         }
     }
+
+    if(str_item.length()>0){
+        update_text_log(str_item.c_str(),is_player);
+    }
+}
+
+bool Creature::items_mixable(int item_index_1,int item_index_2){
+    //If the first item is a fuel refiller, and the second item uses fuel.
+    if(inventory[item_index_1].possesses_effect(ITEM_EFFECT_FUEL) && inventory[item_index_2].fuel_max>0){
+        return true;
+    }
     else{
-        str_item="You aren't quite sure what to do with these.";
+        update_text_log("You aren't quite sure what to do with these.",is_player);
     }
 
-    update_text_log(str_item.c_str(),is_player);
+
+    return false;
 }

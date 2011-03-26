@@ -266,6 +266,10 @@ class Creature: public Object{
     //The first item is applied to the second item.
     void mix_items(int item_index_1,int item_index_2);
 
+    //Returns true if the items can be mixed.
+    //Returns false if the items cannot be mixed.
+    bool items_mixable(int item_index_1,int item_index_2);
+
     //Apply a race's benefits and negatives to the creature.
     void apply_race(short race_to_apply);
 

@@ -1145,6 +1145,22 @@ void Creature::check_command_inventory(char inventory_letter){
         return;
     }
 
+    int first_inventory_item_index=0;
+
+    //If a two part inventory command has been given.
+    if(two_part_inventory_input_state!=0){
+        //Determine the index of the inventory item represented by two_part_inventory_input_state.
+
+        for(int i=0;i<inventory.size();i++){
+            if(inventory[i].inventory_letter==two_part_inventory_input_state){
+                first_inventory_item_index=i;
+                break;
+            }
+        }
+
+        ///two_part_inventory_input_state=0;
+    }
+
     if(command==INVENTORY_COMMAND_DROP_ITEM){
         //If the item is unequipped.
         if(!inventory[inventory_item_index].equipped &&
@@ -1240,7 +1256,23 @@ void Creature::check_command_inventory(char inventory_letter){
         if((!inventory[inventory_item_index].equipped || (inventory[inventory_item_index].equipped && inventory[inventory_item_index].stack>1)) &&
         //And if the item is either not money, or is money with at least 1 piece.
         ((inventory[inventory_item_index].inventory_letter=='$' && inventory[inventory_item_index].stack>0) || (inventory[inventory_item_index].inventory_letter!='$'))){
-            initiate_move=true;
+            ///initiate_move=true;
+            input_inventory=0;
+            two_part_inventory_input_state=inventory_input_state;
+            inventory_input_state=0;
+
+            //Setup a throw message.
+
+            string str_item="";
+
+            //If the creature is the player.
+            if(is_player){
+                str_item="Throw in what direction?";
+            }
+
+            update_text_log(str_item.c_str(),is_player);
+
+            input_directional=DIRECTIONAL_COMMAND_THROW_ITEM;
         }
         //If the item is money but the stack is 0.
         else if(inventory[inventory_item_index].inventory_letter=='$' && inventory[inventory_item_index].stack==0){
@@ -1317,7 +1349,21 @@ void Creature::check_command_inventory(char inventory_letter){
     else if(command==INVENTORY_COMMAND_MIX_ITEMS_1){
         //If the item can be mixed.
         if(true){
-            initiate_move=true;
+            ///initiate_move=true;
+            //Setup a mix message.
+
+            string str_item="";
+
+            //If the creature is the player.
+            if(is_player){
+                str_item="With what?";
+            }
+
+            update_text_log(str_item.c_str(),is_player);
+
+            input_inventory=INVENTORY_COMMAND_MIX_ITEMS_2;
+            two_part_inventory_input_state=inventory_input_state;
+            inventory_input_state=0;
         }
         //If the item cannot be mixed.
         else{
@@ -1328,11 +1374,11 @@ void Creature::check_command_inventory(char inventory_letter){
     }
 
     else if(command==INVENTORY_COMMAND_MIX_ITEMS_2){
-        //If the item can be mixed.
-        if(true){
+        //If the items can be mixed.
+        if(items_mixable(first_inventory_item_index,inventory_item_index)){
             initiate_move=true;
         }
-        //If the item cannot be mixed.
+        //If the items cannot be mixed.
         else{
             //No inventory command will be executed.
             input_inventory=0;
@@ -1567,21 +1613,6 @@ void Creature::execute_command_inventory(char inventory_letter){
         unequip_item(inventory_item_index);
     }
 
-    else if(command==INVENTORY_COMMAND_THROW_ITEM){
-        //Setup a throw message.
-
-        string str_item="";
-
-        //If the creature is the player.
-        if(is_player){
-            str_item="Throw in what direction?";
-        }
-
-        update_text_log(str_item.c_str(),is_player);
-
-        input_directional=DIRECTIONAL_COMMAND_THROW_ITEM;
-    }
-
     else if(command==INVENTORY_COMMAND_QUAFF_ITEM){
         //Setup a message.
 
@@ -1667,21 +1698,6 @@ void Creature::execute_command_inventory(char inventory_letter){
         if(inventory[inventory_item_index].possesses_effect(ITEM_EFFECT_USE_LIGHT)){
             inventory[inventory_item_index].light_on=!inventory[inventory_item_index].light_on;
         }
-    }
-
-    else if(command==INVENTORY_COMMAND_MIX_ITEMS_1){
-        //Setup a throw message.
-
-        string str_item="";
-
-        //If the creature is the player.
-        if(is_player){
-            str_item="With what?";
-        }
-
-        update_text_log(str_item.c_str(),is_player);
-
-        input_inventory=INVENTORY_COMMAND_MIX_ITEMS_2;
     }
 
     else if(command==INVENTORY_COMMAND_MIX_ITEMS_2){
