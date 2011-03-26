@@ -204,53 +204,47 @@ void string_input::handle_events(){
 
                 string message="";
 
+                string item_name="";
+                int stack_size=1;
                 short item_category=-1;
                 int item_index=-1;
-                int stack_size=1;
 
-                if(istarts_with(str_command,"weapon")){
-                    ierase_first(str_command,"weapon");
-                    item_category=ITEM_WEAPON;
-                }
-                else if(istarts_with(str_command,"armor")){
-                    ierase_first(str_command,"armor");
-                    item_category=ITEM_ARMOR;
-                }
-                else if(istarts_with(str_command,"food")){
-                    ierase_first(str_command,"food");
-                    item_category=ITEM_FOOD;
-                }
-                else if(istarts_with(str_command,"drink")){
-                    ierase_first(str_command,"drink");
-                    item_category=ITEM_DRINK;
-                }
-                else if(istarts_with(str_command,"scroll")){
-                    ierase_first(str_command,"scroll");
-                    item_category=ITEM_SCROLL;
-                }
-                else if(istarts_with(str_command,"book")){
-                    ierase_first(str_command,"book");
-                    item_category=ITEM_BOOK;
-                }
-                else if(istarts_with(str_command,"container")){
-                    ierase_first(str_command,"container");
-                    item_category=ITEM_CONTAINER;
-                }
-                else if(istarts_with(str_command,"other")){
-                    ierase_first(str_command,"other");
-                    item_category=ITEM_OTHER;
-                }
+                for(int i=0;i<str_command.length();i++){
+                    if(isdigit((int)str_command[i]) || i==str_command.length()-1){
+                        if(isdigit((int)str_command[i])){
+                            for(int n=0;n<i;n++){
+                                item_name+=str_command[n];
+                            }
+                        }
+                        else if(i==str_command.length()-1){
+                            for(int n=0;n<=i;n++){
+                                item_name+=str_command[n];
+                            }
+                        }
 
-                trim(str_command);
-                item_index=atoi(str_command.c_str());
+                        trim(item_name);
 
-                string temp="";
-                ss.clear();ss.str("");ss<<item_index;temp=ss.str();
-                ierase_first(str_command,temp);
-                trim(str_command);
+                        ierase_first(str_command,item_name);
+
+                        trim(str_command);
+
+                        break;
+                    }
+                }
 
                 if(str_command.size()>0){
                     stack_size=atoi(str_command.c_str());
+                }
+
+                bool item_found=false;
+
+                for(int i=0;i<templates.template_items.size() && !item_found;i++){
+                    for(int n=0;n<templates.template_items[i].size() && !item_found;n++){
+                        if(templates.template_items[i][n].name==item_name){
+                            item_category=i;
+                            item_index=n;
+                        }
+                    }
                 }
 
                 //If the specified item can be added.
@@ -271,7 +265,7 @@ void string_input::handle_events(){
                             temp_item.stack=stack_size;
                         }
 
-                        message="Adding ";
+                        message="Added the ";
                         message+=temp_item.return_full_name();
                         message+=" to your inventory.";
 
