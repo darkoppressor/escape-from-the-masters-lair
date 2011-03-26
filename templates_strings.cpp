@@ -14,6 +14,9 @@ short Templates::string_to_item_effect(string line){
     else if(line=="use:light"){
         effect=ITEM_EFFECT_USE_LIGHT;
     }
+    else if(line=="slight healing"){
+        effect=ITEM_EFFECT_HEALING_SLIGHT;
+    }
 
     return effect;
 }

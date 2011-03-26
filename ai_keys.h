@@ -30,7 +30,8 @@ enum{
     AIK_FIRE_ITEM,
     AIK_QUAFF_ITEM,
     AIK_USE_ITEM,
-    AIK_MIX_ITEMS
+    AIK_MIX_ITEMS,
+    AIK_READ_ITEM
 };
 
 #endif

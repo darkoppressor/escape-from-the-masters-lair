@@ -334,6 +334,11 @@ void Monster::handle_input(){
             input_inventory=INVENTORY_COMMAND_MIX_ITEMS_1;
         }
 
+        //Read item.
+        else if(ai_keystates[AIK_READ_ITEM]){
+            input_inventory=INVENTORY_COMMAND_READ_ITEM;
+        }
+
         //If a directional command has been given.
         if(input_directional!=DIRECTIONAL_COMMAND_NONE && move_state!=NONE){
             check_command_directional(move_state);

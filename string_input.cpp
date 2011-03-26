@@ -84,6 +84,120 @@ void string_input::handle_events(){
                 }
             }
 
+            /**else if(player.option_dev && istarts_with(str_command,"add")){
+                ierase_first(str_command,"add");
+                trim(str_command);
+
+                string message="";
+
+                short item_category=-1;
+                int item_index=-1;
+                int stack_size=1;
+
+                if(istarts_with(str_command,"weapon")){
+                    ierase_first(str_command,"weapon");
+                    item_category=ITEM_WEAPON;
+                }
+                else if(istarts_with(str_command,"armor")){
+                    ierase_first(str_command,"armor");
+                    item_category=ITEM_ARMOR;
+                }
+                else if(istarts_with(str_command,"food")){
+                    ierase_first(str_command,"food");
+                    item_category=ITEM_FOOD;
+                }
+                else if(istarts_with(str_command,"drink")){
+                    ierase_first(str_command,"drink");
+                    item_category=ITEM_DRINK;
+                }
+                else if(istarts_with(str_command,"scroll")){
+                    ierase_first(str_command,"scroll");
+                    item_category=ITEM_SCROLL;
+                }
+                else if(istarts_with(str_command,"book")){
+                    ierase_first(str_command,"book");
+                    item_category=ITEM_BOOK;
+                }
+                else if(istarts_with(str_command,"container")){
+                    ierase_first(str_command,"container");
+                    item_category=ITEM_CONTAINER;
+                }
+                else if(istarts_with(str_command,"other")){
+                    ierase_first(str_command,"other");
+                    item_category=ITEM_OTHER;
+                }
+
+                trim(str_command);
+                item_index=atoi(str_command.c_str());
+
+                string temp="";
+                ss.clear();ss.str("");ss<<item_index;temp=ss.str();
+                ierase_first(str_command,temp);
+                trim(str_command);
+
+                if(str_command.size()>0){
+                    stack_size=atoi(str_command.c_str());
+                }
+
+                //If the specified item can be added.
+                if(item_category!=-1 && item_index!=-1 && item_category<templates.template_items.size() && item_index<templates.template_items[item_category].size()){
+                    //If the inventory is not full, or the item is money, add the item.
+                    if(player.inventory.size()<INVENTORY_MAX_SIZE || templates.template_items[item_category][item_index].inventory_letter=='$'){
+                        //Generate the item.
+                        Item temp_item;
+
+                        //Apply the selected template to the item.
+                        temp_item=templates.template_items[item_category][item_index];
+
+                        //Run the item's setup function.
+                        temp_item.setup();
+
+                        //Apply the stack size.
+                        if(temp_item.stackable){
+                            temp_item.stack=stack_size;
+                        }
+
+                        message="Adding ";
+                        message+=temp_item.return_full_name();
+                        message+=" to your inventory.";
+
+                        //Check to see if there is an identical item already in the inventory.
+                        inventory_match match_check=player.check_for_inventory_match(&temp_item);
+
+                        //If there is already an identical item in the inventory, and the item is stackable.
+                        if(match_check.match_found && temp_item.stackable){
+                            player.inventory[match_check.inventory_slot].stack+=temp_item.stack;
+                        }
+                        //If there is no identical item in the inventory, or the item is not stackable.
+                        else{
+                            //Determine an inventory letter for the item.
+
+                            //Assign the item an available inventory letter.
+                            temp_item.inventory_letter=player.assign_inventory_letter();
+
+                            //Add the item to the inventory items vector.
+                            player.inventory.push_back(temp_item);
+
+                            //Assign an identifier to the item.
+                            player.inventory[player.inventory.size()-1].assign_identifier();
+
+                            //Assign an owner identifier to the item.
+                            player.inventory[player.inventory.size()-1].owner=player.identifier;
+                        }
+                    }
+                    //If the inventory is full and the item is not money.
+                    else{
+                        message="Your inventory is full.";
+                    }
+                }
+                //If the specified item cannot be added.
+                else{
+                    message="The specified item does not exist.";
+                }
+
+                update_text_log(message.c_str(),true,MESSAGE_SYSTEM);
+            }*/
+
             else if(player.option_dev && istarts_with(str_command,"add")){
                 ierase_first(str_command,"add");
                 trim(str_command);

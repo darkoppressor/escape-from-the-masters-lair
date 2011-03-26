@@ -229,7 +229,7 @@
 	<item category:armor>
 		name:shirt
 		plural name:shirts
-		writing:
+		writing:I explored the Master's Lair and all I got was this lousy T-shirt!
 		appearance:[
 		stackable:0
 		weight:16

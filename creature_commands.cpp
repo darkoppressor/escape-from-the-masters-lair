@@ -1157,8 +1157,6 @@ void Creature::check_command_inventory(char inventory_letter){
                 break;
             }
         }
-
-        ///two_part_inventory_input_state=0;
     }
 
     if(command==INVENTORY_COMMAND_DROP_ITEM){
@@ -1380,6 +1378,24 @@ void Creature::check_command_inventory(char inventory_letter){
         }
         //If the items cannot be mixed.
         else{
+            //No inventory command will be executed.
+            input_inventory=0;
+            inventory_input_state=0;
+        }
+    }
+
+    else if(command==INVENTORY_COMMAND_READ_ITEM){
+        //If the item can be read.
+        if(boost::algorithm::trim_copy(inventory[inventory_item_index].writing).length()>0){
+            initiate_move=true;
+        }
+        //If the item cannot be read.
+        else{
+            string message="There does not appear to be anything written on the ";
+            message+=inventory[inventory_item_index].return_full_name(1);
+            message+=".";
+            update_text_log(message.c_str(),is_player);
+
             //No inventory command will be executed.
             input_inventory=0;
             inventory_input_state=0;
@@ -1640,6 +1656,18 @@ void Creature::execute_command_inventory(char inventory_letter){
         //Reduce the creature's thirst by the item's thirst_quenched value.
         change_thirst(false,inventory[inventory_item_index].thirst_quenched);
 
+        //Handle the item's effect, if any.
+
+        if(inventory[inventory_item_index].possesses_effect(ITEM_EFFECT_HEALING_SLIGHT)){
+            //Heal the creature.
+            health+=random_range(HEALING_SLIGHT_MIN,HEALING_SLIGHT_MAX);
+            //If health was healed past maximum health.
+            if(return_health()>return_health_max()){
+                health_max++;
+                health=health_max;
+            }
+        }
+
         //If the stack is greater than 1.
         if(inventory[inventory_item_index].stack>1){
             //Simply decrement the stack by 1.
@@ -1703,5 +1731,21 @@ void Creature::execute_command_inventory(char inventory_letter){
     else if(command==INVENTORY_COMMAND_MIX_ITEMS_2){
         //Mix the items.
         mix_items(first_inventory_item_index,inventory_item_index);
+    }
+
+    else if(command==INVENTORY_COMMAND_READ_ITEM){
+        //Setup a message.
+
+        string str_item="You read the ";
+        str_item+=inventory[inventory_item_index].return_full_name(1);
+        str_item+="...";
+
+        update_text_log(str_item.c_str(),is_player);
+
+        str_item="\x22";
+        str_item+=inventory[inventory_item_index].writing;
+        str_item+="\x22";
+
+        update_text_log(str_item.c_str(),is_player);
     }
 }

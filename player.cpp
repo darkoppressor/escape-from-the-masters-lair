@@ -385,7 +385,7 @@ void Player::handle_input(){
                         }
 
                         //Quaff item.
-                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'Q'){
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'q'){
                             update_text_log("What do you want to drink? [?*]",is_player);
 
                             input_inventory=INVENTORY_COMMAND_QUAFF_ITEM;
@@ -406,7 +406,7 @@ void Player::handle_input(){
                         }
 
                         //Quiver item.
-                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'q'){
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'Q'){
                             update_text_log("What do you want to quiver? [?*]",is_player);
 
                             input_inventory=INVENTORY_COMMAND_QUIVER_ITEM;
@@ -447,6 +447,13 @@ void Player::handle_input(){
                             input_inventory=INVENTORY_COMMAND_MIX_ITEMS_1;
                         }
 
+                        //Read item.
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'R'){
+                            update_text_log("What do you want to read? [?*]",is_player);
+
+                            input_inventory=INVENTORY_COMMAND_READ_ITEM;
+                        }
+
                         //Inventory letter.
                         else if(input_inventory!=INVENTORY_COMMAND_NONE && ((event.key.keysym.unicode>=(Uint16)'A' && event.key.keysym.unicode<=(Uint16)'Z') || (event.key.keysym.unicode>=(Uint16)'a' && event.key.keysym.unicode<=(Uint16)'z') || (event.key.keysym.unicode==(Uint16)'$'))){
                             inventory_input_state=(char)event.key.keysym.unicode;
@@ -464,7 +471,7 @@ void Player::handle_input(){
                             inventory_categories_to_render.clear();
 
                             switch(input_inventory){
-                            case INVENTORY_COMMAND_DROP_ITEM:
+                            case INVENTORY_COMMAND_DROP_ITEM:case INVENTORY_COMMAND_READ_ITEM:
                                 for(short i=ITEM_WEAPON;i<ITEM_OTHER+1;i++){
                                     inventory_categories_to_render.push_back(i);
                                 }

@@ -217,7 +217,17 @@ enum{
 
 enum{
     ITEM_EFFECT_USE_LIGHT,
-    ITEM_EFFECT_FUEL
+    ITEM_EFFECT_FUEL,
+    ITEM_EFFECT_HEALING_SLIGHT
+};
+
+//******************//
+// Healing Amounts: //
+//******************//
+
+enum{
+    HEALING_SLIGHT_MIN=5,
+    HEALING_SLIGHT_MAX=20
 };
 
 //*************//
@@ -428,7 +438,8 @@ enum{
     INVENTORY_COMMAND_QUAFF_ITEM,
     INVENTORY_COMMAND_USE_ITEM,
     INVENTORY_COMMAND_MIX_ITEMS_1,
-    INVENTORY_COMMAND_MIX_ITEMS_2
+    INVENTORY_COMMAND_MIX_ITEMS_2,
+    INVENTORY_COMMAND_READ_ITEM
 };
 
 //***************//

@@ -36,3 +36,21 @@
 		thirst quenched:10
 	</drink>
 </item>
+
+<item category:drink>
+	name:potion of slight healing
+	plural name:potions of slight healing
+	writing:
+	appearance:!
+	stackable:1
+	weight:1
+	value:1
+	color:glass
+	material:glass
+	melee damage:1-1
+	thrown damage:1-1
+	effect:slight healing
+	<drink>
+		thirst quenched:10
+	</drink>
+</item>
