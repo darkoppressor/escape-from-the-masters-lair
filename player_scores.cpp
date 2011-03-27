@@ -21,7 +21,14 @@ void Player::save_game_log_entry(short cause_of_death,string killer,string kille
         tm_now=localtime(&now);
         strftime(buff,sizeof buff,"%Y-%m-%d %H:%M:%S",tm_now);
 
+        //Calculate score.
+
         int score=0;
+
+        //Add in all gold and the gold value of all inventory items.
+        for(int i=0;i<inventory.size();i++){
+            score+=inventory[i].monetary_value*inventory[i].stack;
+        }
 
         save_log<<"name:"<<name<<"\n";
         save_log<<"version:"<<AutoVersion::MAJOR<<"."<<AutoVersion::MINOR<<"\n";

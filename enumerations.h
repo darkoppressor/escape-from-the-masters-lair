@@ -395,6 +395,58 @@ enum{
     LIGHT_NONE
 };
 
+//********************************//
+// Specific gravity of materials: //
+//********************************//
+
+enum{
+    SG_WOOD=0.7,
+    SG_PAPER=0.9,
+    SG_DIRT=1.4,
+    SG_LEATHER=0.95,
+    SG_CLOTH=1.32,
+    SG_BONE=1.92,
+    SG_FOOD=2.0,
+    SG_GLASS=2.4,
+    SG_STONE=2.8,
+    SG_CORPSE=3.84,
+    SG_BRONZE=7.4,
+    SG_STEEL=7.7,
+    SG_IRON=7.03,
+    SG_BRASS=8.4,
+    SG_COPPER=8.89,
+    SG_SILVER=10.5,
+    SG_GOLD=19.32,
+    SG_WATER=1.0,
+    SG_LAVA=2.0
+};
+
+//***********************//
+// Density of materials: //
+//***********************//
+
+enum{
+    DENSITY_WOOD=0.6,
+    DENSITY_PAPER=0.7,
+    DENSITY_DIRT=1.2,
+    DENSITY_LEATHER=1.3,
+    DENSITY_CLOTH=1.31,
+    DENSITY_BONE=1.7,
+    DENSITY_FOOD=2.0,
+    DENSITY_GLASS=2.4,
+    DENSITY_STONE=2.6,
+    DENSITY_CORPSE=3.4,
+    DENSITY_BRONZE=7.4,
+    DENSITY_STEEL=7.85,
+    DENSITY_IRON=7.87,
+    DENSITY_BRASS=8.43,
+    DENSITY_COPPER=8.93,
+    DENSITY_SILVER=10.49,
+    DENSITY_GOLD=19.32,
+    DENSITY_WATER=1.0,
+    DENSITY_LAVA=2.6
+};
+
 //***********//
 // Commands: //
 //***********//
