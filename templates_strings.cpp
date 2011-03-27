@@ -259,194 +259,194 @@ short Templates::string_to_color(string line){
     short color=0;
 
     if(line=="rainbow"){
-        color=COLOR__RAINBOW;
+        color=COLOR_RAINBOW;
     }
 
     else if(line=="black"){
-        color=COLOR__BLACK;
+        color=COLOR_BLACK;
     }
 
     else if(line=="gray"){
-        color=COLOR__GRAY;
+        color=COLOR_GRAY;
     }
     else if(line=="light gray"){
-        color=COLOR__LIGHT_GRAY;
+        color=COLOR_LIGHT_GRAY;
     }
     else if(line=="dark gray"){
-        color=COLOR__DARK_GRAY;
+        color=COLOR_DARK_GRAY;
     }
     else if(line=="payne's gray"){
-        color=COLOR__PAYNES_GRAY;
+        color=COLOR_PAYNES_GRAY;
     }
 
     else if(line=="white"){
-        color=COLOR__WHITE;
+        color=COLOR_WHITE;
     }
 
     else if(line=="brown"){
-        color=COLOR__BROWN;
+        color=COLOR_BROWN;
     }
     else if(line=="dark brown"){
-        color=COLOR__DARK_BROWN;
+        color=COLOR_DARK_BROWN;
     }
     else if(line=="sepia"){
-        color=COLOR__SEPIA;
+        color=COLOR_SEPIA;
     }
     else if(line=="sandy brown"){
-        color=COLOR__SANDY_BROWN;
+        color=COLOR_SANDY_BROWN;
     }
     else if(line=="wheat"){
-        color=COLOR__WHEAT;
+        color=COLOR_WHEAT;
     }
     else if(line=="tan"){
-        color=COLOR__TAN;
+        color=COLOR_TAN;
     }
     else if(line=="pale brown"){
-        color=COLOR__PALE_BROWN;
+        color=COLOR_PALE_BROWN;
     }
     else if(line=="burnt sienna"){
-        color=COLOR__BURNT_SIENNA;
+        color=COLOR_BURNT_SIENNA;
     }
 
     else if(line=="yellow"){
-        color=COLOR__YELLOW;
+        color=COLOR_YELLOW;
     }
     else if(line=="system"){
-        color=COLOR__SYSTEM;
+        color=COLOR_SYSTEM;
     }
 
     else if(line=="orange"){
-        color=COLOR__ORANGE;
+        color=COLOR_ORANGE;
     }
     else if(line=="orange peel"){
-        color=COLOR__ORANGE_PEEL;
+        color=COLOR_ORANGE_PEEL;
     }
     else if(line=="carrot orange"){
-        color=COLOR__ORANGE_CARROT;
+        color=COLOR_ORANGE_CARROT;
     }
     else if(line=="burnt orange"){
-        color=COLOR__ORANGE_BURNT;
+        color=COLOR_ORANGE_BURNT;
     }
     else if(line=="pumpkin"){
-        color=COLOR__PUMPKIN;
+        color=COLOR_PUMPKIN;
     }
 
     else if(line=="red"){
-        color=COLOR__RED;
+        color=COLOR_RED;
     }
     else if(line=="dark red"){
-        color=COLOR__DARK_RED;
+        color=COLOR_DARK_RED;
     }
     else if(line=="flame"){
-        color=COLOR__FLAME;
+        color=COLOR_FLAME;
     }
 
     else if(line=="pink"){
-        color=COLOR__PINK;
+        color=COLOR_PINK;
     }
     else if(line=="rose"){
-        color=COLOR__ROSE;
+        color=COLOR_ROSE;
     }
     else if(line=="shocking pink"){
-        color=COLOR__SHOCKING_PINK;
+        color=COLOR_SHOCKING_PINK;
     }
 
     else if(line=="purple"){
-        color=COLOR__PURPLE;
+        color=COLOR_PURPLE;
     }
     else if(line=="violet"){
-        color=COLOR__VIOLET;
+        color=COLOR_VIOLET;
     }
     else if(line=="indigo"){
-        color=COLOR__INDIGO;
+        color=COLOR_INDIGO;
     }
 
     else if(line=="blue"){
-        color=COLOR__BLUE;
+        color=COLOR_BLUE;
     }
     else if(line=="dark blue"){
-        color=COLOR__DARK_BLUE;
+        color=COLOR_DARK_BLUE;
     }
     else if(line=="sky blue"){
-        color=COLOR__SKY_BLUE;
+        color=COLOR_SKY_BLUE;
     }
     else if(line=="un blue"){
-        color=COLOR__UN_BLUE;
+        color=COLOR_UN_BLUE;
     }
 
     else if(line=="green"){
-        color=COLOR__GREEN;
+        color=COLOR_GREEN;
     }
     else if(line=="jungle"){
-        color=COLOR__JUNGLE;
+        color=COLOR_JUNGLE;
     }
     else if(line=="spring"){
-        color=COLOR__SPRING;
+        color=COLOR_SPRING;
     }
 
     else if(line=="cloth"){
-        color=COLOR__CLOTH;
+        color=COLOR_CLOTH;
     }
     else if(line=="leather"){
-        color=COLOR__LEATHER;
+        color=COLOR_LEATHER;
     }
     else if(line=="copper"){
-        color=COLOR__COPPER;
+        color=COLOR_COPPER;
     }
     else if(line=="brass"){
-        color=COLOR__BRASS;
+        color=COLOR_BRASS;
     }
     else if(line=="bronze"){
-        color=COLOR__BRONZE;
+        color=COLOR_BRONZE;
     }
     else if(line=="iron"){
-        color=COLOR__IRON;
+        color=COLOR_IRON;
     }
     else if(line=="steel"){
-        color=COLOR__STEEL;
+        color=COLOR_STEEL;
     }
     else if(line=="silver"){
-        color=COLOR__SILVER;
+        color=COLOR_SILVER;
     }
     else if(line=="gold"){
-        color=COLOR__GOLD;
+        color=COLOR_GOLD;
     }
     else if(line=="wood"){
-        color=COLOR__WOOD;
+        color=COLOR_WOOD;
     }
     else if(line=="bone"){
-        color=COLOR__BONE;
+        color=COLOR_BONE;
     }
     else if(line=="corpse"){
-        color=COLOR__CORPSE;
+        color=COLOR_CORPSE;
     }
     else if(line=="food"){
-        color=COLOR__FOOD;
+        color=COLOR_FOOD;
     }
     else if(line=="stone"){
-        color=COLOR__STONE;
+        color=COLOR_STONE;
     }
     else if(line=="dirt"){
-        color=COLOR__DIRT;
+        color=COLOR_DIRT;
     }
     else if(line=="glass"){
-        color=COLOR__GLASS;
+        color=COLOR_GLASS;
     }
     else if(line=="paper"){
-        color=COLOR__PAPER;
+        color=COLOR_PAPER;
     }
     else if(line=="water"){
-        color=COLOR__WATER;
+        color=COLOR_WATER;
     }
     else if(line=="lava"){
-        color=COLOR__LAVA;
+        color=COLOR_LAVA;
     }
 
     else if(line=="ice"){
-        color=COLOR__ICE;
+        color=COLOR_ICE;
     }
     else if(line=="frost"){
-        color=COLOR__FROST;
+        color=COLOR_FROST;
     }
 
     return color;

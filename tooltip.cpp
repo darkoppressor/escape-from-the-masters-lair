@@ -51,7 +51,7 @@ void Tooltip::set_dimensions(){
 }
 
 void Tooltip::render(){
-    render_rectangle(x,y-4,w,h,0.5,COLOR__SKY_BLUE);
+    render_rectangle(x,y-4,w,h,0.5,COLOR_SKY_BLUE);
 
-    font.show(x,y,message,COLOR__WHITE);
+    font.show(x,y,message,COLOR_WHITE);
 }

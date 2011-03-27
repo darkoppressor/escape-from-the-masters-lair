@@ -415,17 +415,17 @@ void Player::render_get_name(){
     ss.clear();ss.str("");ss<<"Welcome to Escape from the Master's Lair!";ss<<"\xA";ss<<"\xA";msg=ss.str();
     ss.clear();ss.str("");ss<<"Who are you? ";ss<<get_name;ss<<"\xA";msg+=ss.str();
 
-    font_small.show(0,0,msg,COLOR__WHITE);
+    font_small.show(0,0,msg,COLOR_WHITE);
 
-    font_small.show(13*font_small.spacing_x+font_small.spacing_x*get_name.length(),font_small.spacing_y*2,"\x7F",COLOR__WHITE,cursor_opacity*0.1);
+    font_small.show(13*font_small.spacing_x+font_small.spacing_x*get_name.length(),font_small.spacing_y*2,"\x7F",COLOR_WHITE,cursor_opacity*0.1);
 }
 
 void Player::render_get_race(){
     ss.clear();ss.str("");ss<<"What race do you want to be? ";ss<<get_race;ss<<"\xA";msg=ss.str();
 
-    font_small.show(0,0,msg,COLOR__WHITE);
+    font_small.show(0,0,msg,COLOR_WHITE);
 
-    font_small.show(29*font_small.spacing_x+font_small.spacing_x*get_race.length(),0,"\x7F",COLOR__WHITE,cursor_opacity*0.1);
+    font_small.show(29*font_small.spacing_x+font_small.spacing_x*get_race.length(),0,"\x7F",COLOR_WHITE,cursor_opacity*0.1);
 
     msg="";
 
@@ -452,14 +452,14 @@ void Player::render_get_race(){
 
         ss.clear();ss.str("");ss<<i;ss<<" - ";ss<<templates.template_races[i].name;ss<<"\xA";msg=ss.str();
 
-        font_small.show(5+column*column_width,font_small.spacing_y+font_small.spacing_y*lines_rendered++,msg,COLOR__WHITE);
+        font_small.show(5+column*column_width,font_small.spacing_y+font_small.spacing_y*lines_rendered++,msg,COLOR_WHITE);
     }
 }
 
 void Player::render_get_focused_skills(){
     ss.clear();ss.str("");ss<<"Select 3 skills to focus in.";ss<<"\xA";msg=ss.str();
 
-    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2,0,msg,COLOR__WHITE);
+    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2,0,msg,COLOR_WHITE);
 
     msg="";
 
@@ -562,7 +562,7 @@ void Player::render_get_focused_skills(){
     }
     ss.clear();ss.str("");ss<<"Speed";ss<<"\xA";msg+=ss.str();
 
-    font_small.show(150,60,msg,COLOR__WHITE);
+    font_small.show(150,60,msg,COLOR_WHITE);
 
     msg="";
 
@@ -675,13 +675,13 @@ void Player::render_get_focused_skills(){
     }
     ss.clear();ss.str("");ss<<"Summoning Magic";ss<<"\xA";msg+=ss.str();
 
-    font_small.show(450,60,msg,COLOR__WHITE);
+    font_small.show(450,60,msg,COLOR_WHITE);
 }
 
 void Player::render_levelup(){
     ss.clear();ss.str("");ss<<"You have gained a level!";msg=ss.str();
 
-    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2,0,msg,COLOR__WHITE);
+    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2,0,msg,COLOR_WHITE);
 
     ss.clear();ss.str("");ss<<"Select ";msg=ss.str();
     ss.clear();ss.str("");ss<<levelup_attributes.size();msg+=ss.str();
@@ -693,7 +693,7 @@ void Player::render_levelup(){
     }
     ss.clear();ss.str("");ss<<"to improve.";ss<<"\xA";msg+=ss.str();
 
-    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2,font.spacing_y,msg,COLOR__WHITE);
+    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2,font.spacing_y,msg,COLOR_WHITE);
 
     msg="";
 
@@ -763,7 +763,7 @@ void Player::render_levelup(){
     ss.clear();ss.str("");ss<<" (+";ss<<1+attribute_level_bonuses[ATTRIBUTE_LUCK];ss<<")";ss<<"\xA";msg+=ss.str();
     msg+="\xA";
 
-    font_small.show(330,60,msg,COLOR__WHITE);
+    font_small.show(330,60,msg,COLOR_WHITE);
 }
 
 void Player::render_item_info(){
@@ -796,7 +796,7 @@ void Player::render_item_info(){
         ss.clear();ss.str("");ss<<"Defense: ";ss<<inventory[item_info].defense;ss<<"\xA";msg+=ss.str();
     }
 
-    font_small.show(5,5+font_small.spacing_y,msg,COLOR__WHITE);
+    font_small.show(5,5+font_small.spacing_y,msg,COLOR_WHITE);
 }
 
 void Player::render_stats(){
@@ -807,8 +807,8 @@ void Player::render_stats(){
     title+=race_name;
     title+=" ";
     title+="<class>";
-    render_rectangle(5,5,font_small.spacing_x*title.length()+3,font_small.spacing_y,1.0,COLOR__GRAY);
-    font_small.show(6,8,title,COLOR__BLACK);
+    render_rectangle(5,5,font_small.spacing_x*title.length()+3,font_small.spacing_y,1.0,COLOR_GRAY);
+    font_small.show(6,8,title,COLOR_BLACK);
 
     ss.clear();ss.str("");ss<<"Experience Level: ";ss<<experience_level;ss<<"\xA";msg=ss.str();
     ss.clear();ss.str("");ss<<"Experience: ";ss<<experience;ss<<"/";ss<<experience_max;ss<<"\xA";msg+=ss.str();
@@ -818,11 +818,11 @@ void Player::render_stats(){
     ss.clear();ss.str("");ss<<"Money: ";ss<<inventory[0].stack;ss<<"\xA";msg+=ss.str();
     ss.clear();ss.str("");ss<<"Carrying: ";ss<<player.return_inventory_weight();ss<<"/";ss<<player.return_carry_capacity();msg+=ss.str();
 
-    font_small.show(5,30,msg,COLOR__WHITE);
+    font_small.show(5,30,msg,COLOR_WHITE);
 
     title="Attributes";
-    render_rectangle(5,200,font_small.spacing_x*title.length()+3,font_small.spacing_y,1.0,COLOR__GRAY);
-    font_small.show(6,203,title,COLOR__BLACK);
+    render_rectangle(5,200,font_small.spacing_x*title.length()+3,font_small.spacing_y,1.0,COLOR_GRAY);
+    font_small.show(6,203,title,COLOR_BLACK);
 
     ss.clear();ss.str("");ss<<"Strength - ";ss<<return_attribute_strength();ss<<"\xA";msg=ss.str();
     ss.clear();ss.str("");ss<<"Agility - ";ss<<return_attribute_agility();ss<<"\xA";msg+=ss.str();
@@ -831,11 +831,11 @@ void Player::render_stats(){
     ss.clear();ss.str("");ss<<"Acumen - ";ss<<return_attribute_acumen();ss<<"\xA";msg+=ss.str();
     ss.clear();ss.str("");ss<<"Luck - ";ss<<return_attribute_luck();ss<<"\xA";msg+=ss.str();
 
-    font_small.show(5,225,msg,COLOR__WHITE);
+    font_small.show(5,225,msg,COLOR_WHITE);
 
     title="Skills";
-    render_rectangle(400,5,font_small.spacing_x*title.length()+3,font_small.spacing_y,1.0,COLOR__GRAY);
-    font_small.show(401,8,title,COLOR__BLACK);
+    render_rectangle(400,5,font_small.spacing_x*title.length()+3,font_small.spacing_y,1.0,COLOR_GRAY);
+    font_small.show(401,8,title,COLOR_BLACK);
 
     ss.clear();ss.str("");ss<<"Bladed Weapons - ";ss<<return_skill_bladed_weapons();ss<<" (";ss<<skills[SKILL_BLADED_WEAPONS][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_BLADED_WEAPONS][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg=ss.str();
     msg+="\xA";
@@ -858,7 +858,7 @@ void Player::render_stats(){
     msg+="\xA";
     ss.clear();ss.str("");ss<<"Speed - ";ss<<return_skill_speed();ss<<" (";ss<<skills[SKILL_SPEED][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_SPEED][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
 
-    font_small.show(200,30,msg,COLOR__WHITE);
+    font_small.show(200,30,msg,COLOR_WHITE);
 
     ss.clear();ss.str("");ss<<"Fighting - ";ss<<return_skill_fighting();ss<<" (";ss<<skills[SKILL_FIGHTING][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_FIGHTING][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg=ss.str();
     msg+="\xA";
@@ -885,7 +885,7 @@ void Player::render_stats(){
     msg+="\xA";
     ss.clear();ss.str("");ss<<"Summoning Magic - ";ss<<return_skill_magic_summoning();ss<<" (";ss<<skills[SKILL_MAGIC_SUMMONING][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_MAGIC_SUMMONING][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
 
-    font_small.show(500,30,msg,COLOR__WHITE);
+    font_small.show(500,30,msg,COLOR_WHITE);
 }
 
 bool Player::render_inventory_category(short category){
@@ -901,7 +901,7 @@ bool Player::render_inventory_category(short category){
 
 void Player::render_inventory(bool all_categories){
     msg="";
-    short render_color=COLOR__WHITE;
+    short render_color=COLOR_WHITE;
 
     //Keeps track of the number of lines of inventory text rendered.
     int lines_rendered=0;
@@ -959,8 +959,8 @@ void Player::render_inventory(bool all_categories){
                 title="Others";
             }
 
-            render_rectangle(5+column*column_width,font_small.spacing_y*2+font_small.spacing_y*lines_rendered,font_small.spacing_x*title.length()+3,font_small.spacing_y,1.0,COLOR__GRAY);
-            font_small.show(6+column*column_width,font_small.spacing_y*2+3+font_small.spacing_y*lines_rendered++,title,COLOR__BLACK);
+            render_rectangle(5+column*column_width,font_small.spacing_y*2+font_small.spacing_y*lines_rendered,font_small.spacing_x*title.length()+3,font_small.spacing_y,1.0,COLOR_GRAY);
+            font_small.show(6+column*column_width,font_small.spacing_y*2+3+font_small.spacing_y*lines_rendered++,title,COLOR_BLACK);
 
             for(int i=0;i<inventory.size();i++){
                 //If the maximum number of lines for this column have been rendered.

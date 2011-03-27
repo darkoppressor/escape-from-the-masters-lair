@@ -24,7 +24,7 @@ void Tile::render(vector< vector<bool> >* tile_rendered){
         //If the tile is in camera bounds.
         if(return_absolute_x()>=player.camera_x-TILE_SIZE_X && return_absolute_x()<=player.camera_x+player.camera_w && return_absolute_y()>=player.camera_y-TILE_SIZE_Y && return_absolute_y()<=player.camera_y+player.camera_h){
             if(vector_levels[current_level].fog[x][y]>FOG_BLACK || player.option_dev){
-                short color=COLOR__WHITE;
+                short color=COLOR_WHITE;
                 double opacity=1.0;
 
                 if(vector_levels[current_level].fog[x][y]==FOG_FOG && !player.option_dev){
@@ -33,61 +33,61 @@ void Tile::render(vector< vector<bool> >* tile_rendered){
 
                 //Set color.
                 if(material==MATERIAL_CLOTH){
-                    color=COLOR__CLOTH;
+                    color=COLOR_CLOTH;
                 }
                 else if(material==MATERIAL_LEATHER){
-                    color=COLOR__LEATHER;
+                    color=COLOR_LEATHER;
                 }
                 else if(material==MATERIAL_COPPER){
-                    color=COLOR__COPPER;
+                    color=COLOR_COPPER;
                 }
                 else if(material==MATERIAL_BRASS){
-                    color=COLOR__BRASS;
+                    color=COLOR_BRASS;
                 }
                 else if(material==MATERIAL_BRONZE){
-                    color=COLOR__BRONZE;
+                    color=COLOR_BRONZE;
                 }
                 else if(material==MATERIAL_IRON){
-                    color=COLOR__IRON;
+                    color=COLOR_IRON;
                 }
                 else if(material==MATERIAL_STEEL){
-                    color=COLOR__STEEL;
+                    color=COLOR_STEEL;
                 }
                 else if(material==MATERIAL_SILVER){
-                    color=COLOR__SILVER;
+                    color=COLOR_SILVER;
                 }
                 else if(material==MATERIAL_GOLD){
-                    color=COLOR__GOLD;
+                    color=COLOR_GOLD;
                 }
                 else if(material==MATERIAL_WOOD){
-                    color=COLOR__WOOD;
+                    color=COLOR_WOOD;
                 }
                 else if(material==MATERIAL_BONE){
-                    color=COLOR__BONE;
+                    color=COLOR_BONE;
                 }
                 else if(material==MATERIAL_CORPSE){
-                    color=COLOR__CORPSE;
+                    color=COLOR_CORPSE;
                 }
                 else if(material==MATERIAL_FOOD){
-                    color=COLOR__FOOD;
+                    color=COLOR_FOOD;
                 }
                 else if(material==MATERIAL_STONE){
-                    color=COLOR__STONE;
+                    color=COLOR_STONE;
                 }
                 else if(material==MATERIAL_DIRT){
-                    color=COLOR__DIRT;
+                    color=COLOR_DIRT;
                 }
                 else if(material==MATERIAL_GLASS){
-                    color=COLOR__GLASS;
+                    color=COLOR_GLASS;
                 }
                 else if(material==MATERIAL_PAPER){
-                    color=COLOR__PAPER;
+                    color=COLOR_PAPER;
                 }
                 else if(material==MATERIAL_WATER){
-                    color=COLOR__WATER;
+                    color=COLOR_WATER;
                 }
                 else if(material==MATERIAL_LAVA){
-                    color=COLOR__LAVA;
+                    color=COLOR_LAVA;
                 }
 
                 if(type==TILE_TYPE_WALL){

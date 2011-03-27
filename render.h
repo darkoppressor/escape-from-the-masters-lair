@@ -32,7 +32,7 @@ void render_sprite(double x,double y,image_data image_source,SDL_Rect* texture_c
 void render_rectangle(double x,double y,double w,double h,double opacity,short color_name);
 
 //Render text to the screen using a bitmap font.
-void render_font(double x,double y,image_data image_source,SDL_Rect* texture_clip=NULL,short color_name=COLOR__WHITE,double opacity=1.0,double scale=1.0);
+void render_font(double x,double y,image_data image_source,SDL_Rect* texture_clip=NULL,short color_name=COLOR_WHITE,double opacity=1.0,double scale=1.0);
 
 //Holds red, green, blue color data in double format.
 struct color_data{

@@ -6,10 +6,6 @@
 #include <SDL.h>
 #include <SDL_mixer.h>
 
-#ifdef CONSOLE_MODE
-#include <curses.h>
-#endif
-
 #include "main.h"
 #include "timer.h"
 #include "world.h"
@@ -159,35 +155,6 @@ bool opaque(void *level,int x,int y) {
 
 //Apparently, SDL likes main() to take these arguments, so that is what we will do.
 int main(int argc, char* args[]){
-    #ifdef CONSOLE_MODE
-    initscr();/**Start curses mode.*/
-    raw();/**Disables line buffering.*/
-    keypad(stdscr, TRUE);/**Allows use of function keys, arrow keys, etc.*/
-    noecho();/**Don't echo() while we do getch*/
-    curs_set(0);/**This makes the cursor invisible.*/
-    start_color();/**Start color mode.*/
-    /**Here we define all of our color pairs.*/
-    init_pair(1,COLOR_RED,COLOR_BLACK);
-    init_pair(2,COLOR_GREEN,COLOR_BLACK);
-    init_pair(3,COLOR_YELLOW,COLOR_BLACK);
-    init_pair(4,COLOR_BLUE,COLOR_BLACK);
-    init_pair(5,COLOR_MAGENTA,COLOR_BLACK);
-    init_pair(6,COLOR_CYAN,COLOR_BLACK);
-    /**init_pair(7,CLR_GRAY,COLOR_BLACK);
-    init_pair(8,CLR_DARK_GRAY,COLOR_BLACK);
-    init_pair(9,CLR_WHITE,COLOR_BLACK);
-    init_pair(10,CLR_BRIGHT_BLUE,COLOR_BLACK);
-    init_pair(11,CLR_BRIGHT_GREEN,COLOR_BLACK);
-    init_pair(12,CLR_BRIGHT_CYAN,COLOR_BLACK);
-    init_pair(13,CLR_BRIGHT_MAGENTA,COLOR_BLACK);*/
-
-    printw("Hello world!");
-    refresh();
-    getch();
-
-    endwin();
-    #endif
-
     //Here we seed the random number generator. We use time(&seconds) as a seed to prepare the random number generator.
     //See random_number_generator.h for more details.
     time_t seconds;
