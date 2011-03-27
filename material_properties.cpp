@@ -52,3 +52,67 @@ void prepare_densities(){
     densities[MATERIAL_WATER]=1.0;
     densities[MATERIAL_LAVA]=2.6;
 }
+
+string material_to_string(short material){
+    string line="";
+
+    if(material==MATERIAL_CLOTH){
+        line="cloth";
+    }
+    else if(material==MATERIAL_LEATHER){
+        line="leather";
+    }
+    else if(material==MATERIAL_COPPER){
+        line="copper";
+    }
+    else if(material==MATERIAL_BRASS){
+        line="brass";
+    }
+    else if(material==MATERIAL_BRONZE){
+        line="bronze";
+    }
+    else if(material==MATERIAL_IRON){
+        line="iron";
+    }
+    else if(material==MATERIAL_STEEL){
+        line="steel";
+    }
+    else if(material==MATERIAL_SILVER){
+        line="silver";
+    }
+    else if(material==MATERIAL_GOLD){
+        line="gold";
+    }
+    else if(material==MATERIAL_WOOD){
+        line="wood";
+    }
+    else if(material==MATERIAL_BONE){
+        line="bone";
+    }
+    else if(material==MATERIAL_CORPSE){
+        line="corpse";
+    }
+    else if(material==MATERIAL_FOOD){
+        line="food";
+    }
+    else if(material==MATERIAL_STONE){
+        line="stone";
+    }
+    else if(material==MATERIAL_DIRT){
+        line="dirt";
+    }
+    else if(material==MATERIAL_GLASS){
+        line="glass";
+    }
+    else if(material==MATERIAL_PAPER){
+        line="paper";
+    }
+    else if(material==MATERIAL_WATER){
+        line="water";
+    }
+    else if(material==MATERIAL_LAVA){
+        line="lava";
+    }
+
+    return line;
+}

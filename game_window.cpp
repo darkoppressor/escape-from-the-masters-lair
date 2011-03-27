@@ -14,8 +14,10 @@ using namespace std;
 
 Game_Window::Game_Window(){
     //Here we are going to set the resolution and color depth of our game screen.
-    SCREEN_WIDTH=800;
-    SCREEN_HEIGHT=600;
+    ///SCREEN_WIDTH=800;
+    ///SCREEN_HEIGHT=600;
+    SCREEN_WIDTH=640;
+    SCREEN_HEIGHT=480;
 
     //Since we've set the screen's color depth to 0, SDL will attempt to set it to the computer's color depth when initializing.
     SCREEN_BPP=32;

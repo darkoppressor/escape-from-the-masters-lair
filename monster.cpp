@@ -388,10 +388,10 @@ void Monster::render(vector< vector<bool> >* tile_rendered){
         //If nothing has been rendered here yet.
         if(!tile_rendered->at(x)[y]){
             //Render the monster if the monster is in the camera bounds:
-            if(return_absolute_x()>=player.camera_x-TILE_SIZE && return_absolute_x()<=player.camera_x+player.camera_w && return_absolute_y()>=player.camera_y-TILE_SIZE && return_absolute_y()<=player.camera_y+player.camera_h){
+            if(return_absolute_x()>=player.camera_x-TILE_SIZE_X && return_absolute_x()<=player.camera_x+player.camera_w && return_absolute_y()>=player.camera_y-TILE_SIZE_Y && return_absolute_y()<=player.camera_y+player.camera_h){
                 //If the monster's position is seen.
                 if(vector_levels[current_level].fog[x][y]>FOG_FOG || player.option_dev){
-                    font.show((int)(return_absolute_x()-player.camera_x),(int)(return_absolute_y()-player.camera_y),appearance,color);
+                    font_small.show((int)(return_absolute_x()-player.camera_x),(int)(return_absolute_y()-player.camera_y),appearance,color);
 
                     if(player.option_healthbars){
                         short health_bar_color=COLOR_GREEN;

@@ -21,11 +21,11 @@ Level::Level(short get_level_x,short get_level_y){
 }
 
 double Level::return_absolute_x(){
-    return level_x*TILE_SIZE;
+    return level_x*TILE_SIZE_X;
 }
 
 double Level::return_absolute_y(){
-    return level_y*TILE_SIZE;
+    return level_y*TILE_SIZE_Y;
 }
 
 bool Level::onMap(unsigned short x, unsigned short y){

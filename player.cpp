@@ -64,8 +64,10 @@ Player::Player(){
     //Set the camera's initial location and its dimensions.
     camera_x=0.0;
     camera_y=0.0;
-    camera_w=800.0;
-    camera_h=420.0;
+    ///camera_w=800.0;
+    ///camera_h=420.0;
+    camera_w=640.0;
+    camera_h=300.0;
 }
 
 void Player::set_inventory(){
@@ -185,6 +187,11 @@ void Player::handle_input(){
     modstate=SDL_GetModState();
 
     SDL_GetMouseState(&mouse_x,&mouse_y);
+
+    //If an item's info has been requested.
+    if(item_info!=-1){
+        current_window=WINDOW_ITEM_INFO;
+    }
 
     while(SDL_PollEvent(&event)){
         SDL_EnableUNICODE(SDL_ENABLE);
@@ -484,7 +491,7 @@ void Player::handle_input(){
                             inventory_categories_to_render.clear();
 
                             switch(input_inventory){
-                            case INVENTORY_COMMAND_DROP_ITEM:case INVENTORY_COMMAND_READ_ITEM:
+                            default:
                                 for(short i=ITEM_WEAPON;i<ITEM_OTHER+1;i++){
                                     inventory_categories_to_render.push_back(i);
                                 }
@@ -663,8 +670,8 @@ void Player::handle_input(){
             }*/
 
             if(SDL_GetMouseState(NULL,NULL)&SDL_BUTTON(SDL_BUTTON_LEFT)){
-                int mouse_current_x=(int)((int)(mouse_x+camera_x)/TILE_SIZE);
-                int mouse_current_y=(int)((int)(mouse_y+camera_y)/TILE_SIZE);
+                int mouse_current_x=(int)((int)(mouse_x+camera_x)/TILE_SIZE_X);
+                int mouse_current_y=(int)((int)(mouse_y+camera_y)/TILE_SIZE_Y);
                 x=mouse_current_x;
                 y=mouse_current_y;
             }
@@ -711,11 +718,6 @@ void Player::move(){
 
         else if(command_standard!=COMMAND_NONE){
             execute_command(command_standard);
-        }
-
-        //If an item's info has been requested.
-        if(item_info!=-1){
-            current_window=WINDOW_ITEM_INFO;
         }
 
         //Movement has been handled, now clear the move state.
@@ -815,40 +817,40 @@ void Player::set_camera(){
     //If the camera is sticky, center the camera on the player.
     if(cam_state==CAM_STICKY){
         //Now center the camera on the player.
-        camera_x=(return_absolute_x()+TILE_SIZE/2)-(camera_w/2);
-        camera_y=(return_absolute_y()+TILE_SIZE/2)-(camera_h/2);
+        camera_x=(return_absolute_x()+TILE_SIZE_X/2)-(camera_w/2);
+        camera_y=(return_absolute_y()+TILE_SIZE_Y/2)-(camera_h/2);
     }
 
     //Move the camera if it is unsticky:
     if(cam_state!=CAM_STICKY){
         //Now check for camera input and move the camera accordingly.
         if(cam_state==LEFT){
-            camera_x-=TILE_SIZE;
+            camera_x-=TILE_SIZE_X;
         }
         if(cam_state==UP){
-            camera_y-=TILE_SIZE;
+            camera_y-=TILE_SIZE_Y;
         }
         if(cam_state==RIGHT){
-            camera_x+=TILE_SIZE;
+            camera_x+=TILE_SIZE_X;
         }
         if(cam_state==DOWN){
-            camera_y+=TILE_SIZE;
+            camera_y+=TILE_SIZE_Y;
         }
         if(cam_state==LEFT_UP){
-            camera_x-=TILE_SIZE;
-            camera_y-=TILE_SIZE;
+            camera_x-=TILE_SIZE_X;
+            camera_y-=TILE_SIZE_Y;
         }
         if(cam_state==RIGHT_UP){
-            camera_x+=TILE_SIZE;
-            camera_y-=TILE_SIZE;
+            camera_x+=TILE_SIZE_X;
+            camera_y-=TILE_SIZE_Y;
         }
         if(cam_state==RIGHT_DOWN){
-            camera_x+=TILE_SIZE;
-            camera_y+=TILE_SIZE;
+            camera_x+=TILE_SIZE_X;
+            camera_y+=TILE_SIZE_Y;
         }
         if(cam_state==LEFT_DOWN){
-            camera_x-=TILE_SIZE;
-            camera_y+=TILE_SIZE;
+            camera_x-=TILE_SIZE_X;
+            camera_y+=TILE_SIZE_Y;
         }
     }
 
@@ -912,8 +914,8 @@ void Player::render(vector< vector<bool> >* tile_rendered){
         //If nothing has been rendered here yet.
         if(!tile_rendered->at(x)[y]){
             //Render the player if the player is in the camera bounds:
-            if(return_absolute_x()>=camera_x-TILE_SIZE && return_absolute_x()<=camera_x+camera_w && return_absolute_y()>=camera_y-TILE_SIZE && return_absolute_y()<=camera_y+camera_h){
-                font.show((int)(return_absolute_x()-camera_x),(int)(return_absolute_y()-camera_y),appearance,color);
+            if(return_absolute_x()>=camera_x-TILE_SIZE_X && return_absolute_x()<=camera_x+camera_w && return_absolute_y()>=camera_y-TILE_SIZE_Y && return_absolute_y()<=camera_y+camera_h){
+                font_small.show((int)(return_absolute_x()-camera_x),(int)(return_absolute_y()-camera_y),appearance,color);
 
                 short health_bar_color=COLOR_GREEN;
                 if(return_health()>=return_health_max()*0.75){

@@ -200,14 +200,14 @@ void render(int frame_rate, double ms_per_frame){
             }
 
             //Set the camera's current tile position.
-            int camera_current_x=(int)((int)player.camera_x/TILE_SIZE);
-            int camera_current_y=(int)((int)player.camera_y/TILE_SIZE);
+            int camera_current_x=(int)((int)player.camera_x/TILE_SIZE_X);
+            int camera_current_y=(int)((int)player.camera_y/TILE_SIZE_Y);
 
             //Check all tiles in a rectangle around the camera.
             int check_x_start=camera_current_x;
-            int check_x_end=camera_current_x+(int)((int)player.camera_w/TILE_SIZE)+2;
+            int check_x_end=camera_current_x+(int)((int)player.camera_w/TILE_SIZE_X)+2;
             int check_y_start=camera_current_y;
-            int check_y_end=camera_current_y+(int)((int)player.camera_h/TILE_SIZE)+2;
+            int check_y_end=camera_current_y+(int)((int)player.camera_h/TILE_SIZE_Y)+2;
 
             //Render each player held in the player vector in sequence.
             player.render(&tile_rendered);

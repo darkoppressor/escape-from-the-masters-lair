@@ -1057,6 +1057,13 @@ void Templates::load_template_item(short category){
                     temp_item.damage_min_melee=1;
                     temp_item.damage_max_melee=(temp_item_size*temp_item.weight)/6.0;
                 }
+
+                if(temp_item.damage_min_melee<1){
+                    temp_item.damage_min_melee=1;
+                }
+                if(temp_item.damage_max_melee<1){
+                    temp_item.damage_max_melee=1;
+                }
             }
 
             //If no thrown damage max was set.
@@ -1071,6 +1078,13 @@ void Templates::load_template_item(short category){
                     temp_item.damage_min_thrown=1;
                     temp_item.damage_max_thrown=temp_item.damage_max_melee/2.0;
                 }
+
+                if(temp_item.damage_min_thrown<1){
+                    temp_item.damage_min_thrown=1;
+                }
+                if(temp_item.damage_max_thrown<1){
+                    temp_item.damage_max_thrown=1;
+                }
             }
 
             //If no ranged damage max was set.
@@ -1079,6 +1093,13 @@ void Templates::load_template_item(short category){
                 if(temp_item.category==ITEM_WEAPON && temp_item.weapon_category>=WEAPON_BOWS && temp_item.weapon_category<=WEAPON_SLINGS){
                     temp_item.damage_min_ranged=temp_item_size*densities[temp_item.material]*3.0;
                     temp_item.damage_max_ranged=temp_item_size*densities[temp_item.material]*4.0;
+
+                    if(temp_item.damage_min_ranged<1){
+                        temp_item.damage_min_ranged=1;
+                    }
+                    if(temp_item.damage_max_ranged<1){
+                        temp_item.damage_max_ranged=1;
+                    }
                 }
                 //If the item is not a ranged weapon.
                 else{

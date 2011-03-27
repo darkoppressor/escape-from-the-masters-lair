@@ -6,6 +6,8 @@
 
 #include "enumerations.h"
 
+#include <string>
+
 extern double specific_gravities[MATERIAL_LAVA+1];
 
 extern double densities[MATERIAL_LAVA+1];
@@ -13,5 +15,7 @@ extern double densities[MATERIAL_LAVA+1];
 void prepare_specific_gravities();
 
 void prepare_densities();
+
+std::string material_to_string(short material);
 
 #endif

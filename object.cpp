@@ -18,11 +18,11 @@ Object::Object(){
 }
 
 double Object::return_absolute_x(){
-    return x*TILE_SIZE;
+    return x*TILE_SIZE_X;
 }
 
 double Object::return_absolute_y(){
-    return y*TILE_SIZE;
+    return y*TILE_SIZE_Y;
 }
 
 bool Object::object_nearby(short object_x,short object_y,int range){

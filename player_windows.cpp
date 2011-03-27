@@ -5,6 +5,7 @@
 #include "world.h"
 #include "render.h"
 #include "quit.h"
+#include "material_properties.h"
 
 using namespace std;
 using namespace boost::algorithm;
@@ -766,10 +767,36 @@ void Player::render_levelup(){
 }
 
 void Player::render_item_info(){
-    ss.clear();ss.str("");ss<<inventory[item_info].return_full_name();ss<<"\xA";msg=ss.str();
-    ss.clear();ss.str("");ss<<"Weight: ";ss<<inventory[item_info].weight;ss<<"\xA";msg+=ss.str();
+    short render_color=inventory[item_info].color;
 
-    font_small.show(0,0,msg,COLOR_WHITE);
+    //If the item is dyed.
+    if(inventory[item_info].dye!=0){
+        render_color=inventory[item_info].dye;
+    }
+
+    string item_amount_prefix="";
+
+    if(inventory[item_info].stack==1){
+        item_amount_prefix="a ";
+    }
+
+    ss.clear();ss.str("");ss<<inventory[item_info].appearance;ss<<" - ";ss<<item_amount_prefix;ss<<inventory[item_info].return_full_name();ss<<"\xA";msg=ss.str();
+
+    font_small.show(5,5,msg,render_color);
+
+    ss.clear();ss.str("");ss<<"Composed of ";ss<<material_to_string(inventory[item_info].material);ss<<"\xA";msg=ss.str();
+    ss.clear();ss.str("");ss<<"Weighing ";ss<<inventory[item_info].weight*inventory[item_info].stack;ss<<"\xA";msg+=ss.str();
+    ss.clear();ss.str("");ss<<"With a value of ";ss<<inventory[item_info].monetary_value*inventory[item_info].stack;ss<<"\xA";msg+=ss.str();
+    ss.clear();ss.str("");ss<<"Melee damage: ";ss<<inventory[item_info].damage_min_melee;ss<<"-";ss<<inventory[item_info].damage_max_melee;ss<<"\xA";msg+=ss.str();
+    ss.clear();ss.str("");ss<<"Thrown damage: ";ss<<inventory[item_info].damage_min_thrown;ss<<"-";ss<<inventory[item_info].damage_max_thrown;ss<<"\xA";msg+=ss.str();
+    if(inventory[item_info].damage_max_ranged!=0){
+        ss.clear();ss.str("");ss<<"Ranged damage: ";ss<<inventory[item_info].damage_min_ranged;ss<<"-";ss<<inventory[item_info].damage_max_ranged;ss<<"\xA";msg+=ss.str();
+    }
+    if(inventory[item_info].category==ITEM_ARMOR){
+        ss.clear();ss.str("");ss<<"Defense: ";ss<<inventory[item_info].defense;ss<<"\xA";msg+=ss.str();
+    }
+
+    font_small.show(5,5+font_small.spacing_y,msg,COLOR_WHITE);
 }
 
 void Player::render_stats(){
