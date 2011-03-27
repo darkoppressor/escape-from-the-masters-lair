@@ -13,7 +13,7 @@ Object::Object(){
     y=0;
     name=" ";
     appearance="";
-    color=COLOR_WHITE;
+    color=COLOR__WHITE;
     weight=1.0;
 }
 

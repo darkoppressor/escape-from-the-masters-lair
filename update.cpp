@@ -232,12 +232,12 @@ void render(int frame_rate, double ms_per_frame){
 
             //Render chat stuff:
 
-            render_rectangle(0,main_window.SCREEN_HEIGHT-122,800,122,1.0,COLOR_GRAY);
-            render_rectangle(2,main_window.SCREEN_HEIGHT-120,796,118,1.0,COLOR_BLACK);
+            render_rectangle(0,main_window.SCREEN_HEIGHT-122,800,122,1.0,COLOR__GRAY);
+            render_rectangle(2,main_window.SCREEN_HEIGHT-120,796,118,1.0,COLOR__BLACK);
 
             if(player.chat_mode){
-                render_rectangle(2,main_window.SCREEN_HEIGHT-font_small.spacing_y-6,796,font.spacing_y-4,1.0,COLOR_GRAY);
-                render_rectangle(4,main_window.SCREEN_HEIGHT-font_small.spacing_y-4,792,font.spacing_y-8,1.0,COLOR_BLACK);
+                render_rectangle(2,main_window.SCREEN_HEIGHT-font_small.spacing_y-6,796,font.spacing_y-4,1.0,COLOR__GRAY);
+                render_rectangle(4,main_window.SCREEN_HEIGHT-font_small.spacing_y-4,792,font.spacing_y-8,1.0,COLOR__BLACK);
             }
 
             double opacity=1.0;
@@ -271,31 +271,31 @@ void render(int frame_rate, double ms_per_frame){
                     //If the message is a system message, print it to screen in yellow system message text.
                     if(player.text_log[i].rfind("\x1F",0,1)!=string::npos && player.text_log[i].rfind("\x1F",0,1)==0){
                         string temp_string=player.text_log[i].substr(1);
-                        font_small.show(4,main_window.SCREEN_HEIGHT-36-i*font_small.spacing_y,temp_string,COLOR_SYSTEM,opacity);
+                        font_small.show(4,main_window.SCREEN_HEIGHT-36-i*font_small.spacing_y,temp_string,COLOR__SYSTEM,opacity);
                     }
                     //Otherwise, print it to screen normally.
                     else{
-                        font_small.show(4,main_window.SCREEN_HEIGHT-36-i*font_small.spacing_y,player.text_log[i],COLOR_WHITE,opacity);
+                        font_small.show(4,main_window.SCREEN_HEIGHT-36-i*font_small.spacing_y,player.text_log[i],COLOR__WHITE,opacity);
                     }
                 }
             }
 
             if(player.chat_mode){
                 short chat_input_height=main_window.SCREEN_HEIGHT-font_small.spacing_y-2;
-                font_small.show(4,chat_input_height,"> "+string_input_chat.str1,COLOR_WHITE,1.0);
-                font_small.show(17+font_small.spacing_x*string_input_chat.str1.length(),chat_input_height,"\x7F",COLOR_WHITE,player.cursor_opacity*0.1);
+                font_small.show(4,chat_input_height,"> "+string_input_chat.str1,COLOR__WHITE,1.0);
+                font_small.show(17+font_small.spacing_x*string_input_chat.str1.length(),chat_input_height,"\x7F",COLOR__WHITE,player.cursor_opacity*0.1);
             }
 
             //Display the framerate and milliseconds per frame.
             /**if(player.option_fps){
                 ss.clear();ss.str("");ss<<"FPS: ";ss<<frame_rate;ss<<"\xA";msg=ss.str();
                 ss.clear();ss.str("");ss<<"MS Per Frame: ";ss<<ms_per_frame;msg+=ss.str();
-                font_small.show(624,0,msg,COLOR_RED);
+                font_small.show(624,0,msg,COLOR__RED);
             }*/
 
             if(player.option_dev && player.chat_mode){
-                render_rectangle(0,0,275,205,0.75,COLOR_BLACK);
-                render_rectangle(5,5,265,195,0.75,COLOR_GRAY);
+                render_rectangle(0,0,275,205,0.75,COLOR__BLACK);
+                render_rectangle(5,5,265,195,0.75,COLOR__GRAY);
                 ss.clear();ss.str("");ss<<"Last Dungeon Level: ";ss<<last_level+1;ss<<"\xA";msg=ss.str();
                 ss.clear();ss.str("");ss<<"Max Dungeon Level: ";ss<<max_level+1;ss<<"\xA";msg+=ss.str();
                 ss.clear();ss.str("");ss<<"Level Temperature: ";ss<<vector_levels[current_level].temperature;ss<<"\xA";msg+=ss.str();
@@ -308,7 +308,7 @@ void render(int frame_rate, double ms_per_frame){
                 ss.clear();ss.str("");ss<<"CPU Architecture: ";ss<<8*sizeof(void*);ss<<"-bit";ss<<"\xA";msg+=ss.str();
                 ss.clear();ss.str("");ss<<"Thirst: ";ss<<player.thirst;ss<<"\xA";msg+=ss.str();
                 ss.clear();ss.str("");ss<<"Weight: ";ss<<player.weight;ss<<"\xA";msg+=ss.str();
-                font_small.show(5,5,msg,COLOR_WHITE);
+                font_small.show(5,5,msg,COLOR__WHITE);
             }
 
             if(player.current_window==WINDOW_NONE){
@@ -325,97 +325,97 @@ void render(int frame_rate, double ms_per_frame){
                     thirsty=true;
                 }
 
-                short burden_color=COLOR_WHITE;
+                short burden_color=COLOR__WHITE;
                 //If the player is unencumbered.
                 if(player.return_inventory_weight()<=player.return_carry_capacity()){
-                    burden_color=COLOR_GREEN;
+                    burden_color=COLOR__GREEN;
                 }
                 //If the player is burdened.
                 else if(player.return_inventory_weight()>=player.return_carry_capacity()+1 && player.return_inventory_weight()<=player.return_carry_capacity()*1.5){
-                    burden_color=COLOR_YELLOW;
+                    burden_color=COLOR__YELLOW;
                 }
                 //If the player is stressed.
                 else if(player.return_inventory_weight()>=player.return_carry_capacity()*1.5+1 && player.return_inventory_weight()<=player.return_carry_capacity()*2.0){
-                    burden_color=COLOR_ORANGE;
+                    burden_color=COLOR__ORANGE;
                 }
                 //If the player is strained.
                 else if(player.return_inventory_weight()>=player.return_carry_capacity()*2.0+1 && player.return_inventory_weight()<=player.return_carry_capacity()*2.5){
-                    burden_color=COLOR_PUMPKIN;
+                    burden_color=COLOR__PUMPKIN;
                 }
                 //If the player is overtaxed.
                 else if(player.return_inventory_weight()>=player.return_carry_capacity()*2.5+1 && player.return_inventory_weight()<=player.return_carry_capacity()*3.0){
-                    burden_color=COLOR_RED;
+                    burden_color=COLOR__RED;
                 }
                 //If the player is overloaded.
                 else if(player.return_inventory_weight()>=player.return_carry_capacity()*3.0+1){
-                    burden_color=COLOR_DARK_RED;
+                    burden_color=COLOR__DARK_RED;
                 }
 
-                short thirst_color=COLOR_WHITE;
+                short thirst_color=COLOR__WHITE;
                 //If the player is bloated.
                 if(player.thirst<=THIRST_BLOATED){
-                    thirst_color=COLOR_PURPLE;
+                    thirst_color=COLOR__PURPLE;
                 }
                 //If the player is satiated.
                 else if(player.thirst>=THIRST_SATIATED && player.thirst<THIRST_NOT_THIRSTY){
-                    thirst_color=COLOR_BLUE;
+                    thirst_color=COLOR__BLUE;
                 }
                 //If the player is not thirsty.
                 else if(player.thirst>=THIRST_NOT_THIRSTY && player.thirst<THIRST_THIRSTY){
-                    thirst_color=COLOR_GREEN;
+                    thirst_color=COLOR__GREEN;
                 }
                 //If the player is thirsty.
                 else if(player.thirst>=THIRST_THIRSTY && player.thirst<THIRST_WEAK){
-                    thirst_color=COLOR_YELLOW;
+                    thirst_color=COLOR__YELLOW;
                 }
                 //If the player is weak.
                 else if(player.thirst>=THIRST_WEAK && player.thirst<THIRST_FAINTING){
-                    thirst_color=COLOR_ORANGE;
+                    thirst_color=COLOR__ORANGE;
                 }
                 //If the player is fainting.
                 else if(player.thirst>=THIRST_FAINTING && player.thirst<THIRST_DEATH){
-                    thirst_color=COLOR_RED;
+                    thirst_color=COLOR__RED;
                 }
                 //If the player is dead.
                 else if(player.thirst>=THIRST_DEATH){
-                    thirst_color=COLOR_DARK_RED;
+                    thirst_color=COLOR__DARK_RED;
                 }
 
-                short health_color=COLOR_WHITE;
+                short health_color=COLOR__WHITE;
                 if(player.return_health()>=player.return_health_max()*0.75){
-                    health_color=COLOR_GREEN;
+                    health_color=COLOR__GREEN;
                 }
                 else if(player.return_health()>=player.return_health_max()*0.50 && player.return_health()<player.return_health_max()*0.75){
-                    health_color=COLOR_YELLOW;
+                    health_color=COLOR__YELLOW;
                 }
                 else if(player.return_health()>=player.return_health_max()*0.25 && player.return_health()<player.return_health_max()*0.50){
-                    health_color=COLOR_ORANGE;
+                    health_color=COLOR__ORANGE;
                 }
                 else{
-                    health_color=COLOR_RED;
+                    health_color=COLOR__RED;
                 }
 
-                short mana_color=COLOR_WHITE;
+                short mana_color=COLOR__WHITE;
                 if(player.return_mana()>=player.return_mana_max()*0.75){
-                    mana_color=COLOR_GREEN;
+                    mana_color=COLOR__GREEN;
                 }
                 else if(player.return_mana()>=player.return_mana_max()*0.50 && player.return_mana()<player.return_mana_max()*0.75){
-                    mana_color=COLOR_YELLOW;
+                    mana_color=COLOR__YELLOW;
                 }
                 else if(player.return_mana()>=player.return_mana_max()*0.25 && player.return_mana()<player.return_mana_max()*0.50){
-                    mana_color=COLOR_ORANGE;
+                    mana_color=COLOR__ORANGE;
                 }
                 else{
-                    mana_color=COLOR_RED;
+                    mana_color=COLOR__RED;
                 }
 
                 int size_last_msg=0;
 
-                render_rectangle(0,main_window.SCREEN_HEIGHT-174,800,54,1.0,COLOR_GRAY);
-                render_rectangle(2,main_window.SCREEN_HEIGHT-172,796,50,1.0,COLOR_BLACK);
+                render_rectangle(0,main_window.SCREEN_HEIGHT-174,800,54,1.0,COLOR__GRAY);
+                render_rectangle(2,main_window.SCREEN_HEIGHT-172,796,50,1.0,COLOR__BLACK);
 
                 ss.clear();ss.str("");ss<<player.name;ss<<" the ";ss<<player.race_name;ss<<" ";ss<<"<class>";msg=ss.str();
-                font_small.show(5,main_window.SCREEN_HEIGHT-170,msg,COLOR_WHITE);
+                font_small.show(5,main_window.SCREEN_HEIGHT-170,msg,COLOR__WHITE);
                 size_last_msg=msg.length();
 
                 //If the player is anything other than not thirsty.
@@ -445,7 +445,7 @@ void render(int frame_rate, double ms_per_frame){
                 ss.clear();ss.str("");ss<<" (";ss<<player.experience;ss<<"/";ss<<player.experience_max;ss<<")";msg+=ss.str();
                 ss.clear();ss.str("");ss<<"  Dungeon Level:";ss<<current_level+1;msg+=ss.str();
                 ss.clear();ss.str("");ss<<"  Turn:";ss<<player.turn;msg+=ss.str();
-                font_small.show(5,main_window.SCREEN_HEIGHT-170+font_small.spacing_y,msg,COLOR_WHITE);
+                font_small.show(5,main_window.SCREEN_HEIGHT-170+font_small.spacing_y,msg,COLOR__WHITE);
 
                 ss.clear();ss.str("");ss<<"Health:";ss<<player.return_health();ss<<"/";ss<<player.return_health_max();msg=ss.str();
                 font_small.show(5,main_window.SCREEN_HEIGHT-170+font_small.spacing_y*2,msg,health_color);
@@ -458,7 +458,7 @@ void render(int frame_rate, double ms_per_frame){
                 ss.clear();ss.str("");ss<<"  Armor:";ss<<player.return_armor();msg=ss.str();
                 ss.clear();ss.str("");ss<<"  Money:";ss<<player.inventory[0].stack;msg+=ss.str();
                 ss.clear();ss.str("");ss<<"  Carrying:";ss<<player.return_inventory_weight();ss<<"/";ss<<player.return_carry_capacity();msg+=ss.str();
-                font_small.show(5+font_small.spacing_x*size_last_msg,main_window.SCREEN_HEIGHT-170+font_small.spacing_y*2,msg,COLOR_WHITE);
+                font_small.show(5+font_small.spacing_x*size_last_msg,main_window.SCREEN_HEIGHT-170+font_small.spacing_y*2,msg,COLOR__WHITE);
             }
         }
         else if(player.current_window==WINDOW_INVENTORY){

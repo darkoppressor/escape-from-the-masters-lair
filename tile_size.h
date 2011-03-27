@@ -4,7 +4,7 @@
 #ifndef tile_size_h
 #define tile_size_h
 
-const short TILE_SIZE_X=8;
-const short TILE_SIZE_Y=12;
+const short TILE_SIZE_X=16;
+const short TILE_SIZE_Y=16;
 
 #endif

@@ -201,194 +201,194 @@ color_data color_name_to_doubles(short color_number){
 
     switch(color_number){
 
-    case COLOR_RAINBOW:
-        new_color=color_name_to_doubles(random_range_render(COLOR_BLACK,COLOR_FROST));
+    case COLOR__RAINBOW:
+        new_color=color_name_to_doubles(random_range_render(COLOR__BLACK,COLOR__FROST));
         break;
 
-    case COLOR_BLACK:
+    case COLOR__BLACK:
         new_color=color_shorts_to_doubles(0,0,0);
         break;
 
-    case COLOR_GRAY:
+    case COLOR__GRAY:
         new_color=color_shorts_to_doubles(128,128,128);
         break;
-    case COLOR_LIGHT_GRAY:
+    case COLOR__LIGHT_GRAY:
         new_color=color_shorts_to_doubles(211,211,211);
         break;
-    case COLOR_DARK_GRAY:
+    case COLOR__DARK_GRAY:
         new_color=color_shorts_to_doubles(105,105,105);
         break;
-    case COLOR_PAYNES_GRAY:
+    case COLOR__PAYNES_GRAY:
         new_color=color_shorts_to_doubles(64,64,72);
         break;
 
-    case COLOR_WHITE:
+    case COLOR__WHITE:
         new_color=color_shorts_to_doubles(255,255,255);
         break;
 
-    case COLOR_BROWN:
+    case COLOR__BROWN:
         new_color=color_shorts_to_doubles(150,75,0);
         break;
-    case COLOR_DARK_BROWN:
+    case COLOR__DARK_BROWN:
         new_color=color_shorts_to_doubles(101,67,33);
         break;
-    case COLOR_SEPIA:
+    case COLOR__SEPIA:
         new_color=color_shorts_to_doubles(112,66,20);
         break;
-    case COLOR_SANDY_BROWN:
+    case COLOR__SANDY_BROWN:
         new_color=color_shorts_to_doubles(244,164,96);
         break;
-    case COLOR_WHEAT:
+    case COLOR__WHEAT:
         new_color=color_shorts_to_doubles(245,222,179);
         break;
-    case COLOR_TAN:
+    case COLOR__TAN:
         new_color=color_shorts_to_doubles(210,180,140);
         break;
-    case COLOR_PALE_BROWN:
+    case COLOR__PALE_BROWN:
         new_color=color_shorts_to_doubles(152,118,84);
         break;
-    case COLOR_BURNT_SIENNA:
+    case COLOR__BURNT_SIENNA:
         new_color=color_shorts_to_doubles(233,116,81);
         break;
 
-    case COLOR_YELLOW:
+    case COLOR__YELLOW:
         new_color=color_shorts_to_doubles(255,205,0);
         break;
-    case COLOR_SYSTEM:
+    case COLOR__SYSTEM:
         new_color=color_shorts_to_doubles(255,216,0);
         break;
 
-    case COLOR_ORANGE:
+    case COLOR__ORANGE:
         new_color=color_shorts_to_doubles(255,127,0);
         break;
-    case COLOR_ORANGE_PEEL:
+    case COLOR__ORANGE_PEEL:
         new_color=color_shorts_to_doubles(255,159,0);
         break;
-    case COLOR_ORANGE_CARROT:
+    case COLOR__ORANGE_CARROT:
         new_color=color_shorts_to_doubles(233,105,44);
         break;
-    case COLOR_ORANGE_BURNT:
+    case COLOR__ORANGE_BURNT:
         new_color=color_shorts_to_doubles(204,85,0);
         break;
-    case COLOR_PUMPKIN:
+    case COLOR__PUMPKIN:
         new_color=color_shorts_to_doubles(255,117,24);
         break;
 
-    case COLOR_RED:
+    case COLOR__RED:
         new_color=color_shorts_to_doubles(255,0,0);
         break;
-    case COLOR_DARK_RED:
+    case COLOR__DARK_RED:
         new_color=color_shorts_to_doubles(206,22,32);
         break;
-    case COLOR_FLAME:
+    case COLOR__FLAME:
         new_color=color_shorts_to_doubles(226,88,34);
         break;
 
-    case COLOR_PINK:
+    case COLOR__PINK:
         new_color=color_shorts_to_doubles(255,192,203);
         break;
-    case COLOR_ROSE:
+    case COLOR__ROSE:
         new_color=color_shorts_to_doubles(255,0,127);
         break;
-    case COLOR_SHOCKING_PINK:
+    case COLOR__SHOCKING_PINK:
         new_color=color_shorts_to_doubles(252,15,192);
         break;
 
-    case COLOR_PURPLE:
+    case COLOR__PURPLE:
         new_color=color_shorts_to_doubles(128,0,128);
         break;
-    case COLOR_VIOLET:
+    case COLOR__VIOLET:
         new_color=color_shorts_to_doubles(143,0,255);
         break;
-    case COLOR_INDIGO:
+    case COLOR__INDIGO:
         new_color=color_shorts_to_doubles(111,0,255);
         break;
 
-    case COLOR_BLUE:
+    case COLOR__BLUE:
         new_color=color_shorts_to_doubles(0,0,255);
         break;
-    case COLOR_DARK_BLUE:
+    case COLOR__DARK_BLUE:
         new_color=color_shorts_to_doubles(0,0,128);
         break;
-    case COLOR_SKY_BLUE:
+    case COLOR__SKY_BLUE:
         new_color=color_shorts_to_doubles(135,206,250);
         break;
-    case COLOR_UN_BLUE:
+    case COLOR__UN_BLUE:
         new_color=color_shorts_to_doubles(75,146,219);
         break;
 
-    case COLOR_GREEN:
+    case COLOR__GREEN:
         new_color=color_shorts_to_doubles(0,255,0);
         break;
-    case COLOR_JUNGLE:
+    case COLOR__JUNGLE:
         new_color=color_shorts_to_doubles(41,171,135);
         break;
-    case COLOR_SPRING:
+    case COLOR__SPRING:
         new_color=color_shorts_to_doubles(0,255,127);
         break;
 
-    case COLOR_CLOTH:
+    case COLOR__CLOTH:
         new_color=color_shorts_to_doubles(244,240,236);
         break;
-    case COLOR_LEATHER:
+    case COLOR__LEATHER:
         new_color=color_shorts_to_doubles(128,70,27);
         break;
-    case COLOR_COPPER:
+    case COLOR__COPPER:
         new_color=color_shorts_to_doubles(218,138,103);
         break;
-    case COLOR_BRASS:
+    case COLOR__BRASS:
         new_color=color_shorts_to_doubles(197,179,88);
         break;
-    case COLOR_BRONZE:
+    case COLOR__BRONZE:
         new_color=color_shorts_to_doubles(205,127,50);
         break;
-    case COLOR_IRON:
+    case COLOR__IRON:
         new_color=color_shorts_to_doubles(112,128,144);
         break;
-    case COLOR_STEEL:
+    case COLOR__STEEL:
         new_color=color_shorts_to_doubles(229,228,226);
         break;
-    case COLOR_SILVER:
+    case COLOR__SILVER:
         new_color=color_shorts_to_doubles(192,192,192);
         break;
-    case COLOR_GOLD:
+    case COLOR__GOLD:
         new_color=color_shorts_to_doubles(212,175,55);
         break;
-    case COLOR_WOOD:
+    case COLOR__WOOD:
         new_color=color_shorts_to_doubles(150,75,0);
         break;
-    case COLOR_BONE:
+    case COLOR__BONE:
         new_color=color_shorts_to_doubles(255,255,255);
         break;
-    case COLOR_CORPSE:
+    case COLOR__CORPSE:
         new_color=color_shorts_to_doubles(138,51,36);
         break;
-    case COLOR_FOOD:
+    case COLOR__FOOD:
         new_color=color_shorts_to_doubles(149,69,53);
         break;
-    case COLOR_STONE:
+    case COLOR__STONE:
         new_color=color_shorts_to_doubles(128,128,128);
         break;
-    case COLOR_DIRT:
+    case COLOR__DIRT:
         new_color=color_shorts_to_doubles(112,66,20);
         break;
-    case COLOR_GLASS:
+    case COLOR__GLASS:
         new_color=color_shorts_to_doubles(240,248,255);
         break;
-    case COLOR_PAPER:
+    case COLOR__PAPER:
         new_color=color_shorts_to_doubles(245,245,220);
         break;
-    case COLOR_WATER:
+    case COLOR__WATER:
         new_color=color_shorts_to_doubles(0,127,255);
         break;
-    case COLOR_LAVA:
+    case COLOR__LAVA:
         new_color=color_shorts_to_doubles(207,16,32);
         break;
 
-    case COLOR_ICE:
+    case COLOR__ICE:
         new_color=color_shorts_to_doubles(125,249,255);
         break;
-    case COLOR_FROST:
+    case COLOR__FROST:
         new_color=color_shorts_to_doubles(176,224,230);
         break;
 

@@ -408,7 +408,7 @@ void Item::render(vector< vector<bool> >* tile_rendered){
                     render_color=dye;
                 }
 
-                font_small.show((int)(return_absolute_x()-player.camera_x),(int)(return_absolute_y()-player.camera_y),appearance,render_color);
+                font.show((int)(return_absolute_x()-player.camera_x),(int)(return_absolute_y()-player.camera_y),appearance,render_color);
 
                 tile_rendered->at(x)[y]=true;
             }

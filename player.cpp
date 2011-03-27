@@ -64,10 +64,10 @@ Player::Player(){
     //Set the camera's initial location and its dimensions.
     camera_x=0.0;
     camera_y=0.0;
-    ///camera_w=800.0;
-    ///camera_h=420.0;
-    camera_w=640.0;
-    camera_h=300.0;
+    camera_w=800.0;
+    camera_h=420.0;
+    ///camera_w=640.0;
+    ///camera_h=300.0;
 }
 
 void Player::set_inventory(){
@@ -915,20 +915,20 @@ void Player::render(vector< vector<bool> >* tile_rendered){
         if(!tile_rendered->at(x)[y]){
             //Render the player if the player is in the camera bounds:
             if(return_absolute_x()>=camera_x-TILE_SIZE_X && return_absolute_x()<=camera_x+camera_w && return_absolute_y()>=camera_y-TILE_SIZE_Y && return_absolute_y()<=camera_y+camera_h){
-                font_small.show((int)(return_absolute_x()-camera_x),(int)(return_absolute_y()-camera_y),appearance,color);
+                font.show((int)(return_absolute_x()-camera_x),(int)(return_absolute_y()-camera_y),appearance,color);
 
-                short health_bar_color=COLOR_GREEN;
+                short health_bar_color=COLOR__GREEN;
                 if(return_health()>=return_health_max()*0.75){
-                    health_bar_color=COLOR_GREEN;
+                    health_bar_color=COLOR__GREEN;
                 }
                 else if(return_health()>=return_health_max()*0.50 && return_health()<return_health_max()*0.75){
-                    health_bar_color=COLOR_YELLOW;
+                    health_bar_color=COLOR__YELLOW;
                 }
                 else if(return_health()>=return_health_max()*0.25 && return_health()<return_health_max()*0.50){
-                    health_bar_color=COLOR_ORANGE;
+                    health_bar_color=COLOR__ORANGE;
                 }
                 else{
-                    health_bar_color=COLOR_RED;
+                    health_bar_color=COLOR__RED;
                 }
                 double health_bar_width=((double)((double)health/(double)health_max)*100)/6.25;
                 render_rectangle((int)(return_absolute_x()-camera_x),(int)(return_absolute_y()-camera_y),health_bar_width,5,0.75,health_bar_color);
