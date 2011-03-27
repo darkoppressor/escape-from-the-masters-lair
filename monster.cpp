@@ -11,7 +11,7 @@
 using namespace std;
 
 void Monster::set_inventory(){
-    create_money_item();
+    give_item("gold piece",0,'$');
 
     //The maximum number of items.
     int max_items=random_range(1,8);

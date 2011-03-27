@@ -139,13 +139,10 @@ class Creature: public Object{
 
     Creature();
 
-    ///void create_money_item();
-
-    ///void create_light_item();
-
-    ///void create_water_bottle();
-
-    void give_item(std::string item_name);
+    //Adds stack_size passed items to the creature's inventory.
+    //Returns true if the item was added to inventory.
+    //Returns false if the item was not added to inventory.
+    bool give_item(std::string item_name,int stack_size=1,char force_inventory_letter=-1);
 
     //Assign an identifier to the creature.
     void assign_identifier();

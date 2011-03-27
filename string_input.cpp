@@ -122,71 +122,21 @@ void string_input::handle_events(){
                     stack_size=atoi(str_command.c_str());
                 }
 
-                bool item_found=false;
-
-                for(int i=0;i<templates.template_items.size() && !item_found;i++){
-                    for(int n=0;n<templates.template_items[i].size() && !item_found;n++){
-                        if(templates.template_items[i][n].name==item_name){
-                            item_category=i;
-                            item_index=n;
-                        }
-                    }
+                //Attempt to add the item to the player's inventory.
+                if(player.give_item(item_name,stack_size)){
+                    message="Added the ";
+                    message+=item_name;
+                    message+=" x";
+                    ss.clear();ss.str("");ss<<stack_size;message+=ss.str();
+                    message+=" to your inventory.";
                 }
-
-                //If the specified item can be added.
-                if(item_category!=-1 && item_index!=-1 && item_category<templates.template_items.size() && item_index<templates.template_items[item_category].size()){
-                    //If the inventory is not full, or the item is money, add the item.
-                    if(player.inventory.size()<INVENTORY_MAX_SIZE || templates.template_items[item_category][item_index].inventory_letter=='$'){
-                        //Generate the item.
-                        Item temp_item;
-
-                        //Apply the selected template to the item.
-                        temp_item=templates.template_items[item_category][item_index];
-
-                        //Run the item's setup function.
-                        temp_item.setup();
-
-                        //Apply the stack size.
-                        if(temp_item.stackable){
-                            temp_item.stack=stack_size;
-                        }
-
-                        message="Added the ";
-                        message+=temp_item.return_full_name();
-                        message+=" to your inventory.";
-
-                        //Check to see if there is an identical item already in the inventory.
-                        inventory_match match_check=player.check_for_inventory_match(&temp_item);
-
-                        //If there is already an identical item in the inventory, and the item is stackable.
-                        if(match_check.match_found && temp_item.stackable){
-                            player.inventory[match_check.inventory_slot].stack+=temp_item.stack;
-                        }
-                        //If there is no identical item in the inventory, or the item is not stackable.
-                        else{
-                            //Determine an inventory letter for the item.
-
-                            //Assign the item an available inventory letter.
-                            temp_item.inventory_letter=player.assign_inventory_letter();
-
-                            //Add the item to the inventory items vector.
-                            player.inventory.push_back(temp_item);
-
-                            //Assign an identifier to the item.
-                            player.inventory[player.inventory.size()-1].assign_identifier();
-
-                            //Assign an owner identifier to the item.
-                            player.inventory[player.inventory.size()-1].owner=player.identifier;
-                        }
-                    }
-                    //If the inventory is full and the item is not money.
-                    else{
-                        message="Your inventory is full.";
-                    }
-                }
-                //If the specified item cannot be added.
+                //If the item could not be added, the player's inventory must be full.
                 else{
-                    message="The specified item does not exist.";
+                    message="Failed to add ";
+                    message+=item_name;
+                    message+=" x";
+                    ss.clear();ss.str("");ss<<stack_size;message+=ss.str();
+                    message+=" to your inventory.";
                 }
 
                 update_text_log(message.c_str(),true,MESSAGE_SYSTEM);

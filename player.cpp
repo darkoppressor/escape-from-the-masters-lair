@@ -69,11 +69,14 @@ Player::Player(){
 }
 
 void Player::set_inventory(){
-    create_money_item();
+    give_item("gold piece",0,'$');
 
-    create_light_item();
+    give_item("brass lantern");
 
-    create_water_bottle();
+    give_item("bottle of water");
+
+    inventory[1].light_on=true;
+    inventory[1].fuel=inventory[1].fuel_max;
 
     //The maximum number of items.
     int max_items=random_range(1,8);

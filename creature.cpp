@@ -96,119 +96,10 @@ Creature::Creature(){
     }
 }
 
-/**void Creature::create_money_item(){
-    Item temp_item;
+bool Creature::give_item(string item_name,int stack_size,char force_inventory_letter){
+    short item_category=-1;
+    int item_index=-1;
 
-    temp_item.inventory_letter='$';
-    temp_item.stack=0;
-
-    temp_item.category=ITEM_OTHER;
-    temp_item.name="gold piece";
-    temp_item.plural_name="gold pieces";
-    temp_item.writing=" ";
-    temp_item.appearance='$';
-    temp_item.stackable=true;
-    temp_item.weight=0.0;
-    temp_item.monetary_value=1;
-    temp_item.color=COLOR_GOLD;
-    temp_item.material=MATERIAL_GOLD;
-
-    temp_item.damage_min_melee=1;
-    temp_item.damage_max_melee=1;
-
-    temp_item.damage_min_thrown=1;
-    temp_item.damage_max_thrown=1;
-
-    temp_item.damage_min_ranged=0;
-    temp_item.damage_max_ranged=0;
-
-    inventory.push_back(temp_item);
-    inventory[inventory.size()-1].assign_identifier();
-}
-
-void Creature::create_light_item(){
-    Item temp_item;
-
-    temp_item.light_on=true;
-    temp_item.category=ITEM_OTHER;
-    temp_item.name="brass lantern";
-    temp_item.plural_name="brass lanterns";
-    temp_item.writing=" ";
-    temp_item.appearance='\xE8';
-    temp_item.stackable=false;
-    temp_item.weight=59.0;
-    temp_item.monetary_value=1;
-    temp_item.color=COLOR_BRASS;
-    temp_item.material=MATERIAL_BRASS;
-
-    temp_item.damage_min_melee=1;
-    temp_item.damage_max_melee=69;
-
-    temp_item.damage_min_thrown=1;
-    temp_item.damage_max_thrown=35;
-
-    temp_item.damage_min_ranged=0;
-    temp_item.damage_max_ranged=0;
-
-    temp_item.fov_radius=10;
-    temp_item.beam=false;
-    temp_item.fov_angle=90;
-
-    temp_item.effects.push_back(ITEM_EFFECT_USE_LIGHT);
-
-    temp_item.fuel=500;
-    temp_item.fuel_max=500;
-
-    //Assign the item an available inventory letter.
-    temp_item.inventory_letter=assign_inventory_letter();
-
-    inventory.push_back(temp_item);
-
-    //Assign an identifier to the item.
-    inventory[inventory.size()-1].assign_identifier();
-
-    //Assign an owner identifier to the item.
-    inventory[inventory.size()-1].owner=identifier;
-}
-
-void Creature::create_water_bottle(){
-    Item temp_item;
-
-    temp_item.category=ITEM_DRINK;
-    temp_item.name="bottle of water";
-    temp_item.plural_name="bottles of water";
-    temp_item.writing=" ";
-    temp_item.appearance='!';
-    temp_item.stackable=true;
-    temp_item.weight=1.0;
-    temp_item.monetary_value=1;
-    temp_item.color=COLOR_WATER;
-    temp_item.material=MATERIAL_GLASS;
-
-    temp_item.damage_min_melee=1;
-    temp_item.damage_max_melee=1;
-
-    temp_item.damage_min_thrown=1;
-    temp_item.damage_max_thrown=1;
-
-    temp_item.damage_min_ranged=0;
-    temp_item.damage_max_ranged=0;
-
-    temp_item.thirst_quenched=100;
-
-    //Assign the item an available inventory letter.
-    temp_item.inventory_letter=assign_inventory_letter();
-
-    inventory.push_back(temp_item);
-
-    //Assign an identifier to the item.
-    inventory[inventory.size()-1].assign_identifier();
-
-    //Assign an owner identifier to the item.
-    inventory[inventory.size()-1].owner=identifier;
-}*/
-
-void Creature::give_item(string item_name){
     bool item_found=false;
 
     for(int i=0;i<templates.template_items.size() && !item_found;i++){
@@ -223,7 +114,7 @@ void Creature::give_item(string item_name){
     //If the specified item can be added.
     if(item_category!=-1 && item_index!=-1 && item_category<templates.template_items.size() && item_index<templates.template_items[item_category].size()){
         //If the inventory is not full, or the item is money, add the item.
-        if(player.inventory.size()<INVENTORY_MAX_SIZE || templates.template_items[item_category][item_index].inventory_letter=='$'){
+        if(inventory.size()<INVENTORY_MAX_SIZE || templates.template_items[item_category][item_index].inventory_letter=='$'){
             //Generate the item.
             Item temp_item;
 
@@ -238,39 +129,52 @@ void Creature::give_item(string item_name){
                 temp_item.stack=stack_size;
             }
 
-            message="Added the ";
-            message+=temp_item.return_full_name();
-            message+=" to your inventory.";
-
-            //Check to see if there is an identical item already in the inventory.
-            inventory_match match_check=player.check_for_inventory_match(&temp_item);
-
-            //If there is already an identical item in the inventory, and the item is stackable.
-            if(match_check.match_found && temp_item.stackable){
-                player.inventory[match_check.inventory_slot].stack+=temp_item.stack;
-            }
-            //If there is no identical item in the inventory, or the item is not stackable.
-            else{
-                //Determine an inventory letter for the item.
-
-                //Assign the item an available inventory letter.
-                temp_item.inventory_letter=player.assign_inventory_letter();
+            //If an inventory letter is being forced.
+            if(force_inventory_letter!=-1){
+                //Assign the forced inventory letter to the item.
+                temp_item.inventory_letter=force_inventory_letter;
 
                 //Add the item to the inventory items vector.
-                player.inventory.push_back(temp_item);
+                inventory.push_back(temp_item);
 
                 //Assign an identifier to the item.
-                player.inventory[player.inventory.size()-1].assign_identifier();
+                inventory[inventory.size()-1].assign_identifier();
 
                 //Assign an owner identifier to the item.
-                player.inventory[player.inventory.size()-1].owner=player.identifier;
+                inventory[inventory.size()-1].owner=identifier;
             }
-        }
-        //If the inventory is full and the item is not money.
-        else{
-            message="Your inventory is full.";
+            //If no inventory letter is forced.
+            else{
+                //Check to see if there is an identical item already in the inventory.
+                inventory_match match_check=check_for_inventory_match(&temp_item);
+
+                //If there is already an identical item in the inventory, and the item is stackable.
+                if(match_check.match_found && temp_item.stackable){
+                    inventory[match_check.inventory_slot].stack+=temp_item.stack;
+                }
+                //If there is no identical item in the inventory, or the item is not stackable.
+                else{
+                    //Determine an inventory letter for the item.
+
+                    //Assign the item an available inventory letter.
+                    temp_item.inventory_letter=assign_inventory_letter();
+
+                    //Add the item to the inventory items vector.
+                    inventory.push_back(temp_item);
+
+                    //Assign an identifier to the item.
+                    inventory[inventory.size()-1].assign_identifier();
+
+                    //Assign an owner identifier to the item.
+                    inventory[inventory.size()-1].owner=identifier;
+                }
+            }
+
+            return true;
         }
     }
+
+    return false;
 }
 
 void Creature::assign_identifier(){
