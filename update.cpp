@@ -479,6 +479,9 @@ void render(int frame_rate, double ms_per_frame){
         else if(player.current_window==WINDOW_INTERACTIVE_INVENTORY_ALL){
             player.render_inventory(true);
         }
+        else if(player.current_window==WINDOW_ITEM_INFO){
+            player.render_item_info();
+        }
     }
     else{
         player.render_no_game();

@@ -8,12 +8,10 @@
 	writing:
 	appearance:+
 	stackable:1
-	weight:1
+	size:0.75
 	value:1
 	color:paper
 	material:paper
-	melee damage:1-1
-	thrown damage:1-1
 	//<book>
 		//is corpse:0
 	//</book>

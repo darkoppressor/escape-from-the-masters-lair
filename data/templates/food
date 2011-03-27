@@ -2,7 +2,7 @@
 // Food: //
 //*******//
 
-//This food item needs to be the first food item.
+//This needs to be the first food item.
 <item category:food>
 	<DON'T SPAWN>
 	name:corpse
@@ -10,12 +10,10 @@
 	writing:
 	appearance:%
 	stackable:0
-	weight:1
+	size:1.0
 	value:1
 	color:corpse
 	material:corpse
-	melee damage:1-1
-	thrown damage:1-1
 	<food>
 		is corpse:1
 	</food>
@@ -27,13 +25,8 @@
 //	writing:
 //	appearance:%
 //	stackable:1
-//	weight:1
+//  size:0.5
 //	value:1
 //	color:brown
 //	material:food
-//	melee damage:1-1
-//	thrown damage:1-1
-//	<food>
-//		is corpse:0
-//	</food>
 //</item>

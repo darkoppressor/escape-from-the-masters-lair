@@ -8,14 +8,12 @@
 	writing:
 	appearance:!
 	stackable:1
-	weight:1
+	size:0.5
 	value:1
 	color:water
 	material:glass
-	melee damage:1-1
-	thrown damage:1-1
 	<drink>
-		thirst quenched:100
+		thirst quenched:250
 	</drink>
 </item>
 
@@ -25,12 +23,10 @@
 	writing:
 	appearance:!
 	stackable:1
-	weight:1
+	size:0.5
 	value:1
 	color:glass
 	material:glass
-	melee damage:1-1
-	thrown damage:1-1
 	effect:fuel
 	<drink>
 		thirst quenched:5
@@ -43,12 +39,10 @@
 	writing:
 	appearance:!
 	stackable:1
-	weight:1
+	size:0.5
 	value:1
 	color:glass
 	material:glass
-	melee damage:1-1
-	thrown damage:1-1
 	effect:slight healing
 	<drink>
 		thirst quenched:10
@@ -61,12 +55,10 @@
 	writing:
 	appearance:!
 	stackable:1
-	weight:1
+	size:0.5
 	value:1
 	color:glass
 	material:glass
-	melee damage:1-1
-	thrown damage:1-1
 	effect:healing
 	<drink>
 		thirst quenched:10
@@ -79,12 +71,10 @@
 	writing:
 	appearance:!
 	stackable:1
-	weight:1
+	size:0.5
 	value:1
 	color:glass
 	material:glass
-	melee damage:1-1
-	thrown damage:1-1
 	effect:considerable healing
 	<drink>
 		thirst quenched:10

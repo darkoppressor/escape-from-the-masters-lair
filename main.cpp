@@ -13,6 +13,7 @@
 #include "save_load.h"
 #include "quit.h"
 #include "templates.h"
+#include "material_properties.h"
 
 using namespace std;
 
@@ -174,6 +175,9 @@ int main(int argc, char* args[]){
         fprintf(stderr,"Failed to load 'data/text/commands.txt.'\n");
         return 1;
     }
+
+    prepare_specific_gravities();
+    prepare_densities();
 
     if(!templates.load_templates()){
         return 1;

@@ -12,12 +12,10 @@
 		writing:
 		appearance:)
 		stackable:0
-		weight:7
+		size:1.0
 		value:1
 		color:iron
 		material:iron
-		melee damage:24-31
-		thrown damage:1-1
 		<weapon>
 			governing weapon skill:bladed weapons
 			weapon category:short blades

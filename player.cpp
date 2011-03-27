@@ -215,6 +215,9 @@ void Player::handle_input(){
                     else if(current_window==WINDOW_INTERACTIVE_INVENTORY_ALL){
                         handle_input_interactive_inventory_all();
                     }
+                    else if(current_window==WINDOW_ITEM_INFO){
+                        handle_input_item_info();
+                    }
                     //If no windows are open.
                     else{
 
@@ -452,6 +455,13 @@ void Player::handle_input(){
                             update_text_log("What do you want to read? [?*]",is_player);
 
                             input_inventory=INVENTORY_COMMAND_READ_ITEM;
+                        }
+
+                        //Item info.
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'e'){
+                            update_text_log("What do you want to examine? [?*]",is_player);
+
+                            input_inventory=INVENTORY_COMMAND_ITEM_INFO;
                         }
 
                         //Inventory letter.
@@ -698,6 +708,11 @@ void Player::move(){
 
         else if(command_standard!=COMMAND_NONE){
             execute_command(command_standard);
+        }
+
+        //If an item's info has been requested.
+        if(item_info!=-1){
+            current_window=WINDOW_ITEM_INFO;
         }
 
         //Movement has been handled, now clear the move state.

@@ -70,6 +70,7 @@ class Player: public Creature{
     void handle_input_get_focused_skills();
     void handle_input_interactive_inventory_relevant();
     void handle_input_interactive_inventory_all();
+    void handle_input_item_info();
 
     //Render the windows.
     void render_inventory(bool all_categories);
@@ -79,6 +80,7 @@ class Player: public Creature{
     void render_get_name();
     void render_get_race();
     void render_get_focused_skills();
+    void render_item_info();
 
     //Returns true if the passed category
     bool render_inventory_category(short category);

@@ -41,6 +41,10 @@ class Creature: public Object{
     //A standard command to be executed on the next call to move().
     short command_standard;
 
+    //Used to store the index of the inventory item being examined in the item info window.
+    //Only used by the player.
+    int item_info;
+
     //If true, the creature has given some input that should initiate a call to turn().
     //Only used by the Player class.
     ///This should really be renamed initiate_turn.
@@ -135,11 +139,13 @@ class Creature: public Object{
 
     Creature();
 
-    void create_money_item();
+    ///void create_money_item();
 
-    void create_light_item();
+    ///void create_light_item();
 
-    void create_water_bottle();
+    ///void create_water_bottle();
+
+    void give_item(std::string item_name);
 
     //Assign an identifier to the creature.
     void assign_identifier();

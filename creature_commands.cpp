@@ -1399,6 +1399,13 @@ void Creature::check_command_inventory(char inventory_letter){
             inventory_input_state=0;
         }
     }
+
+    else if(command==INVENTORY_COMMAND_ITEM_INFO){
+        input_inventory=0;
+        inventory_input_state=0;
+
+        item_info=inventory_item_index;
+    }
 }
 
 void Creature::execute_command_inventory(char inventory_letter){

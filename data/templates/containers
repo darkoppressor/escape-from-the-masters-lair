@@ -8,12 +8,10 @@
 	writing:
 	appearance:(
 	stackable:0
-	weight:8
+	size:6.0
 	value:1
 	color:cloth
 	material:cloth
-	melee damage:1-8
-	thrown damage:1-4
 	//<container>
 		//is corpse:0
 	//</container>

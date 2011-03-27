@@ -8,12 +8,10 @@
 	writing:
 	appearance:$
 	stackable:1
-	weight:0
+	size:0.00055
 	value:1
 	color:gold
 	material:gold
-	melee damage:1-1
-	thrown damage:1-1
 </item>
 
 <item category:other>
@@ -22,12 +20,10 @@
 	writing:
 	appearance:è
 	stackable:0
-	weight:59
+	size:7.0
 	value:1
 	color:brass
 	material:brass
-	melee damage:1-69
-	thrown damage:1-35
 	light radius:10
 	light beam:0
 	beam angle:90

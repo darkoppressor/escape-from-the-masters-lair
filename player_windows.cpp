@@ -387,6 +387,15 @@ void Player::handle_input_interactive_inventory_relevant(){
     }
 }
 
+void Player::handle_input_item_info(){
+    //Close the window.
+    if(event.key.keysym.sym==SDLK_ESCAPE || event.key.keysym.sym==SDLK_SPACE){
+        current_window=WINDOW_NONE;
+
+        item_info=-1;
+    }
+}
+
 void Player::render_no_game(){
     //If no player name has yet been entered.
     if(name=="\x1F"){
@@ -754,6 +763,13 @@ void Player::render_levelup(){
     msg+="\xA";
 
     font_small.show(330,60,msg,COLOR_WHITE);
+}
+
+void Player::render_item_info(){
+    ss.clear();ss.str("");ss<<inventory[item_info].return_full_name();ss<<"\xA";msg=ss.str();
+    ss.clear();ss.str("");ss<<"Weight: ";ss<<inventory[item_info].weight;ss<<"\xA";msg+=ss.str();
+
+    font_small.show(0,0,msg,COLOR_WHITE);
 }
 
 void Player::render_stats(){

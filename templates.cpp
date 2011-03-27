@@ -4,6 +4,7 @@
 #include "templates.h"
 #include "enumerations.h"
 #include "render.h"
+#include "material_properties.h"
 
 using namespace std;
 using namespace boost::algorithm;
@@ -740,7 +741,17 @@ void Templates::load_template_item(short category){
 
     Item temp_item;
 
+    temp_item.category=category;
+
     temp_item.spawnable=true;
+
+    temp_item.weight=-1.0;
+    temp_item.defense=-1;
+    temp_item.damage_max_melee=-1;
+    temp_item.damage_max_thrown=-1;
+    temp_item.damage_max_ranged=-1;
+
+    double temp_item_size=0.0;
 
     //As long as we haven't reached the end of the file.
     while(!load.eof()){
@@ -756,6 +767,7 @@ void Templates::load_template_item(short category){
         string color="color:";
         string stackable="stackable:";
         string weight="weight:";
+        string size="size:";
         string monetary_value="value:";
         string material="material:";
         string damage_melee="melee damage:";
@@ -842,7 +854,14 @@ void Templates::load_template_item(short category){
             //Clear the data name.
             line.erase(0,weight.length());
 
-            temp_item.weight=atoi(line.c_str());
+            temp_item.weight=atof(line.c_str());
+        }
+        //Size.
+        else if(icontains(line,size)){
+            //Clear the data name.
+            line.erase(0,size.length());
+
+            temp_item_size=atof(line.c_str());
         }
         //Monetary value.
         else if(icontains(line,monetary_value)){
@@ -1016,11 +1035,62 @@ void Templates::load_template_item(short category){
 
         //If the line ends the item.
         else if(icontains(line,"</item>")){
+            //As long as no weight was set.
+            if(temp_item.weight==-1.0){
+                temp_item.weight=temp_item_size*specific_gravities[temp_item.material];
+            }
+
+            //If the item is armor and no defense was set.
+            if(temp_item.category==ITEM_ARMOR && temp_item.defense==-1){
+                temp_item.defense=temp_item_size*densities[temp_item.material];
+            }
+
+            //If no melee damage max was set.
+            if(temp_item.damage_max_melee==-1){
+                //If the item is a melee weapon.
+                if(temp_item.category==ITEM_WEAPON && temp_item.weapon_category>=WEAPON_SHORT_BLADES && temp_item.weapon_category<=WEAPON_STAVES){
+                    temp_item.damage_min_melee=temp_item_size*densities[temp_item.material]*3.0;
+                    temp_item.damage_max_melee=temp_item_size*densities[temp_item.material]*4.0;
+                }
+                //If the item is not a melee weapon.
+                else{
+                    temp_item.damage_min_melee=1;
+                    temp_item.damage_max_melee=(temp_item_size*temp_item.weight)/6.0;
+                }
+            }
+
+            //If no thrown damage max was set.
+            if(temp_item.damage_max_thrown==-1){
+                //If the item is a thrown weapon.
+                if(temp_item.category==ITEM_WEAPON && temp_item.weapon_category==WEAPON_THROWN){
+                    temp_item.damage_min_thrown=temp_item_size*densities[temp_item.material]*3.0;
+                    temp_item.damage_max_thrown=temp_item_size*densities[temp_item.material]*4.0;
+                }
+                //If the item is not a thrown weapon.
+                else{
+                    temp_item.damage_min_thrown=1;
+                    temp_item.damage_max_thrown=temp_item.damage_max_melee/2.0;
+                }
+            }
+
+            //If no ranged damage max was set.
+            if(temp_item.damage_max_ranged==-1){
+                //If the item is a ranged weapon.
+                if(temp_item.category==ITEM_WEAPON && temp_item.weapon_category>=WEAPON_BOWS && temp_item.weapon_category<=WEAPON_SLINGS){
+                    temp_item.damage_min_ranged=temp_item_size*densities[temp_item.material]*3.0;
+                    temp_item.damage_max_ranged=temp_item_size*densities[temp_item.material]*4.0;
+                }
+                //If the item is not a ranged weapon.
+                else{
+                    temp_item.damage_min_ranged=0;
+                    temp_item.damage_max_ranged=0;
+                }
+            }
+
             ///Ensure the item is legitimate.
 
             //Add this item to its templates vector.
             template_items[category].push_back(Item());
-            temp_item.category=category;
             template_items[category][template_items[category].size()-1]=temp_item;
 
             return;

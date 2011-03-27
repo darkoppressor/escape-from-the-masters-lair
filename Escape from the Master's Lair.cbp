@@ -133,6 +133,8 @@
 		<Unit filename="light_data.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="main.h" />
+		<Unit filename="material_properties.cpp" />
+		<Unit filename="material_properties.h" />
 		<Unit filename="max_objects.h" />
 		<Unit filename="message_log.cpp" />
 		<Unit filename="message_log.h" />
