@@ -397,6 +397,13 @@ void Player::handle_input_item_info(){
     }
 }
 
+void Player::handle_input_death(){
+    //Close the window.
+    if(event.key.keysym.sym==SDLK_ESCAPE || event.key.keysym.sym==SDLK_SPACE){
+        quit_game();
+    }
+}
+
 void Player::render_no_game(){
     //If no player name has yet been entered.
     if(name=="\x1F"){
@@ -797,6 +804,53 @@ void Player::render_item_info(){
     }
 
     font_small.show(5,5+font_small.spacing_y,msg,COLOR_WHITE);
+}
+
+void Player::render_death(){
+    for(int i=font.w/256;i<main_window.SCREEN_WIDTH-font.w/256;i+=font.w/256){
+        font.show(i,0,"\xCD",COLOR_WHITE);
+    }
+
+    for(int i=font.w/256;i<main_window.SCREEN_WIDTH-font.w/256;i+=font.w/256){
+        font.show(i,main_window.SCREEN_HEIGHT-font.h,"\xCD",COLOR_WHITE);
+    }
+
+    for(int i=font.h;i<main_window.SCREEN_HEIGHT-font.h*2;i+=font.h){
+        font.show(0,i,"\xBA",COLOR_WHITE);
+    }
+
+    for(int i=font.h;i<main_window.SCREEN_HEIGHT-font.h*2;i+=font.h){
+        font.show(main_window.SCREEN_WIDTH-font.w/256,i,"\xBA",COLOR_WHITE);
+    }
+
+    font.show(0,main_window.SCREEN_HEIGHT-font.h*2,"\xBA",COLOR_WHITE);
+    font.show(main_window.SCREEN_WIDTH-font.w/256,main_window.SCREEN_HEIGHT-font.h*2,"\xBA",COLOR_WHITE);
+
+    font.show(0,0,"\xC9",COLOR_WHITE);
+    font.show(main_window.SCREEN_WIDTH-font.w/256,0,"\xBB",COLOR_WHITE);
+    font.show(0,main_window.SCREEN_HEIGHT-font.h,"\xC8",COLOR_WHITE);
+    font.show(main_window.SCREEN_WIDTH-font.w/256,main_window.SCREEN_HEIGHT-font.h,"\xBC",COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"Lair of the Master";msg=ss.str();
+    font_small.show(60,45,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"Adventurer Reclamation Department";msg=ss.str();
+    font_small.show(240,45,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"Death Certificate";msg=ss.str();
+    font.show((main_window.SCREEN_WIDTH-msg.length()*font.spacing_x)/2.0,70,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<name;ss<<"\xA";msg=ss.str();
+    font_small.show(5+font_small.spacing_x*17,5+font_small.spacing_y*6,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<inventory[0].monetary_value*inventory[0].stack;ss<<" gold";ss<<"\xA";msg=ss.str();
+    font_small.show(5+font_small.spacing_x*17,5+font_small.spacing_y*7,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<death_message;ss<<"\xA";msg=ss.str();
+    font_small.show(5+font_small.spacing_x*17,5+font_small.spacing_y*8,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<end_date;ss<<"\xA";msg=ss.str();
+    font_small.show(5+font_small.spacing_x*17,5+font_small.spacing_y*9,msg,COLOR_WHITE);
 }
 
 void Player::render_stats(){

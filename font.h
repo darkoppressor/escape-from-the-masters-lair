@@ -18,13 +18,13 @@ class BitmapFont{
     //The font surface.
     image_data bitmap_font_texture;
 
-    //The width and height of the entire texture.
-    double w,h;
-
     //The individual characters.
     SDL_Rect chars[256];
 
     public:
+
+    //The width and height of the entire texture.
+    double w,h;
 
     //Character spacing.
     short spacing_x;

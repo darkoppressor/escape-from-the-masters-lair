@@ -398,6 +398,8 @@ void Creature::die(short cause_of_death,string killer,string killer_item){
         message="You die...";
 
         player.save_game_log_entry(cause_of_death,killer,killer_item);
+
+        player.current_window=WINDOW_DEATH;
     }
     else{
         if(cause_of_death==CAUSE_OF_DEATH_MELEE){

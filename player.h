@@ -39,6 +39,9 @@ class Player: public Creature{
     //Keeps track of what item categories are to be rendered on the inventory window.
     std::vector<short> inventory_categories_to_render;
 
+    //Used to display the death message in the death window.
+    std::string death_message;
+
     Player();
 
     //Setup the player's starting inventory.
@@ -71,6 +74,7 @@ class Player: public Creature{
     void handle_input_interactive_inventory_relevant();
     void handle_input_interactive_inventory_all();
     void handle_input_item_info();
+    void handle_input_death();
 
     //Render the windows.
     void render_inventory(bool all_categories);
@@ -81,6 +85,7 @@ class Player: public Creature{
     void render_get_race();
     void render_get_focused_skills();
     void render_item_info();
+    void render_death();
 
     //Returns true if the passed category
     bool render_inventory_category(short category);
@@ -96,6 +101,9 @@ class Player: public Creature{
 
     //The starting date/time for this game.
     std::string start_date;
+
+    //The ending date/time for this game.
+    std::string end_date;
 
     int turn;
 

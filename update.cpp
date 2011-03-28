@@ -471,7 +471,7 @@ void render(int frame_rate, double ms_per_frame){
             player.render_levelup();
         }
         else if(player.current_window==WINDOW_DEATH){
-            ///player.render_death();
+            player.render_death();
         }
         else if(player.current_window==WINDOW_INTERACTIVE_INVENTORY_RELEVANT){
             player.render_inventory(false);

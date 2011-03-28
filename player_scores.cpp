@@ -21,6 +21,8 @@ void Player::save_game_log_entry(short cause_of_death,string killer,string kille
         tm_now=localtime(&now);
         strftime(buff,sizeof buff,"%Y-%m-%d %H:%M:%S",tm_now);
 
+        end_date=buff;
+
         //Calculate score.
 
         int score=0;
@@ -40,7 +42,7 @@ void Player::save_game_log_entry(short cause_of_death,string killer,string kille
         save_log<<"mana:"<<mana<<"/"<<mana_max<<"\n";
         ///save_log<<"deaths:"<<deaths<<"\n";
         save_log<<"game start:"<<start_date<<"\n";
-        save_log<<"game end:"<<buff<<"\n";
+        save_log<<"game end:"<<end_date<<"\n";
         ///save_log<<"class:"<<class_name<<"\n";
         save_log<<"race:"<<race_name<<"\n";
 
@@ -55,17 +57,29 @@ void Player::save_game_log_entry(short cause_of_death,string killer,string kille
         }
 
         if(cause_of_death==CAUSE_OF_DEATH_MELEE){
-            save_log<<"Killed by a "<<killer<<"."<<"\n";
+            death_message="Killed by a ";
+            death_message+=killer;
+            death_message+=".";
         }
         else if(cause_of_death==CAUSE_OF_DEATH_THROWN){
-            save_log<<"Killed by a "<<killer_item<<" thrown by a "<<killer<<"."<<"\n";
+            death_message="Killed by a ";
+            death_message+=killer_item;
+            death_message+=" thrown by a ";
+            death_message+=killer;
+            death_message+=".";
         }
         else if(cause_of_death==CAUSE_OF_DEATH_RANGED){
-            save_log<<"Killed by a "<<killer_item<<" fired by a "<<killer<<"."<<"\n";
+            death_message="Killed by a ";
+            death_message+=killer_item;
+            death_message+=" fired by a ";
+            death_message+=killer;
+            death_message+=".";
         }
         else if(cause_of_death==CAUSE_OF_DEATH_THIRST){
-            save_log<<"Died of thirst."<<"\n";
+            death_message="Died of thirst.";
         }
+
+        save_log<<death_message<<"\n";
 
         save_log<<"\n\n";
 

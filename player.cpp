@@ -41,6 +41,11 @@ Player::Player(){
 
     get_race="";
 
+    death_message="";
+
+    start_date="";
+    end_date="";
+
     //Chat stuff:
 
     chat_mode=false;
@@ -217,7 +222,7 @@ void Player::handle_input(){
                         handle_input_levelup();
                     }
                     else if(current_window==WINDOW_DEATH){
-                        ///handle_input_death();
+                        handle_input_death();
                     }
                     else if(current_window==WINDOW_INTERACTIVE_INVENTORY_RELEVANT){
                         handle_input_interactive_inventory_relevant();

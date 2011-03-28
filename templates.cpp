@@ -1037,12 +1037,12 @@ void Templates::load_template_item(short category){
         else if(icontains(line,"</item>")){
             //As long as no weight was set.
             if(temp_item.weight==-1.0){
-                temp_item.weight=temp_item_size*specific_gravities[temp_item.material];
+                temp_item.weight=(temp_item_size*specific_gravities[temp_item.material])/2.0;
             }
 
             //If the item is armor and no defense was set.
             if(temp_item.category==ITEM_ARMOR && temp_item.defense==-1){
-                temp_item.defense=temp_item_size*densities[temp_item.material];
+                temp_item.defense=(temp_item_size*densities[temp_item.material])/2.0;
             }
 
             //If no melee damage max was set.

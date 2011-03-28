@@ -11,7 +11,7 @@ Object::Object(){
     identifier=0;
     x=0;
     y=0;
-    name=" ";
+    name="";
     appearance="";
     color=COLOR_WHITE;
     weight=1.0;

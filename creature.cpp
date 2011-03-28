@@ -32,7 +32,7 @@ Creature::Creature(){
     gender=GENDER_MALE;
 
     race=-1;
-    race_name=" ";
+    race_name="";
 
     health_max=100;
     health=health_max;
