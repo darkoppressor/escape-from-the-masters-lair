@@ -34,9 +34,36 @@ void Game::new_game(){
     char buff[BUFSIZ];
     now=time(NULL);
     tm_now=localtime(&now);
-    strftime(buff,sizeof buff,"%Y-%m-%d %H:%M:%S",tm_now);
 
-    player.start_date=buff;
+    strftime(buff,sizeof buff,"%d",tm_now);
+
+    string number_ending="";
+
+    if(atoi(buff)==11 || atoi(buff)==12 || atoi(buff)==13){
+        number_ending="th";
+    }
+    else if(atoi(buff)%10==1){
+        number_ending="st";
+    }
+    else if(atoi(buff)%10==2){
+        number_ending="nd";
+    }
+    else if(atoi(buff)%10==3){
+        number_ending="rd";
+    }
+    else{
+        number_ending="th";
+    }
+
+    player.start_date="the ";
+    player.start_date+=buff;
+    player.start_date+=number_ending;
+    strftime(buff,sizeof buff," day of %B, %Y",tm_now);
+    player.start_date+=buff;
+
+    strftime(buff,sizeof buff,"%H:%M:%S",tm_now);
+
+    player.start_time=buff;
 
     player.game_in_progress=true;
     player.current_window=WINDOW_NONE;

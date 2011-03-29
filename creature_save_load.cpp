@@ -29,6 +29,8 @@ string Creature::return_save_data(){
 
     save<<race_name<<"\n";
 
+    save<<class_name<<"\n";
+
     save<<health<<"\n";
     save<<health_max<<"\n";
 
@@ -129,6 +131,9 @@ void Creature::load_data(stringstream* load){
 
     getline(*load,line);
     race_name=line;
+
+    getline(*load,line);
+    class_name=line;
 
     getline(*load,line);
     health=atoi(line.c_str());

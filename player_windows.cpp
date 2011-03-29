@@ -831,26 +831,64 @@ void Player::render_death(){
     font.show(0,main_window.SCREEN_HEIGHT-font.h,"\xC8",COLOR_WHITE);
     font.show(main_window.SCREEN_WIDTH-font.w/256,main_window.SCREEN_HEIGHT-font.h,"\xBC",COLOR_WHITE);
 
-    ss.clear();ss.str("");ss<<"Lair of the Master";msg=ss.str();
-    font_small.show(60,45,msg,COLOR_WHITE);
+    ss.clear();ss.str("");ss<<"Lair of Loathing";msg=ss.str();
+    font_small.show(170,45,msg,COLOR_WHITE);
 
-    ss.clear();ss.str("");ss<<"Adventurer Reclamation Department";msg=ss.str();
-    font_small.show(240,45,msg,COLOR_WHITE);
+    ss.clear();ss.str("");ss<<"Adventurer Reclamations Department";msg=ss.str();
+    font_small.show(500,45,msg,COLOR_WHITE);
 
     ss.clear();ss.str("");ss<<"Death Certificate";msg=ss.str();
-    font.show((main_window.SCREEN_WIDTH-msg.length()*font.spacing_x)/2.0,70,msg,COLOR_WHITE);
+    font.show((main_window.SCREEN_WIDTH-msg.length()*font.spacing_x)/2.0,80,msg,COLOR_WHITE);
 
-    ss.clear();ss.str("");ss<<name;ss<<"\xA";msg=ss.str();
-    font_small.show(5+font_small.spacing_x*17,5+font_small.spacing_y*6,msg,COLOR_WHITE);
+    ss.clear();ss.str("");ss<<"I, Aesop Thanatos, Clerk of the Department of Adventurer Reclamations";msg=ss.str();
+    font_small.show(240,95+font.spacing_y,msg,COLOR_WHITE);
 
-    ss.clear();ss.str("");ss<<inventory[0].monetary_value*inventory[0].stack;ss<<" gold";ss<<"\xA";msg=ss.str();
-    font_small.show(5+font_small.spacing_x*17,5+font_small.spacing_y*7,msg,COLOR_WHITE);
+    ss.clear();ss.str("");ss<<"in the Lair of Loathing, it being an office of record, do hereby certify that the records in my";msg=ss.str();
+    font_small.show(50,95+font.spacing_y+font_small.spacing_y,msg,COLOR_WHITE);
 
-    ss.clear();ss.str("");ss<<death_message;ss<<"\xA";msg=ss.str();
-    font_small.show(5+font_small.spacing_x*17,5+font_small.spacing_y*8,msg,COLOR_WHITE);
+    ss.clear();ss.str("");ss<<"office show that ";ss<<name;ss<<" died at ";ss<<end_time;ss<<" on dungeon level ";ss<<current_level+1;ss<<", having achieved a maximum";msg=ss.str();
+    font_small.show(50,95+font.spacing_y+font_small.spacing_y*2,msg,COLOR_WHITE);
 
-    ss.clear();ss.str("");ss<<end_date;ss<<"\xA";msg=ss.str();
-    font_small.show(5+font_small.spacing_x*17,5+font_small.spacing_y*9,msg,COLOR_WHITE);
+    ss.clear();ss.str("");ss<<"dungeon level of ";ss<<max_level+1;ss<<", on ";ss<<end_date;ss<<".";msg=ss.str();
+    font_small.show(50,95+font.spacing_y+font_small.spacing_y*3,msg,COLOR_WHITE);
+
+    string gender_string="";
+    if(gender==GENDER_MALE){
+        gender_string="male";
+    }
+    else if(gender==GENDER_FEMALE){
+        gender_string="female";
+    }
+    else if(gender==GENDER_NEUTRAL){
+        gender_string="neutral";
+    }
+
+    ss.clear();ss.str("");ss<<"Gender: ";ss<<gender_string;msg=ss.str();
+    font_small.show(50,95+font.spacing_y+font_small.spacing_y*5,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"Age: ";ss<<turn;ss<<" turns";msg=ss.str();
+    font_small.show(50,95+font.spacing_y+font_small.spacing_y*6,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"Cause of death: ";ss<<death_message;msg=ss.str();
+    font_small.show(50,95+font.spacing_y+font_small.spacing_y*7,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"Class: ";ss<<class_name;msg=ss.str();
+    font_small.show(50,95+font.spacing_y+font_small.spacing_y*8,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"Level: ";ss<<experience_level;msg=ss.str();
+    font_small.show(50,95+font.spacing_y+font_small.spacing_y*9,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"Maximum health at time of death: ";ss<<health_max;msg=ss.str();
+    font_small.show(50,95+font.spacing_y+font_small.spacing_y*10,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"Maximum mana at time of death: ";ss<<mana_max;msg=ss.str();
+    font_small.show(50,95+font.spacing_y+font_small.spacing_y*11,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"Gold found on person: ";ss<<inventory[0].monetary_value*inventory[0].stack;msg=ss.str();
+    font_small.show(50,95+font.spacing_y+font_small.spacing_y*12,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"Final score: ";ss<<score;msg=ss.str();
+    font_small.show(50,95+font.spacing_y+font_small.spacing_y*13,msg,COLOR_WHITE);
 }
 
 void Player::render_stats(){

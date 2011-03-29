@@ -34,6 +34,8 @@ Creature::Creature(){
     race=-1;
     race_name="";
 
+    class_name="";
+
     health_max=100;
     health=health_max;
 

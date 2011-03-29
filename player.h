@@ -99,11 +99,21 @@ class Player: public Creature{
     //The currently displayed window.
     short current_window;
 
-    //The starting date/time for this game.
+    //The starting date for this game.
     std::string start_date;
 
-    //The ending date/time for this game.
+    //The starting time for this game.
+    std::string start_time;
+
+    //The ending date for this game.
     std::string end_date;
+
+    //The ending time for this game.
+    std::string end_time;
+
+    //The final score of a game.
+    //Only used when the game has ended.
+    int score;
 
     int turn;
 

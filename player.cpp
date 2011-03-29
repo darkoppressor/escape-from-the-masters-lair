@@ -44,7 +44,11 @@ Player::Player(){
     death_message="";
 
     start_date="";
+    start_time="";
     end_date="";
+    end_time="";
+
+    score=0;
 
     //Chat stuff:
 

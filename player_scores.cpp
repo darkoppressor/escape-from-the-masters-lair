@@ -19,13 +19,40 @@ void Player::save_game_log_entry(short cause_of_death,string killer,string kille
         char buff[BUFSIZ];
         now=time(NULL);
         tm_now=localtime(&now);
-        strftime(buff,sizeof buff,"%Y-%m-%d %H:%M:%S",tm_now);
 
-        end_date=buff;
+        strftime(buff,sizeof buff,"%d",tm_now);
+
+        string number_ending="";
+
+        if(atoi(buff)==11 || atoi(buff)==12 || atoi(buff)==13){
+            number_ending="th";
+        }
+        else if(atoi(buff)%10==1){
+            number_ending="st";
+        }
+        else if(atoi(buff)%10==2){
+            number_ending="nd";
+        }
+        else if(atoi(buff)%10==3){
+            number_ending="rd";
+        }
+        else{
+            number_ending="th";
+        }
+
+        end_date="the ";
+        end_date+=buff;
+        end_date+=number_ending;
+        strftime(buff,sizeof buff," day of %B, %Y",tm_now);
+        end_date+=buff;
+
+        strftime(buff,sizeof buff,"%H:%M:%S",tm_now);
+
+        end_time=buff;
 
         //Calculate score.
 
-        int score=0;
+        score=0;
 
         //Add in all gold and the gold value of all inventory items.
         for(int i=0;i<inventory.size();i++){
@@ -41,9 +68,9 @@ void Player::save_game_log_entry(short cause_of_death,string killer,string kille
         save_log<<"health:"<<health<<"/"<<health_max<<"\n";
         save_log<<"mana:"<<mana<<"/"<<mana_max<<"\n";
         ///save_log<<"deaths:"<<deaths<<"\n";
-        save_log<<"game start:"<<start_date<<"\n";
-        save_log<<"game end:"<<end_date<<"\n";
-        ///save_log<<"class:"<<class_name<<"\n";
+        save_log<<"game start:"<<start_date<<" at "<<start_time<<"\n";
+        save_log<<"game end:"<<end_date<<" at "<<end_time<<"\n";
+        save_log<<"class:"<<class_name<<"\n";
         save_log<<"race:"<<race_name<<"\n";
 
         if(gender==GENDER_MALE){

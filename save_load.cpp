@@ -71,6 +71,7 @@ void save_game(){
     //Save the player's data from Player.
     save<<player.turn<<"\n";
     save<<player.start_date<<"\n";
+    save<<player.start_time<<"\n";
 
     //******************//
     // Save level data. //
@@ -231,6 +232,9 @@ void load_game(){
 
         getline(load,line);
         player.start_date=line;
+
+        getline(load,line);
+        player.start_time=line;
 
         //******************//
         // Load level data. //

@@ -68,6 +68,8 @@ class Creature: public Object{
     short race;
     std::string race_name;
 
+    std::string class_name;
+
     int health;
     int health_max;
 
