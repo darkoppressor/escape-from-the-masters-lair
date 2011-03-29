@@ -295,7 +295,7 @@ void Creature::attack_melee(Creature* target){
                     }
                     //If the item is not a melee weapon.
                     else{
-                        outcome=" whacks you ";
+                        outcome+=" whacks you ";
                     }
                 }
                 //If the item being wielded is not a weapon.
@@ -303,7 +303,7 @@ void Creature::attack_melee(Creature* target){
                     outcome+=" whacks you ";
                 }
 
-                outcome+=" with its ";
+                outcome+="with its ";
                 outcome+=inventory[item_identifier].return_full_name(1);
                 outcome+="!";
             }
@@ -331,7 +331,7 @@ void Creature::attack_melee(Creature* target){
                     }
                     //If the item is not a melee weapon.
                     else{
-                        outcome=" whacks you ";
+                        outcome+=" whacks you ";
                     }
                 }
                 //If the item being wielded is not a weapon.
@@ -339,7 +339,7 @@ void Creature::attack_melee(Creature* target){
                     outcome+=" whacks you ";
                 }
 
-                outcome+=" with its ";
+                outcome+="with its ";
                 outcome+=inventory[item_identifier].return_full_name(1);
                 outcome+="!";
             }
@@ -351,7 +351,7 @@ void Creature::attack_melee(Creature* target){
 
                 outcome="The ";
                 outcome+=return_full_name();
-                outcome=" attacks you with its ";
+                outcome+=" attacks you with its ";
                 outcome+=inventory[item_identifier_right].return_full_name(1);
                 outcome+=" and its ";
                 outcome+=inventory[item_identifier_left].return_full_name(1);

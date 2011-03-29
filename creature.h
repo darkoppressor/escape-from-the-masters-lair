@@ -152,6 +152,9 @@ class Creature: public Object{
     //Return the creature's identifier.
     void return_identifier();
 
+    //Drops the item at item_index in inventory.
+    void drop_item(int item_index);
+
     //Determines which item is equipped in an equipment slot.
     int index_of_item_in_slot(short equip_slot);
 

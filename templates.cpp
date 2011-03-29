@@ -1128,6 +1128,7 @@ void Templates::load_template_item_weapon(Item* temp_item){
 
         string governing_skill_weapon="governing weapon skill:";
         string weapon_category="weapon category:";
+        string launcher="launcher:";
 
         //Grab the next line of the file.
         getline(load,line);
@@ -1155,6 +1156,13 @@ void Templates::load_template_item_weapon(Item* temp_item){
             line.erase(0,weapon_category.length());
 
             temp_item->weapon_category=string_to_weapon_category(line);
+        }
+        //Launcher.
+        else if(icontains(line,launcher)){
+            //Clear the data name.
+            line.erase(0,launcher.length());
+
+            temp_item->launcher=string_to_weapon_category(line);
         }
 
         //If the line ends the weapon.

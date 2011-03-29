@@ -62,6 +62,8 @@ Item::Item(){
 
     weapon_category=WEAPON_SHORT_BLADES;
 
+    launcher=WEAPON_THROWN;
+
     //Armor-specific//
 
     armor_category=ARMOR_CHEST;

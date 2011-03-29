@@ -599,11 +599,13 @@ void Creature::execute_movement(short check_x,short check_y){
 
             //Exercise the armor skill.
 
-            points_gained=1;
-            inventory_weight=return_inventory_weight(ITEM_ARMOR);
-            //Apply the encumbrance bonus to the armor skill increase.
-            points_gained+=inventory_weight/50.0;
-            gain_skill_experience(SKILL_ARMOR,points_gained);
+            if(rc_exercise_skill_armor()){
+                points_gained=1;
+                inventory_weight=return_inventory_weight(ITEM_ARMOR);
+                //Apply the encumbrance bonus to the armor skill increase.
+                points_gained+=inventory_weight/50.0;
+                gain_skill_experience(SKILL_ARMOR,points_gained);
+            }
 
             //Move the creature.
             x=check_x;

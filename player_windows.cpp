@@ -854,13 +854,13 @@ void Player::render_death(){
 
     string gender_string="";
     if(gender==GENDER_MALE){
-        gender_string="male";
+        gender_string="Male";
     }
     else if(gender==GENDER_FEMALE){
-        gender_string="female";
+        gender_string="Female";
     }
     else if(gender==GENDER_NEUTRAL){
-        gender_string="neutral";
+        gender_string="Neutral";
     }
 
     ss.clear();ss.str("");ss<<"Gender: ";ss<<gender_string;msg=ss.str();

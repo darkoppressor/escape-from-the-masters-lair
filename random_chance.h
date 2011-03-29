@@ -39,6 +39,10 @@ bool rc_thirst_faint();
 
 bool rc_thirst_lose_health();
 
+//Skills//
+
+bool rc_exercise_skill_armor();
+
 //Level generation//
 
 bool rc_levelgen_secret_door();

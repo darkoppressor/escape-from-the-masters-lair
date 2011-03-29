@@ -38,6 +38,8 @@ struct Owner_Data_Fired{
     short experience_level;
     short base_damage_min_ranged;
     short base_damage_max_ranged;
+    short launcher_damage_min;
+    short launcher_damage_max;
     std::string full_name;
     bool is_player;
 };
@@ -156,6 +158,9 @@ class Item: public Object{
     //The weapon category to which the weapon belongs.
     short weapon_category;
 
+    //If the item is a thrown weapon, this is the type of launcher it is made for.
+    short launcher;
+
     //Armor-specific//
 
     //The armor category to which the armor belongs.
@@ -217,7 +222,7 @@ class Item: public Object{
     void assign_owner_data_thrown(Creature* creature);
 
     //Assign special fired data to the item.
-    void assign_owner_data_fired(Creature* creature);
+    void assign_owner_data_fired(Creature* creature,int launcher_item);
 
     //Initiate an attack.
     void attack(Creature* target);

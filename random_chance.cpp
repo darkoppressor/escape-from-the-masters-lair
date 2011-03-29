@@ -165,6 +165,17 @@ bool rc_thirst_lose_health(){
     }
 }
 
+bool rc_exercise_skill_armor(){
+    int random_attempt=random_range(0,99);
+
+    if(random_attempt>=0 && random_attempt<75){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
 bool rc_levelgen_secret_door(){
     int random_attempt=random_range(0,99);
 

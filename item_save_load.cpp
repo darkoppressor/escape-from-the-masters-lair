@@ -77,6 +77,8 @@ string Item::return_save_data(){
 
     save<<weapon_category<<"\n";
 
+    save<<launcher<<"\n";
+
     save<<armor_category<<"\n";
 
     save<<defense<<"\n";
@@ -212,6 +214,9 @@ void Item::load_data(stringstream* load){
 
     getline(*load,line);
     weapon_category=atoi(line.c_str());
+
+    getline(*load,line);
+    launcher=atoi(line.c_str());
 
     getline(*load,line);
     armor_category=atoi(line.c_str());

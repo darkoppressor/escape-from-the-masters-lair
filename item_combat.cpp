@@ -32,7 +32,7 @@ void Item::assign_owner_data_thrown(Creature* creature){
     owner_data_thrown[0].is_player=creature->is_player;
 }
 
-void Item::assign_owner_data_fired(Creature* creature){
+void Item::assign_owner_data_fired(Creature* creature,int launcher_item){
     clear_owner_data_all();
 
     owner_data_fired.push_back(Owner_Data_Fired());
@@ -44,8 +44,17 @@ void Item::assign_owner_data_fired(Creature* creature){
     owner_data_fired[0].experience_level=creature->experience_level;
     owner_data_fired[0].base_damage_min_ranged=creature->base_damage_ranged_min;
     owner_data_fired[0].base_damage_max_ranged=creature->base_damage_ranged_max;
+    owner_data_fired[0].launcher_damage_min=creature->inventory[launcher_item].damage_min_ranged;
+    owner_data_fired[0].launcher_damage_max=creature->inventory[launcher_item].damage_max_ranged;
     owner_data_fired[0].full_name=creature->return_full_name();
     owner_data_fired[0].is_player=creature->is_player;
+
+    //If the launcher is not this item's assigned launcher.
+    if(creature->inventory[launcher_item].weapon_category!=launcher){
+        //The launcher's damage does not apply.
+        owner_data_fired[0].launcher_damage_min=0;
+        owner_data_fired[0].launcher_damage_max=0;
+    }
 }
 
 void Item::attack(Creature* target){
@@ -238,11 +247,10 @@ void Item::attack_fired(Creature* target){
             //Add the weapon's damage to the attack's damage.
             damage+=weapon_damage;
 
-            //Add in ranged weapon damage.
+            //Add in the launcher's damage.
 
-            //Determine the base damage range for this item.
-            weapon_damage_min=damage_min_ranged;
-            weapon_damage_max=damage_max_ranged;
+            weapon_damage_min=owner_data_fired[0].launcher_damage_min;
+            weapon_damage_max=owner_data_fired[0].launcher_damage_max;
             weapon_damage=random_range(weapon_damage_min,weapon_damage_max);
 
             //Apply the ranged weapon skill.

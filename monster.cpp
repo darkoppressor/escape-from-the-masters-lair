@@ -115,82 +115,9 @@ void Monster::set_inventory(){
     else if(weapon_type==2){
         give_item("bow");
         equip_item(inventory.size()-1,EQUIP_HOLD_RIGHT);
-        give_item("arrow",10,20);
+        give_item("arrow",random_range(10,20));
         equip_item(inventory.size()-1,EQUIP_QUIVER);
     }
-
-    //The number of gold pieces.
-    /**int items_to_add=random_range(0,10);
-
-    for(int i=0;i<items_to_add;){
-        //Randomly determine the item category.
-        ///For now, equal chance for all categories.
-        int item_category=random_range(ITEM_WEAPON,ITEM_OTHER);
-
-        //Randomly select an item from the chosen category's template.
-        ///For now, equal chance for all items within category.
-        int item_template=random_range(0,templates.template_items[random_item_category].size()-1);
-
-        //If the item is not spawnable.
-        if(!templates.template_items[random_item_category][random_item_template].spawnable){
-            //Skip this item.
-            continue;
-        }
-
-        //Randomly select a stack size.
-        int random_item_stack=1;
-        //If the item is stackable.
-        if(templates.template_items[random_item_category][random_item_template].stackable){
-            int stackable=random_range(0,99);
-            if(stackable<10){
-                random_item_stack=random_range(1,3);
-            }
-        }
-
-        //If the inventory is not full, or the item is money, add the item.
-        if(inventory.size()<INVENTORY_MAX_SIZE || templates.template_items[random_item_category][random_item_template].inventory_letter=='$'){
-            //Generate the item.
-            Item temp_item;
-
-            //Apply the selected template to the item.
-            temp_item=templates.template_items[random_item_category][random_item_template];
-
-            //Run the item's setup function.
-            temp_item.setup();
-
-            //Apply the randomly selected stack size.
-            temp_item.stack=random_item_stack;
-
-            //Check to see if there is an identical item already in the inventory.
-            inventory_match match_check=check_for_inventory_match(&temp_item);
-
-            //If there is already an identical item in the inventory, and the item is stackable.
-            if(match_check.match_found && temp_item.stackable){
-                inventory[match_check.inventory_slot].stack+=temp_item.stack;
-            }
-            //If there is no identical item in the inventory, or the item is not stackable.
-            else{
-                //Determine an inventory letter for the item.
-
-                //Assign the item an available inventory letter.
-                temp_item.inventory_letter=assign_inventory_letter();
-
-                //Add the item to the inventory items vector.
-                inventory.push_back(temp_item);
-
-                //Assign an identifier to the item.
-                inventory[inventory.size()-1].assign_identifier();
-
-                //Assign an owner identifier to the item.
-                inventory[inventory.size()-1].owner=identifier;
-            }
-        }
-
-        //If the number of items generated has exceeded the maximum.
-        if(inventory.size()>max_items || inventory.size()>=INVENTORY_MAX_SIZE){
-            break;
-        }
-    }*/
 }
 
 void Monster::set_base_stats(short pass_level){

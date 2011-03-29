@@ -867,7 +867,7 @@ void Creature::execute_command_directional(short direction){
             vector_levels[current_level].items[vector_levels[current_level].items.size()-1].momentum=determine_momentum((double)inventory[quivered_item].weight,true);
 
             //Set the fired item's special data.
-            vector_levels[current_level].items[vector_levels[current_level].items.size()-1].assign_owner_data_fired(this);
+            vector_levels[current_level].items[vector_levels[current_level].items.size()-1].assign_owner_data_fired(this,launcher_item);
 
             //If the item's stack is greater than 1, or the item is money.
             //We just subtract 1 from the stack instead of removing the item from the inventory.
@@ -1462,52 +1462,7 @@ void Creature::execute_command_inventory(char inventory_letter){
 
         update_text_log(str_item.c_str(),true);
 
-        //If the item is not money.
-        if(inventory[inventory_item_index].inventory_letter!='$'){
-            //Return the item's inventory letter.
-            return_inventory_letter(inventory[inventory_item_index].inventory_letter);
-
-            //If the creature is not the player.
-            if(!is_player){
-                //Reset the item's inventory letter.
-                //We only do this for monsters. The player leaves the letter attached to the item.
-                inventory[inventory_item_index].inventory_letter=0;
-            }
-
-            //Set the item's position to the creature's current position.
-            inventory[inventory_item_index].x=x;
-            inventory[inventory_item_index].y=y;
-
-            //Add the item to the dungeon items vector.
-            vector_levels[current_level].items.push_back(inventory[inventory_item_index]);
-
-            //Assign an identifier to the new item.
-            vector_levels[current_level].items[vector_levels[current_level].items.size()-1].assign_identifier();
-
-            //Return the inventory item's identifier.
-            inventory[inventory_item_index].return_identifier();
-
-            //Remove the item from the inventory items vector.
-            inventory.erase(inventory.begin()+inventory_item_index);
-        }
-        //If the item is money.
-        else{
-            //Set the item's position to the creature's current position.
-            inventory[inventory_item_index].x=x;
-            inventory[inventory_item_index].y=y;
-
-            //Add the item to the dungeon items vector.
-            vector_levels[current_level].items.push_back(inventory[inventory_item_index]);
-
-            //Assign an identifier to the new item.
-            vector_levels[current_level].items[vector_levels[current_level].items.size()-1].assign_identifier();
-
-            //Assign an owner identifier to the new item.
-            vector_levels[current_level].items[vector_levels[current_level].items.size()-1].owner=identifier;
-
-            //Zero out the money count.
-            inventory[inventory_item_index].stack=0;
-        }
+        drop_item(inventory_item_index);
     }
 
     else if(command==INVENTORY_COMMAND_EQUIP_RIGHT_HAND || command==INVENTORY_COMMAND_EQUIP_LEFT_HAND ||

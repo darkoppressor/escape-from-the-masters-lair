@@ -35,5 +35,6 @@
 		<weapon>
 			governing weapon skill:thrown weapons
 			weapon category:thrown
+			launcher:bows
 		</weapon>
 	</item>

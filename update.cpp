@@ -78,39 +78,13 @@ void events(){
     for(int i=0;i<vector_levels[current_level].monsters.size();i++){
         //If the monster is dead.
         if(!vector_levels[current_level].monsters[i].alive){
-            //Drop the monster's items and corpse.
-
-            //Drop the creature's inventory.
+            //Drop the monsters's inventory.
 
             for(int n=0;n<vector_levels[current_level].monsters[i].inventory.size();n++){
-                //If the item is either not money, or is money but with at least 1 in the stack.
-                if(vector_levels[current_level].monsters[i].inventory[n].inventory_letter!='$' || (vector_levels[current_level].monsters[i].inventory[n].inventory_letter=='$' && vector_levels[current_level].monsters[i].inventory[n].stack>0)){
-                    //Return the item's inventory letter.
-                    vector_levels[current_level].monsters[i].return_inventory_letter(vector_levels[current_level].monsters[i].inventory[n].inventory_letter);
-
-                    //If the creature is not the player.
-                    if(!vector_levels[current_level].monsters[i].is_player){
-                        //Reset the item's inventory letter.
-                        //We only do this for monsters. The player leaves the letter attached to the item.
-                        vector_levels[current_level].monsters[i].inventory[n].inventory_letter=0;
-                    }
-
-                    //Set the item's position to the creature's current position.
-                    vector_levels[current_level].monsters[i].inventory[n].x=vector_levels[current_level].monsters[i].x;
-                    vector_levels[current_level].monsters[i].inventory[n].y=vector_levels[current_level].monsters[i].y;
-
-                    //Add the item to the dungeon items vector.
-                    vector_levels[current_level].items.push_back(vector_levels[current_level].monsters[i].inventory[n]);
-
-                    //Assign an identifier to the new item.
-                    vector_levels[current_level].items[vector_levels[current_level].items.size()-1].assign_identifier();
-
-                    //Return the inventory item's identifier.
-                    vector_levels[current_level].monsters[i].inventory[n].return_identifier();
-                }
+                vector_levels[current_level].monsters[i].drop_item(n);
             }
 
-            //Drop the creature's corpse.
+            //Drop the monster's corpse.
 
             //Create a temporary corpse item.
             Item temp_item=templates.template_items[ITEM_FOOD][0];
