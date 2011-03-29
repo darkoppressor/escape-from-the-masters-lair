@@ -23,10 +23,10 @@
 		<Cursor1 position="199" topLine="0" />
 	</File>
 	<File name="creature.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="2112" topLine="78" />
+		<Cursor1 position="19772" topLine="587" />
 	</File>
 	<File name="creature.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="4990" topLine="144" />
+		<Cursor1 position="4554" topLine="146" />
 	</File>
 	<File name="creature_alchemy.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="477" topLine="0" />
@@ -35,13 +35,13 @@
 		<Cursor1 position="973" topLine="0" />
 	</File>
 	<File name="creature_combat.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="17367" topLine="384" />
+		<Cursor1 position="10601" topLine="192" />
 	</File>
 	<File name="creature_commands.cpp" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="56178" topLine="1551" />
+		<Cursor1 position="13994" topLine="379" />
 	</File>
 	<File name="creature_equipment.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="1553" topLine="12" />
+		<Cursor1 position="173" topLine="0" />
 	</File>
 	<File name="creature_experience.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="2578" topLine="65" />
@@ -68,7 +68,7 @@
 		<Cursor1 position="132" topLine="0" />
 	</File>
 	<File name="enumerations.h" open="0" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="8317" topLine="456" />
+		<Cursor1 position="5109" topLine="114" />
 	</File>
 	<File name="font.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="2195" topLine="48" />
@@ -82,11 +82,11 @@
 	<File name="fov.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="818" topLine="29" />
 	</File>
-	<File name="game.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="991" topLine="33" />
+	<File name="game.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="5602" topLine="81" />
 	</File>
-	<File name="game.h" open="0" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="2589" topLine="60" />
+	<File name="game.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="2076" topLine="64" />
 	</File>
 	<File name="game_window.cpp" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="1095" topLine="9" />
@@ -107,16 +107,16 @@
 		<Cursor1 position="132" topLine="0" />
 	</File>
 	<File name="item.cpp" open="0" top="0" tabpos="15" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="4500" topLine="180" />
+		<Cursor1 position="1143" topLine="48" />
 	</File>
 	<File name="item.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="4625" topLine="186" />
+		<Cursor1 position="1195" topLine="121" />
 	</File>
 	<File name="item_combat.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="2205" topLine="14" />
+		<Cursor1 position="2474" topLine="24" />
 	</File>
 	<File name="item_save_load.cpp" open="0" top="0" tabpos="14" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="1314" topLine="54" />
+		<Cursor1 position="4262" topLine="120" />
 	</File>
 	<File name="level.cpp" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="675" topLine="35" />
@@ -151,8 +151,8 @@
 	<File name="message_log.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="255" topLine="0" />
 	</File>
-	<File name="monster.cpp" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="789" topLine="14" />
+	<File name="monster.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="4026" topLine="24" />
 	</File>
 	<File name="monster.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="313" topLine="31" />
@@ -175,8 +175,8 @@
 	<File name="pixels.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="132" topLine="0" />
 	</File>
-	<File name="player.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="1787" topLine="12" />
+	<File name="player.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="4730" topLine="109" />
 	</File>
 	<File name="player.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="3050" topLine="86" />
@@ -185,7 +185,7 @@
 		<Cursor1 position="625" topLine="16" />
 	</File>
 	<File name="player_windows.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="30052" topLine="102" />
+		<Cursor1 position="31632" topLine="897" />
 	</File>
 	<File name="quit.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="963" topLine="21" />
@@ -200,10 +200,10 @@
 		<Cursor1 position="350" topLine="0" />
 	</File>
 	<File name="random_chance.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="3022" topLine="112" />
+		<Cursor1 position="3897" topLine="152" />
 	</File>
 	<File name="random_chance.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="841" topLine="21" />
+		<Cursor1 position="976" topLine="25" />
 	</File>
 	<File name="random_number_generator.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="474" topLine="0" />
@@ -236,13 +236,13 @@
 		<Cursor1 position="132" topLine="0" />
 	</File>
 	<File name="templates.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="34321" topLine="1032" />
+		<Cursor1 position="39112" topLine="1146" />
 	</File>
 	<File name="templates.h" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="443" topLine="18" />
+		<Cursor1 position="443" topLine="58" />
 	</File>
 	<File name="templates_strings.cpp" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="10188" topLine="414" />
+		<Cursor1 position="4206" topLine="24" />
 	</File>
 	<File name="tile.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="3208" topLine="55" />
@@ -266,7 +266,7 @@
 		<Cursor1 position="132" topLine="0" />
 	</File>
 	<File name="update.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="4671" topLine="120" />
+		<Cursor1 position="7494" topLine="191" />
 	</File>
 	<File name="update.h" open="0" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="249" topLine="0" />
