@@ -898,7 +898,7 @@ void Player::render_stats(){
     title+=" the ";
     title+=race_name;
     title+=" ";
-    title+="<class>";
+    title+=class_name;
     render_rectangle(5,5,font_small.spacing_x*title.length()+3,font_small.spacing_y,1.0,COLOR_GRAY);
     font_small.show(6,8,title,COLOR_BLACK);
 
@@ -908,7 +908,7 @@ void Player::render_stats(){
     ss.clear();ss.str("");ss<<"Mana: ";ss<<return_mana();ss<<"/";ss<<return_mana_max();ss<<"\xA";msg+=ss.str();
     ss.clear();ss.str("");ss<<"Armor: ";ss<<return_armor();ss<<"\xA";msg+=ss.str();
     ss.clear();ss.str("");ss<<"Money: ";ss<<inventory[0].stack;ss<<"\xA";msg+=ss.str();
-    ss.clear();ss.str("");ss<<"Carrying: ";ss<<player.return_inventory_weight();ss<<"/";ss<<player.return_carry_capacity();msg+=ss.str();
+    ss.clear();ss.str("");ss<<"Carrying: ";ss<<(int)player.return_inventory_weight();ss<<"/";ss<<(int)player.return_carry_capacity();msg+=ss.str();
 
     font_small.show(5,30,msg,COLOR_WHITE);
 
@@ -1007,7 +1007,7 @@ void Player::render_inventory(bool all_categories){
     //The width of each column.
     int column_width=400;
 
-    ss.clear();ss.str("");ss<<"Weight/Capacity: ";ss<<return_inventory_weight();ss<<"/";ss<<return_carry_capacity();msg=ss.str();
+    ss.clear();ss.str("");ss<<"Weight/Capacity: ";ss<<(int)return_inventory_weight();ss<<"/";ss<<(int)return_carry_capacity();msg=ss.str();
     font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2,0,msg,render_color);
 
     ss.clear();ss.str("");ss<<"You are currently ";ss<<return_encumbrance_state();ss<<".";msg=ss.str();

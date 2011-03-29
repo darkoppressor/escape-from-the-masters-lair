@@ -388,7 +388,7 @@ void render(int frame_rate, double ms_per_frame){
                 render_rectangle(0,main_window.SCREEN_HEIGHT-174,800,54,1.0,COLOR_GRAY);
                 render_rectangle(2,main_window.SCREEN_HEIGHT-172,796,50,1.0,COLOR_BLACK);
 
-                ss.clear();ss.str("");ss<<player.name;ss<<" the ";ss<<player.race_name;ss<<" ";ss<<"<class>";msg=ss.str();
+                ss.clear();ss.str("");ss<<player.name;ss<<" the ";ss<<player.race_name;ss<<" ";ss<<player.class_name;msg=ss.str();
                 font_small.show(5,main_window.SCREEN_HEIGHT-170,msg,COLOR_WHITE);
                 size_last_msg=msg.length();
 
@@ -431,7 +431,7 @@ void render(int frame_rate, double ms_per_frame){
 
                 ss.clear();ss.str("");ss<<"  Armor:";ss<<player.return_armor();msg=ss.str();
                 ss.clear();ss.str("");ss<<"  Money:";ss<<player.inventory[0].stack;msg+=ss.str();
-                ss.clear();ss.str("");ss<<"  Carrying:";ss<<player.return_inventory_weight();ss<<"/";ss<<player.return_carry_capacity();msg+=ss.str();
+                ss.clear();ss.str("");ss<<"  Carrying:";ss<<(int)player.return_inventory_weight();ss<<"/";ss<<(int)player.return_carry_capacity();msg+=ss.str();
                 font_small.show(5+font_small.spacing_x*size_last_msg,main_window.SCREEN_HEIGHT-170+font_small.spacing_y*2,msg,COLOR_WHITE);
             }
         }

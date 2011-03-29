@@ -388,12 +388,12 @@ void Creature::check_command_directional(short direction){
         }
     }
 
-    //If the creature is overloaded and the directional command is a move command.
+    //If the creature is overburdened and the directional command is a move command.
     if(return_inventory_weight()>=return_carry_capacity()*3.0+1 &&
        (command==DIRECTIONAL_COMMAND_MOVE_LEFT || command==DIRECTIONAL_COMMAND_MOVE_UP || command==DIRECTIONAL_COMMAND_MOVE_RIGHT ||
         command==DIRECTIONAL_COMMAND_MOVE_DOWN || command==DIRECTIONAL_COMMAND_MOVE_LEFT_UP || command==DIRECTIONAL_COMMAND_MOVE_RIGHT_UP ||
         command==DIRECTIONAL_COMMAND_MOVE_RIGHT_DOWN || command==DIRECTIONAL_COMMAND_MOVE_LEFT_DOWN)){
-        update_text_log("You are overloaded and cannot move.",is_player);
+        update_text_log("You are overburdened and cannot move.",is_player);
 
         //No directional command will be executed.
         input_directional=0;

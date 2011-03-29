@@ -144,17 +144,78 @@ void Game::return_identifier(short object_type,uint32_t returning_identifier){
     return TILE_TYPE_WALL;
 }*/
 
+void Game::flood_fill(int x,int y){
+    //If the tile is within level bounds.
+    if(x>=0 && x<=generated_level_x-1 && y>=0 && y<=generated_level_y-1 &&
+    //And if the tile is walkable.
+    generated_tiles[x][y].type!=TILE_TYPE_WALL && generated_tiles[x][y].type!=TILE_TYPE_SOLID && generated_tiles[x][y].type!=TILE_TYPE_LIQUID &&
+    //And if the tile is not already marked as reachable.
+    !tiles_reachable[x][y]){
+        tiles_reachable[x][y]=true;
+    }
+    else{
+        return;
+    }
+
+    flood_fill(x+1,y);
+    flood_fill(x-1,y);
+    flood_fill(x,y+1);
+    flood_fill(x,y-1);
+}
+
+bool Game::all_tiles_reachable(){
+    tiles_reachable.clear();
+
+    tiles_reachable.resize(generated_level_x,vector<bool>(generated_level_y));
+
+    for(short int_y=0;int_y<generated_level_y;int_y++){
+        for(short int_x=0;int_x<generated_level_x;int_x++){
+            tiles_reachable[int_x][int_y]=false;
+        }
+    }
+
+    bool flood_fill_processed=false;
+
+    //Find a walkable tile.
+    for(short int_y=0;int_y<generated_level_y;int_y++){
+        for(short int_x=0;int_x<generated_level_x;int_x++){
+            //If the tile is walkable.
+            if(generated_tiles[int_x][int_y].type!=TILE_TYPE_WALL && generated_tiles[int_x][int_y].type!=TILE_TYPE_SOLID && generated_tiles[int_x][int_y].type!=TILE_TYPE_LIQUID){
+                flood_fill(int_x,int_y);
+                flood_fill_processed=true;
+                break;
+            }
+        }
+    }
+
+    //If no walkable tile was found.
+    if(!flood_fill_processed){
+        return false;
+    }
+
+    for(short int_y=0;int_y<generated_level_y;int_y++){
+        for(short int_x=0;int_x<generated_level_x;int_x++){
+            //If the tile is walkable.
+            if(generated_tiles[int_x][int_y].type!=TILE_TYPE_WALL && generated_tiles[int_x][int_y].type!=TILE_TYPE_SOLID && generated_tiles[int_x][int_y].type!=TILE_TYPE_LIQUID &&
+            //And if the tile is not marked as reachable.
+            !tiles_reachable[int_x][int_y]){
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
 void Game::generate_level(){
     //Start the level generation timer.
     Timer timer_level_gen;
     timer_level_gen.start();
 
-    fprintf(stdout,"Generating dungeon level...\n");
+    //The number of attempts before this level was generated successfully.
+    int gen_attempts=0;
 
-    //Clear the vectors.
-    generated_items.clear();
-    generated_monsters.clear();
-    generated_tiles.clear();
+    fprintf(stdout,"Generating dungeon level...\n");
 
     //**********************************//
     // Begin randomly generating level! //
@@ -164,262 +225,302 @@ void Game::generate_level(){
     // Dungeon level. //
     //****************//
 
-    //Determine the level's dimensions.
-    generated_level_x=random_range(LEVEL_X_MIN,LEVEL_X_MAX);
-    generated_level_y=random_range(LEVEL_Y_MIN,LEVEL_Y_MAX);
+    //Keep generating levels until one is generated in which all walkable tiles can be reached.
+    do{
+        gen_attempts++;
 
-    //Determine the level's starting temperature.
-    /**generated_temperature=random_range(0,TEMP_ROOM_TEMPERATURE);
-    int random=random_range(0,1);
-    if(random==0){
-        generated_temperature*=-1;
-    }*/
-    generated_temperature=TEMP_ROOM_TEMPERATURE;
+        //Clear the vectors.
+        generated_items.clear();
+        generated_monsters.clear();
+        generated_tiles.clear();
 
-    //Start with a clean slate.
+        //Determine the level's dimensions.
+        generated_level_x=random_range(LEVEL_X_MIN,LEVEL_X_MAX);
+        generated_level_y=random_range(LEVEL_Y_MIN,LEVEL_Y_MAX);
 
-    generated_tiles.resize(generated_level_x,vector<Tile>(generated_level_y));
+        //Determine the level's starting temperature.
+        /**generated_temperature=random_range(0,TEMP_ROOM_TEMPERATURE);
+        int random=random_range(0,1);
+        if(random==0){
+            generated_temperature*=-1;
+        }*/
+        generated_temperature=TEMP_ROOM_TEMPERATURE;
 
-    for(short int_y=0;int_y<generated_level_y;int_y++){
-        for(short int_x=0;int_x<generated_level_x;int_x++){
-            generated_tiles[int_x][int_y].x=int_x;
-            generated_tiles[int_x][int_y].y=int_y;
-            generated_tiles[int_x][int_y].type=TILE_TYPE_WALL;
-            generated_tiles[int_x][int_y].material=MATERIAL_STONE;
+        //Start with a clean slate.
+
+        generated_tiles.resize(generated_level_x,vector<Tile>(generated_level_y));
+
+        for(short int_y=0;int_y<generated_level_y;int_y++){
+            for(short int_x=0;int_x<generated_level_x;int_x++){
+                generated_tiles[int_x][int_y].x=int_x;
+                generated_tiles[int_x][int_y].y=int_y;
+                generated_tiles[int_x][int_y].type=TILE_TYPE_WALL;
+                generated_tiles[int_x][int_y].material=MATERIAL_STONE;
+            }
         }
-    }
 
-    struct feature_data{
-        short max_room_size_x;
-        short min_room_size_x;
-        short max_room_size_y;
-        short min_room_size_y;
+        struct feature_data{
+            short max_room_size_x;
+            short min_room_size_x;
+            short max_room_size_y;
+            short min_room_size_y;
 
-        short max_hall_length;
-        short min_hall_length;
-    };
-    feature_data features[2];
+            short max_hall_length;
+            short min_hall_length;
+        };
+        feature_data features[2];
 
-    //Rectangular room.
-    features[0].max_room_size_x=16;
-    features[0].min_room_size_x=6;
-    features[0].max_room_size_y=16;
-    features[0].min_room_size_y=6;
+        //Rectangular room.
+        features[0].max_room_size_x=16;
+        features[0].min_room_size_x=6;
+        features[0].max_room_size_y=16;
+        features[0].min_room_size_y=6;
 
-    //Circular room.
-    features[1].max_room_size_x=7;
-    features[1].min_room_size_x=4;
-    features[1].max_room_size_y=7;
-    features[1].min_room_size_y=4;
+        //Circular room.
+        features[1].max_room_size_x=7;
+        features[1].min_room_size_x=4;
+        features[1].max_room_size_y=7;
+        features[1].min_room_size_y=4;
 
-    short feature=0;
+        short feature=0;
 
-    draw_rectangle_room(generated_level_x/2,generated_level_y/2,6,6,TILE_TYPE_FLOOR,MATERIAL_STONE);
+        draw_rectangle_room(generated_level_x/2,generated_level_y/2,6,6,TILE_TYPE_FLOOR,MATERIAL_STONE);
 
-    //Number of created rooms.
-    short rooms_done=1;
-    //Used to prevent an infinite loop.
-    short iterations=0;
-    //Number of rooms to create.
-    short number_of_rooms=random_range((generated_level_x*generated_level_y)/730,(generated_level_x*generated_level_y)/365);
+        //Number of created rooms.
+        short rooms_done=1;
+        //Used to prevent an infinite loop.
+        short iterations=0;
+        //Number of rooms to create.
+        short number_of_rooms=random_range((generated_level_x*generated_level_y)/730,(generated_level_x*generated_level_y)/365);
 
-    //0 = Left.
-    //1 = Up.
-    //2 = Right.
-    //3 = Down.
-    short direction=-1;
+        //0 = Left.
+        //1 = Up.
+        //2 = Right.
+        //3 = Down.
+        short direction=-1;
 
-    short check_x,check_y,check_size_x,check_size_y;
-    short hall_check_x,hall_check_y,hall_check_size_x,hall_check_size_y;
+        short check_x,check_y,check_size_x,check_size_y;
+        short hall_check_x,hall_check_y,hall_check_size_x,hall_check_size_y;
 
-    //Create number_of_rooms rooms.
-    while(rooms_done<number_of_rooms){
-        short x,y;
+        //Create number_of_rooms rooms.
+        while(rooms_done<number_of_rooms){
+            short x,y;
 
-        //Pick a random tile.
-        x=random_range(0,generated_level_x-1);
-        y=random_range(0,generated_level_y-1);
+            //Pick a random tile.
+            x=random_range(0,generated_level_x-1);
+            y=random_range(0,generated_level_y-1);
 
-        direction=-1;
+            direction=-1;
 
-        //If the tile is a wall.
-        if(generated_tiles[x][y].type==TILE_TYPE_WALL){
-            //If this is the left wall of a room.
-            if(x<generated_level_x-1 && generated_tiles[x+1][y].type==TILE_TYPE_FLOOR){
-                //We want to build to the left.
-                direction=0;
-            }
-            //If this is the top wall of a room.
-            else if(y<generated_level_y-1 && generated_tiles[x][y+1].type==TILE_TYPE_FLOOR){
-                //We want to build up.
-                direction=1;
-            }
-            //If this is the right wall of a room.
-            else if(x>0 && generated_tiles[x-1][y].type==TILE_TYPE_FLOOR){
-                //We want to build to the right.
-                direction=2;
-            }
-            //If this is the bottom wall of a room.
-            else if(y>0 && generated_tiles[x][y-1].type==TILE_TYPE_FLOOR){
-                //We want to build down.
-                direction=3;
-            }
-
-            if(direction!=-1){
-                //Decide on a new feature to build.
-                int random_int=random_range(0,99);
-                if(random_int>=0 && random_int<75){
-                    feature=0;
+            //If the tile is a wall.
+            if(generated_tiles[x][y].type==TILE_TYPE_WALL){
+                //If this is the left wall of a room.
+                if(x<generated_level_x-1 && generated_tiles[x+1][y].type==TILE_TYPE_FLOOR){
+                    //We want to build to the left.
+                    direction=0;
                 }
-                else if(random_int>=75 && random_int<100){
-                    feature=1;
+                //If this is the top wall of a room.
+                else if(y<generated_level_y-1 && generated_tiles[x][y+1].type==TILE_TYPE_FLOOR){
+                    //We want to build up.
+                    direction=1;
                 }
-                ///feature=1;
-
-                if(feature==0){
-                    check_size_x=random_range(features[feature].min_room_size_x,features[feature].max_room_size_x);
-                    check_size_y=random_range(features[feature].min_room_size_y,features[feature].max_room_size_y);
+                //If this is the right wall of a room.
+                else if(x>0 && generated_tiles[x-1][y].type==TILE_TYPE_FLOOR){
+                    //We want to build to the right.
+                    direction=2;
                 }
-                else if(feature==1){
-                    check_size_x=random_range(features[feature].min_room_size_x,features[feature].max_room_size_x);
-                    check_size_y=check_size_x;
-                }
-                hall_check_size_x=random_range(1,12);
-                hall_check_size_y=random_range(1,12);
-
-                if(direction==0){
-                    check_x=x-check_size_x-hall_check_size_x;
-                    check_y=y;
-
-                    hall_check_x=x-hall_check_size_x;
-                    hall_check_y=y;
-                    hall_check_size_y=1;
-                }
-                else if(direction==1){
-                    check_x=x;
-                    check_y=y-check_size_y-hall_check_size_y;
-
-                    hall_check_x=x;
-                    hall_check_y=y-hall_check_size_y;
-                    hall_check_size_x=1;
-                }
-                else if(direction==2){
-                    check_x=x+hall_check_size_x;
-                    check_y=y;
-
-                    hall_check_x=x;
-                    hall_check_y=y;
-                    hall_check_size_y=1;
-                }
-                else if(direction==3){
-                    check_x=x;
-                    check_y=y+hall_check_size_y;
-
-                    hall_check_x=x;
-                    hall_check_y=y;
-                    hall_check_size_x=1;
+                //If this is the bottom wall of a room.
+                else if(y>0 && generated_tiles[x][y-1].type==TILE_TYPE_FLOOR){
+                    //We want to build down.
+                    direction=3;
                 }
 
-                //If the checked rectangle is within the level bounds.
-                if(check_x>=0 && check_y>=0 && check_x+check_size_x<generated_level_x-1 && check_y+check_size_y<generated_level_y-1){
+                if(direction!=-1){
+                    //Decide on a new feature to build.
+                    int random_int=random_range(0,99);
+                    if(random_int>=0 && random_int<75){
+                        feature=0;
+                    }
+                    else if(random_int>=75 && random_int<100){
+                        feature=1;
+                    }
+                    ///feature=1;
+
                     if(feature==0){
-                        if(check_rectangle(check_x,check_y,check_size_x,check_size_y,TILE_TYPE_WALL) && check_rectangle(hall_check_x,hall_check_y,hall_check_size_x,hall_check_size_y,TILE_TYPE_WALL)){
-                            rooms_done++;
-                            //Draw room.
-                            draw_rectangle_room(check_x,check_y,check_size_x,check_size_y,TILE_TYPE_FLOOR,MATERIAL_STONE);
-                            //Draw corridor.
-                            draw_rectangle_room(hall_check_x,hall_check_y,hall_check_size_x,hall_check_size_y,TILE_TYPE_FLOOR,MATERIAL_STONE);
-                        }
+                        check_size_x=random_range(features[feature].min_room_size_x,features[feature].max_room_size_x);
+                        check_size_y=random_range(features[feature].min_room_size_y,features[feature].max_room_size_y);
                     }
                     else if(feature==1){
-                        if(check_circle(check_x,check_y,check_size_x,TILE_TYPE_WALL) && check_rectangle(hall_check_x,hall_check_y,hall_check_size_x,hall_check_size_y,TILE_TYPE_WALL)){
-                            rooms_done++;
-                            //Draw room.
-                            draw_circle(check_x,check_y,check_size_x,TILE_TYPE_FLOOR,MATERIAL_STONE);
-                            //Draw corridor.
-                            draw_rectangle_room(hall_check_x,hall_check_y,hall_check_size_x,hall_check_size_y,TILE_TYPE_FLOOR,MATERIAL_STONE);
+                        check_size_x=random_range(features[feature].min_room_size_x,features[feature].max_room_size_x);
+                        check_size_y=check_size_x;
+                    }
+                    hall_check_size_x=random_range(1,12);
+                    hall_check_size_y=random_range(1,12);
+
+                    if(direction==0){
+                        check_x=x-check_size_x-hall_check_size_x;
+                        check_y=y;
+
+                        hall_check_x=x-hall_check_size_x;
+                        hall_check_y=y;
+                        hall_check_size_y=1;
+                    }
+                    else if(direction==1){
+                        check_x=x;
+                        check_y=y-check_size_y-hall_check_size_y;
+
+                        hall_check_x=x;
+                        hall_check_y=y-hall_check_size_y;
+                        hall_check_size_x=1;
+                    }
+                    else if(direction==2){
+                        check_x=x+hall_check_size_x;
+                        check_y=y;
+
+                        hall_check_x=x;
+                        hall_check_y=y;
+                        hall_check_size_y=1;
+                    }
+                    else if(direction==3){
+                        check_x=x;
+                        check_y=y+hall_check_size_y;
+
+                        hall_check_x=x;
+                        hall_check_y=y;
+                        hall_check_size_x=1;
+                    }
+
+                    //If the checked rectangle is within the level bounds.
+                    if(check_x>=0 && check_y>=0 && check_x+check_size_x<generated_level_x-1 && check_y+check_size_y<generated_level_y-1){
+                        if(feature==0){
+                            if(check_rectangle(check_x,check_y,check_size_x,check_size_y,TILE_TYPE_WALL) && check_rectangle(hall_check_x,hall_check_y,hall_check_size_x,hall_check_size_y,TILE_TYPE_WALL)){
+                                rooms_done++;
+                                //Draw room.
+                                draw_rectangle_room(check_x,check_y,check_size_x,check_size_y,TILE_TYPE_FLOOR,MATERIAL_STONE);
+                                //Draw corridor.
+                                draw_rectangle_room(hall_check_x,hall_check_y,hall_check_size_x,hall_check_size_y,TILE_TYPE_FLOOR,MATERIAL_STONE);
+                            }
+                        }
+                        else if(feature==1){
+                            if(check_circle(check_x,check_y,check_size_x,TILE_TYPE_WALL) && check_rectangle(hall_check_x,hall_check_y,hall_check_size_x,hall_check_size_y,TILE_TYPE_WALL)){
+                                rooms_done++;
+                                //Draw room.
+                                draw_circle(check_x,check_y,check_size_x,TILE_TYPE_FLOOR,MATERIAL_STONE);
+                                //Draw corridor.
+                                draw_rectangle_room(hall_check_x,hall_check_y,hall_check_size_x,hall_check_size_y,TILE_TYPE_FLOOR,MATERIAL_STONE);
+                            }
+                        }
+                    }
+                }
+            }
+            //Ensure that we don't get stuck in an infinite loop.
+            //Probably not needed for a grid based generator, but I'm leaving it in for now.
+            if(++iterations>=100000){
+                break;
+            }
+        }
+
+        //
+        for(short i=0;i<2;i++){
+            //Remove any walls that share multiple rooms.
+            short random_type;
+            short random_material;
+            for(short y=0;y<generated_level_y;y++){
+                for(short x=0;x<generated_level_x;x++){
+                    if(generated_tiles[x][y].type==TILE_TYPE_WALL){
+                        int random_int=random_range(0,99);
+                        //Replace the wall with floor.
+                        if(random_int>=0 && random_int<25){
+                            random_type=TILE_TYPE_FLOOR;
+                            random_material=MATERIAL_STONE;
+                        }
+                        //Replace the wall with a closed door.
+                        else if(random_int>=25 && random_int<100){
+                            random_type=TILE_TYPE_DOOR_CLOSED;
+                            random_material=MATERIAL_WOOD;
+                        }
+                        if(x>0 && generated_tiles[x-1][y].type!=TILE_TYPE_WALL && x<generated_level_x-1 && generated_tiles[x+1][y].type!=TILE_TYPE_WALL){
+                            generated_tiles[x][y].type=random_type;
+                            generated_tiles[x][y].material=random_material;
+                        }
+                        else if(y>0 && generated_tiles[x][y-1].type!=TILE_TYPE_WALL && y<generated_level_y-1 && generated_tiles[x][y+1].type!=TILE_TYPE_WALL){
+                            generated_tiles[x][y].type=random_type;
+                            generated_tiles[x][y].material=random_material;
+                        }
+                    }
+                }
+            }
+
+            //Remove any doors that shouldn't exist.
+            for(short y=0;y<generated_level_y;y++){
+                for(short x=0;x<generated_level_x;x++){
+                    if(generated_tiles[x][y].type==TILE_TYPE_DOOR_CLOSED){
+                        if(((x>0 && generated_tiles[x-1][y].type==TILE_TYPE_WALL) || x==0) && ((x<generated_level_x-1 && generated_tiles[x+1][y].type==TILE_TYPE_WALL) || x==generated_level_x-1)){
+                        }
+                        else if(((y>0 && generated_tiles[x][y-1].type==TILE_TYPE_WALL) || y==0) && ((y<generated_level_y-1 && generated_tiles[x][y+1].type==TILE_TYPE_WALL) || y==generated_level_y-1)){
+                        }
+                        else{
+                            generated_tiles[x][y].type=TILE_TYPE_FLOOR;
+                            generated_tiles[x][y].material=MATERIAL_STONE;
                         }
                     }
                 }
             }
         }
-        //Ensure that we don't get stuck in an infinite loop.
-        //Probably not needed for a grid based generator, but I'm leaving it in for now.
-        if(++iterations>=100000){
-            break;
-        }
-    }
 
-    //
-    for(short i=0;i<2;i++){
-        //Remove any walls that share multiple rooms.
-        short random_type;
-        short random_material;
+        //Any floor tiles adjacent to the level bounds should be made walls.
+        for(short y=0;y<generated_level_y;y++){
+            for(short x=0;x<generated_level_x;x++){
+                if(generated_tiles[x][y].type==TILE_TYPE_FLOOR){
+                    if(x==0 || x==generated_level_x-1 || y==0 || y==generated_level_y-1){
+                        generated_tiles[x][y].type=TILE_TYPE_WALL;
+                    }
+                }
+            }
+        }
+
+        //Any wall tiles not adjacent to something other than wall tiles and solid tiles should be replaced with solid.
         for(short y=0;y<generated_level_y;y++){
             for(short x=0;x<generated_level_x;x++){
                 if(generated_tiles[x][y].type==TILE_TYPE_WALL){
-                    int random_int=random_range(0,99);
-                    //Replace the wall with floor.
-                    if(random_int>=0 && random_int<25){
-                        random_type=TILE_TYPE_FLOOR;
-                        random_material=MATERIAL_STONE;
-                    }
-                    //Replace the wall with a closed door.
-                    else if(random_int>=25 && random_int<100){
-                        random_type=TILE_TYPE_DOOR_CLOSED;
-                        random_material=MATERIAL_WOOD;
-                    }
-                    if(x>0 && generated_tiles[x-1][y].type!=TILE_TYPE_WALL && x<generated_level_x-1 && generated_tiles[x+1][y].type!=TILE_TYPE_WALL){
-                        generated_tiles[x][y].type=random_type;
-                        generated_tiles[x][y].material=random_material;
-                    }
-                    else if(y>0 && generated_tiles[x][y-1].type!=TILE_TYPE_WALL && y<generated_level_y-1 && generated_tiles[x][y+1].type!=TILE_TYPE_WALL){
-                        generated_tiles[x][y].type=random_type;
-                        generated_tiles[x][y].material=random_material;
+                    if(check_rectangle2(x-1,y-1,3,3,TILE_TYPE_WALL,TILE_TYPE_SOLID)){
+                        generated_tiles[x][y].type=TILE_TYPE_SOLID;
+                        generated_tiles[x][y].material=MATERIAL_DIRT;
                     }
                 }
             }
         }
 
-        //Remove any doors that shouldn't exist.
-        for(short y=0;y<generated_level_y;y++){
-            for(short x=0;x<generated_level_x;x++){
-                if(generated_tiles[x][y].type==TILE_TYPE_DOOR_CLOSED){
-                    if(((x>0 && generated_tiles[x-1][y].type==TILE_TYPE_WALL) || x==0) && ((x<generated_level_x-1 && generated_tiles[x+1][y].type==TILE_TYPE_WALL) || x==generated_level_x-1)){
-                    }
-                    else if(((y>0 && generated_tiles[x][y-1].type==TILE_TYPE_WALL) || y==0) && ((y<generated_level_y-1 && generated_tiles[x][y+1].type==TILE_TYPE_WALL) || y==generated_level_y-1)){
-                    }
-                    else{
-                        generated_tiles[x][y].type=TILE_TYPE_FLOOR;
-                        generated_tiles[x][y].material=MATERIAL_STONE;
-                    }
-                }
-            }
-        }
-    }
+        //Add liquid.
 
-    //Any floor tiles adjacent to the level bounds should be made walls.
-    for(short y=0;y<generated_level_y;y++){
-        for(short x=0;x<generated_level_x;x++){
-            if(generated_tiles[x][y].type==TILE_TYPE_FLOOR){
-                if(x==0 || x==generated_level_x-1 || y==0 || y==generated_level_y-1){
-                    generated_tiles[x][y].type=TILE_TYPE_WALL;
-                }
-            }
-        }
-    }
+        //The maximum number.
+        int max_liquids=random_range((generated_level_x*generated_level_y)/10000,(generated_level_x*generated_level_y)/5000);
+        //The maximum number of tries.
+        int random_amount_liquids=random_range((generated_level_x*generated_level_y)/4,(generated_level_x*generated_level_y)/2);
+        //The number created successfully.
+        int liquids_created=0;
 
-    //Any wall tiles not adjacent to something other than wall tiles and solid tiles should be replaced with solid.
-    for(short y=0;y<generated_level_y;y++){
-        for(short x=0;x<generated_level_x;x++){
-            if(generated_tiles[x][y].type==TILE_TYPE_WALL){
-                if(check_rectangle2(x-1,y-1,3,3,TILE_TYPE_WALL,TILE_TYPE_SOLID)){
-                    generated_tiles[x][y].type=TILE_TYPE_SOLID;
-                    generated_tiles[x][y].material=MATERIAL_DIRT;
-                }
+        for(int i=0;i<random_amount_liquids;i++){
+            short x,y;
+
+            //Choose a random location in the level.
+            x=random_range(0,generated_level_x-1);
+            y=random_range(0,generated_level_y-1);
+
+            int radius=random_range(1,5);
+
+            //If the tiles at the random position are appropriate tiles.
+            if(check_circle(x,y,radius,TILE_TYPE_FLOOR)){
+                draw_circle(x,y,radius,TILE_TYPE_LIQUID,MATERIAL_WATER);
+                liquids_created++;
+            }
+
+            //If the number generated has exceeded the maximum.
+            if(liquids_created>max_liquids){
+                break;
             }
         }
-    }
+    }while(!all_tiles_reachable());
 
     //Replace some closed doors with secret doors.
     for(short y=0;y<generated_level_y;y++){
@@ -466,36 +567,6 @@ void Game::generate_level(){
         if(generated_tiles[x][y].type==TILE_TYPE_FLOOR && generated_tiles[x][y].material==MATERIAL_STONE){
             generated_tiles[x][y].type=TILE_TYPE_DOWN_STAIRS;
             generated_tiles[x][y].material=MATERIAL_STONE;
-            break;
-        }
-    }
-
-    //Add liquid.
-
-    //The maximum number.
-    int max_liquids=random_range((generated_level_x*generated_level_y)/10000,(generated_level_x*generated_level_y)/5000);
-    //The maximum number of tries.
-    int random_amount_liquids=random_range((generated_level_x*generated_level_y)/4,(generated_level_x*generated_level_y)/2);
-    //The number created successfully.
-    int liquids_created=0;
-
-    for(int i=0;i<random_amount_liquids;i++){
-        short x,y;
-
-        //Choose a random location in the level.
-        x=random_range(0,generated_level_x-1);
-        y=random_range(0,generated_level_y-1);
-
-        int radius=random_range(1,5);
-
-        //If the tiles at the random position are appropriate tiles.
-        if(check_circle(x,y,radius,TILE_TYPE_FLOOR)){
-            draw_circle(x,y,radius,TILE_TYPE_LIQUID,MATERIAL_WATER);
-            liquids_created++;
-        }
-
-        //If the number generated has exceeded the maximum.
-        if(liquids_created>max_liquids){
             break;
         }
     }
@@ -751,7 +822,7 @@ void Game::generate_level(){
 
     unsigned int level_gen_time=timer_level_gen.get_ticks();
     double seconds=(double)level_gen_time/1000.0;
-    fprintf(stdout,"Finished generating dungeon level in %f seconds.\n",seconds);
+    fprintf(stdout,"Finished generating dungeon level in %f seconds and %i try(s).\n",seconds,gen_attempts);
 }
 
 void Game::draw_rectangle_room(short start_x,short start_y,short size_x,short size_y,short type,short material){
