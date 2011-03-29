@@ -24,7 +24,7 @@ class Game{
     std::vector< std::vector<Tile> > generated_tiles;
 
     //Used in testing walkable tiles' reachability.
-    std::vector< std::vector<bool> > tiles_reachable;
+    std::vector< std::vector<bool> > tiles_check;
 
     std::vector<Item> generated_items;
     std::vector<Monster> generated_monsters;
@@ -60,11 +60,23 @@ class Game{
     ///short tile_check(short check_x,short check_y);
 
     //Recursively fills the whole generated dungeon with "reachable" flags for each walkable tile.
-    void flood_fill(int x,int y);
+    void flood_fill_reachable(int x,int y);
 
     //Returns true if all walkable tiles in the generated level are reachable.
     //Returns false if one or more walkable tiles are unreachable.
     bool all_tiles_reachable();
+
+    //
+    void level_theme_rooms();
+
+    //
+    void flood_fill_caves(int x,int y);
+
+    //
+    void level_theme_caves();
+
+    //
+    void level_theme_big_room();
 
     //This function loads whatever level is needed from the corresponding level file.
     void generate_level();
