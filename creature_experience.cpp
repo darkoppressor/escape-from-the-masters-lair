@@ -61,21 +61,23 @@ void Creature::level_up(){
 
     //Don't allow any attribute bonus to pass the maximum.
     for(int i=ATTRIBUTE_STRENGTH;i<ATTRIBUTE_LUCK+1;i++){
-        if(attribute_level_bonuses[i]>2){
+        if(attribute_level_bonuses[i]>=1 && attribute_level_bonuses[i]<=4){
+            attribute_level_bonuses[i]=1;
+        }
+        else if(attribute_level_bonuses[i]>=5 && attribute_level_bonuses[i]<=7){
             attribute_level_bonuses[i]=2;
+        }
+        else if(attribute_level_bonuses[i]>=8 && attribute_level_bonuses[i]<=9){
+            attribute_level_bonuses[i]=3;
+        }
+        else if(attribute_level_bonuses[i]>=10){
+            attribute_level_bonuses[i]=4;
         }
     }
 
-    ///if(is_player){
-        ss.clear();ss.str("");ss<<"You have gained a level!";msg=ss.str();
+    ss.clear();ss.str("");ss<<"Welcome to experience level ";ss<<experience_level;ss<<".";msg=ss.str();
 
-        update_text_log(msg.c_str(),is_player);
-    ///}
-    /**else{
-        ss.clear();ss.str("");ss<<"The ";ss<<return_full_name();ss<<" has gained a level!";msg=ss.str();
-
-        update_text_log(msg.c_str(),true);
-    }**/
+    update_text_log(msg.c_str(),is_player);
 
     if(is_player){
         player.current_window=WINDOW_LEVELUP;
@@ -109,10 +111,6 @@ void Creature::level_up(){
 
 void Creature::gain_experience(int points_gained){
     experience+=points_gained;
-
-    ///ss.clear();ss.str("");ss<<"You gain ";ss<<points_gained;ss<<" experience points!";msg=ss.str();
-
-    ///update_text_log(msg.c_str(),is_player);
 
     //If experience reaches the current maximum experience.
     if(experience>=experience_max){
@@ -184,10 +182,6 @@ void Creature::gain_skill_experience(short skill,int points_gained,int experienc
 
     //Add points_gained to the skill's experience.
     skills[skill][SKILL_EXPERIENCE]+=points_gained;
-
-    ///ss.clear();ss.str("");ss<<"You gain ";ss<<points_gained;ss<<" experience points!";msg=ss.str();
-
-    ///update_text_log(msg.c_str(),is_player);
 
     //If the skill's experience reaches its current maximum experience.
     if(skills[skill][SKILL_EXPERIENCE]>=skills[skill][SKILL_EXPERIENCE_MAX]){
