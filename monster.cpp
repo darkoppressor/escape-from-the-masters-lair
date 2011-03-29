@@ -13,17 +13,123 @@ using namespace std;
 void Monster::set_inventory(){
     give_item("gold piece",0,'$');
 
-    //The maximum number of items.
-    int max_items=random_range(1,8);
+    //Add some random gold.
+    give_item("gold piece",random_range(0,10));
 
-    for(int i=0;i<20;i++){
+    //Add some random bottles of water.
+    give_item("bottle of water",random_range(1,2));
+
+    //Add some random healing potions.
+    if(random_range(0,1)==1){
+        give_item("potion of slight healing");
+    }
+
+    //Generate armor//
+
+    //The maximum number of armor pieces.
+    int max_armor_items=random_range(0,13);
+
+    //The number of armor pieces generated.
+    int armor_items=0;
+
+    if(armor_items<max_armor_items && random_range(0,99)<15){
+        give_item("leather helm");
+        equip_item(inventory.size()-1,-1);
+        armor_items++;
+    }
+    if(armor_items<max_armor_items && random_range(0,99)<15){
+        give_item("pair of leather spaulders");
+        equip_item(inventory.size()-1,-1);
+        armor_items++;
+    }
+    if(armor_items<max_armor_items && random_range(0,99)<15){
+        give_item("leather chestpiece");
+        equip_item(inventory.size()-1,-1);
+        armor_items++;
+    }
+    if(armor_items<max_armor_items && random_range(0,99)<15){
+        give_item("leather cloak");
+        equip_item(inventory.size()-1,-1);
+        armor_items++;
+    }
+    if(armor_items<max_armor_items && random_range(0,99)<15){
+        give_item("leather belt");
+        equip_item(inventory.size()-1,-1);
+        armor_items++;
+    }
+    if(armor_items<max_armor_items && random_range(0,99)<15){
+        give_item("pair of leather trousers");
+        equip_item(inventory.size()-1,-1);
+        armor_items++;
+    }
+    if(armor_items<max_armor_items && random_range(0,99)<15){
+        give_item("pair of leather boots");
+        equip_item(inventory.size()-1,-1);
+        armor_items++;
+    }
+    if(armor_items<max_armor_items && random_range(0,99)<15){
+        give_item("pair of leather gloves");
+        equip_item(inventory.size()-1,-1);
+        armor_items++;
+    }
+    if(armor_items<max_armor_items && random_range(0,99)<15){
+        give_item("pair of leather bracers");
+        equip_item(inventory.size()-1,-1);
+        armor_items++;
+    }
+    if(armor_items<max_armor_items && random_range(0,99)<15){
+        give_item("leather shield");
+        equip_item(inventory.size()-1,-1);
+        armor_items++;
+    }
+    if(armor_items<max_armor_items && random_range(0,99)<15){
+        give_item("shirt");
+        equip_item(inventory.size()-1,-1);
+        armor_items++;
+    }
+    if(armor_items<max_armor_items && random_range(0,99)<15){
+        give_item("copper amulet");
+        equip_item(inventory.size()-1,-1);
+        armor_items++;
+    }
+    if(armor_items<max_armor_items && random_range(0,99)<15){
+        give_item("copper ring");
+        equip_item(inventory.size()-1,-1);
+        armor_items++;
+    }
+
+    //Generate weapon//
+
+    int weapon_type=random_range(0,2);
+
+    //Melee
+    if(weapon_type==0){
+        give_item("dagger");
+        equip_item(inventory.size()-1,EQUIP_HOLD_RIGHT);
+    }
+    //Thrown
+    else if(weapon_type==1){
+        give_item("shuriken",random_range(10,20));
+    }
+    //Ranged
+    else if(weapon_type==2){
+        give_item("bow");
+        equip_item(inventory.size()-1,EQUIP_HOLD_RIGHT);
+        give_item("arrow",10,20);
+        equip_item(inventory.size()-1,EQUIP_QUIVER);
+    }
+
+    //The number of gold pieces.
+    /**int items_to_add=random_range(0,10);
+
+    for(int i=0;i<items_to_add;){
         //Randomly determine the item category.
         ///For now, equal chance for all categories.
-        int random_item_category=random_range(ITEM_WEAPON,ITEM_OTHER);
+        int item_category=random_range(ITEM_WEAPON,ITEM_OTHER);
 
         //Randomly select an item from the chosen category's template.
         ///For now, equal chance for all items within category.
-        int random_item_template=random_range(0,templates.template_items[random_item_category].size()-1);
+        int item_template=random_range(0,templates.template_items[random_item_category].size()-1);
 
         //If the item is not spawnable.
         if(!templates.template_items[random_item_category][random_item_template].spawnable){
@@ -84,7 +190,7 @@ void Monster::set_inventory(){
         if(inventory.size()>max_items || inventory.size()>=INVENTORY_MAX_SIZE){
             break;
         }
-    }
+    }*/
 }
 
 void Monster::set_base_stats(short pass_level){

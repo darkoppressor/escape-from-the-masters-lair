@@ -21,3 +21,19 @@
 			weapon category:thrown
 		</weapon>
 	</item>
+	
+	<item category:weapon>
+		name:arrow
+		plural name:arrows
+		writing:
+		appearance:)
+		stackable:1
+		size:0.5
+		value:1
+		color:wood
+		material:wood
+		<weapon>
+			governing weapon skill:thrown weapons
+			weapon category:thrown
+		</weapon>
+	</item>

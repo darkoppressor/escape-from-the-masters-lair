@@ -168,7 +168,7 @@ double Creature::return_carry_capacity(){
     double number=carry_capacity;
 
     //Apply the weight bonus.
-    number+=weight/4.0;
+    number+=weight/6.0;
 
     //Add the strength bonus.
     number+=return_attribute_strength()*3;

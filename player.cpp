@@ -89,8 +89,105 @@ void Player::set_inventory(){
     inventory[1].light_on=true;
     inventory[1].fuel=inventory[1].fuel_max;
 
+    ///For now, armor and weapons are randomized. Later, these should be determined by race.
+
+    //Generate armor//
+
+    //The maximum number of armor pieces.
+    int max_armor_items=random_range(1,13);
+
+    //The number of armor pieces generated.
+    int armor_items=0;
+
+    if(armor_items<max_armor_items && random_range(0,99)<15){
+        give_item("leather helm");
+        equip_item(inventory.size()-1,-1);
+        armor_items++;
+    }
+    if(armor_items<max_armor_items && random_range(0,99)<15){
+        give_item("pair of leather spaulders");
+        equip_item(inventory.size()-1,-1);
+        armor_items++;
+    }
+    if(armor_items<max_armor_items && random_range(0,99)<15){
+        give_item("leather chestpiece");
+        equip_item(inventory.size()-1,-1);
+        armor_items++;
+    }
+    if(armor_items<max_armor_items && random_range(0,99)<15){
+        give_item("leather cloak");
+        equip_item(inventory.size()-1,-1);
+        armor_items++;
+    }
+    if(armor_items<max_armor_items && random_range(0,99)<15){
+        give_item("leather belt");
+        equip_item(inventory.size()-1,-1);
+        armor_items++;
+    }
+    if(armor_items<max_armor_items && random_range(0,99)<15){
+        give_item("pair of leather trousers");
+        equip_item(inventory.size()-1,-1);
+        armor_items++;
+    }
+    if(armor_items<max_armor_items && random_range(0,99)<15){
+        give_item("pair of leather boots");
+        equip_item(inventory.size()-1,-1);
+        armor_items++;
+    }
+    if(armor_items<max_armor_items && random_range(0,99)<15){
+        give_item("pair of leather gloves");
+        equip_item(inventory.size()-1,-1);
+        armor_items++;
+    }
+    if(armor_items<max_armor_items && random_range(0,99)<15){
+        give_item("pair of leather bracers");
+        equip_item(inventory.size()-1,-1);
+        armor_items++;
+    }
+    if(armor_items<max_armor_items && random_range(0,99)<15){
+        give_item("leather shield");
+        equip_item(inventory.size()-1,-1);
+        armor_items++;
+    }
+    if(armor_items<max_armor_items && random_range(0,99)<15){
+        give_item("shirt");
+        equip_item(inventory.size()-1,-1);
+        armor_items++;
+    }
+    if(armor_items<max_armor_items && random_range(0,99)<15){
+        give_item("copper amulet");
+        equip_item(inventory.size()-1,-1);
+        armor_items++;
+    }
+    if(armor_items<max_armor_items && random_range(0,99)<15){
+        give_item("copper ring");
+        equip_item(inventory.size()-1,-1);
+        armor_items++;
+    }
+
+    //Generate weapon//
+
+    int weapon_type=random_range(0,2);
+
+    //Melee
+    if(weapon_type==0){
+        give_item("dagger");
+        equip_item(inventory.size()-1,EQUIP_HOLD_RIGHT);
+    }
+    //Thrown
+    else if(weapon_type==1){
+        give_item("shuriken",random_range(10,20));
+    }
+    //Ranged
+    else if(weapon_type==2){
+        give_item("bow");
+        equip_item(inventory.size()-1,EQUIP_HOLD_RIGHT);
+        give_item("arrow",10,20);
+        equip_item(inventory.size()-1,EQUIP_QUIVER);
+    }
+
     //The maximum number of items.
-    int max_items=random_range(1,8);
+    /**int max_items=random_range(1,8);
 
     for(int i=0;i<20;i++){
         //Randomly determine the item category.
@@ -160,7 +257,7 @@ void Player::set_inventory(){
         if(inventory.size()>max_items || inventory.size()>=INVENTORY_MAX_SIZE){
             break;
         }
-    }
+    }*/
 }
 
 void Player::set_base_stats(){
