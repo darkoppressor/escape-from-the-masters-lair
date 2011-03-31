@@ -42,6 +42,9 @@ class Player: public Creature{
     //Used to display the death message in the death window.
     std::string death_message;
 
+    //The number of deaths in this game.
+    int deaths;
+
     Player();
 
     //Setup the player's starting inventory.
@@ -111,8 +114,7 @@ class Player: public Creature{
     //The ending time for this game.
     std::string end_time;
 
-    //The final score of a game.
-    //Only used when the game has ended.
+    //The score for this game.
     int score;
 
     int turn;

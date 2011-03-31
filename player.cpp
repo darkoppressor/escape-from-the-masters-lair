@@ -43,6 +43,8 @@ Player::Player(){
 
     death_message="";
 
+    deaths=0;
+
     start_date="";
     start_time="";
     end_date="";
@@ -862,21 +864,23 @@ void Player::render(vector< vector<bool> >* tile_rendered){
             if(return_absolute_x()>=camera_x-TILE_SIZE_X && return_absolute_x()<=camera_x+camera_w && return_absolute_y()>=camera_y-TILE_SIZE_Y && return_absolute_y()<=camera_y+camera_h){
                 font.show((int)(return_absolute_x()-camera_x),(int)(return_absolute_y()-camera_y),appearance,color);
 
-                short health_bar_color=COLOR_GREEN;
-                if(return_health()>=return_health_max()*0.75){
-                    health_bar_color=COLOR_GREEN;
+                if(player.option_healthbars){
+                    short health_bar_color=COLOR_GREEN;
+                    if(return_health()>=return_health_max()*0.75){
+                        health_bar_color=COLOR_GREEN;
+                    }
+                    else if(return_health()>=return_health_max()*0.50 && return_health()<return_health_max()*0.75){
+                        health_bar_color=COLOR_YELLOW;
+                    }
+                    else if(return_health()>=return_health_max()*0.25 && return_health()<return_health_max()*0.50){
+                        health_bar_color=COLOR_ORANGE;
+                    }
+                    else{
+                        health_bar_color=COLOR_RED;
+                    }
+                    double health_bar_width=((double)((double)health/(double)health_max)*100)/6.25;
+                    render_rectangle((int)(return_absolute_x()-camera_x),(int)(return_absolute_y()-camera_y),health_bar_width,5,0.75,health_bar_color);
                 }
-                else if(return_health()>=return_health_max()*0.50 && return_health()<return_health_max()*0.75){
-                    health_bar_color=COLOR_YELLOW;
-                }
-                else if(return_health()>=return_health_max()*0.25 && return_health()<return_health_max()*0.50){
-                    health_bar_color=COLOR_ORANGE;
-                }
-                else{
-                    health_bar_color=COLOR_RED;
-                }
-                double health_bar_width=((double)((double)health/(double)health_max)*100)/6.25;
-                render_rectangle((int)(return_absolute_x()-camera_x),(int)(return_absolute_y()-camera_y),health_bar_width,5,0.75,health_bar_color);
 
                 tile_rendered->at(x)[y]=true;
             }

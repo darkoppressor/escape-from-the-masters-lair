@@ -52,12 +52,28 @@ void Player::save_game_log_entry(short cause_of_death,string killer,string kille
 
         //Calculate score.
 
-        score=0;
-
-        //Add in all gold and the gold value of all inventory items.
+        //Add all gold and the gold value of all inventory items.
         for(int i=0;i<inventory.size();i++){
             score+=inventory[i].monetary_value*inventory[i].stack;
         }
+
+        //Add the dungeon level bonus.
+        score+=50*max_level;
+
+        //Add the experience level bonus.
+        score+=25*experience_level;
+
+        //Add the attribute bonuses.
+        for(int i=0;i<ATTRIBUTE_LUCK+1;i++){
+            score+=10*attributes[i];
+        }
+
+        //Add the skill bonuses.
+        for(int i=0;i<SKILL_MAGIC_SUMMONING+1;i++){
+            score+=5*skills[i][SKILL_EXPERIENCE_LEVEL];
+        }
+
+        ///Double the total score if the player won.
 
         save_log<<"name:"<<name<<"\n";
         save_log<<"version:"<<AutoVersion::MAJOR<<"."<<AutoVersion::MINOR<<"\n";
@@ -67,7 +83,7 @@ void Player::save_game_log_entry(short cause_of_death,string killer,string kille
         save_log<<"experience level:"<<experience_level<<"\n";
         save_log<<"health:"<<health<<"/"<<health_max<<"\n";
         save_log<<"mana:"<<mana<<"/"<<mana_max<<"\n";
-        ///save_log<<"deaths:"<<deaths<<"\n";
+        save_log<<"deaths:"<<deaths<<"\n";
         save_log<<"game start:"<<start_date<<" at "<<start_time<<"\n";
         save_log<<"game end:"<<end_date<<" at "<<end_time<<"\n";
         save_log<<"class:"<<class_name<<"\n";

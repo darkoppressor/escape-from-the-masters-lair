@@ -72,6 +72,8 @@ void save_game(){
     save<<player.turn<<"\n";
     save<<player.start_date<<"\n";
     save<<player.start_time<<"\n";
+    save<<player.deaths<<"\n";
+    save<<player.score<<"\n";
 
     //******************//
     // Save level data. //
@@ -236,6 +238,12 @@ void load_game(){
 
         getline(load,line);
         player.start_time=line;
+
+        getline(load,line);
+        player.deaths=atoi(line.c_str());
+
+        getline(load,line);
+        player.score=atoi(line.c_str());
 
         //******************//
         // Load level data. //

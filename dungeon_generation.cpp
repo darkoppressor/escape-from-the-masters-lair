@@ -325,7 +325,7 @@ void Game::generate_level(){
 
     //Determine the level's variation(s).
 
-    if(random_range(0,99)<5){
+    if(random_range(0,99)<8){
         if(random_range(0,99)<75){
             level_variations[LEVEL_VARIATION_WATERY]=true;
         }
@@ -334,7 +334,7 @@ void Game::generate_level(){
         }
     }
 
-    if(random_range(0,99)<5){
+    if(random_range(0,99)<10){
         if(random_range(0,99)<75){
             level_variations[LEVEL_VARIATION_FROZEN]=true;
         }
@@ -669,8 +669,7 @@ void Game::generate_level(){
     ///
     /**for(short int_y=0;int_y<generated_level_y;int_y++){
         for(short int_x=0;int_x<generated_level_x;int_x++){
-            //If the tile is reachable.
-            if(tiles_check[int_x][int_y]){
+            if(generated_tiles[int_x][int_y].type!=TILE_TYPE_SOLID){
                 generated_fog[int_x][int_y]=FOG_PERMANENT;
             }
         }

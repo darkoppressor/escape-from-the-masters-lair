@@ -124,11 +124,22 @@ void Monster::handle_ai(){
             }
         }
         else if(action.action==AI_ACTION_HEAL){
-            ///
+            for(int i=0;i<inventory.size();i++){
+                if(inventory[i].possesses_effect(ITEM_EFFECT_HEALING_SLIGHT) || inventory[i].possesses_effect(ITEM_EFFECT_HEALING) || inventory[i].possesses_effect(ITEM_EFFECT_HEALING_CONSIDERABLE)){
+                    ai_keystates[AIK_QUAFF_ITEM]=true;
+                    inventory_input_state=inventory[i].inventory_letter;
+                    break;
+                }
+            }
         }
         else if(action.action==AI_ACTION_DRINK){
-            ///Find a drinkable item.
-            ///Drink the item.
+            for(int i=0;i<inventory.size();i++){
+                if(inventory[i].thirst_quenched>10){
+                    ai_keystates[AIK_QUAFF_ITEM]=true;
+                    inventory_input_state=inventory[i].inventory_letter;
+                    break;
+                }
+            }
         }
         else if(action.action==AI_ACTION_DROP_WEIGHT){
             ///Find the heaviest non-equipped item.

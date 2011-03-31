@@ -7,19 +7,7 @@ using namespace std;
 
 bool Monster::ai_state_thirsty(){
     //If the creature is thirsty.
-    if(thirst>=THIRST_THIRSTY && thirst<THIRST_WEAK){
-        return true;
-    }
-    //If the creature is weak.
-    else if(thirst>=THIRST_WEAK && thirst<THIRST_FAINTING){
-        return true;
-    }
-    //If the creature is fainting.
-    else if(thirst>=THIRST_FAINTING && thirst<THIRST_DEATH){
-        return true;
-    }
-    //If the creature is dead.
-    else if(thirst>=THIRST_DEATH){
+    if(thirst>=THIRST_THIRSTY){
         return true;
     }
 
@@ -61,7 +49,7 @@ bool Monster::ai_state_overencumbered(){
 }
 
 bool Monster::ai_state_low_health(){
-    if(health<health_max*0.25){
+    if(return_health()<return_health_max()*0.25){
         return true;
     }
 

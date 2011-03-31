@@ -42,9 +42,9 @@ bool Level::blockLOS(unsigned short x, unsigned short y){
 void Level::setSeen(unsigned short x, unsigned short y,light_data source_data){
 	if(!onMap(x,y)) return;
 
-    //
-    if(!this->fog[x][y]==FOG_PERMANENT){
-        //Permanent light.
+    //If the light is permanent.
+    if(this->fog[x][y]!=FOG_PERMANENT){
+        //Standard light.
         if(source_data.permanent){
             this->fog[x][y]=FOG_REVEALED_PERMANENT;
         }
@@ -57,8 +57,5 @@ void Level::setSeen(unsigned short x, unsigned short y,light_data source_data){
                 this->fog[x][y]=FOG_REVEALED_TEMPORARY;
             }
         }
-    }
-    else{
-        this->fog[x][y]=FOG_PERMANENT;
     }
 }
