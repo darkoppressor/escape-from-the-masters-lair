@@ -99,7 +99,8 @@ enum{
     FOG_BLACK,
     FOG_FOG,
     FOG_REVEALED_PERMANENT,
-    FOG_REVEALED_TEMPORARY
+    FOG_REVEALED_TEMPORARY,
+    FOG_PERMANENT
 };
 
 //*******************//
@@ -161,7 +162,6 @@ enum{
 enum{
     COVERING_NONE,
     COVERING_ICE,
-    ///COVERING_FROST
 };
 
 //*******************//
@@ -245,7 +245,8 @@ enum{
     ITEM_EFFECT_HEALING_SLIGHT,
     ITEM_EFFECT_HEALING,
     ITEM_EFFECT_HEALING_CONSIDERABLE,
-    ITEM_EFFECT_DYE
+    ITEM_EFFECT_DYE,
+    ITEM_EFFECT_WATER
 };
 
 //******************//

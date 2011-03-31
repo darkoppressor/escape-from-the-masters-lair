@@ -26,6 +26,9 @@ short Templates::string_to_item_effect(string line){
     else if(line=="dye"){
         effect=ITEM_EFFECT_DYE;
     }
+    else if(line=="water"){
+        effect=ITEM_EFFECT_WATER;
+    }
 
     return effect;
 }
@@ -90,12 +93,6 @@ short Templates::string_to_material(string line){
     else if(line=="lava"){
         material=MATERIAL_LAVA;
     }
-    /**else if(line=="ice"){
-        material=MATERIAL_ICE;
-    }
-    else if(line=="frost"){
-        material=MATERIAL_FROST;
-    }*/
 
     return material;
 }

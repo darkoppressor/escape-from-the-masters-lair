@@ -12,6 +12,7 @@
 	value:1
 	color:water
 	material:glass
+	effect:water
 	<drink>
 		thirst quenched:250
 	</drink>

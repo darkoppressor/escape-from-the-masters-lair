@@ -381,6 +381,7 @@ void Game::generate_level(){
         generated_items.clear();
         generated_monsters.clear();
         generated_tiles.clear();
+        generated_fog.clear();
 
         //Determine the level's dimensions.
         generated_level_x=random_range(LEVEL_X_MIN,LEVEL_X_MAX);
@@ -390,6 +391,8 @@ void Game::generate_level(){
 
         generated_tiles.resize(generated_level_x,vector<Tile>(generated_level_y));
 
+        generated_fog.resize(generated_level_x,vector<short>(generated_level_y));
+
         for(short int_y=0;int_y<generated_level_y;int_y++){
             for(short int_x=0;int_x<generated_level_x;int_x++){
                 generated_tiles[int_x][int_y].x=int_x;
@@ -397,6 +400,7 @@ void Game::generate_level(){
                 generated_tiles[int_x][int_y].type=TILE_TYPE_WALL;
                 generated_tiles[int_x][int_y].material=MATERIAL_STONE;
                 generated_tiles[int_x][int_y].covering=COVERING_NONE;
+                generated_fog[int_x][int_y]=FOG_BLACK;
             }
         }
 
@@ -662,6 +666,16 @@ void Game::generate_level(){
         }
     }
 
+    ///
+    /**for(short int_y=0;int_y<generated_level_y;int_y++){
+        for(short int_x=0;int_x<generated_level_x;int_x++){
+            //If the tile is reachable.
+            if(tiles_check[int_x][int_y]){
+                generated_fog[int_x][int_y]=FOG_PERMANENT;
+            }
+        }
+    }*/
+
     //Add the items.
 
     //The maximum number of items.
@@ -807,7 +821,8 @@ void Game::generate_level(){
             vector_levels[vector_levels.size()-1].tiles[x][y].covering=generated_tiles[x][y].covering;
 
             //All tiles start out black.
-            vector_levels[vector_levels.size()-1].fog[x][y]=FOG_BLACK;
+            ///vector_levels[vector_levels.size()-1].fog[x][y]=FOG_BLACK;
+            vector_levels[vector_levels.size()-1].fog[x][y]=generated_fog[x][y];
         }
     }
 

@@ -27,6 +27,8 @@ class Game{
 
     std::vector< std::vector<Tile> > generated_tiles;
 
+    std::vector< std::vector<short> > generated_fog;
+
     //Used in testing walkable tiles' reachability.
     std::vector< std::vector<bool> > tiles_check;
 

@@ -60,7 +60,39 @@ void Creature::mix_items(int item_index_1,int item_index_2){
         }
 
         //Dye the second item with the first item's dye color.
+        ///This should be improved later. Colors should mix and whatnot.
+        ///Eventually, if you keep dying an item, it will end up dark brown or something.
         inventory[item_index_2].dye=inventory[item_index_1].color;
+
+        first_item_used=true;
+    }
+
+    //If the first item is water.
+    if(inventory[item_index_1].possesses_effect(ITEM_EFFECT_WATER)){
+        //If the creature is the player.
+        if(is_player){
+            str_item="You pour the ";
+            str_item+=inventory[item_index_1].return_full_name(1);
+            str_item+=" on the ";
+            str_item+=inventory[item_index_2].return_full_name(1);
+            str_item+=".";
+        }
+        //If the creature is not the player.
+        else{
+            str_item="The ";
+            str_item+=return_full_name();
+            str_item+="pours the ";
+            str_item+=inventory[item_index_1].return_full_name(1);
+            str_item+=" on the ";
+            str_item+=inventory[item_index_2].return_full_name(1);
+            str_item+=".";
+        }
+
+        //Wash any dye off of the second item.
+        inventory[item_index_2].dye=0;
+
+        //If the item is lit, extinguish its light.
+        inventory[item_index_2].light_on=false;
 
         first_item_used=true;
     }
@@ -98,6 +130,10 @@ bool Creature::items_mixable(int item_index_1,int item_index_2){
     }
     //If the first item is a dye, and the second item is not a dye.
     else if(inventory[item_index_1].possesses_effect(ITEM_EFFECT_DYE) && !inventory[item_index_2].possesses_effect(ITEM_EFFECT_DYE)){
+        return true;
+    }
+    //If the first item is water.
+    else if(inventory[item_index_1].possesses_effect(ITEM_EFFECT_WATER)){
         return true;
     }
     else{
