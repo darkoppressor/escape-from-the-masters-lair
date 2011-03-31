@@ -9,6 +9,8 @@ using namespace std;
 void Creature::mix_items(int item_index_1,int item_index_2){
     string str_item="";
 
+    bool first_item_used=false;
+
     //If the first item is a fuel refiller, and the second item uses fuel.
     if(inventory[item_index_1].possesses_effect(ITEM_EFFECT_FUEL) && inventory[item_index_2].fuel_max>0){
         //If the creature is the player.
@@ -33,6 +35,37 @@ void Creature::mix_items(int item_index_1,int item_index_2){
         //Max out the second item's fuel supply.
         inventory[item_index_2].fuel=inventory[item_index_2].fuel_max;
 
+        first_item_used=true;
+    }
+
+    //If the first item is a dye, and the second item is not a dye.
+    if(inventory[item_index_1].possesses_effect(ITEM_EFFECT_DYE) && !inventory[item_index_2].possesses_effect(ITEM_EFFECT_DYE)){
+        //If the creature is the player.
+        if(is_player){
+            str_item="You dye the ";
+            str_item+=inventory[item_index_2].return_full_name();
+            str_item+=" with the ";
+            str_item+=inventory[item_index_1].return_full_name(1);
+            str_item+=".";
+        }
+        //If the creature is not the player.
+        else{
+            str_item="The ";
+            str_item+=return_full_name();
+            str_item+="dyes the ";
+            str_item+=inventory[item_index_2].return_full_name();
+            str_item+=" with the ";
+            str_item+=inventory[item_index_1].return_full_name(1);
+            str_item+=".";
+        }
+
+        //Dye the second item with the first item's dye color.
+        inventory[item_index_2].dye=inventory[item_index_1].color;
+
+        first_item_used=true;
+    }
+
+    if(first_item_used){
         //The first item is used up.
 
         //If the stack is greater than 1.
@@ -61,6 +94,10 @@ void Creature::mix_items(int item_index_1,int item_index_2){
 bool Creature::items_mixable(int item_index_1,int item_index_2){
     //If the first item is a fuel refiller, and the second item uses fuel.
     if(inventory[item_index_1].possesses_effect(ITEM_EFFECT_FUEL) && inventory[item_index_2].fuel_max>0){
+        return true;
+    }
+    //If the first item is a dye, and the second item is not a dye.
+    else if(inventory[item_index_1].possesses_effect(ITEM_EFFECT_DYE) && !inventory[item_index_2].possesses_effect(ITEM_EFFECT_DYE)){
         return true;
     }
     else{

@@ -18,4 +18,6 @@ void prepare_densities();
 
 std::string material_to_string(short material);
 
+std::string color_to_string(short color);
+
 #endif

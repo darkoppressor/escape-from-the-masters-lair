@@ -116,3 +116,199 @@ string material_to_string(short material){
 
     return line;
 }
+
+string color_to_string(short color){
+    string line="";
+
+    if(color==COLOR_RAINBOW){
+        line="rainbow";
+    }
+
+    else if(color==COLOR_BLACK){
+        line="black";
+    }
+    else if(color==COLOR_GRAY){
+        line="gray";
+    }
+    else if(color==COLOR_LIGHT_GRAY){
+        line="light gray";
+    }
+    else if(color==COLOR_DARK_GRAY){
+        line="dark gray";
+    }
+
+    else if(color==COLOR_PAYNES_GRAY){
+        line="payne's gray";
+    }
+
+    else if(color==COLOR_WHITE){
+        line="white";
+    }
+    else if(color==COLOR_BROWN){
+        line="brown";
+    }
+    else if(color==COLOR_DARK_BROWN){
+        line="dark brown";
+    }
+    else if(color==COLOR_SEPIA){
+        line="sepia";
+    }
+    else if(color==COLOR_SANDY_BROWN){
+        line="sandy brown";
+    }
+    else if(color==COLOR_WHEAT){
+        line="wheat";
+    }
+    else if(color==COLOR_TAN){
+        line="tan";
+    }
+    else if(color==COLOR_PALE_BROWN){
+        line="pale brown";
+    }
+    else if(color==COLOR_BURNT_SIENNA){
+        line="burnt sienna";
+    }
+
+    else if(color==COLOR_YELLOW){
+        line="yellow";
+    }
+    else if(color==COLOR_SYSTEM){
+        line="system";
+    }
+
+    else if(color==COLOR_ORANGE){
+        line="orange";
+    }
+    else if(color==COLOR_ORANGE_PEEL){
+        line="orange peel";
+    }
+    else if(color==COLOR_ORANGE_CARROT){
+        line="carrot orange";
+    }
+    else if(color==COLOR_ORANGE_BURNT){
+        line="burnt orange";
+    }
+    else if(color==COLOR_PUMPKIN){
+        line="pumpkin";
+    }
+
+    else if(color==COLOR_RED){
+        line="red";
+    }
+    else if(color==COLOR_DARK_RED){
+        line="dark red";
+    }
+    else if(color==COLOR_FLAME){
+        line="flame";
+    }
+
+    else if(color==COLOR_PINK){
+        line="pink";
+    }
+    else if(color==COLOR_ROSE){
+        line="rose";
+    }
+    else if(color==COLOR_SHOCKING_PINK){
+        line="shocking pink";
+    }
+
+    else if(color==COLOR_PURPLE){
+        line="purple";
+    }
+    else if(color==COLOR_VIOLET){
+        line="violet";
+    }
+    else if(color==COLOR_INDIGO){
+        line="indigo";
+    }
+
+    else if(color==COLOR_BLUE){
+        line="blue";
+    }
+    else if(color==COLOR_DARK_BLUE){
+        line="dark blue";
+    }
+    else if(color==COLOR_SKY_BLUE){
+        line="sky blue";
+    }
+    else if(color==COLOR_UN_BLUE){
+        line="un blue";
+    }
+
+    else if(color==COLOR_GREEN){
+        line="green";
+    }
+    else if(color==COLOR_JUNGLE){
+        line="jungle";
+    }
+    else if(color==COLOR_SPRING){
+        line="spring";
+    }
+
+    else if(color==COLOR_CLOTH){
+        line="cloth";
+    }
+    else if(color==COLOR_LEATHER){
+        line="leather";
+    }
+    else if(color==COLOR_COPPER){
+        line="copper";
+    }
+    else if(color==COLOR_BRASS){
+        line="brass";
+    }
+    else if(color==COLOR_BRONZE){
+        line="bronze";
+    }
+    else if(color==COLOR_IRON){
+        line="iron";
+    }
+    else if(color==COLOR_STEEL){
+        line="steel";
+    }
+    else if(color==COLOR_SILVER){
+        line="silver";
+    }
+    else if(color==COLOR_GOLD){
+        line="gold";
+    }
+    else if(color==COLOR_WOOD){
+        line="wood";
+    }
+    else if(color==COLOR_BONE){
+        line="bone";
+    }
+    else if(color==COLOR_CORPSE){
+        line="corpse";
+    }
+    else if(color==COLOR_FOOD){
+        line="food";
+    }
+    else if(color==COLOR_STONE){
+        line="stone";
+    }
+    else if(color==COLOR_DIRT){
+        line="dirt";
+    }
+    else if(color==COLOR_GLASS){
+        line="glass";
+    }
+    else if(color==COLOR_PAPER){
+        line="paper";
+    }
+    else if(color==COLOR_WATER){
+        line="water";
+    }
+    else if(color==COLOR_LAVA){
+        line="lava";
+    }
+
+    else if(color==COLOR_ICE){
+        line="ice";
+    }
+    else if(color==COLOR_FROST){
+        line="frost";
+    }
+
+    return line;
+}

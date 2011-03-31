@@ -80,3 +80,19 @@
 		thirst quenched:10
 	</drink>
 </item>
+
+<item category:drink>
+	name:bottle of yellow dye
+	plural name:bottles of yellow dye
+	writing:
+	appearance:!
+	stackable:1
+	size:0.5
+	value:1
+	color:yellow
+	material:glass
+	effect:dye
+	<drink>
+		thirst quenched:1
+	</drink>
+</item>

@@ -23,6 +23,9 @@ short Templates::string_to_item_effect(string line){
     else if(line=="considerable healing"){
         effect=ITEM_EFFECT_HEALING_CONSIDERABLE;
     }
+    else if(line=="dye"){
+        effect=ITEM_EFFECT_DYE;
+    }
 
     return effect;
 }

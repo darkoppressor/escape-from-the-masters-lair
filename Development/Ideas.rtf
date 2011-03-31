@@ -37,8 +37,6 @@ Search should look for traps, too.\par
 I just want to note somewhere: a game turn is one call to turn(). During this turn, creatures can make multiple moves.\par
 The difficulty of monsters generated should be dungeon level-dependent, NOT player's experience level-dependent.\par
 Necromancy sorts of spells that raise corpses and such as undead minions should take the kind of corpse into account. For instance, a grid bug corpse would become a grid bug zombie. Also, since corpses rot and leave behind skeletons, those should be raised as skeletons and not zombies.\par
-\strike Perhaps a creature's weight, which is an indicator of its size, should give a small bonus to carrying capacity.\strike0\par
-You should gain max hp when drinking a healing potion at full health.\par
 Perhaps the type of monsters should be determined by the level theme. Each monster could even have a theme number, which would tie it to a given theme. Should I also sort monsters by difficulty? I could have the game calculate each monster's difficulty after loading the templates. Both theme and difficulty could be taken into account, and most monsters generated could be of the corresponding types/ranges. However, it should be possible for monsters to be generated outside of both their theme and difficulty. Since monsters can level up just like the player, maybe the difficulty sorting can be left out at load time. Instead, a monster's starting inventory/base stats/starting experience level could be scaled depending on how difficult the monster should be. So, based on dungeon level, player level, both, whatever, a difficulty number is determined for each monster as it is generated. Then, its stuff is all scaled by this. Each race should have some AI stuff defined, too, like preferred attributes and skills.\par
 I need to add monsters spawning over time. Also, dark-spawning monsters.\par
 Some possible conditions: lycanthropy, vampirism, various diseases and poisons.\par
@@ -48,7 +46,6 @@ Instead of the single level theme number for races, they should be able to have 
 For the creature conditions, I can have a vector of Conditions. Each Condition can store the number of remaining turns for the condition (determined when the condition is applied to the creature) and the actual condition identifier. Every turn, all conditions' turn counter can be decremented. As conditions are removed, they are simply erased from the vector. Similarly, when they are added, they are added to the vector.\par
 Each race should have a number of ai traits set for it, so when the race is being controlled by AI, it will act in certain ways.\par
 Perhaps each race should have a "thirst need" variable of some kind, determining whether or not they need to drink anything.\par
-\strike Maybe you should start losing health each turn instead of immediately dying of thirst in the final stage.\strike0\par
 Should non-humanoid races be prevented from wearing most/all armor? If so, should they get some natural armor?\par
 Should I add some kind of passive "search" that replaces the search command? In other words, you search every time you wait, and maybe every time you move. This could be affected by your security skill. The search command would be removed. The wait command would have an identical function.\par
 Magical pools, like in Super Rogue.\par
@@ -56,8 +53,7 @@ Awesome traps. Traps will need to be capable of being multiple tiles. So, like a
 Pressure plates could have a minimum weight required to set them off. This could be the weight of all creatures, items, etc. on the pressure plate's tile.\par
 The AI should be capable of hit and run tactics.\par
 I can get some initial armor sets setup by making a set of armor for each armor-worthy material, in 3 sizes - light, medium, and heavy.\par
-Maybe monsters initially spawned on a level should be determined by the dungeon level, but monsters spawned later on a given level are determined by the player's current experience level.\par
-\strike Any item can be thrown, or quivered and fired with a launcher item equipped. However, fired items suffer a heavy damage penalty if they are not among the launcher's ammo types.\par
+Maybe monsters initially spawned on a level should be determined by the dungeon level, but monsters spawned later on a given level are determined by the player's current experience level.\strike\par
 \strike0 The level generator needs to be able to make special rooms.\par
 \lang1033 -Handle projectile breakage. UPDATE: If I decide to even have this at all.\par
 I need to make ice on walkable tiles affect creature movement (if it is going to do anything). I should also make liquids with an ice covering walkable.\lang9\par

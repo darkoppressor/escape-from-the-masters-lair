@@ -380,7 +380,7 @@ void Item::process_turn(){
         age++;
 
         //If the corpse reaches its decay age.
-        if(age>=10){
+        if(age>=100){
             //The corpse becomes a skeleton.
 
             //Create a temporary skeleton item.

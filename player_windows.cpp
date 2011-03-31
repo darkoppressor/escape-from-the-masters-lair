@@ -1064,11 +1064,17 @@ void Player::render_inventory(bool all_categories){
                 }
 
                 if(inventory[i].category==n && inventory[i].inventory_letter!='$'){
+                    string str_dye="";
+
                     render_color=inventory[i].color;
 
                     //If the item is dyed.
                     if(inventory[i].dye!=0){
                         render_color=inventory[i].dye;
+
+                        str_dye=" (dyed ";
+                        str_dye+=color_to_string(inventory[i].dye);
+                        str_dye+=")";
                     }
 
                     string item_amount_prefix="";
@@ -1180,7 +1186,7 @@ void Player::render_inventory(bool all_categories){
                         }
                     }
 
-                    ss.clear();ss.str("");ss<<" ";ss<<inventory[i].inventory_letter;ss<<" - ";ss<<item_amount_prefix;ss<<inventory[i].return_full_name();ss<<str_item;ss<<"\xA";msg=ss.str();
+                    ss.clear();ss.str("");ss<<" ";ss<<inventory[i].inventory_letter;ss<<" - ";ss<<item_amount_prefix;ss<<inventory[i].return_full_name();ss<<str_item;ss<<str_dye;ss<<"\xA";msg=ss.str();
 
                     font_small.show(5+column*column_width,font_small.spacing_y*2+2+font_small.spacing_y*lines_rendered++,msg,render_color);
                 }

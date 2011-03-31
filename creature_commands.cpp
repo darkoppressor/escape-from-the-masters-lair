@@ -1352,7 +1352,9 @@ void Creature::check_command_inventory(char inventory_letter){
 
             //If the creature is the player.
             if(is_player){
-                str_item="With what?";
+                str_item="Mix the ";
+                str_item+=inventory[inventory_item_index].return_full_name(1);
+                str_item+=" with what?";
             }
 
             update_text_log(str_item.c_str(),is_player);
