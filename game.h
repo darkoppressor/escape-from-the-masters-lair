@@ -19,7 +19,11 @@ class Game{
     //Background music will be loaded into this variable.
     Mix_Music *music;
 
+    short level_variations[LEVEL_VARIATION_LAVA+1];
+
     short generated_temperature;
+
+    short level_theme;
 
     std::vector< std::vector<Tile> > generated_tiles;
 
@@ -27,6 +31,7 @@ class Game{
     std::vector< std::vector<bool> > tiles_check;
 
     std::vector<Item> generated_items;
+
     std::vector<Monster> generated_monsters;
 
     public:

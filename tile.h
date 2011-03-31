@@ -23,6 +23,9 @@ class Tile: public Object{
     //The material that the tile is composed of.
     //In other words, what the tile is MADE OF.
     short material;
+
+    //
+    short covering;
 };
 
 #endif

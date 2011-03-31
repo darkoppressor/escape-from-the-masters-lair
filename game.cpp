@@ -17,7 +17,13 @@ Game::Game(){
     generated_level_x=0;
     generated_level_y=0;
 
+    for(int i=0;i<LEVEL_VARIATION_LAVA+1;i++){
+        level_variations[i]=false;
+    }
+
     generated_temperature=TEMP_ROOM_TEMPERATURE;
+
+    level_theme=LEVEL_THEME_RECTANGLES_AND_CIRCLES;
 }
 
 Game::~Game(){

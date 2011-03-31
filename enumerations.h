@@ -159,8 +159,32 @@ enum{
 //************//
 
 enum{
+    COVERING_NONE,
     COVERING_ICE,
-    COVERING_FROST
+    ///COVERING_FROST
+};
+
+//*******************//
+// Level Variations: //
+//*******************//
+
+enum{
+    LEVEL_VARIATION_WATERY,
+    LEVEL_VARIATION_FROZEN,
+    LEVEL_VARIATION_ICY,
+    LEVEL_VARIATION_LAVA
+};
+
+//***************//
+// Level Themes: //
+//***************//
+
+enum{
+    LEVEL_THEME_ALL_RECTANGLES,
+    LEVEL_THEME_ALL_CIRCLES,
+    LEVEL_THEME_RECTANGLES_AND_CIRCLES,
+    LEVEL_THEME_CAVE,
+    LEVEL_THEME_BIG_ROOM,
 };
 
 //***************//
@@ -174,7 +198,7 @@ enum{
 //***************//
 // Temperatures: //
 //***************//
-
+///I might just make these a regular enum, and throw out the values.
 enum{
     TEMP_ABSOLUTE_ZERO=-273,
     TEMP_FREEZING=0,

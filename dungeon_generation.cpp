@@ -117,13 +117,7 @@ void Game::level_theme_rooms(){
     //Used to prevent an infinite loop.
     short iterations=0;
     //Number of rooms to create.
-    ///short number_of_rooms=random_range((generated_level_x*generated_level_y)/1000,(generated_level_x*generated_level_y)/100);
     short number_of_rooms=random_range((generated_level_x*generated_level_y)/768,(generated_level_x*generated_level_y)/512);
-
-    //0 = rectangular only
-    //1 = circular only
-    //2 = both
-    short room_types=random_range(0,2);
 
     //0 = Left.
     //1 = Up.
@@ -177,11 +171,10 @@ void Game::level_theme_rooms(){
                     feature=1;
                 }
 
-                //
-                if(room_types==0){
+                if(level_theme==LEVEL_THEME_ALL_RECTANGLES){
                     feature=0;
                 }
-                else if(room_types==1){
+                else if(level_theme==LEVEL_THEME_ALL_CIRCLES){
                     feature=1;
                 }
 
@@ -305,7 +298,7 @@ void Game::level_theme_caves(){
         }
     }
 
-    flood_fill_caves(start_x-5,start_y-5);
+    ///flood_fill_caves(start_x-5,start_y-5);
 }
 
 void Game::level_theme_big_room(){
@@ -330,6 +323,52 @@ void Game::generate_level(){
     // Begin randomly generating level! //
     //**********************************//
 
+    //Determine the level's variation(s).
+
+    if(random_range(0,99)<5){
+        if(random_range(0,99)<75){
+            level_variations[LEVEL_VARIATION_WATERY]=true;
+        }
+        else{
+            level_variations[LEVEL_VARIATION_LAVA]=true;
+        }
+    }
+
+    if(random_range(0,99)<5){
+        if(random_range(0,99)<75){
+            level_variations[LEVEL_VARIATION_FROZEN]=true;
+        }
+        else{
+            level_variations[LEVEL_VARIATION_ICY]=true;
+        }
+    }
+
+    //Determine the level's starting temperature.
+    if(level_variations[LEVEL_VARIATION_FROZEN]){
+        generated_temperature=TEMP_FREEZING;
+    }
+    else if(level_variations[LEVEL_VARIATION_ICY]){
+        generated_temperature=TEMP_ABSOLUTE_ZERO;
+    }
+    else if(level_variations[LEVEL_VARIATION_LAVA]){
+        generated_temperature=TEMP_BOILING;
+    }
+    else{
+        generated_temperature=TEMP_ROOM_TEMPERATURE;
+    }
+
+    int random=random_range(0,99);
+
+    if(random<75){
+        level_theme=random_range(LEVEL_THEME_ALL_RECTANGLES,LEVEL_THEME_RECTANGLES_AND_CIRCLES);
+    }
+    else if(random>=75 && random<95){
+        level_theme=LEVEL_THEME_CAVE;
+    }
+    else if(random>=95 && random<100){
+        level_theme=LEVEL_THEME_BIG_ROOM;
+    }
+
     //****************//
     // Dungeon level. //
     //****************//
@@ -347,14 +386,6 @@ void Game::generate_level(){
         generated_level_x=random_range(LEVEL_X_MIN,LEVEL_X_MAX);
         generated_level_y=random_range(LEVEL_Y_MIN,LEVEL_Y_MAX);
 
-        //Determine the level's starting temperature.
-        /**generated_temperature=random_range(0,TEMP_ROOM_TEMPERATURE);
-        int random=random_range(0,1);
-        if(random==0){
-            generated_temperature*=-1;
-        }*/
-        generated_temperature=TEMP_ROOM_TEMPERATURE;
-
         //Start with a clean slate.
 
         generated_tiles.resize(generated_level_x,vector<Tile>(generated_level_y));
@@ -365,19 +396,17 @@ void Game::generate_level(){
                 generated_tiles[int_x][int_y].y=int_y;
                 generated_tiles[int_x][int_y].type=TILE_TYPE_WALL;
                 generated_tiles[int_x][int_y].material=MATERIAL_STONE;
+                generated_tiles[int_x][int_y].covering=COVERING_NONE;
             }
         }
 
-        int level_theme=random_range(0,99);
-
-        if(level_theme>=0 && level_theme<80){
+        if(level_theme==LEVEL_THEME_ALL_RECTANGLES || level_theme==LEVEL_THEME_ALL_CIRCLES || level_theme==LEVEL_THEME_RECTANGLES_AND_CIRCLES){
             level_theme_rooms();
         }
-        else if(level_theme>=80 && level_theme<95){
-            ///level_theme_caves();
-            level_theme_rooms();
+        else if(level_theme==LEVEL_THEME_CAVE){
+            level_theme_caves();
         }
-        else if(level_theme>=95 && level_theme<100){
+        else if(level_theme==LEVEL_THEME_BIG_ROOM){
             level_theme_big_room();
         }
         ///level_theme_caves();
@@ -456,24 +485,49 @@ void Game::generate_level(){
         //Add liquid.
 
         //The maximum number.
-        int max_liquids=random_range((generated_level_x*generated_level_y)/10000,(generated_level_x*generated_level_y)/5000);
+        int max_liquids=0;
+
+        if(level_variations[LEVEL_VARIATION_WATERY] || level_variations[LEVEL_VARIATION_LAVA]){
+            max_liquids=random_range((generated_level_x*generated_level_y)/500,(generated_level_x*generated_level_y)/100);
+        }
+        else{
+            max_liquids=random_range((generated_level_x*generated_level_y)/20000,(generated_level_x*generated_level_y)/10000);
+        }
+
         //The maximum number of tries.
         int random_amount_liquids=random_range((generated_level_x*generated_level_y)/4,(generated_level_x*generated_level_y)/2);
+
         //The number created successfully.
         int liquids_created=0;
 
         for(int i=0;i<random_amount_liquids;i++){
             short x,y;
 
+            short liquid_material=MATERIAL_WATER;
+
             //Choose a random location in the level.
             x=random_range(0,generated_level_x-1);
             y=random_range(0,generated_level_y-1);
 
-            int radius=random_range(1,5);
+            int radius=0;
+
+            if(level_variations[LEVEL_VARIATION_WATERY] || level_variations[LEVEL_VARIATION_LAVA]){
+                radius=random_range(3,20);
+            }
+            else{
+                radius=random_range(3,5);
+            }
+
+            if(level_variations[LEVEL_VARIATION_WATERY]){
+                liquid_material=MATERIAL_WATER;
+            }
+            else if(level_variations[LEVEL_VARIATION_LAVA]){
+                liquid_material=MATERIAL_LAVA;
+            }
 
             //If the tiles at the random position are appropriate tiles.
             if(check_circle(x,y,radius,TILE_TYPE_FLOOR)){
-                draw_circle(x,y,radius,TILE_TYPE_LIQUID,MATERIAL_WATER);
+                draw_circle(x,y,radius,TILE_TYPE_LIQUID,liquid_material);
                 liquids_created++;
             }
 
@@ -513,9 +567,8 @@ void Game::generate_level(){
 
         x=random_range(1,generated_level_x-2);
         y=random_range(1,generated_level_y-2);
-        if(generated_tiles[x][y].type==TILE_TYPE_FLOOR){/// && generated_tiles[x][y].material==MATERIAL_STONE
+        if(generated_tiles[x][y].type==TILE_TYPE_FLOOR){
             generated_tiles[x][y].type=TILE_TYPE_UP_STAIRS;
-            ///generated_tiles[x][y].material=MATERIAL_STONE;
             break;
         }
     }
@@ -526,9 +579,8 @@ void Game::generate_level(){
 
         x=random_range(1,generated_level_x-2);
         y=random_range(1,generated_level_y-2);
-        if(generated_tiles[x][y].type==TILE_TYPE_FLOOR){/// && generated_tiles[x][y].material==MATERIAL_STONE
+        if(generated_tiles[x][y].type==TILE_TYPE_FLOOR){
             generated_tiles[x][y].type=TILE_TYPE_DOWN_STAIRS;
-            ///generated_tiles[x][y].material=MATERIAL_STONE;
             break;
         }
     }
@@ -583,7 +635,6 @@ void Game::generate_level(){
         ///It should also check to make sure there is not more than one other trap within a small radius.
         if(generated_tiles[x][y].type==TILE_TYPE_FLOOR){
             generated_tiles[x][y].type=TILE_TYPE_TRAP;
-            ///generated_tiles[x][y].material=MATERIAL_WOOD;
             traps_created++;
         }
 
@@ -593,35 +644,23 @@ void Game::generate_level(){
         }
     }
 
-    //Modify the material of the tiles according to the level's temperature.
-    /**for(short y=0;y<generated_level_y;y++){
+    //Modify the covering(s) of the tiles according to the level's temperature.
+    for(short y=0;y<generated_level_y;y++){
         for(short x=0;x<generated_level_x;x++){
-            //If the temperature is frosty.
-            if(generated_temperature<=TEMP_FREEZING && generated_temperature>=-10){
+            //If the temperature is freezing.
+            if(generated_temperature==TEMP_FREEZING){
                 switch(generated_tiles[x][y].type){
-                    case TILE_TYPE_WALL: case TILE_TYPE_FLOOR: case TILE_TYPE_SOLID: case TILE_TYPE_DOWN_STAIRS:
-                    case TILE_TYPE_UP_STAIRS: case TILE_TYPE_DOOR_CLOSED: case TILE_TYPE_DOOR_OPEN: case TILE_TYPE_SECRET_DOOR:
-                        generated_tiles[x][y].material=MATERIAL_FROST;
-                        break;
-
                     case TILE_TYPE_LIQUID: case TILE_TYPE_FOUNTAIN:
-                        generated_tiles[x][y].material=MATERIAL_ICE;
+                        generated_tiles[x][y].covering=COVERING_ICE;
                         break;
                 }
             }
-
             //If the temperature is icy.
-            else if(generated_temperature<-10){
-                switch(generated_tiles[x][y].type){
-                    case TILE_TYPE_WALL: case TILE_TYPE_FLOOR: case TILE_TYPE_SOLID: case TILE_TYPE_DOWN_STAIRS:
-                    case TILE_TYPE_UP_STAIRS: case TILE_TYPE_DOOR_CLOSED: case TILE_TYPE_DOOR_OPEN: case TILE_TYPE_SECRET_DOOR:
-                    case TILE_TYPE_LIQUID: case TILE_TYPE_FOUNTAIN:
-                        generated_tiles[x][y].material=MATERIAL_ICE;
-                        break;
-                }
+            else if(generated_temperature==TEMP_ABSOLUTE_ZERO){
+                generated_tiles[x][y].covering=COVERING_ICE;
             }
         }
-    }*/
+    }
 
     //Add the items.
 
@@ -765,6 +804,7 @@ void Game::generate_level(){
             vector_levels[vector_levels.size()-1].tiles[x][y].y=generated_tiles[x][y].y;
             vector_levels[vector_levels.size()-1].tiles[x][y].type=generated_tiles[x][y].type;
             vector_levels[vector_levels.size()-1].tiles[x][y].material=generated_tiles[x][y].material;
+            vector_levels[vector_levels.size()-1].tiles[x][y].covering=generated_tiles[x][y].covering;
 
             //All tiles start out black.
             vector_levels[vector_levels.size()-1].fog[x][y]=FOG_BLACK;

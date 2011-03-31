@@ -268,8 +268,8 @@ void render(int frame_rate, double ms_per_frame){
             }*/
 
             if(player.option_dev && player.chat_mode){
-                render_rectangle(0,0,275,205,0.75,COLOR_BLACK);
-                render_rectangle(5,5,265,195,0.75,COLOR_GRAY);
+                render_rectangle(0,0,275,225,0.75,COLOR_BLACK);
+                render_rectangle(5,5,265,215,0.75,COLOR_GRAY);
                 ss.clear();ss.str("");ss<<"Last Dungeon Level: ";ss<<last_level+1;ss<<"\xA";msg=ss.str();
                 ss.clear();ss.str("");ss<<"Max Dungeon Level: ";ss<<max_level+1;ss<<"\xA";msg+=ss.str();
                 ss.clear();ss.str("");ss<<"Level Temperature: ";ss<<vector_levels[current_level].temperature;ss<<"\xA";msg+=ss.str();
@@ -282,6 +282,7 @@ void render(int frame_rate, double ms_per_frame){
                 ss.clear();ss.str("");ss<<"CPU Architecture: ";ss<<8*sizeof(void*);ss<<"-bit";ss<<"\xA";msg+=ss.str();
                 ss.clear();ss.str("");ss<<"Thirst: ";ss<<player.thirst;ss<<"\xA";msg+=ss.str();
                 ss.clear();ss.str("");ss<<"Weight: ";ss<<player.weight;ss<<"\xA";msg+=ss.str();
+                ss.clear();ss.str("");ss<<"Level Temp: ";ss<<vector_levels[current_level].temperature;ss<<"\xA";msg+=ss.str();
                 font_small.show(5,5,msg,COLOR_WHITE);
             }
 

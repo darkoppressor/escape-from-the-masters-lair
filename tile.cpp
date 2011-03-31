@@ -9,13 +9,9 @@
 using namespace std;
 
 Tile::Tile(){
-    //Set the tile's variables:
-
-    x=0;
-    y=0;
-
     type=TILE_TYPE_WALL;
     material=MATERIAL_STONE;
+    covering=COVERING_NONE;
 }
 
 void Tile::render(vector< vector<bool> >* tile_rendered){
@@ -88,6 +84,10 @@ void Tile::render(vector< vector<bool> >* tile_rendered){
                 }
                 else if(material==MATERIAL_LAVA){
                     color=COLOR_LAVA;
+                }
+
+                if(covering==COVERING_ICE){
+                    color=COLOR_ICE;
                 }
 
                 if(type==TILE_TYPE_WALL){
