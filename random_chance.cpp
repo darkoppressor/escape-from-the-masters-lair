@@ -176,6 +176,17 @@ bool rc_exercise_skill_armor(){
     }
 }
 
+bool rc_exercise_skill_speed(){
+    int random_attempt=random_range(0,99);
+
+    if(random_attempt>=0 && random_attempt<75){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
 bool rc_levelgen_secret_door(){
     int random_attempt=random_range(0,99);
 

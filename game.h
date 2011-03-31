@@ -73,17 +73,13 @@ class Game{
     //Returns false if one or more walkable tiles are unreachable.
     bool all_tiles_reachable();
 
-    //
-    void level_theme_rooms();
-
-    //
+    ///This is probably going to be thrown out.
     void flood_fill_caves(int x,int y);
 
-    //
+    void level_theme_rooms();
     void level_theme_caves();
-
-    //
     void level_theme_big_room();
+    void level_theme_maze();
 
     //This function loads whatever level is needed from the corresponding level file.
     void generate_level();

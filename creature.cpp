@@ -586,16 +586,21 @@ void Creature::execute_movement(short check_x,short check_y){
 
         //If no attack occurred.
         if(!combat_occurred){
+            int points_gained=0;
+            double inventory_weight=0.0;
+
             //Exercise the speed skill.
 
-            int points_gained=1;
-            double inventory_weight=return_inventory_weight();
-            if(inventory_weight<10.0){
-                inventory_weight=10.0;
+            if(rc_exercise_skill_speed()){
+                points_gained=1;
+                inventory_weight=return_inventory_weight();
+                if(inventory_weight<10.0){
+                    inventory_weight=10.0;
+                }
+                //Apply the encumbrance bonus to the speed skill increase.
+                points_gained+=25.0/inventory_weight;
+                gain_skill_experience(SKILL_SPEED,points_gained);
             }
-            //Apply the encumbrance bonus to the speed skill increase.
-            points_gained+=25.0/inventory_weight;
-            gain_skill_experience(SKILL_SPEED,points_gained);
 
             //Exercise the armor skill.
 
@@ -603,7 +608,7 @@ void Creature::execute_movement(short check_x,short check_y){
                 points_gained=1;
                 inventory_weight=return_inventory_weight(ITEM_ARMOR);
                 //Apply the encumbrance bonus to the armor skill increase.
-                points_gained+=inventory_weight/50.0;
+                points_gained+=inventory_weight/75.0;
                 gain_skill_experience(SKILL_ARMOR,points_gained);
             }
 
