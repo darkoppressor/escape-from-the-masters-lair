@@ -2,6 +2,23 @@
 // Other: //
 //********//
 
+//This needs to be the first other item.
+<item category:other>
+	<DON'T SPAWN>
+	name:skeleton
+	plural name:skeletons
+	writing:
+	appearance:%
+	stackable:0
+	size:1.0
+	value:1
+	color:bone
+	material:bone
+	<other>
+		is skeleton:1
+	</other>
+</item>
+
 <item category:other>
 	name:gold piece
 	plural name:gold pieces

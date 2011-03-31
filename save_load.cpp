@@ -94,6 +94,7 @@ void save_game(){
                 save<<vector_levels[i].tiles[x][y].y<<"\n";
                 save<<vector_levels[i].tiles[x][y].type<<"\n";
                 save<<vector_levels[i].tiles[x][y].material<<"\n";
+                save<<vector_levels[i].tiles[x][y].covering<<"\n";
             }
         }
 
@@ -275,6 +276,9 @@ void load_game(){
 
                     getline(load,line);
                     vector_levels[i].tiles[x][y].material=atoi(line.c_str());
+
+                    getline(load,line);
+                    vector_levels[i].tiles[x][y].covering=atoi(line.c_str());
                 }
             }
 

@@ -1425,6 +1425,7 @@ void Templates::load_template_item_other(Item* temp_item){
         //The data name strings used in the file.
 
         string fuel_max="max fuel:";
+        string is_skeleton="is skeleton:";
 
         //Grab the next line of the file.
         getline(load,line);
@@ -1445,6 +1446,13 @@ void Templates::load_template_item_other(Item* temp_item){
             line.erase(0,fuel_max.length());
 
             temp_item->fuel_max=atoi(line.c_str());
+        }
+        //Is skeleton.
+        else if(icontains(line,is_skeleton)){
+            //Clear the data name.
+            line.erase(0,is_skeleton.length());
+
+            temp_item->is_skeleton=(bool)atoi(line.c_str());
         }
 
         //If the line ends the other.

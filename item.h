@@ -74,7 +74,7 @@ class Item: public Object{
     bool equipped;
 
     //The race the item belonged to.
-    //Currently, this just applies to corpses.
+    //Currently, this just applies to corpses and skeletons.
     short race;
 
     //The color of the dye applied to the item.
@@ -150,6 +150,10 @@ class Item: public Object{
     //The item's special effect(s).
     std::vector<short> effects;
 
+    //The age of the item.
+    //This is only used for corpses/skeletons.
+    int age;
+
     //Weapon-specific//
 
     //The skill that this weapon exercises and uses for damage bonuses, etc.
@@ -193,6 +197,10 @@ class Item: public Object{
 
     //The maximum amount of fuel this item can hold.
     short fuel_max;
+
+    //If true, this item is a skeleton.
+    //If false, this item is not a skeleton.
+    bool is_skeleton;
 
     Item();
 

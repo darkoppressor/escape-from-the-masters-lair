@@ -73,6 +73,8 @@ string Item::return_save_data(){
         save<<effects[i]<<"\n";
     }
 
+    save<<age<<"\n";
+
     save<<governing_skill_weapon<<"\n";
 
     save<<weapon_category<<"\n";
@@ -90,6 +92,8 @@ string Item::return_save_data(){
     save<<fuel<<"\n";
 
     save<<fuel_max<<"\n";
+
+    save<<is_skeleton<<"\n";
 
     return save.str();
 }
@@ -210,6 +214,9 @@ void Item::load_data(stringstream* load){
     }
 
     getline(*load,line);
+    age=atoi(line.c_str());
+
+    getline(*load,line);
     governing_skill_weapon=atoi(line.c_str());
 
     getline(*load,line);
@@ -235,4 +242,7 @@ void Item::load_data(stringstream* load){
 
     getline(*load,line);
     fuel_max=atoi(line.c_str());
+
+    getline(*load,line);
+    is_skeleton=(bool)atoi(line.c_str());
 }

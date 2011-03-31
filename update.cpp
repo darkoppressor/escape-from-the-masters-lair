@@ -4,6 +4,7 @@
 #include "update.h"
 #include "world.h"
 #include "render.h"
+#include "material_properties.h"
 
 #include <SDL.h>
 
@@ -89,18 +90,40 @@ void events(){
             //Create a temporary corpse item.
             Item temp_item=templates.template_items[ITEM_FOOD][0];
 
+            double temp_item_size=0.0;
+
             //Set the item's info to the corpse's race.
-            string temp_name=templates.template_races[vector_levels[current_level].monsters[i].race].name;
+            temp_item.race=vector_levels[current_level].monsters[i].race;
+
+            string temp_name=templates.template_races[temp_item.race].name;
             temp_name+=" ";
             temp_item.name=temp_name+temp_item.name;
 
-            temp_item.color=templates.template_races[vector_levels[current_level].monsters[i].race].color;
+            temp_item.color=templates.template_races[temp_item.race].color;
 
-            temp_item.weight=templates.template_races[vector_levels[current_level].monsters[i].race].weight;
+            temp_item.weight=templates.template_races[temp_item.race].weight;
 
-            temp_item.damage_max_melee=temp_item.weight/6.0;
+            temp_item_size=(temp_item.weight*2)/specific_gravities[temp_item.material];
 
+            temp_item.damage_min_melee=1;
+            temp_item.damage_max_melee=(temp_item_size*temp_item.weight)/6.0;
+
+            if(temp_item.damage_min_melee<1){
+                temp_item.damage_min_melee=1;
+            }
+            if(temp_item.damage_max_melee<1){
+                temp_item.damage_max_melee=1;
+            }
+
+            temp_item.damage_min_thrown=1;
             temp_item.damage_max_thrown=temp_item.damage_max_melee/2.0;
+
+            if(temp_item.damage_min_thrown<1){
+                temp_item.damage_min_thrown=1;
+            }
+            if(temp_item.damage_max_thrown<1){
+                temp_item.damage_max_thrown=1;
+            }
 
             //Set the item's position to the creature's current position.
             temp_item.x=vector_levels[current_level].monsters[i].x;

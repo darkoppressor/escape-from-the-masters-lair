@@ -4,6 +4,7 @@
 #include "item.h"
 #include "world.h"
 #include "message_log.h"
+#include "material_properties.h"
 
 using namespace std;
 
@@ -56,6 +57,8 @@ Item::Item(){
     light_on=false;
     source_data.permanent=false;
 
+    age=0;
+
     //Weapon-specific//
 
     governing_skill_weapon=SKILL_BLADED_WEAPONS;
@@ -89,6 +92,8 @@ Item::Item(){
     fuel=0;
 
     fuel_max=0;
+
+    is_skeleton=false;
 }
 
 void Item::setup(){
@@ -366,6 +371,68 @@ void Item::process_turn(){
 
                 update_text_log(message.c_str(),true);
             }
+        }
+    }
+
+    //If the item is a corpse.
+    if(is_corpse){
+        //Age the item.
+        age++;
+
+        //If the corpse reaches its decay age.
+        if(age>=10){
+            //The corpse becomes a skeleton.
+
+            //Create a temporary skeleton item.
+            Item temp_item=templates.template_items[ITEM_OTHER][0];
+
+            double temp_item_size=0.0;
+
+            //Set the item's info to the corpse's race.
+            string temp_name=templates.template_races[race].name;
+            temp_name+=" ";
+            temp_item.name=temp_name+temp_item.name;
+
+            temp_item.weight=templates.template_races[race].weight;
+
+            temp_item_size=(temp_item.weight*2)/specific_gravities[temp_item.material];
+
+            temp_item.damage_min_melee=1;
+            temp_item.damage_max_melee=(temp_item_size*temp_item.weight)/6.0;
+
+            if(temp_item.damage_min_melee<1){
+                temp_item.damage_min_melee=1;
+            }
+            if(temp_item.damage_max_melee<1){
+                temp_item.damage_max_melee=1;
+            }
+
+            temp_item.damage_min_thrown=1;
+            temp_item.damage_max_thrown=temp_item.damage_max_melee/2.0;
+
+            if(temp_item.damage_min_thrown<1){
+                temp_item.damage_min_thrown=1;
+            }
+            if(temp_item.damage_max_thrown<1){
+                temp_item.damage_max_thrown=1;
+            }
+
+            name=temp_item.name;
+
+            color=temp_item.color;
+
+            material=temp_item.material;
+
+            weight=temp_item.weight;
+
+            damage_min_melee=temp_item.damage_min_melee;
+            damage_max_melee=temp_item.damage_max_melee;
+
+            damage_min_thrown=temp_item.damage_min_thrown;
+            damage_max_thrown=temp_item.damage_max_thrown;
+
+            is_corpse=false;
+            is_skeleton=true;
         }
     }
 }
