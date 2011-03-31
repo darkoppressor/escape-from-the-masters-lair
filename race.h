@@ -16,6 +16,10 @@ class Race: public Creature{
     int levelup_mana_min;
     int levelup_mana_max;
 
+    //A list of inventory item names.
+    //These are the items that a member of this race starts with.
+    std::vector<std::string> inventory_items;
+
     Race();
 };
 

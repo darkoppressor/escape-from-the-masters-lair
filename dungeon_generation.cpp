@@ -117,7 +117,8 @@ void Game::level_theme_rooms(){
     //Used to prevent an infinite loop.
     short iterations=0;
     //Number of rooms to create.
-    short number_of_rooms=random_range((generated_level_x*generated_level_y)/1000,(generated_level_x*generated_level_y)/100);
+    ///short number_of_rooms=random_range((generated_level_x*generated_level_y)/1000,(generated_level_x*generated_level_y)/100);
+    short number_of_rooms=random_range((generated_level_x*generated_level_y)/768,(generated_level_x*generated_level_y)/512);
 
     //0 = rectangular only
     //1 = circular only
@@ -184,7 +185,7 @@ void Game::level_theme_rooms(){
                     feature=1;
                 }
 
-                feature=1;
+                ///feature=1;
 
                 if(feature==0){
                     check_size_x=random_range(features[feature].min_room_size_x,features[feature].max_room_size_x);
@@ -367,18 +368,19 @@ void Game::generate_level(){
             }
         }
 
-        /**int level_theme=random_range(0,99);
+        int level_theme=random_range(0,99);
 
         if(level_theme>=0 && level_theme<80){
             level_theme_rooms();
         }
         else if(level_theme>=80 && level_theme<95){
-            level_theme_caves();
+            ///level_theme_caves();
+            level_theme_rooms();
         }
         else if(level_theme>=95 && level_theme<100){
             level_theme_big_room();
-        }*/
-        level_theme_caves();
+        }
+        ///level_theme_caves();
 
         //
         for(short i=0;i<2;i++){

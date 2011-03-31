@@ -409,6 +409,7 @@ void Templates::load_template_race(){
         string conjuration_magic="conjuration magic:";
         string enchantment_magic="enchantment magic:";
         string summoning_magic="summoning magic:";
+        string item="item:";
 
         //Grab the next line of the file.
         getline(load,line);
@@ -721,6 +722,13 @@ void Templates::load_template_race(){
             line.erase(0,summoning_magic.length());
 
             temp_race.skills[SKILL_MAGIC_SUMMONING][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+        }
+        //Item
+        else if(icontains(line,item)){
+            //Clear the data name.
+            line.erase(0,item.length());
+
+            temp_race.inventory_items.push_back(line);
         }
 
         //If the line ends the race.
