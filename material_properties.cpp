@@ -9,6 +9,8 @@ double specific_gravities[MATERIAL_LAVA+1];
 
 double densities[MATERIAL_LAVA+1];
 
+double values[MATERIAL_LAVA+1];
+
 void prepare_specific_gravities(){
     specific_gravities[MATERIAL_WOOD]=0.7;
     specific_gravities[MATERIAL_PAPER]=0.9;
@@ -51,6 +53,28 @@ void prepare_densities(){
     densities[MATERIAL_GOLD]=19.32;
     densities[MATERIAL_WATER]=1.0;
     densities[MATERIAL_LAVA]=2.6;
+}
+
+void prepare_values(){
+    values[MATERIAL_WOOD]=5;
+    values[MATERIAL_PAPER]=4;
+    values[MATERIAL_DIRT]=3;
+    values[MATERIAL_LEATHER]=12;
+    values[MATERIAL_CLOTH]=9;
+    values[MATERIAL_BONE]=6;
+    values[MATERIAL_FOOD]=8;
+    values[MATERIAL_GLASS]=11;
+    values[MATERIAL_STONE]=10;
+    values[MATERIAL_CORPSE]=7;
+    values[MATERIAL_BRONZE]=14;
+    values[MATERIAL_STEEL]=17;
+    values[MATERIAL_IRON]=16;
+    values[MATERIAL_BRASS]=15;
+    values[MATERIAL_COPPER]=13;
+    values[MATERIAL_SILVER]=18;
+    values[MATERIAL_GOLD]=19;
+    values[MATERIAL_WATER]=1;
+    values[MATERIAL_LAVA]=2;
 }
 
 string material_to_string(short material){

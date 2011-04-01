@@ -11,7 +11,6 @@
 	appearance:%
 	stackable:0
 	size:1.0
-	value:1
 	color:bone
 	material:bone
 	<other>
@@ -26,7 +25,6 @@
 	appearance:$
 	stackable:1
 	size:0.00055
-	value:1
 	color:gold
 	material:gold
 </item>
@@ -38,7 +36,6 @@
 	appearance:è
 	stackable:0
 	size:7.0
-	value:1
 	color:brass
 	material:brass
 	light radius:10

@@ -11,7 +11,6 @@
 	appearance:%
 	stackable:0
 	size:1.0
-	value:1
 	color:corpse
 	material:corpse
 	<food>
@@ -26,7 +25,6 @@
 //	appearance:%
 //	stackable:1
 //  size:0.5
-//	value:1
 //	color:brown
 //	material:food
 //</item>

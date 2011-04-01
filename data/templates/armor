@@ -13,7 +13,6 @@
 		appearance:[
 		stackable:0
 		size:5.0
-		value:1
 		color:leather
 		material:leather
 		<armor>
@@ -32,7 +31,6 @@
 		appearance:[
 		stackable:0
 		size:6.0
-		value:1
 		color:leather
 		material:leather
 		<armor>
@@ -51,7 +49,6 @@
 		appearance:[
 		stackable:0
 		size:10.0
-		value:1
 		color:leather
 		material:leather
 		<armor>
@@ -70,7 +67,6 @@
 		appearance:[
 		stackable:0
 		size:4.0
-		value:1
 		color:leather
 		material:leather
 		<armor>
@@ -89,7 +85,6 @@
 		appearance:[
 		stackable:0
 		size:7.0
-		value:1
 		color:leather
 		material:leather
 		<armor>
@@ -108,7 +103,6 @@
 		appearance:[
 		stackable:0
 		size:9.0
-		value:1
 		color:leather
 		material:leather
 		<armor>
@@ -127,7 +121,6 @@
 		appearance:[
 		stackable:0
 		size:4.0
-		value:1
 		color:leather
 		material:leather
 		<armor>
@@ -146,7 +139,6 @@
 		appearance:[
 		stackable:0
 		size:3.0
-		value:1
 		color:leather
 		material:leather
 		<armor>
@@ -165,7 +157,6 @@
 		appearance:[
 		stackable:0
 		size:2.0
-		value:1
 		color:leather
 		material:leather
 		<armor>
@@ -184,7 +175,6 @@
 		appearance:[
 		stackable:0
 		size:8.0
-		value:1
 		color:leather
 		material:leather
 		<armor>
@@ -203,7 +193,6 @@
 		appearance:[
 		stackable:0
 		size:4.0
-		value:1
 		color:cloth
 		material:cloth
 		<armor>
@@ -222,7 +211,6 @@
 		appearance:"
 		stackable:0
 		size:0.5
-		value:1
 		color:copper
 		material:copper
 		<armor>
@@ -241,7 +229,6 @@
 		appearance:=
 		stackable:0
 		size:0.25
-		value:1
 		color:copper
 		material:copper
 		<armor>

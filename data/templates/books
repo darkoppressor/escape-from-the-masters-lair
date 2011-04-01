@@ -9,7 +9,6 @@
 	appearance:+
 	stackable:1
 	size:0.75
-	value:1
 	color:paper
 	material:paper
 	//<book>

@@ -20,12 +20,44 @@ void Monster::set_inventory(){
     give_item("bottle of water",random_range(1,2));
 
     //Add some random healing potions.
-    if(random_range(0,1)==1){
+    if(random_range(0,99)<40){
         give_item("potion of slight healing");
     }
 
+    //Give the monster any race-specific items.
     for(int i=0;i<templates.template_races[race].inventory_items.size();i++){
         give_item(templates.template_races[race].inventory_items[i]);
+
+        //If the new item is armor.
+        if(inventory[inventory.size()-1].category==ITEM_ARMOR){
+            if(equipment_slot_empty(inventory.size()-1,-1)){
+                equip_item(inventory.size()-1,-1);
+            }
+        }
+        //If the new item is a weapon.
+        else if(inventory[inventory.size()-1].category==ITEM_WEAPON){
+            short slot=-1;
+
+            //If the item is an ammo item.
+            if(inventory[inventory.size()-1].launcher!=WEAPON_THROWN){
+                if(equipment_slot_empty(inventory.size()-1,EQUIP_QUIVER)){
+                    slot=EQUIP_QUIVER;
+                }
+            }
+            //If the item is a melee weapon or a ranged weapon.
+            else if((inventory[inventory.size()-1].weapon_category>=WEAPON_SHORT_BLADES && inventory[inventory.size()-1].weapon_category<=WEAPON_STAVES) || (inventory[inventory.size()-1].weapon_category>=WEAPON_BOWS && inventory[inventory.size()-1].weapon_category<=WEAPON_SLINGS)){
+                if(equipment_slot_empty(inventory.size()-1,EQUIP_HOLD_RIGHT)){
+                    slot=EQUIP_HOLD_RIGHT;
+                }
+                else if(equipment_slot_empty(inventory.size()-1,EQUIP_HOLD_LEFT)){
+                    slot=EQUIP_HOLD_LEFT;
+                }
+            }
+
+            if(slot!=-1){
+                equip_item(inventory.size()-1,slot);
+            }
+        }
     }
 }
 

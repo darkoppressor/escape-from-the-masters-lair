@@ -38,8 +38,8 @@ void Creature::mix_items(int item_index_1,int item_index_2){
         first_item_used=true;
     }
 
-    //If the first item is a dye, and the second item is not a dye.
-    if(inventory[item_index_1].possesses_effect(ITEM_EFFECT_DYE) && !inventory[item_index_2].possesses_effect(ITEM_EFFECT_DYE)){
+    //If the first item is a dye, and the second item is not a dye or money.
+    if(inventory[item_index_1].possesses_effect(ITEM_EFFECT_DYE) && !inventory[item_index_2].possesses_effect(ITEM_EFFECT_DYE) && inventory[item_index_2].inventory_letter!='$'){
         //If the creature is the player.
         if(is_player){
             str_item="You dye the ";
@@ -67,8 +67,8 @@ void Creature::mix_items(int item_index_1,int item_index_2){
         first_item_used=true;
     }
 
-    //If the first item is water.
-    if(inventory[item_index_1].possesses_effect(ITEM_EFFECT_WATER)){
+    //If the first item is water and the second item is not money.
+    if(inventory[item_index_1].possesses_effect(ITEM_EFFECT_WATER) && inventory[item_index_2].inventory_letter!='$'){
         //If the creature is the player.
         if(is_player){
             str_item="You pour the ";
@@ -128,12 +128,12 @@ bool Creature::items_mixable(int item_index_1,int item_index_2){
     if(inventory[item_index_1].possesses_effect(ITEM_EFFECT_FUEL) && inventory[item_index_2].fuel_max>0){
         return true;
     }
-    //If the first item is a dye, and the second item is not a dye.
-    else if(inventory[item_index_1].possesses_effect(ITEM_EFFECT_DYE) && !inventory[item_index_2].possesses_effect(ITEM_EFFECT_DYE)){
+    //If the first item is a dye, and the second item is not a dye or money.
+    if(inventory[item_index_1].possesses_effect(ITEM_EFFECT_DYE) && !inventory[item_index_2].possesses_effect(ITEM_EFFECT_DYE) && inventory[item_index_2].inventory_letter!='$'){
         return true;
     }
-    //If the first item is water.
-    else if(inventory[item_index_1].possesses_effect(ITEM_EFFECT_WATER)){
+    //If the first item is water and the second item is not money.
+    if(inventory[item_index_1].possesses_effect(ITEM_EFFECT_WATER) && inventory[item_index_2].inventory_letter!='$'){
         return true;
     }
     else{

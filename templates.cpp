@@ -754,7 +754,11 @@ void Templates::load_template_item(short category){
     temp_item.spawnable=true;
 
     temp_item.weight=-1.0;
+
+    temp_item.monetary_value=-1;
+
     temp_item.defense=-1;
+
     temp_item.damage_max_melee=-1;
     temp_item.damage_max_thrown=-1;
     temp_item.damage_max_ranged=-1;
@@ -1046,6 +1050,38 @@ void Templates::load_template_item(short category){
             //As long as no weight was set.
             if(temp_item.weight==-1.0){
                 temp_item.weight=(temp_item_size*specific_gravities[temp_item.material])/2.0;
+            }
+
+            //As long as no value was set.
+            if(temp_item.monetary_value==-1){
+                temp_item.monetary_value=(temp_item.weight*values[temp_item.material])/2.0;
+
+                temp_item.monetary_value+=(temp_item.effects.size()*values[temp_item.material])/4.0;
+
+                if(temp_item.category==ITEM_WEAPON){
+                    temp_item.monetary_value+=(6*values[temp_item.material])/4.0;
+                }
+                else if(temp_item.category==ITEM_ARMOR){
+                    temp_item.monetary_value+=(5*values[temp_item.material])/4.0;
+                }
+                else if(temp_item.category==ITEM_FOOD){
+                    temp_item.monetary_value+=(1*values[temp_item.material])/4.0;
+                }
+                else if(temp_item.category==ITEM_DRINK){
+                    temp_item.monetary_value+=(3*values[temp_item.material])/4.0;
+                }
+                else if(temp_item.category==ITEM_SCROLL){
+                    temp_item.monetary_value+=(4*values[temp_item.material])/4.0;
+                }
+                else if(temp_item.category==ITEM_BOOK){
+                    temp_item.monetary_value+=(4*values[temp_item.material])/4.0;
+                }
+                else if(temp_item.category==ITEM_CONTAINER){
+                    temp_item.monetary_value+=(2*values[temp_item.material])/4.0;
+                }
+                else if(temp_item.category==ITEM_OTHER){
+                    temp_item.monetary_value+=(1*values[temp_item.material])/4.0;
+                }
             }
 
             //If the item is armor and no defense was set.

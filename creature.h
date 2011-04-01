@@ -19,6 +19,12 @@ struct inventory_match{
     int inventory_slot;
 };
 
+//Holds data referring to a specific item template.
+struct item_template{
+    int item_category;
+    int item_index;
+};
+
 class Creature: public Object{
     private:
     public:
@@ -145,6 +151,9 @@ class Creature: public Object{
     //Returns true if the item was added to inventory.
     //Returns false if the item was not added to inventory.
     bool give_item(std::string item_name,int stack_size=1,char force_inventory_letter=-1);
+
+    //
+    item_template return_item_template(std::string item_name);
 
     //Assign an identifier to the creature.
     void assign_identifier();

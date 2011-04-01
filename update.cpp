@@ -105,6 +105,33 @@ void events(){
 
             temp_item_size=(temp_item.weight*2)/specific_gravities[temp_item.material];
 
+            temp_item.monetary_value=(temp_item.weight*values[temp_item.material])/2.0;
+            temp_item.monetary_value+=(temp_item.effects.size()*values[temp_item.material])/4.0;
+            if(temp_item.category==ITEM_WEAPON){
+                temp_item.monetary_value+=(6*values[temp_item.material])/4.0;
+            }
+            else if(temp_item.category==ITEM_ARMOR){
+                temp_item.monetary_value+=(5*values[temp_item.material])/4.0;
+            }
+            else if(temp_item.category==ITEM_FOOD){
+                temp_item.monetary_value+=(1*values[temp_item.material])/4.0;
+            }
+            else if(temp_item.category==ITEM_DRINK){
+                temp_item.monetary_value+=(3*values[temp_item.material])/4.0;
+            }
+            else if(temp_item.category==ITEM_SCROLL){
+                temp_item.monetary_value+=(4*values[temp_item.material])/4.0;
+            }
+            else if(temp_item.category==ITEM_BOOK){
+                temp_item.monetary_value+=(4*values[temp_item.material])/4.0;
+            }
+            else if(temp_item.category==ITEM_CONTAINER){
+                temp_item.monetary_value+=(2*values[temp_item.material])/4.0;
+            }
+            else if(temp_item.category==ITEM_OTHER){
+                temp_item.monetary_value+=(1*values[temp_item.material])/4.0;
+            }
+
             temp_item.damage_min_melee=1;
             temp_item.damage_max_melee=(temp_item_size*temp_item.weight)/6.0;
 

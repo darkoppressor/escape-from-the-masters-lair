@@ -8,6 +8,7 @@
 #include "quit.h"
 #include "save_load.h"
 #include "message_log.h"
+#include "player_starting_gold.h"
 
 using namespace std;
 
@@ -40,6 +41,48 @@ Player::Player(){
     get_name="";
 
     get_race="";
+
+    done_focusing_skills=false;
+
+    starting_items_gold=STARTING_ITEMS_GOLD;
+
+    available_starting_items.push_back("dagger");
+
+    available_starting_items.push_back("bow");
+
+    available_starting_items.push_back("arrow");
+
+    available_starting_items.push_back("shuriken");
+
+    available_starting_items.push_back("leather helm");
+
+    available_starting_items.push_back("pair of leather spaulders");
+
+    available_starting_items.push_back("leather chestpiece");
+
+    available_starting_items.push_back("leather cloak");
+
+    available_starting_items.push_back("leather belt");
+
+    available_starting_items.push_back("pair of leather trousers");
+
+    available_starting_items.push_back("pair of leather boots");
+
+    available_starting_items.push_back("pair of leather gloves");
+
+    available_starting_items.push_back("pair of leather bracers");
+
+    available_starting_items.push_back("leather shield");
+
+    available_starting_items.push_back("bottle of water");
+
+    available_starting_items.push_back("bottle of oil");
+
+    available_starting_items.push_back("potion of slight healing");
+
+    available_starting_items.push_back("potion of healing");
+
+    available_starting_items.push_back("potion of considerable healing");
 
     death_message="";
 
@@ -91,8 +134,49 @@ void Player::set_inventory(){
     inventory[1].light_on=true;
     inventory[1].fuel=inventory[1].fuel_max;
 
-    for(int i=0;i<templates.template_races[race].inventory_items.size();i++){
-        give_item(templates.template_races[race].inventory_items[i]);
+    //Give the player their purchased starting items.
+    for(int i=0;i<starting_items.size();i++){
+        int stack=1;
+
+        if(available_starting_items[starting_items[i]]=="arrow"){
+            stack=20;
+        }
+        else if(available_starting_items[starting_items[i]]=="shuriken"){
+            stack=20;
+        }
+
+        give_item(available_starting_items[starting_items[i]],stack);
+
+        //If the new item is armor.
+        if(inventory[inventory.size()-1].category==ITEM_ARMOR){
+            if(equipment_slot_empty(inventory.size()-1,-1)){
+                equip_item(inventory.size()-1,-1);
+            }
+        }
+        //If the new item is a weapon.
+        else if(inventory[inventory.size()-1].category==ITEM_WEAPON){
+            short slot=-1;
+
+            //If the item is an ammo item.
+            if(inventory[inventory.size()-1].launcher!=WEAPON_THROWN){
+                if(equipment_slot_empty(inventory.size()-1,EQUIP_QUIVER)){
+                    slot=EQUIP_QUIVER;
+                }
+            }
+            //If the item is a melee weapon or a ranged weapon.
+            else if((inventory[inventory.size()-1].weapon_category>=WEAPON_SHORT_BLADES && inventory[inventory.size()-1].weapon_category<=WEAPON_STAVES) || (inventory[inventory.size()-1].weapon_category>=WEAPON_BOWS && inventory[inventory.size()-1].weapon_category<=WEAPON_SLINGS)){
+                if(equipment_slot_empty(inventory.size()-1,EQUIP_HOLD_RIGHT)){
+                    slot=EQUIP_HOLD_RIGHT;
+                }
+                else if(equipment_slot_empty(inventory.size()-1,EQUIP_HOLD_LEFT)){
+                    slot=EQUIP_HOLD_LEFT;
+                }
+            }
+
+            if(slot!=-1){
+                equip_item(inventory.size()-1,slot);
+            }
+        }
     }
 }
 

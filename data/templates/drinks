@@ -9,7 +9,6 @@
 	appearance:!
 	stackable:1
 	size:0.5
-	value:1
 	color:water
 	material:glass
 	effect:water
@@ -25,7 +24,6 @@
 	appearance:!
 	stackable:1
 	size:0.5
-	value:1
 	color:glass
 	material:glass
 	effect:fuel
@@ -41,7 +39,6 @@
 	appearance:!
 	stackable:1
 	size:0.5
-	value:1
 	color:glass
 	material:glass
 	effect:slight healing
@@ -57,7 +54,6 @@
 	appearance:!
 	stackable:1
 	size:0.5
-	value:1
 	color:glass
 	material:glass
 	effect:healing
@@ -73,7 +69,6 @@
 	appearance:!
 	stackable:1
 	size:0.5
-	value:1
 	color:glass
 	material:glass
 	effect:considerable healing
@@ -89,7 +84,6 @@
 	appearance:!
 	stackable:1
 	size:0.5
-	value:1
 	color:yellow
 	material:glass
 	effect:dye

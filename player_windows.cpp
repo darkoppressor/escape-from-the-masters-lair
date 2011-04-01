@@ -6,6 +6,8 @@
 #include "render.h"
 #include "quit.h"
 #include "material_properties.h"
+#include "version.h"
+#include "player_starting_gold.h"
 
 using namespace std;
 using namespace boost::algorithm;
@@ -37,8 +39,13 @@ void Player::handle_input_no_game(){
                 else if(race==-1){
                     handle_input_get_race();
                 }
-                else{
+                //If the focused skills have not been selected.
+                else if(!done_focusing_skills){
                     handle_input_get_focused_skills();
+                }
+                //If the starting items have not been selected.
+                else{
+                    handle_input_get_starting_items();
                 }
                 break;
         }
@@ -129,6 +136,7 @@ void Player::handle_input_get_race(){
     if(event.key.keysym.sym==SDLK_ESCAPE){
         //Go back one screen.
         name="\x1F";
+
         get_race.clear();
     }
 
@@ -153,6 +161,8 @@ void Player::handle_input_get_focused_skills(){
     if(event.key.keysym.sym==SDLK_ESCAPE){
         //Go back one screen.
         race=-1;
+        get_race.clear();
+
         focused_skills[0]=-1;
         focused_skills[1]=-1;
         focused_skills[2]=-1;
@@ -254,7 +264,96 @@ void Player::handle_input_get_focused_skills(){
     }
 
     else if((event.key.keysym.sym==SDLK_RETURN || event.key.keysym.sym==SDLK_KP_ENTER) && focused_skills[0]!=-1 && focused_skills[1]!=-1 && focused_skills[2]!=-1){
-        //Once the focused skills are set, apply their initial bonuses to their corresponding skills.
+        done_focusing_skills=true;
+
+        //Make sure that enter is cleared before moving to the next screen.
+        Uint8 *keystates=SDL_GetKeyState(NULL);
+        keystates[SDLK_RETURN]=NULL;
+        keystates[SDLK_KP_ENTER]=NULL;
+    }
+}
+
+void Player::handle_input_get_starting_items(){
+    if(event.key.keysym.sym==SDLK_ESCAPE){
+        //Go back one screen.
+        focused_skills[0]=-1;
+        focused_skills[1]=-1;
+        focused_skills[2]=-1;
+        done_focusing_skills=false;
+
+        starting_items_gold=STARTING_ITEMS_GOLD;
+        starting_items.clear();
+    }
+
+    else if((event.key.keysym.unicode>=(Uint16)'a' && event.key.keysym.unicode<=(Uint16)'z') || (event.key.keysym.unicode>=(Uint16)'A' && event.key.keysym.unicode<=(Uint16)'Z')){
+        //Look through the items available for purchase.
+        for(int i=0;i<available_starting_items.size();i++){
+            //Determine the ascii letter of the item.
+
+            short letter=0;
+
+            if(i<26){
+                letter=97+i;
+            }
+            else{
+                letter=65+i-26;
+            }
+
+            //If the pressed letter key corresponds to this item.
+            if(event.key.keysym.unicode==letter){
+                //If true, the item should be purchased.
+                //If false, the item should not be purchased.
+                bool purchase_item=true;
+
+                //Look through the purchased items.
+                for(int n=0;n<starting_items.size();n++){
+                    //If this item is a purchased item.
+                    if(i==starting_items[n]){
+                        //Determine the monetary value of the item.
+                        int item_value=0;
+
+                        item_template this_item_template=return_item_template(available_starting_items[i]);
+
+                        item_value=templates.template_items[this_item_template.item_category][this_item_template.item_index].monetary_value;
+
+                        //Remove the purchased item.
+                        starting_items.erase(starting_items.begin()+n);
+
+                        //The item should not be purchased after this, as we just unpurchased it.
+                        purchase_item=false;
+
+                        //Add the item's value back to starting gold.
+                        starting_items_gold+=item_value;
+                        break;
+                    }
+                }
+
+                //If we are purchasing this item.
+                if(purchase_item){
+                    //Determine the monetary value of the item.
+                    int item_value=0;
+
+                    item_template this_item_template=return_item_template(available_starting_items[i]);
+
+                    item_value=templates.template_items[this_item_template.item_category][this_item_template.item_index].monetary_value;
+
+                    //If the player can afford to purchase this item.
+                    if(item_value<starting_items_gold){
+                        //Add the purchased item.
+                        starting_items.push_back(i);
+
+                        //Remove the item's value from the starting gold.
+                        starting_items_gold-=item_value;
+                    }
+                }
+
+                break;
+            }
+        }
+    }
+
+    else if(event.key.keysym.sym==SDLK_RETURN || event.key.keysym.sym==SDLK_KP_ENTER){
+        //Apply the focused skills' initial bonuses to their corresponding skills.
         for(int i=0;i<3;i++){
             gain_skill_experience(focused_skills[i],skills[focused_skills[i]][SKILL_EXPERIENCE_MAX]-skills[focused_skills[i]][SKILL_EXPERIENCE],0,false);
         }
@@ -413,26 +512,38 @@ void Player::render_no_game(){
     else if(race==-1){
         render_get_race();
     }
-    else{
+    //If the focused skills have not been selected.
+    else if(!done_focusing_skills){
         render_get_focused_skills();
+    }
+    //If the starting items have not been selected.
+    else{
+        render_get_starting_items();
     }
 }
 
 void Player::render_get_name(){
-    ss.clear();ss.str("");ss<<"Welcome to Escape from the Master's Lair!";ss<<"\xA";ss<<"\xA";msg=ss.str();
+    ss.clear();ss.str("");ss<<"Hello, welcome to Escape from the Master's Lair ";ss<<AutoVersion::MAJOR;ss<<".";ss<<AutoVersion::MINOR;ss<<" ";ss<<AutoVersion::STATUS;ss<<"!";ss<<"\xA";msg=ss.str();
+    ss.clear();ss.str("");ss<<"Copyright (c) 2011 Kevin Wells";ss<<"\xA";msg+=ss.str();
+    ss.clear();ss.str("");ss<<"Escape from the Master's Lair may be freely redistributed.  See license for details.";ss<<"\xA";msg+=ss.str();
+    ss.clear();ss.str("");ss<<"\xA";msg+=ss.str();
     ss.clear();ss.str("");ss<<"Who are you? ";ss<<get_name;ss<<"\xA";msg+=ss.str();
 
     font_small.show(0,0,msg,COLOR_WHITE);
 
-    font_small.show(13*font_small.spacing_x+font_small.spacing_x*get_name.length(),font_small.spacing_y*2,"\x7F",COLOR_WHITE,cursor_opacity*0.1);
+    font_small.show(13*font_small.spacing_x+font_small.spacing_x*get_name.length(),font_small.spacing_y*4,"\x7F",COLOR_WHITE,cursor_opacity*0.1);
 }
 
 void Player::render_get_race(){
-    ss.clear();ss.str("");ss<<"What race do you want to be? ";ss<<get_race;ss<<"\xA";msg=ss.str();
+    ss.clear();ss.str("");ss<<"What race do you want to be?";msg=ss.str();
 
-    font_small.show(0,0,msg,COLOR_WHITE);
+    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2,0,msg,COLOR_WHITE);
 
-    font_small.show(29*font_small.spacing_x+font_small.spacing_x*get_race.length(),0,"\x7F",COLOR_WHITE,cursor_opacity*0.1);
+    ss.clear();ss.str("");ss<<get_race;msg=ss.str();
+
+    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2,font_small.spacing_y,msg,COLOR_WHITE);
+
+    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2+msg.length()*font_small.spacing_x,font_small.spacing_y,"\x7F",COLOR_WHITE,cursor_opacity*0.1);
 
     msg="";
 
@@ -459,7 +570,7 @@ void Player::render_get_race(){
 
         ss.clear();ss.str("");ss<<i;ss<<" - ";ss<<templates.template_races[i].name;ss<<"\xA";msg=ss.str();
 
-        font_small.show(5+column*column_width,font_small.spacing_y+font_small.spacing_y*lines_rendered++,msg,COLOR_WHITE);
+        font_small.show(5+column*column_width,font_small.spacing_y*2+font_small.spacing_y*lines_rendered++,msg,COLOR_WHITE);
     }
 }
 
@@ -683,6 +794,71 @@ void Player::render_get_focused_skills(){
     ss.clear();ss.str("");ss<<"Summoning Magic";ss<<"\xA";msg+=ss.str();
 
     font_small.show(450,60,msg,COLOR_WHITE);
+}
+
+void Player::render_get_starting_items(){
+    ss.clear();ss.str("");ss<<"Select your starting item(s).";msg=ss.str();
+
+    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2,0,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"You have ";ss<<starting_items_gold;ss<<" gold.";msg=ss.str();
+
+    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2,font_small.spacing_y,msg,COLOR_WHITE);
+
+    msg="";
+
+    //Keeps track of the number of lines of inventory text rendered.
+    int lines_rendered=0;
+
+    //The maximum number of lines before a new column is started.
+    int max_lines=35;
+
+    //The current column.
+    int column=0;
+
+    //The width of each column.
+    int column_width=200;
+
+    for(int i=0;i<available_starting_items.size();i++){
+        //If the maximum number of lines for this column have been rendered.
+        if(lines_rendered>=max_lines){
+            lines_rendered=0;
+            column++;
+            i--;
+            continue;
+        }
+
+        short letter=0;
+
+        if(i<26){
+            letter=97+i;
+        }
+        else{
+            letter=65+i-26;
+        }
+
+        string purchased=" - ";
+
+        //Look through the purchased items.
+        for(int n=0;n<starting_items.size();n++){
+            //If this item is a purchased item.
+            if(i==starting_items[n]){
+                purchased=" + ";
+                break;
+            }
+        }
+
+        //Determine the monetary value of the item.
+        int item_value=0;
+
+        item_template this_item_template=return_item_template(available_starting_items[i]);
+
+        item_value=templates.template_items[this_item_template.item_category][this_item_template.item_index].monetary_value;
+
+        ss.clear();ss.str("");ss<<(char)letter;ss<<purchased;ss<<available_starting_items[i];ss<<" (cost: ";ss<<item_value;ss<<")";ss<<"\xA";msg=ss.str();
+
+        font_small.show(5+column*column_width,font_small.spacing_y*2+font_small.spacing_y*lines_rendered++,msg,COLOR_WHITE);
+    }
 }
 
 void Player::render_levelup(){

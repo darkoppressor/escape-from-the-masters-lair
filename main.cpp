@@ -178,6 +178,7 @@ int main(int argc, char* args[]){
 
     prepare_specific_gravities();
     prepare_densities();
+    prepare_values();
 
     if(!templates.load_templates()){
         return 1;
