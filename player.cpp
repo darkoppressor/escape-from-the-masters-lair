@@ -99,15 +99,14 @@ Player::Player(){
 
     chat_mode=false;
 
-    text_limit=6;
-
-    for(short i=0;i<text_limit;i++){
-        text_log[i]="";
+    for(short i=0;i<1000;i++){
+        text_log.push_back("\x1F");
     }
 
     timer_cursor.start();
     cursor=false;
     cursor_opacity=10;
+    text_log_display_position=text_log.size()-1;
 
     //Options:
     option_fullscreen=false;
@@ -210,8 +209,6 @@ void Player::handle_input(){
     //Get the SDL keystates and store them in the keystates variable for evaluation.
     keystates=SDL_GetKeyState(NULL);
 
-    modstate=SDL_GetModState();
-
     SDL_GetMouseState(&mouse_x,&mouse_y);
 
     //If an item's info has been requested.
@@ -229,6 +226,22 @@ void Player::handle_input(){
         switch(event.type){
             case SDL_QUIT:
                 quit_game();
+                break;
+
+            case SDL_MOUSEBUTTONDOWN:
+                //If the cursor is over the chat box.
+                if(mouse_x>=0 && mouse_x<=main_window.SCREEN_WIDTH && mouse_y>=main_window.SCREEN_HEIGHT-122 && mouse_y<=main_window.SCREEN_HEIGHT){
+                    if(event.button.button==SDL_BUTTON_WHEELUP){
+                        if(text_log_display_position<text_log.size()-1){
+                            text_log_display_position++;
+                        }
+                    }
+                    else if(event.button.button==SDL_BUTTON_WHEELDOWN){
+                        if(text_log_display_position>5 && text_log[text_log_display_position-1]!="\x1F"){
+                            text_log_display_position--;
+                        }
+                    }
+                }
                 break;
 
             case SDL_KEYDOWN:

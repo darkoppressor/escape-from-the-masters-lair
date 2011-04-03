@@ -18,8 +18,6 @@ void Player::handle_input_no_game(){
     //Get the SDL keystates and store them in the keystates variable for evaluation.
     keystates=SDL_GetKeyState(NULL);
 
-    modstate=SDL_GetModState();
-
     SDL_GetMouseState(&mouse_x,&mouse_y);
 
     while(SDL_PollEvent(&event)){

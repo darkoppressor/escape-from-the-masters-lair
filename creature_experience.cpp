@@ -33,7 +33,7 @@ bool Creature::levelup_all_attributes_set(){
 
 void Creature::level_up(){
     //Increase the max experience.
-    experience_max+=experience_max*1.1;
+    experience_max*=2;
 
     //Increase the creature's experience level.
     experience_level++;

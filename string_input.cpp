@@ -13,7 +13,12 @@ using namespace boost::algorithm;
 
 string_input::string_input(){
     str1="";
-    last_string="";
+
+    for(int i=0;i<100;i++){
+        recalled_strings.push_back("\x1F");
+    }
+
+    current_recalled_string=recalled_strings.size();
 }
 
 void string_input::handle_events(){
@@ -29,17 +34,33 @@ void string_input::handle_events(){
         }
 
         else if(event.key.keysym.sym==SDLK_UP){
-            str1=last_string;
+            if(current_recalled_string>0 && recalled_strings[current_recalled_string-1]!="\x1F"){
+                current_recalled_string--;
+            }
+
+            str1=recalled_strings[current_recalled_string];
         }
         else if(event.key.keysym.sym==SDLK_DOWN){
-            str1.clear();
+            if(current_recalled_string<recalled_strings.size()-1){
+                current_recalled_string++;
+
+                str1=recalled_strings[current_recalled_string];
+            }
+            else{
+                current_recalled_string=recalled_strings.size();
+
+                str1.clear();
+            }
         }
 
         else if((event.key.keysym.sym==SDLK_RETURN || event.key.keysym.sym==SDLK_KP_ENTER) && str1.length()>0){/**If the player hits enter.*/
             string str_command=str1;
 
+            //Forget the oldest command string.
+            recalled_strings.erase(recalled_strings.begin());
+
             //Remember this string.
-            last_string=str_command;
+            recalled_strings.push_back(str_command);
 
             trim(str_command);
 
@@ -297,8 +318,9 @@ void string_input::handle_events(){
         }
 
         else if(event.key.keysym.sym==SDLK_ESCAPE){
-            player.chat_mode=false;
             str1.clear();
+
+            player.chat_mode=false;
 
             //Make sure that escape is cleared before moving to the next screen.
             Uint8 *keystates=SDL_GetKeyState(NULL);/**Get keystates.*/

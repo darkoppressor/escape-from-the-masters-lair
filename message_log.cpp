@@ -21,15 +21,14 @@ void update_text_log(const char *message,bool display,unsigned char message_type
             message=temp_message.c_str();
         }
 
-        //Print the message on this instance's screen.
-        for(short i=0;i<player.text_limit;i++){
-            if(i==player.text_limit-1){
-                player.text_log[i]=message;
-            }
-            else{
-                player.text_log[i]=player.text_log[i+1];
-            }
-        }
+        //Forget the oldest string.
+        player.text_log.erase(player.text_log.begin());
+
+        //Remember this string.
+        player.text_log.push_back(message);
+
+        //Reset the text log display position to the top.
+        player.text_log_display_position=player.text_log.size()-1;
 
         //Don't log system messsages.
         if(message_type!=MESSAGE_SYSTEM){

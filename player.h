@@ -19,8 +19,6 @@ class Player: public Creature{
     //We will use this to hold the keystates, which will be given to us by SDL.
     Uint8 *keystates;
 
-    SDLMod modstate;
-
     //Current movement state of the camera.
     short cam_state;
 
@@ -87,11 +85,11 @@ class Player: public Creature{
     std::string end_time;
 
     bool chat_mode;
-    unsigned short text_limit;
-    std::string text_log[6];
+    std::vector<std::string> text_log;
     Timer timer_cursor;
     bool cursor;
     int cursor_opacity;
+    int text_log_display_position;
 
     bool option_fullscreen;
     bool option_dev;

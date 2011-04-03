@@ -5,6 +5,8 @@
 #define string_input_h
 
 #include <string>
+#include <vector>
+
 #include <SDL.h>
 
 #include <boost/algorithm/string.hpp>
@@ -15,8 +17,12 @@ class string_input{
     //Storage string.
     std::string str1;
 
-    //The last string entered.
-    std::string last_string;
+    //The last command strings entered.
+    std::vector<std::string> recalled_strings;
+
+    //The currently recalled string.
+    //Used for scrolling around in the recalled strings.
+    int current_recalled_string;
 
     string_input();
 

@@ -256,7 +256,7 @@ void render(int frame_rate, double ms_per_frame){
 
             //Render chat stuff:
 
-            render_rectangle(0,main_window.SCREEN_HEIGHT-122,800,122,1.0,COLOR_GRAY);
+            render_rectangle(0,main_window.SCREEN_HEIGHT-122,main_window.SCREEN_WIDTH,122,1.0,COLOR_GRAY);
             render_rectangle(2,main_window.SCREEN_HEIGHT-120,796,118,1.0,COLOR_BLACK);
 
             if(player.chat_mode){
@@ -266,40 +266,37 @@ void render(int frame_rate, double ms_per_frame){
 
             double opacity=1.0;
 
-            for(short i=player.text_limit-1;i>=0;i--){
+            for(short i=player.text_log_display_position,n=5;i>player.text_log_display_position-6;i--,n--){
                 //If the current text log line is not empty.
                 if(player.text_log[i]!=""){
                     //Set opacity.
-                    if(i==player.text_limit-1){
+                    if(n==5){
                         opacity=1.0;
                     }
-                    else if(i==player.text_limit-2){
+                    else if(n==4){
                         opacity=.84;
                     }
-                    else if(i==player.text_limit-3){
+                    else if(n==3){
                         opacity=.68;
                     }
-                    else if(i==player.text_limit-4){
+                    else if(n==2){
                         opacity=.52;
                     }
-                    else if(i==player.text_limit-5){
+                    else if(n==1){
                         opacity=.36;
                     }
-                    else if(i==player.text_limit-6){
+                    else if(n==0){
                         opacity=.20;
-                    }
-                    else{
-                        opacity=.15;
                     }
 
                     //If the message is a system message, print it to screen in yellow system message text.
                     if(player.text_log[i].rfind("\x1F",0,1)!=string::npos && player.text_log[i].rfind("\x1F",0,1)==0){
                         string temp_string=player.text_log[i].substr(1);
-                        font_small.show(4,main_window.SCREEN_HEIGHT-36-i*font_small.spacing_y,temp_string,COLOR_SYSTEM,opacity);
+                        font_small.show(4,main_window.SCREEN_HEIGHT-36-n*font_small.spacing_y,temp_string,COLOR_SYSTEM,opacity);
                     }
                     //Otherwise, print it to screen normally.
                     else{
-                        font_small.show(4,main_window.SCREEN_HEIGHT-36-i*font_small.spacing_y,player.text_log[i],COLOR_WHITE,opacity);
+                        font_small.show(4,main_window.SCREEN_HEIGHT-36-n*font_small.spacing_y,player.text_log[i],COLOR_WHITE,opacity);
                     }
                 }
             }
