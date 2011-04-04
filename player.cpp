@@ -80,10 +80,6 @@ Player::Player(){
 
     available_starting_items.push_back("potion of slight healing");
 
-    available_starting_items.push_back("potion of healing");
-
-    available_starting_items.push_back("potion of considerable healing");
-
     death_message="";
 
     deaths=0;

@@ -177,7 +177,6 @@ int main(int argc, char* args[]){
     }
 
     prepare_specific_gravities();
-    prepare_densities();
     prepare_toughness();
     prepare_values();
 

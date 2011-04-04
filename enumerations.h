@@ -162,6 +162,9 @@ enum{
 enum{
     COVERING_NONE,
     COVERING_ICE,
+    COVERING_BLOOD_LOTS,
+    COVERING_BLOOD_LITTLE,
+    COVERING_BLOOD_DRIED
 };
 
 //*******************//
