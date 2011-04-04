@@ -9,6 +9,8 @@ double specific_gravities[MATERIAL_LAVA+1];
 
 double densities[MATERIAL_LAVA+1];
 
+double toughness[MATERIAL_LAVA+1];
+
 double values[MATERIAL_LAVA+1];
 
 void prepare_specific_gravities(){
@@ -53,6 +55,28 @@ void prepare_densities(){
     densities[MATERIAL_GOLD]=19.32;
     densities[MATERIAL_WATER]=1.0;
     densities[MATERIAL_LAVA]=2.6;
+}
+
+void prepare_toughness(){
+    toughness[MATERIAL_WOOD]=2;
+    toughness[MATERIAL_PAPER]=0.1;
+    toughness[MATERIAL_DIRT]=0.1;
+    toughness[MATERIAL_LEATHER]=5;
+    toughness[MATERIAL_CLOTH]=4;
+    toughness[MATERIAL_BONE]=3;
+    toughness[MATERIAL_FOOD]=0.1;
+    toughness[MATERIAL_GLASS]=1;
+    toughness[MATERIAL_STONE]=6;
+    toughness[MATERIAL_CORPSE]=0.1;
+    toughness[MATERIAL_BRONZE]=8;
+    toughness[MATERIAL_STEEL]=10;
+    toughness[MATERIAL_IRON]=9;
+    toughness[MATERIAL_BRASS]=7.5;
+    toughness[MATERIAL_COPPER]=7;
+    toughness[MATERIAL_SILVER]=6.8;
+    toughness[MATERIAL_GOLD]=6.5;
+    toughness[MATERIAL_WATER]=0.1;
+    toughness[MATERIAL_LAVA]=0.1;
 }
 
 void prepare_values(){

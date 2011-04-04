@@ -74,6 +74,12 @@ void save_game(){
     save<<player.start_time<<"\n";
     save<<player.deaths<<"\n";
     save<<player.score<<"\n";
+    for(int i=0;i<player.text_log.size();i++){
+        save<<player.text_log[i]<<"\n";
+    }
+    for(int i=0;i<string_input_chat.recalled_strings.size();i++){
+        save<<string_input_chat.recalled_strings[i]<<"\n";
+    }
 
     //******************//
     // Save level data. //
@@ -244,6 +250,15 @@ void load_game(){
 
         getline(load,line);
         player.score=atoi(line.c_str());
+
+        for(int i=0;i<player.text_log.size();i++){
+            getline(load,line);
+            player.text_log[i]=line;
+        }
+        for(int i=0;i<string_input_chat.recalled_strings.size();i++){
+            getline(load,line);
+            string_input_chat.recalled_strings[i]=line;
+        }
 
         //******************//
         // Load level data. //

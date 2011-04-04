@@ -12,11 +12,15 @@ extern double specific_gravities[MATERIAL_LAVA+1];
 
 extern double densities[MATERIAL_LAVA+1];
 
+extern double toughness[MATERIAL_LAVA+1];
+
 extern double values[MATERIAL_LAVA+1];
 
 void prepare_specific_gravities();
 
 void prepare_densities();
+
+void prepare_toughness();
 
 void prepare_values();
 

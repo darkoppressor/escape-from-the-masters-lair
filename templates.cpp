@@ -1086,15 +1086,15 @@ void Templates::load_template_item(short category){
 
             //If the item is armor and no defense was set.
             if(temp_item.category==ITEM_ARMOR && temp_item.defense==-1){
-                temp_item.defense=(temp_item_size*densities[temp_item.material])/2.0;
+                temp_item.defense=(temp_item_size*toughness[temp_item.material])/2.0;
             }
 
             //If no melee damage max was set.
             if(temp_item.damage_max_melee==-1){
                 //If the item is a melee weapon.
                 if(temp_item.category==ITEM_WEAPON && temp_item.weapon_category>=WEAPON_SHORT_BLADES && temp_item.weapon_category<=WEAPON_STAVES){
-                    temp_item.damage_min_melee=temp_item_size*densities[temp_item.material]*3.0;
-                    temp_item.damage_max_melee=temp_item_size*densities[temp_item.material]*4.0;
+                    temp_item.damage_min_melee=temp_item_size*toughness[temp_item.material]*3.0;
+                    temp_item.damage_max_melee=temp_item_size*toughness[temp_item.material]*4.0;
                 }
                 //If the item is not a melee weapon.
                 else{
@@ -1114,8 +1114,8 @@ void Templates::load_template_item(short category){
             if(temp_item.damage_max_thrown==-1){
                 //If the item is a thrown weapon.
                 if(temp_item.category==ITEM_WEAPON && temp_item.weapon_category==WEAPON_THROWN){
-                    temp_item.damage_min_thrown=temp_item_size*densities[temp_item.material]*3.0;
-                    temp_item.damage_max_thrown=temp_item_size*densities[temp_item.material]*4.0;
+                    temp_item.damage_min_thrown=temp_item_size*toughness[temp_item.material]*3.0;
+                    temp_item.damage_max_thrown=temp_item_size*toughness[temp_item.material]*4.0;
                 }
                 //If the item is not a thrown weapon.
                 else{
@@ -1135,8 +1135,8 @@ void Templates::load_template_item(short category){
             if(temp_item.damage_max_ranged==-1){
                 //If the item is a ranged weapon.
                 if(temp_item.category==ITEM_WEAPON && temp_item.weapon_category>=WEAPON_BOWS && temp_item.weapon_category<=WEAPON_SLINGS){
-                    temp_item.damage_min_ranged=temp_item_size*densities[temp_item.material]*3.0;
-                    temp_item.damage_max_ranged=temp_item_size*densities[temp_item.material]*4.0;
+                    temp_item.damage_min_ranged=temp_item_size*toughness[temp_item.material]*3.0;
+                    temp_item.damage_max_ranged=temp_item_size*toughness[temp_item.material]*4.0;
 
                     if(temp_item.damage_min_ranged<1){
                         temp_item.damage_min_ranged=1;
