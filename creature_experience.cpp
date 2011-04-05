@@ -33,7 +33,10 @@ bool Creature::levelup_all_attributes_set(){
 
 void Creature::level_up(){
     //Increase the max experience.
-    experience_max*=2;
+    experience_max+=experience_max*0.05;
+
+    //Reset experience.
+    experience=0;
 
     //Increase the creature's experience level.
     experience_level++;
@@ -130,7 +133,10 @@ void Creature::level_up_skill(short skill,int experience_gained){
     gain_experience(experience_gained);
 
     //Increase the skill's max experience.
-    skills[skill][SKILL_EXPERIENCE_MAX]+=skills[skill][SKILL_EXPERIENCE_MAX]*0.25;
+    skills[skill][SKILL_EXPERIENCE_MAX]+=skills[skill][SKILL_EXPERIENCE_MAX]*0.025;
+
+    //Reset the skill's experience.
+    skills[skill][SKILL_EXPERIENCE]=0;
 
     //Increase the skill's experience level.
     skills[skill][SKILL_EXPERIENCE_LEVEL]++;

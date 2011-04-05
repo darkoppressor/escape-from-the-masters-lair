@@ -64,20 +64,20 @@ void Monster::set_base_stats(short pass_level){
 
     // From creature: //
 
-    health_max=random_range(templates.base_stats.health_max/2,templates.base_stats.health_max);
+    health_max=random_range(templates.base_stats.health_max/2.0,templates.base_stats.health_max);
     health=health_max;
 
-    mana_max=random_range(templates.base_stats.mana_max/2,templates.base_stats.mana_max);
+    mana_max=random_range(templates.base_stats.mana_max/2.0,templates.base_stats.mana_max);
     mana=mana_max;
 
-    base_damage_melee_min=random_range(templates.base_stats.base_damage_melee_min/2,templates.base_stats.base_damage_melee_min);
-    base_damage_melee_max=random_range(templates.base_stats.base_damage_melee_max/2,templates.base_stats.base_damage_melee_max);
+    base_damage_melee_min=random_range(templates.base_stats.base_damage_melee_min/2.0,templates.base_stats.base_damage_melee_min);
+    base_damage_melee_max=random_range(templates.base_stats.base_damage_melee_max/2.0,templates.base_stats.base_damage_melee_max);
 
-    base_damage_ranged_min=random_range(templates.base_stats.base_damage_ranged_min/2,templates.base_stats.base_damage_ranged_min);
-    base_damage_ranged_max=random_range(templates.base_stats.base_damage_ranged_max/2,templates.base_stats.base_damage_ranged_max);
+    base_damage_ranged_min=random_range(templates.base_stats.base_damage_ranged_min/2.0,templates.base_stats.base_damage_ranged_min);
+    base_damage_ranged_max=random_range(templates.base_stats.base_damage_ranged_max/2.0,templates.base_stats.base_damage_ranged_max);
 
-    base_damage_thrown_min=random_range(templates.base_stats.base_damage_thrown_min/2,templates.base_stats.base_damage_thrown_min);
-    base_damage_thrown_max=random_range(templates.base_stats.base_damage_thrown_max/2,templates.base_stats.base_damage_thrown_max);
+    base_damage_thrown_min=random_range(templates.base_stats.base_damage_thrown_min/2.0,templates.base_stats.base_damage_thrown_min);
+    base_damage_thrown_max=random_range(templates.base_stats.base_damage_thrown_max/2.0,templates.base_stats.base_damage_thrown_max);
 
     movement_speed=templates.base_stats.movement_speed;
     next_move=movement_speed;

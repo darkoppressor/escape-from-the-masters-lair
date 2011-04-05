@@ -412,7 +412,6 @@ void Game::generate_level(){
         else if(level_theme==LEVEL_THEME_BIG_ROOM){
             level_theme_big_room();
         }
-        ///level_theme_caves();
 
         //
         for(short i=0;i<2;i++){
@@ -744,9 +743,9 @@ void Game::generate_level(){
     //Add the monsters.
 
     //The maximum number of monsters.
-    int max_monsters=random_range((generated_level_x*generated_level_y)/2000,(generated_level_x*generated_level_y)/1000);
+    int max_monsters=random_range((generated_level_x*generated_level_y)/2000.0,(generated_level_x*generated_level_y)/1000.0);
     //The maximum number of tries.
-    int random_amount_monsters=random_range((generated_level_x*generated_level_y)/100,(generated_level_x*generated_level_y)/25);
+    int random_amount_monsters=random_range((generated_level_x*generated_level_y)/100.0,(generated_level_x*generated_level_y)/25.0);
 
     for(int i=0;i<random_amount_monsters;i++){
         short x,y;

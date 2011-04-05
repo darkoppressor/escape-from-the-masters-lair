@@ -93,7 +93,9 @@ void Game::new_game(){
 
     player.set_inventory();
 
-    generate_level();
+    for(int i=0;i<26;i++){
+        generate_level();
+    }
 
     change_level(NONE);
 
