@@ -91,6 +91,7 @@ Player::Player(){
     end_time="";
 
     score=0;
+    score_from_game=0;
 
     //Chat stuff:
 
@@ -255,6 +256,12 @@ void Player::handle_input(){
                     }
                     else if(current_window==WINDOW_DEATH_1){
                         handle_input_death_1();
+                    }
+                    else if(current_window==WINDOW_CONFIRM_LEAVE_DUNGEON){
+                        handle_input_confirm_leave_dungeon();
+                    }
+                    else if(current_window==WINDOW_LEAVE_DUNGEON){
+                        handle_input_leave_dungeon();
                     }
                     else if(current_window==WINDOW_INTERACTIVE_INVENTORY_RELEVANT){
                         handle_input_interactive_inventory_relevant();

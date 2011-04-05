@@ -8,6 +8,7 @@
 #include "random_chance.h"
 #include "max_objects.h"
 #include "dungeon.h"
+#include "message_log.h"
 
 #include <fstream>
 
@@ -102,7 +103,8 @@ void Game::new_game(){
     //Generate the deepest level.
     generate_level(true);
 
-    current_level=DUNGEON_DEPTH-1;
+    ///current_level=DUNGEON_DEPTH-1;
+    current_level=0;
     max_level=current_level;
     change_level(NONE);
 
@@ -155,6 +157,15 @@ void Game::return_identifier(short object_type,uint32_t returning_identifier){
 }
 
 void Game::change_level(short direction){
+    //If the player has traveled up to the surface.
+    if(direction==UP && current_level-1<0){
+        player.current_window=WINDOW_LEAVE_DUNGEON;
+
+        player.save_game_log_entry(CAUSE_OF_DEATH_NONE);
+
+        return;
+    }
+
     //If any music is playing, fade it out and then stop it.
     while(!Mix_FadeOutMusic(1000) && Mix_PlayingMusic()){
         SDL_Delay(100);
@@ -168,15 +179,14 @@ void Game::change_level(short direction){
     //If the level is changing to a lower level.
     if(direction==DOWN){
         current_level++;
+
+        update_text_log("You make your way down the stairs.",true);
     }
     //If the level is changing to a higher level.
     else if(direction==UP){
         current_level--;
 
-        //If the player has traveled up to the surface.
-        if(current_level<0){
-            ///Handle this.
-        }
+        update_text_log("You make your way up the stairs.",true);
     }
 
     if(max_level>current_level){

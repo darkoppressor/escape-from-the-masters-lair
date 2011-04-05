@@ -9,6 +9,7 @@
 #include "version.h"
 #include "player_starting_gold.h"
 #include "covering_conversions.h"
+#include "message_log.h"
 
 using namespace std;
 using namespace boost::algorithm;
@@ -496,7 +497,7 @@ void Player::handle_input_item_info(){
 }
 
 void Player::handle_input_death(){
-    //Close the window.
+    //Close the game.
     if(event.key.keysym.sym==SDLK_ESCAPE || event.key.keysym.sym==SDLK_SPACE){
         quit_game();
     }
@@ -506,6 +507,31 @@ void Player::handle_input_death_1(){
     //Display the death window.
     if(event.key.keysym.sym==SDLK_SPACE){
         current_window=WINDOW_DEATH;
+    }
+}
+
+void Player::handle_input_confirm_leave_dungeon(){
+    //Display the leaving dungeon window.
+    if(event.key.keysym.unicode==(Uint16)'y'){
+        current_window=WINDOW_NONE;
+
+        command_standard=COMMAND_GO_UP_STAIRS;
+
+        initiate_move=true;
+    }
+
+    //Return to game.
+    else if(event.key.keysym.unicode==(Uint16)'n'){
+        current_window=WINDOW_NONE;
+
+        update_text_log("You decide to remain in the dungeon for now.",true);
+    }
+}
+
+void Player::handle_input_leave_dungeon(){
+    //Close the game.
+    if(event.key.keysym.sym==SDLK_ESCAPE || event.key.keysym.sym==SDLK_SPACE){
+        quit_game();
     }
 }
 
@@ -1068,6 +1094,58 @@ void Player::render_death(){
 
     ss.clear();ss.str("");ss<<"Final score: ";ss<<score;msg=ss.str();
     font_small.show(50,95+font.spacing_y+font_small.spacing_y*12,msg,COLOR_WHITE);
+}
+
+void Player::render_leave_dungeon(){
+    for(int i=font.w/256;i<main_window.SCREEN_WIDTH-font.w/256;i+=font.w/256){
+        font.show(i,0,"\xB0",COLOR_WHITE);
+    }
+
+    for(int i=font.w/256;i<main_window.SCREEN_WIDTH-font.w/256;i+=font.w/256){
+        font.show(i,main_window.SCREEN_HEIGHT-font.h,"\xB0",COLOR_WHITE);
+    }
+
+    for(int i=font.h;i<main_window.SCREEN_HEIGHT-font.h*2;i+=font.h){
+        font.show(0,i,"\xB0",COLOR_WHITE);
+    }
+
+    for(int i=font.h;i<main_window.SCREEN_HEIGHT-font.h*2;i+=font.h){
+        font.show(main_window.SCREEN_WIDTH-font.w/256,i,"\xB0",COLOR_WHITE);
+    }
+
+    font.show(0,main_window.SCREEN_HEIGHT-font.h*2,"\xB0",COLOR_WHITE);
+    font.show(main_window.SCREEN_WIDTH-font.w/256,main_window.SCREEN_HEIGHT-font.h*2,"\xB0",COLOR_WHITE);
+
+    font.show(0,0,"\xB0",COLOR_WHITE);
+    font.show(main_window.SCREEN_WIDTH-font.w/256,0,"\xB0",COLOR_WHITE);
+    font.show(0,main_window.SCREEN_HEIGHT-font.h,"\xB0",COLOR_WHITE);
+    font.show(main_window.SCREEN_WIDTH-font.w/256,main_window.SCREEN_HEIGHT-font.h,"\xB0",COLOR_WHITE);
+
+    /**ss.clear();ss.str("");ss<<"Lair of Loathing";msg=ss.str();
+    font_small.show(170,45,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"Adventurer Reclamations Department";msg=ss.str();
+    font_small.show(500,45,msg,COLOR_WHITE);*/
+
+    /**ss.clear();ss.str("");ss<<"Death Certificate";msg=ss.str();
+    font.show((main_window.SCREEN_WIDTH-msg.length()*font.spacing_x)/2.0,80,msg,COLOR_WHITE);*/
+
+    ss.clear();ss.str("");ss<<"Farewell, ";ss<<name;ss<<" the ";ss<<player.race_name;ss<<" ";ss<<player.class_name;ss<<"...";msg=ss.str();
+    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2.0,95+font.spacing_y,msg,COLOR_WHITE);
+
+    string turns="";
+    if(turn==1){
+        turns=" turn";
+    }
+    else{
+        turns=" turns";
+    }
+
+    ss.clear();ss.str("");ss<<"You escaped the dungeon with a score of ";ss<<score;ss<<", after ";ss<<turn;ss<<turns;ss<<".";msg=ss.str();
+    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2.0,95+font.spacing_y+font_small.spacing_y*2,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"You were level ";ss<<experience_level;ss<<" with a maximum of ";ss<<health_max;ss<<" health and ";ss<<mana_max;ss<<" mana when you escaped.";msg=ss.str();
+    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2.0,95+font.spacing_y+font_small.spacing_y*3,msg,COLOR_WHITE);
 }
 
 void Player::render_stats(){

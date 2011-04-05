@@ -31,16 +31,19 @@ void Creature::check_command(short command){
     }
 
     else if(command==COMMAND_GO_UP_STAIRS){
-        //
-        //If creature is located on: Up stairs.
-        //
-        if(vector_levels[current_level].tiles[x][y].type==TILE_TYPE_UP_STAIRS){
+        //If creature is located on the up stairs.
+        //And if the level above is not the outside.
+        if(vector_levels[current_level].tiles[x][y].type==TILE_TYPE_UP_STAIRS && current_level-1>=0){
             command_standard=command;
             initiate_move=true;
         }
-        //
-        //If creature is located on: Anything else.
-        //
+        //If the creature is located on the up stairs.
+        //And if the level above is the outside.
+        else if(vector_levels[current_level].tiles[x][y].type==TILE_TYPE_UP_STAIRS && current_level-1<0){
+            update_text_log("Leave the dungeon? [yn]",true);
+            player.current_window=WINDOW_CONFIRM_LEAVE_DUNGEON;
+        }
+        //If creature is located on anything else.
         else{
             //No up stairs here.
             update_text_log(string_up_stairs_not_here.c_str(),is_player);
@@ -148,8 +151,6 @@ void Creature::execute_command(short command){
         //If the creature is the player.
         if(is_player){
             game.change_level(DOWN);
-
-            update_text_log("You make your way down the stairs.",true);
         }
         //If the creature is a monster.
         else{
@@ -161,8 +162,6 @@ void Creature::execute_command(short command){
         //If the creature is the player.
         if(is_player){
             game.change_level(UP);
-
-            update_text_log("You make your way up the stairs.",true);
         }
         //If the creature is a monster.
         else{

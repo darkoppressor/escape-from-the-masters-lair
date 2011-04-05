@@ -72,7 +72,7 @@ void save_game(){
     save<<player.start_date<<"\n";
     save<<player.start_time<<"\n";
     save<<player.deaths<<"\n";
-    save<<player.score<<"\n";
+    save<<player.score_from_game<<"\n";
     for(int i=0;i<player.text_log.size();i++){
         save<<player.text_log[i]<<"\n";
     }
@@ -251,7 +251,7 @@ void load_game(){
         player.deaths=atoi(line.c_str());
 
         getline(load,line);
-        player.score=atoi(line.c_str());
+        player.score_from_game=atoi(line.c_str());
 
         for(int i=0;i<player.text_log.size();i++){
             getline(load,line);

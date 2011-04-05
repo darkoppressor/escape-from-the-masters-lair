@@ -34,8 +34,8 @@ class Player: public Creature{
     //The starting time for this game.
     std::string start_time;
 
-    //The score for this game.
-    int score;
+    //The score accumulated during this game.
+    int score_from_game;
 
     int turn;
 
@@ -45,6 +45,9 @@ class Player: public Creature{
     //**************************************************//
     // Variables that should not be saved in savegames. //
     //**************************************************//
+
+    //The score for this game.
+    int score;
 
     //If true, a game is currently in progress.
     //If false, a game is not currently in progress.
@@ -136,6 +139,8 @@ class Player: public Creature{
     void handle_input_item_info();
     void handle_input_death();
     void handle_input_death_1();
+    void handle_input_confirm_leave_dungeon();
+    void handle_input_leave_dungeon();
 
     //Render the windows.
     void render_no_game();
@@ -149,6 +154,7 @@ class Player: public Creature{
     void render_levelup();
     void render_item_info();
     void render_death();
+    void render_leave_dungeon();
 
     //Returns true if the passed category
     bool render_inventory_category(short category);
@@ -157,7 +163,7 @@ class Player: public Creature{
     void render(std::vector< std::vector<bool> >* tile_rendered);
 
     //Saves an entry to the game log for this game.
-    void save_game_log_entry(short cause_of_death,std::string killer,std::string killer_item);
+    void save_game_log_entry(short cause_of_death,std::string killer="",std::string killer_item="");
 };
 
 #endif

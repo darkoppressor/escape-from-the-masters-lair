@@ -239,7 +239,7 @@ void render(int frame_rate, double ms_per_frame){
     glClear(GL_COLOR_BUFFER_BIT);
 
     if(player.game_in_progress){
-        if(player.current_window==WINDOW_NONE || player.current_window==WINDOW_DEATH_1){
+        if(player.current_window==WINDOW_NONE || player.current_window==WINDOW_DEATH_1 || player.current_window==WINDOW_CONFIRM_LEAVE_DUNGEON){
             //Used to keep track of what spaces have something rendered on them this frame.
             vector< vector<bool> > tile_rendered;
             tile_rendered.resize(vector_levels[current_level].level_x,vector<bool>(vector_levels[current_level].level_y));
@@ -358,154 +358,152 @@ void render(int frame_rate, double ms_per_frame){
                 font_small.show(5,5,msg,COLOR_WHITE);
             }
 
-            if(player.current_window==WINDOW_NONE){
-                bool thirsty=false;
-                bool burdened=false;
+            bool thirsty=false;
+            bool burdened=false;
 
-                //If the player is anything aside from unencumbered.
-                if(!(player.return_inventory_weight()<=player.return_carry_capacity())){
-                    burdened=true;
-                }
-
-                //If the player is anything other than not thirsty.
-                if(!(player.thirst>=THIRST_NOT_THIRSTY && player.thirst<THIRST_THIRSTY)){
-                    thirsty=true;
-                }
-
-                short burden_color=COLOR_WHITE;
-                //If the player is unencumbered.
-                if(player.return_inventory_weight()<=player.return_carry_capacity()){
-                    burden_color=COLOR_GREEN;
-                }
-                //If the player is burdened.
-                else if(player.return_inventory_weight()>=player.return_carry_capacity()+1 && player.return_inventory_weight()<=player.return_carry_capacity()*1.5){
-                    burden_color=COLOR_YELLOW;
-                }
-                //If the player is stressed.
-                else if(player.return_inventory_weight()>=player.return_carry_capacity()*1.5+1 && player.return_inventory_weight()<=player.return_carry_capacity()*2.0){
-                    burden_color=COLOR_ORANGE;
-                }
-                //If the player is strained.
-                else if(player.return_inventory_weight()>=player.return_carry_capacity()*2.0+1 && player.return_inventory_weight()<=player.return_carry_capacity()*2.5){
-                    burden_color=COLOR_PUMPKIN;
-                }
-                //If the player is overtaxed.
-                else if(player.return_inventory_weight()>=player.return_carry_capacity()*2.5+1 && player.return_inventory_weight()<=player.return_carry_capacity()*3.0){
-                    burden_color=COLOR_RED;
-                }
-                //If the player is overloaded.
-                else if(player.return_inventory_weight()>=player.return_carry_capacity()*3.0+1){
-                    burden_color=COLOR_DARK_RED;
-                }
-
-                short thirst_color=COLOR_WHITE;
-                //If the player is bloated.
-                if(player.thirst<=THIRST_BLOATED){
-                    thirst_color=COLOR_PURPLE;
-                }
-                //If the player is satiated.
-                else if(player.thirst>=THIRST_SATIATED && player.thirst<THIRST_NOT_THIRSTY){
-                    thirst_color=COLOR_BLUE;
-                }
-                //If the player is not thirsty.
-                else if(player.thirst>=THIRST_NOT_THIRSTY && player.thirst<THIRST_THIRSTY){
-                    thirst_color=COLOR_GREEN;
-                }
-                //If the player is thirsty.
-                else if(player.thirst>=THIRST_THIRSTY && player.thirst<THIRST_WEAK){
-                    thirst_color=COLOR_YELLOW;
-                }
-                //If the player is weak.
-                else if(player.thirst>=THIRST_WEAK && player.thirst<THIRST_FAINTING){
-                    thirst_color=COLOR_ORANGE;
-                }
-                //If the player is fainting.
-                else if(player.thirst>=THIRST_FAINTING && player.thirst<THIRST_DEATH){
-                    thirst_color=COLOR_RED;
-                }
-                //If the player is dead.
-                else if(player.thirst>=THIRST_DEATH){
-                    thirst_color=COLOR_DARK_RED;
-                }
-
-                short health_color=COLOR_WHITE;
-                if(player.return_health()>=player.return_health_max()*0.75){
-                    health_color=COLOR_GREEN;
-                }
-                else if(player.return_health()>=player.return_health_max()*0.50 && player.return_health()<player.return_health_max()*0.75){
-                    health_color=COLOR_YELLOW;
-                }
-                else if(player.return_health()>=player.return_health_max()*0.25 && player.return_health()<player.return_health_max()*0.50){
-                    health_color=COLOR_ORANGE;
-                }
-                else{
-                    health_color=COLOR_RED;
-                }
-
-                short mana_color=COLOR_WHITE;
-                if(player.return_mana()>=player.return_mana_max()*0.75){
-                    mana_color=COLOR_GREEN;
-                }
-                else if(player.return_mana()>=player.return_mana_max()*0.50 && player.return_mana()<player.return_mana_max()*0.75){
-                    mana_color=COLOR_YELLOW;
-                }
-                else if(player.return_mana()>=player.return_mana_max()*0.25 && player.return_mana()<player.return_mana_max()*0.50){
-                    mana_color=COLOR_ORANGE;
-                }
-                else{
-                    mana_color=COLOR_RED;
-                }
-
-                int size_last_msg=0;
-
-                render_rectangle(0,main_window.SCREEN_HEIGHT-174,800,54,1.0,COLOR_GRAY);
-                render_rectangle(2,main_window.SCREEN_HEIGHT-172,796,50,1.0,COLOR_BLACK);
-
-                ss.clear();ss.str("");ss<<player.name;ss<<" the ";ss<<player.race_name;ss<<" ";ss<<player.class_name;msg=ss.str();
-                font_small.show(5,main_window.SCREEN_HEIGHT-170,msg,COLOR_WHITE);
-                size_last_msg=msg.length();
-
-                //If the player is anything other than not thirsty.
-                if(thirsty){
-                    if(!burdened){
-                        ss.clear();ss.str("");ss<<" is ";ss<<player.return_thirst_state();ss<<".";msg=ss.str();
-                    }
-                    else{
-                        ss.clear();ss.str("");ss<<" is ";ss<<player.return_thirst_state();msg=ss.str();
-                    }
-                    font_small.show(5+font_small.spacing_x*size_last_msg,main_window.SCREEN_HEIGHT-170,msg,thirst_color);
-                    size_last_msg+=msg.length();
-                }
-
-                //If the player is anything aside from unencumbered.
-                if(burdened){
-                    if(!thirsty){
-                        ss.clear();ss.str("");ss<<" is ";ss<<player.return_encumbrance_state();ss<<".";msg=ss.str();
-                    }
-                    else{
-                        ss.clear();ss.str("");ss<<" and ";ss<<player.return_encumbrance_state();ss<<".";msg=ss.str();
-                    }
-                    font_small.show(5+font_small.spacing_x*size_last_msg,main_window.SCREEN_HEIGHT-170,msg,burden_color);
-                }
-
-                ss.clear();ss.str("");ss<<"Experience Level:";ss<<player.experience_level;msg=ss.str();
-                ss.clear();ss.str("");ss<<" (";ss<<player.experience;ss<<"/";ss<<player.experience_max;ss<<")";msg+=ss.str();
-                ss.clear();ss.str("");ss<<"  Dungeon Level:";ss<<current_level+1;msg+=ss.str();
-                ss.clear();ss.str("");ss<<"  Turn:";ss<<player.turn;msg+=ss.str();
-                font_small.show(5,main_window.SCREEN_HEIGHT-170+font_small.spacing_y,msg,COLOR_WHITE);
-
-                ss.clear();ss.str("");ss<<"Health:";ss<<player.return_health();ss<<"/";ss<<player.return_health_max();msg=ss.str();
-                font_small.show(5,main_window.SCREEN_HEIGHT-170+font_small.spacing_y*2,msg,health_color);
-                size_last_msg=msg.length();
-
-                ss.clear();ss.str("");ss<<"  Mana:";ss<<player.return_mana();ss<<"/";ss<<player.return_mana_max();msg=ss.str();
-                font_small.show(5+font_small.spacing_x*size_last_msg,main_window.SCREEN_HEIGHT-170+font_small.spacing_y*2,msg,mana_color);
-                size_last_msg+=msg.length();
-
-                ss.clear();ss.str("");ss<<"  Armor:";ss<<player.return_armor();msg=ss.str();
-                ss.clear();ss.str("");ss<<"  Carrying:";ss<<(int)player.return_inventory_weight();ss<<"/";ss<<(int)player.return_carry_capacity();msg+=ss.str();
-                font_small.show(5+font_small.spacing_x*size_last_msg,main_window.SCREEN_HEIGHT-170+font_small.spacing_y*2,msg,COLOR_WHITE);
+            //If the player is anything aside from unencumbered.
+            if(!(player.return_inventory_weight()<=player.return_carry_capacity())){
+                burdened=true;
             }
+
+            //If the player is anything other than not thirsty.
+            if(!(player.thirst>=THIRST_NOT_THIRSTY && player.thirst<THIRST_THIRSTY)){
+                thirsty=true;
+            }
+
+            short burden_color=COLOR_WHITE;
+            //If the player is unencumbered.
+            if(player.return_inventory_weight()<=player.return_carry_capacity()){
+                burden_color=COLOR_GREEN;
+            }
+            //If the player is burdened.
+            else if(player.return_inventory_weight()>=player.return_carry_capacity()+1 && player.return_inventory_weight()<=player.return_carry_capacity()*1.5){
+                burden_color=COLOR_YELLOW;
+            }
+            //If the player is stressed.
+            else if(player.return_inventory_weight()>=player.return_carry_capacity()*1.5+1 && player.return_inventory_weight()<=player.return_carry_capacity()*2.0){
+                burden_color=COLOR_ORANGE;
+            }
+            //If the player is strained.
+            else if(player.return_inventory_weight()>=player.return_carry_capacity()*2.0+1 && player.return_inventory_weight()<=player.return_carry_capacity()*2.5){
+                burden_color=COLOR_PUMPKIN;
+            }
+            //If the player is overtaxed.
+            else if(player.return_inventory_weight()>=player.return_carry_capacity()*2.5+1 && player.return_inventory_weight()<=player.return_carry_capacity()*3.0){
+                burden_color=COLOR_RED;
+            }
+            //If the player is overloaded.
+            else if(player.return_inventory_weight()>=player.return_carry_capacity()*3.0+1){
+                burden_color=COLOR_DARK_RED;
+            }
+
+            short thirst_color=COLOR_WHITE;
+            //If the player is bloated.
+            if(player.thirst<=THIRST_BLOATED){
+                thirst_color=COLOR_PURPLE;
+            }
+            //If the player is satiated.
+            else if(player.thirst>=THIRST_SATIATED && player.thirst<THIRST_NOT_THIRSTY){
+                thirst_color=COLOR_BLUE;
+            }
+            //If the player is not thirsty.
+            else if(player.thirst>=THIRST_NOT_THIRSTY && player.thirst<THIRST_THIRSTY){
+                thirst_color=COLOR_GREEN;
+            }
+            //If the player is thirsty.
+            else if(player.thirst>=THIRST_THIRSTY && player.thirst<THIRST_WEAK){
+                thirst_color=COLOR_YELLOW;
+            }
+            //If the player is weak.
+            else if(player.thirst>=THIRST_WEAK && player.thirst<THIRST_FAINTING){
+                thirst_color=COLOR_ORANGE;
+            }
+            //If the player is fainting.
+            else if(player.thirst>=THIRST_FAINTING && player.thirst<THIRST_DEATH){
+                thirst_color=COLOR_RED;
+            }
+            //If the player is dead.
+            else if(player.thirst>=THIRST_DEATH){
+                thirst_color=COLOR_DARK_RED;
+            }
+
+            short health_color=COLOR_WHITE;
+            if(player.return_health()>=player.return_health_max()*0.75){
+                health_color=COLOR_GREEN;
+            }
+            else if(player.return_health()>=player.return_health_max()*0.50 && player.return_health()<player.return_health_max()*0.75){
+                health_color=COLOR_YELLOW;
+            }
+            else if(player.return_health()>=player.return_health_max()*0.25 && player.return_health()<player.return_health_max()*0.50){
+                health_color=COLOR_ORANGE;
+            }
+            else{
+                health_color=COLOR_RED;
+            }
+
+            short mana_color=COLOR_WHITE;
+            if(player.return_mana()>=player.return_mana_max()*0.75){
+                mana_color=COLOR_GREEN;
+            }
+            else if(player.return_mana()>=player.return_mana_max()*0.50 && player.return_mana()<player.return_mana_max()*0.75){
+                mana_color=COLOR_YELLOW;
+            }
+            else if(player.return_mana()>=player.return_mana_max()*0.25 && player.return_mana()<player.return_mana_max()*0.50){
+                mana_color=COLOR_ORANGE;
+            }
+            else{
+                mana_color=COLOR_RED;
+            }
+
+            int size_last_msg=0;
+
+            render_rectangle(0,main_window.SCREEN_HEIGHT-174,800,54,1.0,COLOR_GRAY);
+            render_rectangle(2,main_window.SCREEN_HEIGHT-172,796,50,1.0,COLOR_BLACK);
+
+            ss.clear();ss.str("");ss<<player.name;ss<<" the ";ss<<player.race_name;ss<<" ";ss<<player.class_name;msg=ss.str();
+            font_small.show(5,main_window.SCREEN_HEIGHT-170,msg,COLOR_WHITE);
+            size_last_msg=msg.length();
+
+            //If the player is anything other than not thirsty.
+            if(thirsty){
+                if(!burdened){
+                    ss.clear();ss.str("");ss<<" is ";ss<<player.return_thirst_state();ss<<".";msg=ss.str();
+                }
+                else{
+                    ss.clear();ss.str("");ss<<" is ";ss<<player.return_thirst_state();msg=ss.str();
+                }
+                font_small.show(5+font_small.spacing_x*size_last_msg,main_window.SCREEN_HEIGHT-170,msg,thirst_color);
+                size_last_msg+=msg.length();
+            }
+
+            //If the player is anything aside from unencumbered.
+            if(burdened){
+                if(!thirsty){
+                    ss.clear();ss.str("");ss<<" is ";ss<<player.return_encumbrance_state();ss<<".";msg=ss.str();
+                }
+                else{
+                    ss.clear();ss.str("");ss<<" and ";ss<<player.return_encumbrance_state();ss<<".";msg=ss.str();
+                }
+                font_small.show(5+font_small.spacing_x*size_last_msg,main_window.SCREEN_HEIGHT-170,msg,burden_color);
+            }
+
+            ss.clear();ss.str("");ss<<"Experience Level:";ss<<player.experience_level;msg=ss.str();
+            ss.clear();ss.str("");ss<<" (";ss<<player.experience;ss<<"/";ss<<player.experience_max;ss<<")";msg+=ss.str();
+            ss.clear();ss.str("");ss<<"  Dungeon Level:";ss<<current_level+1;msg+=ss.str();
+            ss.clear();ss.str("");ss<<"  Turn:";ss<<player.turn;msg+=ss.str();
+            font_small.show(5,main_window.SCREEN_HEIGHT-170+font_small.spacing_y,msg,COLOR_WHITE);
+
+            ss.clear();ss.str("");ss<<"Health:";ss<<player.return_health();ss<<"/";ss<<player.return_health_max();msg=ss.str();
+            font_small.show(5,main_window.SCREEN_HEIGHT-170+font_small.spacing_y*2,msg,health_color);
+            size_last_msg=msg.length();
+
+            ss.clear();ss.str("");ss<<"  Mana:";ss<<player.return_mana();ss<<"/";ss<<player.return_mana_max();msg=ss.str();
+            font_small.show(5+font_small.spacing_x*size_last_msg,main_window.SCREEN_HEIGHT-170+font_small.spacing_y*2,msg,mana_color);
+            size_last_msg+=msg.length();
+
+            ss.clear();ss.str("");ss<<"  Armor:";ss<<player.return_armor();msg=ss.str();
+            ss.clear();ss.str("");ss<<"  Carrying:";ss<<(int)player.return_inventory_weight();ss<<"/";ss<<(int)player.return_carry_capacity();msg+=ss.str();
+            font_small.show(5+font_small.spacing_x*size_last_msg,main_window.SCREEN_HEIGHT-170+font_small.spacing_y*2,msg,COLOR_WHITE);
         }
         else if(player.current_window==WINDOW_INVENTORY){
             player.render_inventory(true);
@@ -518,6 +516,9 @@ void render(int frame_rate, double ms_per_frame){
         }
         else if(player.current_window==WINDOW_DEATH){
             player.render_death();
+        }
+        else if(player.current_window==WINDOW_LEAVE_DUNGEON){
+            player.render_leave_dungeon();
         }
         else if(player.current_window==WINDOW_INTERACTIVE_INVENTORY_RELEVANT){
             player.render_inventory(false);

@@ -4,6 +4,7 @@
 #include "player.h"
 #include "version.h"
 #include "dungeon_location.h"
+#include "dungeon.h"
 
 #include <fstream>
 #include <ctime>
@@ -64,13 +65,18 @@ void Player::save_game_log_entry(short cause_of_death,string killer,string kille
 
         //Calculate score.
 
+        score=0;
+
+        //Add any points that were earned during play.
+        score+=score_from_game;
+
         //Add the gold value of all inventory items.
         for(int i=0;i<inventory.size();i++){
             score+=inventory[i].monetary_value*inventory[i].stack;
         }
 
         //Add the dungeon level bonus.
-        score+=50*max_level;
+        score+=(DUNGEON_DEPTH*50)-((max_level+1)*50);
 
         //Add the experience level bonus.
         score+=25*experience_level;
@@ -140,7 +146,9 @@ void Player::save_game_log_entry(short cause_of_death,string killer,string kille
             death_message="Drowned.";
         }
 
-        save_log<<death_message<<"\n";
+        if(cause_of_death!=CAUSE_OF_DEATH_NONE){
+            save_log<<death_message<<"\n";
+        }
 
         save_log<<"\n\n";
 
