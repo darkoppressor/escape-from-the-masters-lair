@@ -59,7 +59,6 @@ void save_game(){
     //Level information.
     save<<current_level<<"\n";
     save<<max_level<<"\n";
-    save<<last_level<<"\n";
 
     //*******************//
     // Save player data. //
@@ -230,9 +229,6 @@ void load_game(){
 
         getline(load,line);
         max_level=atoi(line.c_str());
-
-        getline(load,line);
-        last_level=atoi(line.c_str());
 
         //*******************//
         // Load player data. //

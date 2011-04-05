@@ -320,7 +320,7 @@ void Game::level_theme_big_room(){
     }
 }
 
-void Game::generate_level(bool first_level){
+void Game::generate_level(bool deepest_level){
     //Start the level generation timer.
     Timer timer_level_gen;
     timer_level_gen.start();
@@ -587,7 +587,7 @@ void Game::generate_level(bool first_level){
     }
 
     //Place the down stairs.
-    if(!first_level){
+    if(!deepest_level){
         while(true){
             short x,y;
 

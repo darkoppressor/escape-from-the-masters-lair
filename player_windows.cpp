@@ -1028,10 +1028,10 @@ void Player::render_death(){
     ss.clear();ss.str("");ss<<"in the Lair of Loathing, it being an office of record, do hereby certify that the records in my";msg=ss.str();
     font_small.show(50,95+font.spacing_y+font_small.spacing_y,msg,COLOR_WHITE);
 
-    ss.clear();ss.str("");ss<<"office show that ";ss<<name;ss<<" died at ";ss<<end_time;ss<<" on dungeon level ";ss<<current_level+1;ss<<", having achieved a maximum";msg=ss.str();
+    ss.clear();ss.str("");ss<<"office show that ";ss<<name;ss<<" died at ";ss<<end_time;ss<<" on dungeon level ";ss<<current_level+1;ss<<", having reached";msg=ss.str();
     font_small.show(50,95+font.spacing_y+font_small.spacing_y*2,msg,COLOR_WHITE);
 
-    ss.clear();ss.str("");ss<<"dungeon level of ";ss<<max_level+1;ss<<", on ";ss<<end_date;ss<<".";msg=ss.str();
+    ss.clear();ss.str("");ss<<"dungeon level ";ss<<max_level+1;ss<<", on ";ss<<end_date;ss<<".";msg=ss.str();
     font_small.show(50,95+font.spacing_y+font_small.spacing_y*3,msg,COLOR_WHITE);
 
     string gender_string="";

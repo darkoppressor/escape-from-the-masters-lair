@@ -78,7 +78,7 @@ class Game{
     void level_theme_big_room();
     void level_theme_maze();
 
-    void generate_level(bool first_level=false);
+    void generate_level(bool deepest_level=false);
 
     void draw_rectangle_room(short start_x,short start_y,short size_x,short size_y,short type,short material);
 

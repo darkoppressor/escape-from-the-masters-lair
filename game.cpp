@@ -93,12 +93,16 @@ void Game::new_game(){
 
     player.set_inventory();
 
-    generate_level(true);
-
-    for(int i=1;i<26;i++){
+    //Generate all but the deepest level.
+    for(int i=0;i<25;i++){
         generate_level();
     }
 
+    //Generate the deepest level.
+    generate_level(true);
+
+    current_level=25;
+    max_level=current_level;
     change_level(NONE);
 
     //Update initial fov.
@@ -162,21 +166,20 @@ void Game::change_level(short direction){
 
     //If the level is changing to a lower level.
     if(direction==DOWN){
-        last_level=current_level;
-        current_level--;
+        current_level++;
     }
     //If the level is changing to a higher level.
     else if(direction==UP){
-        last_level=current_level;
-        if(++current_level>vector_levels.size()-1){
-            game.generate_level();
-            max_level++;
-        }
+        current_level--;
 
         //If the player has traveled up to the surface.
-        if(current_level>25){
+        if(current_level<0){
             ///Handle this.
         }
+    }
+
+    if(max_level>current_level){
+        max_level=current_level;
     }
 
     //Load the background music. The music that is loaded will later be determined by which level is being loaded.
@@ -210,14 +213,16 @@ void Game::change_level(short direction){
     }
     //If this is the first level.
     else if(direction==NONE){
-        //Locate the starting position for the player.
-        for(short y=0;y<vector_levels[current_level].level_y;y++){
-            for(short x=0;x<vector_levels[current_level].level_x;x++){
-                if(vector_levels[current_level].tiles[x][y].type==TILE_TYPE_FLOOR){
-                    //Set the player's starting position.
-                    player.x=vector_levels[current_level].tiles[x][y].x;
-                    player.y=vector_levels[current_level].tiles[x][y].y;
-                }
+        while(true){
+            short x=random_range(0,vector_levels[current_level].level_x-1);
+            short y=random_range(0,vector_levels[current_level].level_y-1);
+
+            if(vector_levels[current_level].tiles[x][y].type==TILE_TYPE_FLOOR){
+                //Set the player's starting position.
+                player.x=vector_levels[current_level].tiles[x][y].x;
+                player.y=vector_levels[current_level].tiles[x][y].y;
+
+                break;
             }
         }
     }

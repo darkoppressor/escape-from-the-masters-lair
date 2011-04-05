@@ -91,7 +91,7 @@ void Player::save_game_log_entry(short cause_of_death,string killer,string kille
         save_log<<"version:"<<AutoVersion::MAJOR<<"."<<AutoVersion::MINOR<<"\n";
         save_log<<"score:"<<score<<"\n";
         save_log<<"dungeon level:"<<current_level+1<<"\n";
-        save_log<<"maximum dungeon level:"<<max_level+1<<"\n";
+        save_log<<"highest dungeon level:"<<max_level+1<<"\n";
         save_log<<"experience level:"<<experience_level<<"\n";
         save_log<<"health:"<<health<<"/"<<health_max<<"\n";
         save_log<<"mana:"<<mana<<"/"<<mana_max<<"\n";
