@@ -1,0 +1,183 @@
+//********//
+// Armor: //
+//********//
+
+	//*******//
+	// Head: //
+	//*******//
+
+	<item category:armor>
+		name:bronze helm
+		plural name:bronze helms
+		writing:
+		appearance:[
+		stackable:0
+		size:5.0
+		color:bronze
+		material:bronze
+		<armor>
+			armor category:head
+		</armor>
+	</item>
+	
+	//************//
+	// Shoulders: //
+	//************//
+
+	<item category:armor>
+		name:pair of bronze spaulders
+		plural name:pairs of bronze spaulders
+		writing:
+		appearance:[
+		stackable:0
+		size:6.0
+		color:bronze
+		material:bronze
+		<armor>
+			armor category:shoulders
+		</armor>
+	</item>
+	
+	//********//
+	// Chest: //
+	//********//
+
+	<item category:armor>
+		name:bronze chestpiece
+		plural name:bronze chestpieces
+		writing:
+		appearance:[
+		stackable:0
+		size:10.0
+		color:bronze
+		material:bronze
+		<armor>
+			armor category:chest
+		</armor>
+	</item>
+	
+	//*******//
+	// Back: //
+	//*******//
+
+	<item category:armor>
+		name:bronze cloak
+		plural name:bronze cloaks
+		writing:
+		appearance:[
+		stackable:0
+		size:4.0
+		color:bronze
+		material:bronze
+		<armor>
+			armor category:back
+		</armor>
+	</item>
+	
+	//********//
+	// Waist: //
+	//********//
+
+	<item category:armor>
+		name:bronze belt
+		plural name:bronze belts
+		writing:
+		appearance:[
+		stackable:0
+		size:7.0
+		color:bronze
+		material:bronze
+		<armor>
+			armor category:waist
+		</armor>
+	</item>
+	
+	//*******//
+	// Legs: //
+	//*******//
+
+	<item category:armor>
+		name:pair of bronze trousers
+		plural name:pairs of bronze trousers
+		writing:
+		appearance:[
+		stackable:0
+		size:9.0
+		color:bronze
+		material:bronze
+		<armor>
+			armor category:legs
+		</armor>
+	</item>
+	
+	//*******//
+	// Feet: //
+	//*******//
+
+	<item category:armor>
+		name:pair of bronze boots
+		plural name:pairs of bronze boots
+		writing:
+		appearance:[
+		stackable:0
+		size:4.0
+		color:bronze
+		material:bronze
+		<armor>
+			armor category:feet
+		</armor>
+	</item>
+
+	//********//
+	// Hands: //
+	//********//
+
+	<item category:armor>
+		name:pair of bronze gloves
+		plural name:pairs of bronze gloves
+		writing:
+		appearance:[
+		stackable:0
+		size:3.0
+		color:bronze
+		material:bronze
+		<armor>
+			armor category:hands
+		</armor>
+	</item>
+	
+	//*********//
+	// Wrists: //
+	//*********//
+
+	<item category:armor>
+		name:pair of bronze bracers
+		plural name:pairs of bronze bracers
+		writing:
+		appearance:[
+		stackable:0
+		size:2.0
+		color:bronze
+		material:bronze
+		<armor>
+			armor category:wrists
+		</armor>
+	</item>
+	
+	//*********//
+	// Shield: //
+	//*********//
+
+	<item category:armor>
+		name:bronze shield
+		plural name:bronze shields
+		writing:
+		appearance:[
+		stackable:0
+		size:8.0
+		color:bronze
+		material:bronze
+		<armor>
+			armor category:shield
+		</armor>
+	</item>

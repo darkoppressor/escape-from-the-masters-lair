@@ -91,6 +91,16 @@ Food, if I include it, should rot, go bad, etc. Corpses should break down into b
 -Instead of race determining starting inventory, the creature should be able to select some starting items. UPDATE: For the player, they select starting items. For monsters, race determines starting items.\par
 -Make the start screen prettier.\par
 -Make an actual list of starting items.\par
--Figure out item values.\lang9\strike0\par
+-Figure out item values.\par
+\lang9 -Ice, snow, frost, etc. should not be material, but instead a "covering". Colors will be determined by looking at both material and covering.\par
+\lang1033 -Implement items that cannot be picked up. This will allow the placing of light items in the dungeon that cannot be taken and used by the player. UPDATE: Or, I can just make some rooms start with perma light during level generation. I think I'll just do this.\par
+-The in-game message log should record many lines of text, and you should be able to scroll around in them. Any new message should bring the log back to the top.\strike0\par
+\strike -Expand the typed command memory to remember many commands.\strike0\par
+\strike -Replace density with strength for armor defense formula.\strike0\par
+\strike -Density is no longer used for anything. I should probably just throw it out.\par
+-When a monster adds its race template starting items, each one should have a random chance of not being added.\par
+\lang9 Blood should be a covering. It could come in three varieties: lots, little, and dried. A little blood will eventually dry up and the covering will be removed. A lot of blood will also dry over time, but instead of eventually vanishing, it eventually becomes dried blood, which stays forever unless washed off. All of this means that a tile will need to be able to have multiple coverings at once.\par
+Monsters get their starting equipment from their racial template. The items they receive from their template should be randomized.\par
+I am considering removing gold as a special case item.\strike0\par
 }
  
