@@ -7,6 +7,7 @@
 #include "world.h"
 #include "ai_keys.h"
 #include "render.h"
+#include "dungeon.h"
 
 using namespace std;
 
@@ -103,12 +104,15 @@ void Monster::set_base_stats(short pass_level){
 
     //Level the monster up an appropriate number of times.
 
-    int lowest_level=home_level-3;
+    int monster_experience_level_home=(DUNGEON_DEPTH+1)-home_level;
+
+    int lowest_level=monster_experience_level_home-3;
+
     if(lowest_level<0){
         lowest_level=0;
     }
 
-    int highest_level=home_level+3;
+    int highest_level=monster_experience_level_home+3;
 
     int levels_to_gain=random_range(lowest_level,highest_level);
 

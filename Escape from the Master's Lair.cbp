@@ -171,6 +171,7 @@
 		<Unit filename="creature_other_stats.cpp" />
 		<Unit filename="creature_save_load.cpp" />
 		<Unit filename="creature_skills.cpp" />
+		<Unit filename="dungeon.h" />
 		<Unit filename="dungeon_generation.cpp" />
 		<Unit filename="dungeon_location.cpp" />
 		<Unit filename="dungeon_location.h" />

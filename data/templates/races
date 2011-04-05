@@ -12,6 +12,7 @@
 	color:white
 	weight:350
 	health:50
+	damage melee:2-4
 	movement speed:-1
 </race>
 
@@ -21,6 +22,7 @@
 	color:dark blue
 	weight:125
 	health:50
+	damage melee:2-4
 	movement speed:-1
 </race>
 
@@ -30,6 +32,7 @@
 	color:brown
 	weight:300
 	health:50
+	damage melee:2-4
 	movement speed:-1
 </race>
 
@@ -39,6 +42,7 @@
 	color:blue
 	weight:125
 	health:50
+	damage melee:2-4
 	movement speed:-1
 </race>
 
@@ -73,6 +77,7 @@
 	appearance:f
 	color:orange
 	weight:300
+	health:25
 	damage melee:2-4
 	movement speed:-5
 </race>
@@ -82,6 +87,7 @@
 	appearance:f
 	color:burnt orange
 	weight:250
+	health:25
 	damage melee:2-4
 	movement speed:-5
 </race>
@@ -95,7 +101,8 @@
 	appearance:q
 	color:pale brown
 	weight:90
-	damage melee:1-3
+	health:50
+	damage melee:2-4
 </race>
 
 <race>
@@ -103,7 +110,8 @@
 	appearance:q
 	color:light gray
 	weight:4175
-	damage melee:1-3
+	health:50
+	damage melee:2-4
 </race>
 
 <race>
@@ -111,7 +119,8 @@
 	appearance:q
 	color:dark brown
 	weight:1760
-	damage melee:1-3
+	health:50
+	damage melee:2-4
 </race>
 
 <race>
@@ -119,7 +128,8 @@
 	appearance:q
 	color:burnt sienna
 	weight:450
-	damage melee:1-3
+	health:50
+	damage melee:2-4
 </race>
 
 <race>
@@ -127,7 +137,8 @@
 	appearance:q
 	color:payne's gray
 	weight:850
-	damage melee:1-3
+	health:50
+	damage melee:2-4
 </race>
 
 <race>
@@ -146,5 +157,7 @@
 	item:dagger
 	item:leather chestpiece
 	item:pair of leather trousers
+	item:pair of leather boots
+	item:pair of leather gloves
 	item:potion of slight healing
 </race>

@@ -7,6 +7,7 @@
 #include "random_number_generator.h"
 #include "random_chance.h"
 #include "max_objects.h"
+#include "dungeon.h"
 
 #include <fstream>
 
@@ -94,14 +95,14 @@ void Game::new_game(){
     player.set_inventory();
 
     //Generate all but the deepest level.
-    for(int i=0;i<25;i++){
+    for(int i=0;i<DUNGEON_DEPTH-1;i++){
         generate_level();
     }
 
     //Generate the deepest level.
     generate_level(true);
 
-    current_level=25;
+    current_level=DUNGEON_DEPTH-1;
     max_level=current_level;
     change_level(NONE);
 
