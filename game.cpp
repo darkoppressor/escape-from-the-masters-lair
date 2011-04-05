@@ -159,6 +159,8 @@ void Game::return_identifier(short object_type,uint32_t returning_identifier){
 void Game::change_level(short direction){
     //If the player has traveled up to the surface.
     if(direction==UP && current_level-1<0){
+        update_text_log("You make your way out of the dungeon...",true);
+
         player.current_window=WINDOW_LEAVE_DUNGEON;
 
         player.save_game_log_entry(CAUSE_OF_DEATH_NONE);
