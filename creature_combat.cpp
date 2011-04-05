@@ -426,6 +426,16 @@ void Creature::die(short cause_of_death,string killer,string killer_item){
             message+=return_full_name();
             message+=" dies of thirst!";
         }
+        else if(cause_of_death==CAUSE_OF_DEATH_LAVA){
+            message="The ";
+            message+=return_full_name();
+            message+=" is incinerated by the lava!";
+        }
+        else if(cause_of_death==CAUSE_OF_DEATH_DROWN){
+            message="The ";
+            message+=return_full_name();
+            message+=" drowns!";
+        }
     }
 
     update_text_log(message.c_str(),true);

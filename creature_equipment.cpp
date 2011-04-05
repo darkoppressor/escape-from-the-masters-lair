@@ -7,54 +7,42 @@
 using namespace std;
 
 void Creature::drop_item(int item_index){
-    //If the item is either not money, or is money but with at least 1 in the stack.
-    if(inventory[item_index].inventory_letter!='$' || (inventory[item_index].inventory_letter=='$' && inventory[item_index].stack>0)){
-        //If the item is not money.
-        if(inventory[item_index].inventory_letter!='$'){
-            //Return the item's inventory letter.
-            return_inventory_letter(inventory[item_index].inventory_letter);
+    //Return the item's inventory letter.
+    return_inventory_letter(inventory[item_index].inventory_letter);
 
-            //If the creature is not the player.
-            if(!is_player){
-                //Reset the item's inventory letter.
-                //We only do this for monsters. The player leaves the letter attached to the item.
-                inventory[item_index].inventory_letter=0;
-            }
-
-            //Unequip the item.
-            unequip_item(item_index);
-        }
-
-        //Set the item's position to the creature's current position.
-        inventory[item_index].x=x;
-        inventory[item_index].y=y;
-
-        //Add the item to the dungeon items vector.
-        vector_levels[current_level].items.push_back(inventory[item_index]);
-
-        //The new item in the dungeon MUST not be set to equipped.
-        vector_levels[current_level].items[vector_levels[current_level].items.size()-1].equipped=false;
-
-        //Assign an identifier to the new item.
-        vector_levels[current_level].items[vector_levels[current_level].items.size()-1].assign_identifier();
-
-        //Assign an owner identifier to the new item.
-        vector_levels[current_level].items[vector_levels[current_level].items.size()-1].owner=identifier;
-
-        //If the item is not money.
-        if(inventory[item_index].inventory_letter!='$'){
-            //Return the inventory item's identifier.
-            inventory[item_index].return_identifier();
-
-            //Remove the item from the inventory items vector.
-            inventory.erase(inventory.begin()+item_index);
-        }
-        //If the item is money.
-        else{
-            //Zero out the money count.
-            inventory[item_index].stack=0;
-        }
+    //If the creature is not the player.
+    if(!is_player){
+        //Reset the item's inventory letter.
+        //We only do this for monsters. The player leaves the letter attached to the item.
+        inventory[item_index].inventory_letter=0;
     }
+
+    //Unequip the item.
+    unequip_item(item_index);
+
+    //Set the item's position to the creature's current position.
+    inventory[item_index].x=x;
+    inventory[item_index].y=y;
+
+    //Add the item to the dungeon items vector.
+    vector_levels[current_level].items.push_back(inventory[item_index]);
+
+    //The new item in the dungeon MUST not be set to equipped.
+    vector_levels[current_level].items[vector_levels[current_level].items.size()-1].equipped=false;
+
+    vector_levels[current_level].items[vector_levels[current_level].items.size()-1].check_this_tile();
+
+    //Assign an identifier to the new item.
+    vector_levels[current_level].items[vector_levels[current_level].items.size()-1].assign_identifier();
+
+    //Assign an owner identifier to the new item.
+    vector_levels[current_level].items[vector_levels[current_level].items.size()-1].owner=identifier;
+
+    //Return the inventory item's identifier.
+    inventory[item_index].return_identifier();
+
+    //Remove the item from the inventory items vector.
+    inventory.erase(inventory.begin()+item_index);
 }
 
 int Creature::index_of_item_in_slot(short equip_slot){

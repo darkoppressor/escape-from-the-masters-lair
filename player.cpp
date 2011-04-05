@@ -121,14 +121,12 @@ Player::Player(){
 }
 
 void Player::set_inventory(){
-    give_item("gold piece",0,'$');
-
     give_item("brass lantern");
 
     give_item("bottle of water");
 
-    inventory[1].light_on=true;
-    inventory[1].fuel=inventory[1].fuel_max;
+    inventory[0].light_on=true;
+    inventory[0].fuel=inventory[0].fuel_max;
 
     //Give the player their purchased starting items.
     for(int i=0;i<starting_items.size();i++){
@@ -511,7 +509,7 @@ void Player::handle_input(){
                         }
 
                         //Inventory letter.
-                        else if(input_inventory!=INVENTORY_COMMAND_NONE && ((event.key.keysym.unicode>=(Uint16)'A' && event.key.keysym.unicode<=(Uint16)'Z') || (event.key.keysym.unicode>=(Uint16)'a' && event.key.keysym.unicode<=(Uint16)'z') || (event.key.keysym.unicode==(Uint16)'$'))){
+                        else if(input_inventory!=INVENTORY_COMMAND_NONE && ((event.key.keysym.unicode>=(Uint16)'A' && event.key.keysym.unicode<=(Uint16)'Z') || (event.key.keysym.unicode>=(Uint16)'a' && event.key.keysym.unicode<=(Uint16)'z'))){
                             inventory_input_state=(char)event.key.keysym.unicode;
                         }
 
@@ -767,6 +765,8 @@ void Player::move(){
         command_standard=COMMAND_NONE;
 
         process_move();
+
+        check_this_tile();
 
         update_fov();
     }

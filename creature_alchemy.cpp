@@ -38,8 +38,8 @@ void Creature::mix_items(int item_index_1,int item_index_2){
         first_item_used=true;
     }
 
-    //If the first item is a dye, and the second item is not a dye or money.
-    if(inventory[item_index_1].possesses_effect(ITEM_EFFECT_DYE) && !inventory[item_index_2].possesses_effect(ITEM_EFFECT_DYE) && inventory[item_index_2].inventory_letter!='$'){
+    //If the first item is a dye, and the second item is not a dye.
+    if(inventory[item_index_1].possesses_effect(ITEM_EFFECT_DYE) && !inventory[item_index_2].possesses_effect(ITEM_EFFECT_DYE)){
         //If the creature is the player.
         if(is_player){
             str_item="You dye the ";
@@ -67,14 +67,14 @@ void Creature::mix_items(int item_index_1,int item_index_2){
         first_item_used=true;
     }
 
-    //If the first item is water and the second item is not money.
-    if(inventory[item_index_1].possesses_effect(ITEM_EFFECT_WATER) && inventory[item_index_2].inventory_letter!='$'){
+    //If the first item is water.
+    if(inventory[item_index_1].possesses_effect(ITEM_EFFECT_WATER)){
         //If the creature is the player.
         if(is_player){
             str_item="You pour the ";
             str_item+=inventory[item_index_1].return_full_name(1);
             str_item+=" on the ";
-            str_item+=inventory[item_index_2].return_full_name(1);
+            str_item+=inventory[item_index_2].return_full_name();
             str_item+=".";
         }
         //If the creature is not the player.
@@ -84,12 +84,15 @@ void Creature::mix_items(int item_index_1,int item_index_2){
             str_item+="pours the ";
             str_item+=inventory[item_index_1].return_full_name(1);
             str_item+=" on the ";
-            str_item+=inventory[item_index_2].return_full_name(1);
+            str_item+=inventory[item_index_2].return_full_name();
             str_item+=".";
         }
 
         //Wash any dye off of the second item.
         inventory[item_index_2].dye=0;
+
+        //Add water to the second item.
+        inventory[item_index_2].add_covering(COVERING_WATER);
 
         //If the item is lit, extinguish its light.
         inventory[item_index_2].light_on=false;
@@ -128,12 +131,12 @@ bool Creature::items_mixable(int item_index_1,int item_index_2){
     if(inventory[item_index_1].possesses_effect(ITEM_EFFECT_FUEL) && inventory[item_index_2].fuel_max>0){
         return true;
     }
-    //If the first item is a dye, and the second item is not a dye or money.
-    if(inventory[item_index_1].possesses_effect(ITEM_EFFECT_DYE) && !inventory[item_index_2].possesses_effect(ITEM_EFFECT_DYE) && inventory[item_index_2].inventory_letter!='$'){
+    //If the first item is a dye, and the second item is not a dye.
+    if(inventory[item_index_1].possesses_effect(ITEM_EFFECT_DYE) && !inventory[item_index_2].possesses_effect(ITEM_EFFECT_DYE)){
         return true;
     }
-    //If the first item is water and the second item is not money.
-    if(inventory[item_index_1].possesses_effect(ITEM_EFFECT_WATER) && inventory[item_index_2].inventory_letter!='$'){
+    //If the first item is water.
+    if(inventory[item_index_1].possesses_effect(ITEM_EFFECT_WATER)){
         return true;
     }
     else{

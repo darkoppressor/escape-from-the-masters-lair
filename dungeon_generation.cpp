@@ -654,13 +654,13 @@ void Game::generate_level(){
             if(generated_temperature==TEMP_FREEZING){
                 switch(generated_tiles[x][y].type){
                     case TILE_TYPE_LIQUID: case TILE_TYPE_FOUNTAIN:
-                        generated_tiles[x][y].coverings.push_back(Covering(COVERING_ICE));
+                        generated_tiles[x][y].add_covering(COVERING_ICE);
                         break;
                 }
             }
             //If the temperature is icy.
             else if(generated_temperature==TEMP_ABSOLUTE_ZERO){
-                generated_tiles[x][y].coverings.push_back(COVERING_ICE);
+                generated_tiles[x][y].add_covering(COVERING_ICE);
             }
         }
     }
@@ -818,7 +818,7 @@ void Game::generate_level(){
             vector_levels[vector_levels.size()-1].tiles[x][y].material=generated_tiles[x][y].material;
 
             for(int i=0;i<generated_tiles[x][y].coverings.size();i++){
-                vector_levels[vector_levels.size()-1].tiles[x][y].coverings.push_back(generated_tiles[x][y].coverings[i]);
+                vector_levels[vector_levels.size()-1].tiles[x][y].add_covering(generated_tiles[x][y].coverings[i].type);
             }
 
             vector_levels[vector_levels.size()-1].fog[x][y]=generated_fog[x][y];

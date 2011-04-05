@@ -28,6 +28,27 @@ bool Covering::process_turn(){
             type=COVERING_BLOOD_DRIED;
         }
     }
+    else if(type==COVERING_ICE){
+        age++;
+
+        if(age>=AGE_ICE){
+            type=COVERING_WATER;
+        }
+    }
+    else if(type==COVERING_WATER){
+        age++;
+
+        if(age>=AGE_WATER){
+            return false;
+        }
+    }
+    else if(type==COVERING_FIRE){
+        age++;
+
+        if(age>=AGE_FIRE){
+            return false;
+        }
+    }
 
     return true;
 }

@@ -464,7 +464,7 @@ void Player::handle_input_interactive_inventory_all(){
     }
 
     //Inventory letter.
-    else if(input_inventory!=INVENTORY_COMMAND_NONE && ((event.key.keysym.unicode>=(Uint16)'A' && event.key.keysym.unicode<=(Uint16)'Z') || (event.key.keysym.unicode>=(Uint16)'a' && event.key.keysym.unicode<=(Uint16)'z') || (event.key.keysym.unicode==(Uint16)'$'))){
+    else if(input_inventory!=INVENTORY_COMMAND_NONE && ((event.key.keysym.unicode>=(Uint16)'A' && event.key.keysym.unicode<=(Uint16)'Z') || (event.key.keysym.unicode>=(Uint16)'a' && event.key.keysym.unicode<=(Uint16)'z'))){
         inventory_input_state=(char)event.key.keysym.unicode;
 
         current_window=WINDOW_NONE;
@@ -479,7 +479,7 @@ void Player::handle_input_interactive_inventory_relevant(){
 
     //Inventory letter.
     ///Maybe this should only take relevant inventory letters.
-    else if(input_inventory!=INVENTORY_COMMAND_NONE && ((event.key.keysym.unicode>=(Uint16)'A' && event.key.keysym.unicode<=(Uint16)'Z') || (event.key.keysym.unicode>=(Uint16)'a' && event.key.keysym.unicode<=(Uint16)'z') || (event.key.keysym.unicode==(Uint16)'$'))){
+    else if(input_inventory!=INVENTORY_COMMAND_NONE && ((event.key.keysym.unicode>=(Uint16)'A' && event.key.keysym.unicode<=(Uint16)'Z') || (event.key.keysym.unicode>=(Uint16)'a' && event.key.keysym.unicode<=(Uint16)'z'))){
         inventory_input_state=(char)event.key.keysym.unicode;
 
         current_window=WINDOW_NONE;
@@ -1082,7 +1082,6 @@ void Player::render_stats(){
     ss.clear();ss.str("");ss<<"Health: ";ss<<return_health();ss<<"/";ss<<return_health_max();ss<<"\xA";msg+=ss.str();
     ss.clear();ss.str("");ss<<"Mana: ";ss<<return_mana();ss<<"/";ss<<return_mana_max();ss<<"\xA";msg+=ss.str();
     ss.clear();ss.str("");ss<<"Armor: ";ss<<return_armor();ss<<"\xA";msg+=ss.str();
-    ss.clear();ss.str("");ss<<"Money: ";ss<<inventory[0].stack;ss<<"\xA";msg+=ss.str();
     ss.clear();ss.str("");ss<<"Carrying: ";ss<<(int)player.return_inventory_weight();ss<<"/";ss<<(int)player.return_carry_capacity();msg+=ss.str();
 
     font_small.show(5,30,msg,COLOR_WHITE);
@@ -1238,7 +1237,7 @@ void Player::render_inventory(bool all_categories){
                     continue;
                 }
 
-                if(inventory[i].category==n && inventory[i].inventory_letter!='$'){
+                if(inventory[i].category==n){
                     string str_dye="";
                     string str_coverings="";
 

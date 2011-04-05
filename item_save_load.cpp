@@ -139,7 +139,7 @@ void Item::load_data(stringstream* load){
         getline(*load,line);
         number=atoi(line.c_str());
 
-        coverings.push_back(Covering(number));
+        add_covering(number);
 
         getline(*load,line);
         number=atoi(line.c_str());

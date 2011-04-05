@@ -343,6 +343,8 @@ void Item::move(){
         if(momentum==0){
             //It doesn't matter what caused the item to move, since it has stopped moving.
             clear_owner_data_all();
+
+            check_this_tile();
         }
     }
 }
@@ -471,6 +473,20 @@ void Item::process_turn(){
 
             is_corpse=false;
             is_skeleton=true;
+        }
+    }
+}
+
+void Item::check_this_tile(){
+    //If the tile the item is on is liquid.
+    if(vector_levels[current_level].tiles[x][y].type==TILE_TYPE_LIQUID){
+        //If the liquid is water.
+        if(vector_levels[current_level].tiles[x][y].material==MATERIAL_WATER){
+            add_covering(COVERING_WATER);
+        }
+        //If the liquid is lava.
+        else if(vector_levels[current_level].tiles[x][y].material==MATERIAL_LAVA){
+            alive=false;
         }
     }
 }

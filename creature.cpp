@@ -27,8 +27,6 @@ Creature::Creature(){
 
     is_player=false;
 
-    alive=true;
-
     gender=GENDER_MALE;
 
     race=-1;
@@ -116,8 +114,8 @@ bool Creature::give_item(string item_name,int stack_size,char force_inventory_le
 
     //If the specified item can be added.
     if(item_category!=-1 && item_index!=-1 && item_category<templates.template_items.size() && item_index<templates.template_items[item_category].size()){
-        //If the inventory is not full, or the item is money, add the item.
-        if(inventory.size()<INVENTORY_MAX_SIZE || templates.template_items[item_category][item_index].inventory_letter=='$'){
+        //If the inventory is not full, add the item.
+        if(inventory.size()<INVENTORY_MAX_SIZE){
             //Generate the item.
             Item temp_item;
 
@@ -214,7 +212,7 @@ int Creature::item_category_in_inventory(short category){
     int number_of_items=0;
 
     for(int i=0;i<inventory.size();i++){
-        if(inventory[i].category==category && inventory[i].inventory_letter!='$'){
+        if(inventory[i].category==category){
             number_of_items++;
         }
     }
@@ -428,7 +426,7 @@ void Creature::change_thirst(bool increase,short amount){
 
                 if(return_health()<=0){
                     //The creature dies of thirst.
-                    die(CAUSE_OF_DEATH_THIRST,"","");
+                    die(CAUSE_OF_DEATH_THIRST);
                 }
             }
         }
@@ -556,7 +554,7 @@ bool Creature::check_movement(short check_x,short check_y){
             return true;
             break;
 
-        case TILE_TYPE_WALL: case TILE_TYPE_SOLID: case TILE_TYPE_LIQUID: case TILE_TYPE_SECRET_DOOR:
+        case TILE_TYPE_WALL: case TILE_TYPE_SOLID: case TILE_TYPE_SECRET_DOOR:
             return false;
             break;
     }
@@ -571,7 +569,7 @@ void Creature::execute_movement(short check_x,short check_y){
             clear_for_move=true;
             break;
 
-        case TILE_TYPE_WALL: case TILE_TYPE_SOLID: case TILE_TYPE_LIQUID: case TILE_TYPE_SECRET_DOOR:
+        case TILE_TYPE_WALL: case TILE_TYPE_SOLID: case TILE_TYPE_SECRET_DOOR:
             ///
             break;
 
@@ -679,6 +677,20 @@ void Creature::search(){
                     update_text_log(string_discover_secret_door.c_str(),is_player);
                 }
             }
+        }
+    }
+}
+
+void Creature::check_this_tile(){
+    //If the tile the creature is on is liquid.
+    if(vector_levels[current_level].tiles[x][y].type==TILE_TYPE_LIQUID){
+        //If the liquid is water, and not covered in ice.
+        if(vector_levels[current_level].tiles[x][y].material==MATERIAL_WATER && !has_covering(COVERING_ICE)){
+            add_covering(COVERING_WATER);
+        }
+        //If the liquid is lava.
+        else if(vector_levels[current_level].tiles[x][y].material==MATERIAL_LAVA){
+            die(CAUSE_OF_DEATH_LAVA);
         }
     }
 }

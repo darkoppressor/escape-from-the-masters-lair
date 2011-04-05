@@ -244,6 +244,9 @@ class Item: public Object{
     //Handle anything that needs handling on each game turn.
     void process_turn();
 
+    //Check the tile this item is currently on.
+    void check_this_tile();
+
     std::string return_full_name(int override_stack=-1);
 
     //Returns true if the passed effect is possessed by the item.

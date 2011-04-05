@@ -42,7 +42,7 @@ void Level::draw_circle_covering(short center_x,short center_y,short max_radius,
             if(center_x+x>=0 && center_x+x<=level_x-1 && center_y+y>=0 && center_y+y<=level_y-1){
                 if(tiles[center_x+x][center_y+y].type!=TILE_TYPE_LIQUID && tiles[center_x+x][center_y+y].type!=TILE_TYPE_FOUNTAIN){
                     if(random_range(0,99)<covering_chance){
-                        tiles[center_x+x][center_y+y].coverings.push_back(covering_type);
+                        tiles[center_x+x][center_y+y].add_covering(covering_type);
                     }
                     for(int i=0;i<items.size();i++){
                         if(items[i].x==center_x+x && items[i].y==center_y+y){
@@ -56,7 +56,7 @@ void Level::draw_circle_covering(short center_x,short center_y,short max_radius,
             if(center_x-x>=0 && center_x-x<=level_x-1 && center_y+y>=0 && center_y+y<=level_y-1){
                 if(tiles[center_x-x][center_y+y].type!=TILE_TYPE_LIQUID && tiles[center_x-x][center_y+y].type!=TILE_TYPE_FOUNTAIN){
                     if(random_range(0,99)<covering_chance){
-                        tiles[center_x-x][center_y+y].coverings.push_back(covering_type);
+                        tiles[center_x-x][center_y+y].add_covering(covering_type);
                     }
                     for(int i=0;i<items.size();i++){
                         if(items[i].x==center_x-x && items[i].y==center_y+y){
@@ -70,7 +70,7 @@ void Level::draw_circle_covering(short center_x,short center_y,short max_radius,
             if(center_x+x>=0 && center_x+x<=level_x-1 && center_y-y>=0 && center_y-y<=level_y-1){
                 if(tiles[center_x+x][center_y-y].type!=TILE_TYPE_LIQUID && tiles[center_x+x][center_y-y].type!=TILE_TYPE_FOUNTAIN){
                     if(random_range(0,99)<covering_chance){
-                        tiles[center_x+x][center_y-y].coverings.push_back(covering_type);
+                        tiles[center_x+x][center_y-y].add_covering(covering_type);
                     }
                     for(int i=0;i<items.size();i++){
                         if(items[i].x==center_x+x && items[i].y==center_y-y){
@@ -84,7 +84,7 @@ void Level::draw_circle_covering(short center_x,short center_y,short max_radius,
             if(center_x-x>=0 && center_x-x<=level_x-1 && center_y-y>=0 && center_y-y<=level_y-1){
                 if(tiles[center_x-x][center_y-y].type!=TILE_TYPE_LIQUID && tiles[center_x-x][center_y-y].type!=TILE_TYPE_FOUNTAIN){
                     if(random_range(0,99)<covering_chance){
-                        tiles[center_x-x][center_y-y].coverings.push_back(covering_type);
+                        tiles[center_x-x][center_y-y].add_covering(covering_type);
                     }
                     for(int i=0;i<items.size();i++){
                         if(items[i].x==center_x-x && items[i].y==center_y-y){
@@ -99,7 +99,7 @@ void Level::draw_circle_covering(short center_x,short center_y,short max_radius,
             if(center_x+y>=0 && center_x+y<=level_x-1 && center_y+x>=0 && center_y+x<=level_y-1){
                 if(tiles[center_x+y][center_y+x].type!=TILE_TYPE_LIQUID && tiles[center_x+y][center_y+x].type!=TILE_TYPE_FOUNTAIN){
                     if(random_range(0,99)<covering_chance){
-                        tiles[center_x+y][center_y+x].coverings.push_back(covering_type);
+                        tiles[center_x+y][center_y+x].add_covering(covering_type);
                     }
                     for(int i=0;i<items.size();i++){
                         if(items[i].x==center_x+y && items[i].y==center_y+x){
@@ -113,7 +113,7 @@ void Level::draw_circle_covering(short center_x,short center_y,short max_radius,
             if(center_x-y>=0 && center_x-y<=level_x-1 && center_y+x>=0 && center_y+x<=level_y-1){
                 if(tiles[center_x-y][center_y+x].type!=TILE_TYPE_LIQUID && tiles[center_x-y][center_y+x].type!=TILE_TYPE_FOUNTAIN){
                     if(random_range(0,99)<covering_chance){
-                        tiles[center_x-y][center_y+x].coverings.push_back(covering_type);
+                        tiles[center_x-y][center_y+x].add_covering(covering_type);
                     }
                     for(int i=0;i<items.size();i++){
                         if(items[i].x==center_x-y && items[i].y==center_y+x){
@@ -127,7 +127,7 @@ void Level::draw_circle_covering(short center_x,short center_y,short max_radius,
             if(center_x+y>=0 && center_x+y<=level_x-1 && center_y-x>=0 && center_y-x<=level_y-1){
                 if(tiles[center_x+y][center_y-x].type!=TILE_TYPE_LIQUID && tiles[center_x+y][center_y-x].type!=TILE_TYPE_FOUNTAIN){
                     if(random_range(0,99)<covering_chance){
-                        tiles[center_x+y][center_y-x].coverings.push_back(covering_type);
+                        tiles[center_x+y][center_y-x].add_covering(covering_type);
                     }
                     for(int i=0;i<items.size();i++){
                         if(items[i].x==center_x+y && items[i].y==center_y-x){
@@ -141,7 +141,7 @@ void Level::draw_circle_covering(short center_x,short center_y,short max_radius,
             if(center_x-y>=0 && center_x-y<=level_x-1 && center_y-x>=0 && center_y-x<=level_y-1){
                 if(tiles[center_x-y][center_y-x].type!=TILE_TYPE_LIQUID && tiles[center_x-y][center_y-x].type!=TILE_TYPE_FOUNTAIN){
                     if(random_range(0,99)<covering_chance){
-                        tiles[center_x-y][center_y-x].coverings.push_back(covering_type);
+                        tiles[center_x-y][center_y-x].add_covering(covering_type);
                     }
                     for(int i=0;i<items.size();i++){
                         if(items[i].x==center_x-y && items[i].y==center_y-x){
@@ -169,7 +169,7 @@ void Level::draw_circle_covering(short center_x,short center_y,short max_radius,
                     if(tiles[fill_x-1][fill_y].has_covering(covering_type) && tiles[fill_x+1][fill_y].has_covering(covering_type) && tiles[fill_x][fill_y-1].has_covering(covering_type) && tiles[fill_x][fill_y+1].has_covering(covering_type)){
                         if(tiles[fill_x][fill_y].type!=TILE_TYPE_LIQUID && tiles[fill_x][fill_y].type!=TILE_TYPE_FOUNTAIN){
                             if(random_range(0,99)<covering_chance){
-                                tiles[fill_x][fill_y].coverings.push_back(covering_type);
+                                tiles[fill_x][fill_y].add_covering(covering_type);
                             }
                             for(int i=0;i<items.size();i++){
                                 if(items[i].x==fill_x && items[i].y==fill_y){

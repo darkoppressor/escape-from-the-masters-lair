@@ -62,8 +62,8 @@ void Creature::check_command(short command){
                 //At least one item has been found on the current tile.
                 item_here=true;
 
-                //If the inventory is not full, or the item is money.
-                if(inventory.size()<INVENTORY_MAX_SIZE || vector_levels[current_level].items[i].inventory_letter=='$'){
+                //If the inventory is not full.
+                if(inventory.size()<INVENTORY_MAX_SIZE){
                     //Due to the above if() statements, there is at least one item that can definitely be picked up on this tile.
                     command_standard=command;
                     initiate_move=true;
@@ -179,8 +179,8 @@ void Creature::execute_command(short command){
         for(int i=0;i<vector_levels[current_level].items.size();i++){
             //We've found an item at the creature's position.
             if(vector_levels[current_level].items[i].x==x && vector_levels[current_level].items[i].y==y){
-                //If the inventory is not full, or the item is money, pick up the item.
-                if(inventory.size()<INVENTORY_MAX_SIZE || vector_levels[current_level].items[i].inventory_letter=='$'){
+                //If the inventory is not full, pick up the item.
+                if(inventory.size()<INVENTORY_MAX_SIZE){
                     //The inventory index of the item being picked up.
                     int picked_up_item_index=-1;
 
@@ -732,8 +732,8 @@ void Creature::execute_command_directional(short direction){
                 gain_skill_experience(SKILL_THROWN_WEAPONS,1);
             }
 
-            //If the item's stack is 1 and the item is not money.
-            if(inventory[inventory_item_index].stack==1 && inventory[inventory_item_index].inventory_letter!='$'){
+            //If the item's stack is 1.
+            if(inventory[inventory_item_index].stack==1){
                 //Return the item's inventory letter.
                 return_inventory_letter(inventory[inventory_item_index].inventory_letter);
 
@@ -764,16 +764,16 @@ void Creature::execute_command_directional(short direction){
             //Set the thrown item's special data.
             vector_levels[current_level].items[vector_levels[current_level].items.size()-1].assign_owner_data_thrown(this);
 
-            //If the item's stack is greater than 1, or the item is money.
+            //If the item's stack is greater than 1.
             //We just subtract 1 from the stack instead of removing the item from the inventory.
-            if(inventory[inventory_item_index].stack>1 || inventory[inventory_item_index].inventory_letter=='$'){
+            if(inventory[inventory_item_index].stack>1){
                 //Set the newly created item's stack to 1.
                 vector_levels[current_level].items[vector_levels[current_level].items.size()-1].stack=1;
 
                 //Subtract 1 from the inventory item's stack.
                 inventory[inventory_item_index].stack--;
             }
-            //If the item's stack is 1 and the item is not money.
+            //If the item's stack is 1.
             //We remove the item from the inventory.
             else{
                 //Return the item's identifier.
@@ -831,8 +831,8 @@ void Creature::execute_command_directional(short direction){
             //Exercise the launcher weapons skill.
             gain_skill_experience(SKILL_LAUNCHER_WEAPONS,1);
 
-            //If the item's stack is 1 and the item is not money.
-            if(inventory[quivered_item].stack==1 && inventory[quivered_item].inventory_letter!='$'){
+            //If the item's stack is 1.
+            if(inventory[quivered_item].stack==1){
                 //Return the item's inventory letter.
                 return_inventory_letter(inventory[quivered_item].inventory_letter);
 
@@ -869,16 +869,16 @@ void Creature::execute_command_directional(short direction){
             //Set the fired item's special data.
             vector_levels[current_level].items[vector_levels[current_level].items.size()-1].assign_owner_data_fired(this,launcher_item);
 
-            //If the item's stack is greater than 1, or the item is money.
+            //If the item's stack is greater than 1.
             //We just subtract 1 from the stack instead of removing the item from the inventory.
-            if(inventory[quivered_item].stack>1 || inventory[quivered_item].inventory_letter=='$'){
+            if(inventory[quivered_item].stack>1){
                 //Set the newly created item's stack to 1.
                 vector_levels[current_level].items[vector_levels[current_level].items.size()-1].stack=1;
 
                 //Subtract 1 from the inventory item's stack.
                 inventory[quivered_item].stack--;
             }
-            //If the item's stack is 1 and the item is not money.
+            //If the item's stack is 1.
             //We remove the item from the inventory.
             else{
                 //Return the item's identifier.
@@ -1161,18 +1161,8 @@ void Creature::check_command_inventory(char inventory_letter){
 
     if(command==INVENTORY_COMMAND_DROP_ITEM){
         //If the item is unequipped.
-        if(!inventory[inventory_item_index].equipped &&
-        //And if the item is either not money, or is money with at least 1 piece.
-        ((inventory[inventory_item_index].inventory_letter=='$' && inventory[inventory_item_index].stack>0) || (inventory[inventory_item_index].inventory_letter!='$'))){
+        if(!inventory[inventory_item_index].equipped){
             initiate_move=true;
-        }
-        //If the item is money but the stack is 0.
-        else if(inventory[inventory_item_index].inventory_letter=='$' && inventory[inventory_item_index].stack==0){
-            update_text_log("You don't have any money.",is_player);
-
-            //No inventory command will be executed.
-            input_inventory=0;
-            inventory_input_state=0;
         }
         //If the item is equipped.
         else{
@@ -1251,9 +1241,7 @@ void Creature::check_command_inventory(char inventory_letter){
 
     else if(command==INVENTORY_COMMAND_THROW_ITEM){
         //If either the item is NOT equipped or it is equipped but has more than 1 stack.
-        if((!inventory[inventory_item_index].equipped || (inventory[inventory_item_index].equipped && inventory[inventory_item_index].stack>1)) &&
-        //And if the item is either not money, or is money with at least 1 piece.
-        ((inventory[inventory_item_index].inventory_letter=='$' && inventory[inventory_item_index].stack>0) || (inventory[inventory_item_index].inventory_letter!='$'))){
+        if(!inventory[inventory_item_index].equipped || (inventory[inventory_item_index].equipped && inventory[inventory_item_index].stack>1)){
             input_inventory=0;
             two_part_inventory_input_state=inventory_input_state;
             inventory_input_state=0;
@@ -1270,14 +1258,6 @@ void Creature::check_command_inventory(char inventory_letter){
             update_text_log(str_item.c_str(),is_player);
 
             input_directional=DIRECTIONAL_COMMAND_THROW_ITEM;
-        }
-        //If the item is money but the stack is 0.
-        else if(inventory[inventory_item_index].inventory_letter=='$' && inventory[inventory_item_index].stack==0){
-            update_text_log("You don't have any money.",is_player);
-
-            //No inventory command will be executed.
-            input_inventory=0;
-            inventory_input_state=0;
         }
         //If the item is equipped.
         else{

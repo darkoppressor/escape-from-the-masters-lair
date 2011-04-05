@@ -34,6 +34,14 @@ class Object{
     //Returns false if the passed covering is not on the object.
     bool has_covering(short covering);
 
+    //Adds the passed covering.
+    void add_covering(short covering);
+
+    //Removes the passed covering.
+    //Returns true if the covering existed and was thus removed.
+    //Returns false if the covering did not exist and thus was not removed.
+    bool remove_covering(short covering);
+
     //The current coordinates of the object, in tiles.
     short x,y;
 
@@ -51,6 +59,8 @@ class Object{
 
     //The coverings on this object.
     std::vector<Covering> coverings;
+
+    bool alive;
 };
 
 #endif

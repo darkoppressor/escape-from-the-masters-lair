@@ -121,6 +121,12 @@ void Player::save_game_log_entry(short cause_of_death,string killer,string kille
         else if(cause_of_death==CAUSE_OF_DEATH_THIRST){
             death_message="Died of thirst.";
         }
+        else if(cause_of_death==CAUSE_OF_DEATH_LAVA){
+            death_message="Incinerated by lava.";
+        }
+        else if(cause_of_death==CAUSE_OF_DEATH_DROWN){
+            death_message="Drowned.";
+        }
 
         save_log<<death_message<<"\n";
 

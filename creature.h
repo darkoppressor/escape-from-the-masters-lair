@@ -63,8 +63,6 @@ class Creature: public Object{
     //Stores the attribute(s) being selected for improvement when leveling up.
     std::vector<short> levelup_attributes;
 
-    bool alive;
-
     //*****************//
     // Game variables: //
     //*****************//
@@ -244,7 +242,7 @@ class Creature: public Object{
 
     void attack_melee(Creature* target);
 
-    void die(short cause_of_death,std::string killer,std::string killer_item);
+    void die(short cause_of_death,std::string killer="",std::string killer_item="");
 
     //Level up the creature.
     void level_up();
@@ -265,6 +263,9 @@ class Creature: public Object{
     void execute_movement(short check_x,short check_y);
 
     void search();
+
+    //Check the tile this creature is currently on.
+    void check_this_tile();
 
     //Handle anything that needs handling on each game turn.
     void process_turn();

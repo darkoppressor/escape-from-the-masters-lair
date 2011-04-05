@@ -10,4 +10,10 @@ const int AGE_BLOOD_LITTLE_DRY=100;
 
 const int AGE_BLOOD_LOTS_DRY=150;
 
+const int AGE_ICE=150;
+
+const int AGE_WATER=100;
+
+const int AGE_FIRE=50;
+
 #endif

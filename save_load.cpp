@@ -317,7 +317,7 @@ void load_game(){
                         getline(load,line);
                         number=atoi(line.c_str());
 
-                        vector_levels[i].tiles[x][y].coverings.push_back(Covering(number));
+                        vector_levels[i].tiles[x][y].add_covering(number);
 
                         getline(load,line);
                         number=atoi(line.c_str());

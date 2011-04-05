@@ -76,6 +76,14 @@ void turn(){
 
 //Handle events, such as collisions.
 void events(){
+    for(int i=0;i<vector_levels[current_level].items.size();i++){
+        //If the item has been destroyed.
+        if(!vector_levels[current_level].items[i].alive){
+            vector_levels[current_level].items.erase(vector_levels[current_level].items.begin()+i);
+            i--;
+        }
+    }
+
     ///I may need to add some kind of check eventually, so movement cannot resume until no items need to move.
     //Move the items.
     for(int i=0;i<vector_levels[current_level].items.size();i++){
@@ -496,7 +504,6 @@ void render(int frame_rate, double ms_per_frame){
                 size_last_msg+=msg.length();
 
                 ss.clear();ss.str("");ss<<"  Armor:";ss<<player.return_armor();msg=ss.str();
-                ss.clear();ss.str("");ss<<"  Money:";ss<<player.inventory[0].stack;msg+=ss.str();
                 ss.clear();ss.str("");ss<<"  Carrying:";ss<<(int)player.return_inventory_weight();ss<<"/";ss<<(int)player.return_carry_capacity();msg+=ss.str();
                 font_small.show(5+font_small.spacing_x*size_last_msg,main_window.SCREEN_HEIGHT-170+font_small.spacing_y*2,msg,COLOR_WHITE);
             }

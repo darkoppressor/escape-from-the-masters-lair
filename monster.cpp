@@ -11,10 +11,10 @@
 using namespace std;
 
 void Monster::set_inventory(){
-    give_item("gold piece",0,'$');
-
     //Add some random gold.
-    give_item("gold piece",random_range(0,10));
+    if(random_range(0,99)<50){
+        give_item("gold piece",random_range(1,10));
+    }
 
     //Add some random bottles of water.
     give_item("bottle of water",random_range(1,2));
@@ -354,6 +354,8 @@ void Monster::move(){
         command_standard=COMMAND_NONE;
 
         process_move();
+
+        check_this_tile();
 
         ///update_fov();
     }

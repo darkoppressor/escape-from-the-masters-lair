@@ -18,6 +18,12 @@ short coverings_to_color(Object* object){
     else if(object->has_covering(COVERING_ICE)){
         color=COLOR_ICE;
     }
+    else if(object->has_covering(COVERING_WATER)){
+        color=COLOR_WATER;
+    }
+    else if(object->has_covering(COVERING_FIRE)){
+        color=COLOR_FLAME;
+    }
 
     return color;
 }
@@ -25,16 +31,22 @@ short coverings_to_color(Object* object){
 string covering_to_string(short covering){
     string line="";
 
-    if(covering=COVERING_ICE){
+    if(covering==COVERING_ICE){
         line="ice";
     }
-    else if(covering=COVERING_BLOOD_LOTS){
+    else if(covering==COVERING_WATER){
+        line="water";
+    }
+    else if(covering==COVERING_FIRE){
+        line="fire";
+    }
+    else if(covering==COVERING_BLOOD_LOTS){
         line="blood";
     }
-    else if(covering=COVERING_BLOOD_LITTLE){
+    else if(covering==COVERING_BLOOD_LITTLE){
         line="blood";
     }
-    else if(covering=COVERING_BLOOD_DRIED){
+    else if(covering==COVERING_BLOOD_DRIED){
         line="dried blood";
     }
 

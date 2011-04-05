@@ -15,6 +15,7 @@ Object::Object(){
     appearance="";
     color=COLOR_WHITE;
     weight=1.0;
+    alive=true;
 }
 
 double Object::return_absolute_x(){
@@ -46,4 +47,62 @@ bool Object::has_covering(short covering){
     }
 
     return false;
+}
+
+void Object::add_covering(short covering){
+    //If the object doesn't already have this covering.
+    if(!has_covering(covering)){
+        bool create_covering=true;
+
+        if(covering==COVERING_WATER){
+            remove_covering(COVERING_BLOOD_LOTS);
+            remove_covering(COVERING_BLOOD_LITTLE);
+            remove_covering(COVERING_BLOOD_DRIED);
+
+            if(remove_covering(COVERING_FIRE)){
+                create_covering=false;
+            }
+
+            if(has_covering(COVERING_ICE)){
+                create_covering=false;
+            }
+        }
+        else if(covering==COVERING_ICE){
+            remove_covering(COVERING_WATER);
+
+            if(remove_covering(COVERING_FIRE)){
+                create_covering=false;
+            }
+        }
+        else if(covering==COVERING_FIRE){
+            if(remove_covering(COVERING_WATER)){
+                create_covering=false;
+            }
+
+            if(remove_covering(COVERING_ICE)){
+                create_covering=false;
+            }
+        }
+
+        //If nothing prevented the new covering from being added.
+        if(create_covering){
+            //Add the new covering.
+            coverings.push_back(covering);
+        }
+    }
+}
+
+bool Object::remove_covering(short covering){
+    bool covering_exists=false;
+
+    //Look through all of the coverings.
+    for(int i=0;i<coverings.size();i++){
+        if(coverings[i].type==covering){
+            coverings.erase(coverings.begin()+i);
+            i--;
+            covering_exists=true;
+        }
+    }
+
+    return covering_exists;
 }
