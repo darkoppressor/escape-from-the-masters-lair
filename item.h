@@ -25,6 +25,7 @@ struct Owner_Data_Thrown{
     short experience_level;
     short base_damage_min_thrown;
     short base_damage_max_thrown;
+    short race;
     std::string full_name;
     bool is_player;
 };
@@ -40,6 +41,7 @@ struct Owner_Data_Fired{
     short base_damage_max_ranged;
     short launcher_damage_min;
     short launcher_damage_max;
+    short race;
     std::string full_name;
     bool is_player;
 };

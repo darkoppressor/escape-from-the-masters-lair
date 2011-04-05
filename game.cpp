@@ -43,18 +43,27 @@ void Game::new_game(){
 
     strftime(buff,sizeof buff,"%d",tm_now);
 
+    string day=buff;
+    string initial_day_digit="";
+    initial_day_digit+=day[0];
+
+    //Remove the leading zero, if any.
+    if(atoi(initial_day_digit.c_str())==0){
+        erase_head(day,1);
+    }
+
     string number_ending="";
 
-    if(atoi(buff)==11 || atoi(buff)==12 || atoi(buff)==13){
+    if(atoi(day.c_str())==11 || atoi(day.c_str())==12 || atoi(day.c_str())==13){
         number_ending="th";
     }
-    else if(atoi(buff)%10==1){
+    else if(atoi(day.c_str())%10==1){
         number_ending="st";
     }
-    else if(atoi(buff)%10==2){
+    else if(atoi(day.c_str())%10==2){
         number_ending="nd";
     }
-    else if(atoi(buff)%10==3){
+    else if(atoi(day.c_str())%10==3){
         number_ending="rd";
     }
     else{
@@ -62,7 +71,7 @@ void Game::new_game(){
     }
 
     player.start_date="the ";
-    player.start_date+=buff;
+    player.start_date+=day;
     player.start_date+=number_ending;
     strftime(buff,sizeof buff," day of %B, %Y",tm_now);
     player.start_date+=buff;

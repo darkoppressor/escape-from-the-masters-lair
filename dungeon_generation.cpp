@@ -491,14 +491,14 @@ void Game::generate_level(){
         int max_liquids=0;
 
         if(level_variations[LEVEL_VARIATION_WATERY] || level_variations[LEVEL_VARIATION_LAVA]){
-            max_liquids=random_range((generated_level_x*generated_level_y)/500,(generated_level_x*generated_level_y)/100);
+            max_liquids=random_range((generated_level_x*generated_level_y)/500.0,(generated_level_x*generated_level_y)/100.0);
         }
         else{
-            max_liquids=random_range((generated_level_x*generated_level_y)/20000,(generated_level_x*generated_level_y)/10000);
+            max_liquids=random_range((generated_level_x*generated_level_y)/20000.0,(generated_level_x*generated_level_y)/10000.0);
         }
 
         //The maximum number of tries.
-        int random_amount_liquids=random_range((generated_level_x*generated_level_y)/4,(generated_level_x*generated_level_y)/2);
+        int random_amount_liquids=random_range((generated_level_x*generated_level_y)/4.0,(generated_level_x*generated_level_y)/2.0);
 
         //The number created successfully.
         int liquids_created=0;
@@ -518,7 +518,7 @@ void Game::generate_level(){
                 radius=random_range(3,20);
             }
             else{
-                radius=random_range(3,5);
+                radius=random_range(3,4);
             }
 
             if(level_variations[LEVEL_VARIATION_WATERY]){

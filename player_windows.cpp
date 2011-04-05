@@ -1059,11 +1059,8 @@ void Player::render_death(){
     ss.clear();ss.str("");ss<<"Maximum mana at time of death: ";ss<<mana_max;msg=ss.str();
     font_small.show(50,95+font.spacing_y+font_small.spacing_y*11,msg,COLOR_WHITE);
 
-    ss.clear();ss.str("");ss<<"Gold found on person: ";ss<<inventory[0].monetary_value*inventory[0].stack;msg=ss.str();
-    font_small.show(50,95+font.spacing_y+font_small.spacing_y*12,msg,COLOR_WHITE);
-
     ss.clear();ss.str("");ss<<"Final score: ";ss<<score;msg=ss.str();
-    font_small.show(50,95+font.spacing_y+font_small.spacing_y*13,msg,COLOR_WHITE);
+    font_small.show(50,95+font.spacing_y+font_small.spacing_y*12,msg,COLOR_WHITE);
 }
 
 void Player::render_stats(){

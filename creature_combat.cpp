@@ -68,6 +68,9 @@ void Creature::attack_melee(Creature* target){
 
             damage=base_damage;
 
+            //Add the racial base melee damage modifier.
+            damage+=random_range(templates.template_races[race].base_damage_melee_min,templates.template_races[race].base_damage_melee_max);
+
             //Add in melee weapon damage.
 
             //Check for items wielded in either hand.

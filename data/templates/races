@@ -11,6 +11,8 @@
 	appearance:B
 	color:white
 	weight:350
+	health:50
+	damage melee:2-4
 	movement speed:-1
 </race>
 
@@ -19,6 +21,8 @@
 	appearance:B
 	color:dark blue
 	weight:125
+	health:50
+	damage melee:2-4
 	movement speed:-1
 </race>
 
@@ -27,6 +31,8 @@
 	appearance:B
 	color:brown
 	weight:300
+	health:50
+	damage melee:2-4
 	movement speed:-1
 </race>
 
@@ -35,6 +41,8 @@
 	appearance:B
 	color:blue
 	weight:125
+	health:50
+	damage melee:2-4
 	movement speed:-1
 </race>
 
@@ -47,7 +55,8 @@
 	appearance:r
 	color:dark gray
 	weight:0.5
-	movement speed:120
+	damage melee:2-4
+	movement speed:5
 </race>
 
 <race>
@@ -55,7 +64,8 @@
 	appearance:r
 	color:light gray
 	weight:0.02
-	movement speed:120
+	damage melee:2-4
+	movement speed:5
 </race>
 
 //**************//
@@ -67,6 +77,8 @@
 	appearance:f
 	color:orange
 	weight:300
+	health:25
+	damage melee:2-4
 	movement speed:-5
 </race>
 
@@ -75,6 +87,8 @@
 	appearance:f
 	color:burnt orange
 	weight:250
+	health:25
+	damage melee:2-4
 	movement speed:-5
 </race>
 
@@ -87,7 +101,8 @@
 	appearance:q
 	color:pale brown
 	weight:90
-	movement speed:10
+	health:50
+	damage melee:2-4
 </race>
 
 <race>
@@ -95,7 +110,8 @@
 	appearance:q
 	color:light gray
 	weight:4175
-	movement speed:10
+	health:50
+	damage melee:2-4
 </race>
 
 <race>
@@ -103,7 +119,8 @@
 	appearance:q
 	color:dark brown
 	weight:1760
-	movement speed:10
+	health:50
+	damage melee:2-4
 </race>
 
 <race>
@@ -111,7 +128,8 @@
 	appearance:q
 	color:burnt sienna
 	weight:450
-	movement speed:10
+	health:50
+	damage melee:2-4
 </race>
 
 <race>
@@ -119,7 +137,8 @@
 	appearance:q
 	color:payne's gray
 	weight:850
-	movement speed:10
+	health:50
+	damage melee:2-4
 </race>
 
 <race>
@@ -127,7 +146,7 @@
 	appearance:x
 	color:purple
 	weight:0.07
-	movement speed:5
+	movement speed:1
 </race>
 
 <race>
@@ -135,4 +154,10 @@
 	appearance:@
 	color:white
 	weight:55
+	item:dagger
+	item:leather chestpiece
+	item:pair of leather trousers
+	item:pair of leather boots
+	item:pair of leather gloves
+	item:potion of slight healing
 </race>

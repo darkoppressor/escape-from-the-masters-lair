@@ -8,6 +8,7 @@
 #include "random_number_generator.h"
 #include "message_log.h"
 #include "combat_all.h"
+#include "world.h"
 
 using namespace std;
 
@@ -28,6 +29,7 @@ void Item::assign_owner_data_thrown(Creature* creature){
     owner_data_thrown[0].experience_level=creature->experience_level;
     owner_data_thrown[0].base_damage_min_thrown=creature->base_damage_thrown_min;
     owner_data_thrown[0].base_damage_max_thrown=creature->base_damage_thrown_max;
+    owner_data_thrown[0].race=creature->race;
     owner_data_thrown[0].full_name=creature->return_full_name();
     owner_data_thrown[0].is_player=creature->is_player;
 }
@@ -46,6 +48,7 @@ void Item::assign_owner_data_fired(Creature* creature,int launcher_item){
     owner_data_fired[0].base_damage_max_ranged=creature->base_damage_ranged_max;
     owner_data_fired[0].launcher_damage_min=creature->inventory[launcher_item].damage_min_ranged;
     owner_data_fired[0].launcher_damage_max=creature->inventory[launcher_item].damage_max_ranged;
+    owner_data_fired[0].race=creature->race;
     owner_data_fired[0].full_name=creature->return_full_name();
     owner_data_fired[0].is_player=creature->is_player;
 
@@ -85,6 +88,9 @@ void Item::attack_thrown(Creature* target){
             int base_damage=random_range(owner_data_thrown[0].base_damage_min_thrown,owner_data_thrown[0].base_damage_max_thrown);
 
             damage=base_damage;
+
+            //Add the racial base thrown damage modifier.
+            damage+=random_range(templates.template_races[owner_data_thrown[0].race].base_damage_thrown_min,templates.template_races[owner_data_thrown[0].race].base_damage_thrown_max);
 
             //Add in thrown weapon damage.
 
@@ -236,6 +242,9 @@ void Item::attack_fired(Creature* target){
             int base_damage=random_range(owner_data_fired[0].base_damage_min_ranged,owner_data_fired[0].base_damage_max_ranged);
 
             damage=base_damage;
+
+            //Add the racial base ranged damage modifier.
+            damage+=random_range(templates.template_races[owner_data_fired[0].race].base_damage_ranged_min,templates.template_races[owner_data_fired[0].race].base_damage_ranged_max);
 
             //Add the actual projectile's thrown weapon damage.
 

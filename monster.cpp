@@ -19,14 +19,9 @@ void Monster::set_inventory(){
     //Add some random bottles of water.
     give_item("bottle of water",random_range(1,2));
 
-    //Add some random healing potions.
-    if(random_range(0,99)<40){
-        give_item("potion of slight healing");
-    }
-
     //Give the monster any race-specific items.
     for(int i=0;i<templates.template_races[race].inventory_items.size();i++){
-        if(random_range(0,99)<30){
+        if(random_range(0,99)<45){
             give_item(templates.template_races[race].inventory_items[i]);
 
             //If the new item is armor.

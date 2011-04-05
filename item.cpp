@@ -480,8 +480,8 @@ void Item::process_turn(){
 void Item::check_this_tile(){
     //If the tile the item is on is liquid.
     if(vector_levels[current_level].tiles[x][y].type==TILE_TYPE_LIQUID){
-        //If the liquid is water.
-        if(vector_levels[current_level].tiles[x][y].material==MATERIAL_WATER){
+        //If the liquid is water and not covered in ice.
+        if(vector_levels[current_level].tiles[x][y].material==MATERIAL_WATER && !vector_levels[current_level].tiles[x][y].has_covering(COVERING_ICE)){
             add_covering(COVERING_WATER);
         }
         //If the liquid is lava.

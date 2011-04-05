@@ -381,6 +381,9 @@ void Templates::load_template_race(){
         string mana_range="levelup mana range:";
         string health="health:";
         string mana="mana:";
+        string base_damage_melee="damage melee:";
+        string base_damage_ranged="damage ranged:";
+        string base_damage_thrown="damage thrown:";
         string movement_speed="movement speed:";
         string strength="strength:";
         string agility="agility:";
@@ -526,6 +529,93 @@ void Templates::load_template_race(){
             line.erase(0,mana.length());
 
             temp_race.mana_max=atoi(line.c_str());
+        }
+        //Base melee damage.
+        else if(icontains(line,base_damage_melee)){
+            //Clear the data name.
+            line.erase(0,base_damage_melee.length());
+
+            string min_damage="";
+            string max_damage="";
+
+            //Look through the characters remaining in line.
+            for(int i=0;i<line.length();i++){
+                //If the dash is encountered.
+                if(line[i]=='-'){
+                    //Erase the dash.
+                    line.erase(i,1);
+
+                    for(int n=i;n<line.length();n++){
+                        max_damage+=line[n];
+                    }
+
+                    line.erase(i);
+
+                    min_damage=line;
+                    break;
+                }
+            }
+
+            temp_race.base_damage_melee_min=atoi(min_damage.c_str());
+            temp_race.base_damage_melee_max=atoi(max_damage.c_str());
+        }
+        //Base ranged damage.
+        else if(icontains(line,base_damage_ranged)){
+            //Clear the data name.
+            line.erase(0,base_damage_ranged.length());
+
+            string min_damage="";
+            string max_damage="";
+
+            //Look through the characters remaining in line.
+            for(int i=0;i<line.length();i++){
+                //If the dash is encountered.
+                if(line[i]=='-'){
+                    //Erase the dash.
+                    line.erase(i,1);
+
+                    for(int n=i;n<line.length();n++){
+                        max_damage+=line[n];
+                    }
+
+                    line.erase(i);
+
+                    min_damage=line;
+                    break;
+                }
+            }
+
+            temp_race.base_damage_ranged_min=atoi(min_damage.c_str());
+            temp_race.base_damage_ranged_max=atoi(max_damage.c_str());
+        }
+        //Base thrown damage.
+        else if(icontains(line,base_damage_thrown)){
+            //Clear the data name.
+            line.erase(0,base_damage_thrown.length());
+
+            string min_damage="";
+            string max_damage="";
+
+            //Look through the characters remaining in line.
+            for(int i=0;i<line.length();i++){
+                //If the dash is encountered.
+                if(line[i]=='-'){
+                    //Erase the dash.
+                    line.erase(i,1);
+
+                    for(int n=i;n<line.length();n++){
+                        max_damage+=line[n];
+                    }
+
+                    line.erase(i);
+
+                    min_damage=line;
+                    break;
+                }
+            }
+
+            temp_race.base_damage_thrown_min=atoi(min_damage.c_str());
+            temp_race.base_damage_thrown_max=atoi(max_damage.c_str());
         }
         //Movement speed.
         else if(icontains(line,movement_speed)){
@@ -1086,7 +1176,7 @@ void Templates::load_template_item(short category){
 
             //If the item is armor and no defense was set.
             if(temp_item.category==ITEM_ARMOR && temp_item.defense==-1){
-                temp_item.defense=(temp_item_size*toughness[temp_item.material])/2.0;
+                temp_item.defense=(temp_item_size*toughness[temp_item.material])/8.0;
             }
 
             //If no melee damage max was set.

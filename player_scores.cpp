@@ -8,7 +8,10 @@
 #include <fstream>
 #include <ctime>
 
+#include <boost/algorithm/string.hpp>
+
 using namespace std;
+using namespace boost::algorithm;
 
 void Player::save_game_log_entry(short cause_of_death,string killer,string killer_item){
     ofstream save_log("game_log",ifstream::app);
@@ -22,18 +25,27 @@ void Player::save_game_log_entry(short cause_of_death,string killer,string kille
 
         strftime(buff,sizeof buff,"%d",tm_now);
 
+        string day=buff;
+        string initial_day_digit="";
+        initial_day_digit+=day[0];
+
+        //Remove the leading zero, if any.
+        if(atoi(initial_day_digit.c_str())==0){
+            erase_head(day,1);
+        }
+
         string number_ending="";
 
-        if(atoi(buff)==11 || atoi(buff)==12 || atoi(buff)==13){
+        if(atoi(day.c_str())==11 || atoi(day.c_str())==12 || atoi(day.c_str())==13){
             number_ending="th";
         }
-        else if(atoi(buff)%10==1){
+        else if(atoi(day.c_str())%10==1){
             number_ending="st";
         }
-        else if(atoi(buff)%10==2){
+        else if(atoi(day.c_str())%10==2){
             number_ending="nd";
         }
-        else if(atoi(buff)%10==3){
+        else if(atoi(day.c_str())%10==3){
             number_ending="rd";
         }
         else{
@@ -41,7 +53,7 @@ void Player::save_game_log_entry(short cause_of_death,string killer,string kille
         }
 
         end_date="the ";
-        end_date+=buff;
+        end_date+=day;
         end_date+=number_ending;
         strftime(buff,sizeof buff," day of %B, %Y",tm_now);
         end_date+=buff;
@@ -52,7 +64,7 @@ void Player::save_game_log_entry(short cause_of_death,string killer,string kille
 
         //Calculate score.
 
-        //Add all gold and the gold value of all inventory items.
+        //Add the gold value of all inventory items.
         for(int i=0;i<inventory.size();i++){
             score+=inventory[i].monetary_value*inventory[i].stack;
         }
