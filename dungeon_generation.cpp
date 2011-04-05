@@ -320,7 +320,7 @@ void Game::level_theme_big_room(){
     }
 }
 
-void Game::generate_level(){
+void Game::generate_level(bool first_level){
     //Start the level generation timer.
     Timer timer_level_gen;
     timer_level_gen.start();
@@ -587,14 +587,16 @@ void Game::generate_level(){
     }
 
     //Place the down stairs.
-    while(true){
-        short x,y;
+    if(!first_level){
+        while(true){
+            short x,y;
 
-        x=random_range(1,generated_level_x-2);
-        y=random_range(1,generated_level_y-2);
-        if(generated_tiles[x][y].type==TILE_TYPE_FLOOR){
-            generated_tiles[x][y].type=TILE_TYPE_DOWN_STAIRS;
-            break;
+            x=random_range(1,generated_level_x-2);
+            y=random_range(1,generated_level_y-2);
+            if(generated_tiles[x][y].type==TILE_TYPE_FLOOR){
+                generated_tiles[x][y].type=TILE_TYPE_DOWN_STAIRS;
+                break;
+            }
         }
     }
 

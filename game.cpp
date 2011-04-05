@@ -93,7 +93,9 @@ void Game::new_game(){
 
     player.set_inventory();
 
-    for(int i=0;i<26;i++){
+    generate_level(true);
+
+    for(int i=1;i<26;i++){
         generate_level();
     }
 
@@ -161,18 +163,18 @@ void Game::change_level(short direction){
     //If the level is changing to a lower level.
     if(direction==DOWN){
         last_level=current_level;
-        if(++current_level>vector_levels.size()-1){
-            game.generate_level();
-            max_level++;
-        }
+        current_level--;
     }
     //If the level is changing to a higher level.
     else if(direction==UP){
         last_level=current_level;
-        current_level--;
+        if(++current_level>vector_levels.size()-1){
+            game.generate_level();
+            max_level++;
+        }
 
         //If the player has traveled up to the surface.
-        if(current_level<0){
+        if(current_level>25){
             ///Handle this.
         }
     }
@@ -194,11 +196,24 @@ void Game::change_level(short direction){
         }
     }
     //If the player has traveled downwards.
-    else if(direction==DOWN || direction==NONE){
+    else if(direction==DOWN){
         //Locate the starting position for the player.
         for(short y=0;y<vector_levels[current_level].level_y;y++){
             for(short x=0;x<vector_levels[current_level].level_x;x++){
                 if(vector_levels[current_level].tiles[x][y].type==TILE_TYPE_UP_STAIRS){
+                    //Set the player's starting position.
+                    player.x=vector_levels[current_level].tiles[x][y].x;
+                    player.y=vector_levels[current_level].tiles[x][y].y;
+                }
+            }
+        }
+    }
+    //If this is the first level.
+    else if(direction==NONE){
+        //Locate the starting position for the player.
+        for(short y=0;y<vector_levels[current_level].level_y;y++){
+            for(short x=0;x<vector_levels[current_level].level_x;x++){
+                if(vector_levels[current_level].tiles[x][y].type==TILE_TYPE_FLOOR){
                     //Set the player's starting position.
                     player.x=vector_levels[current_level].tiles[x][y].x;
                     player.y=vector_levels[current_level].tiles[x][y].y;
