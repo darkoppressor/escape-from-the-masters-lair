@@ -255,29 +255,6 @@ void Game::level_theme_rooms(){
     }
 }
 
-void Game::flood_fill_caves(int x,int y){
-    //If the tile is within level bounds.
-    if(x>=0 && x<=generated_level_x-1 && y>=0 && y<=generated_level_y-1 &&
-    //And if the tile is a wall.
-    generated_tiles[x][y].type==TILE_TYPE_WALL &&
-    //And if the tile is not already marked as checked.
-    !tiles_check[x][y]){
-        tiles_check[x][y]=true;
-
-        if(random_range(0,99)<25){
-            generated_tiles[x][y].type=TILE_TYPE_FLOOR;
-        }
-    }
-    else{
-        return;
-    }
-
-    flood_fill_caves(x+1,y);
-    flood_fill_caves(x-1,y);
-    flood_fill_caves(x,y+1);
-    flood_fill_caves(x,y-1);
-}
-
 void Game::level_theme_caves(){
     tiles_check.clear();
 
@@ -292,13 +269,47 @@ void Game::level_theme_caves(){
     short start_x=(generated_level_x-1)/2;
     short start_y=(generated_level_y-1)/2;
 
-    for(short int_y=start_y;int_y<start_y+5;int_y++){
-        for(short int_x=start_x;int_x<start_x+5;int_x++){
+    for(short int_y=start_y;int_y<=start_y+12;int_y++){
+        for(short int_x=start_x;int_x<=start_x+12;int_x++){
             generated_tiles[int_x][int_y].type=TILE_TYPE_FLOOR;
         }
     }
 
-    ///flood_fill_caves(start_x-5,start_y-5);
+    for(int i=0;i<(generated_level_x*generated_level_y)/100.0;i++){
+        for(short int_y=0;int_y<generated_level_y;int_y++){
+            for(short int_x=0;int_x<generated_level_x;int_x++){
+                if(!tiles_check[int_x][int_y] && generated_tiles[int_x][int_y].type==TILE_TYPE_FLOOR){
+                    if(random_range(0,99)<35){
+                        tiles_check[int_x][int_y]=true;
+                    }
+
+                    short direction=random_range(LEFT,DOWN);
+
+                    int length=random_range(1,1);
+
+                    int x=int_x;
+                    int y=int_y;
+
+                    if(direction==LEFT){
+                        x--;
+                    }
+                    else if(direction==UP){
+                        y--;
+                    }
+                    else if(direction==RIGHT){
+                        x++;
+                    }
+                    else if(direction==DOWN){
+                        y++;
+                    }
+
+                    if(x>=0 && x<=generated_level_x-1 && y>=0 && y<=generated_level_y-1){
+                        generated_tiles[x][y].type=TILE_TYPE_FLOOR;
+                    }
+                }
+            }
+        }
+    }
 }
 
 void Game::level_theme_big_room(){
@@ -362,10 +373,10 @@ void Game::generate_level(){
     if(random<75){
         level_theme=random_range(LEVEL_THEME_ALL_RECTANGLES,LEVEL_THEME_RECTANGLES_AND_CIRCLES);
     }
-    else if(random>=75 && random<95){
+    else if(random>=75 && random<99){
         level_theme=LEVEL_THEME_CAVE;
     }
-    else if(random>=95 && random<100){
+    else if(random>=99 && random<100){
         level_theme=LEVEL_THEME_BIG_ROOM;
     }
 

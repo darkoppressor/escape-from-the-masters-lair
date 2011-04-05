@@ -402,7 +402,7 @@ void Creature::die(short cause_of_death,string killer,string killer_item){
 
         player.save_game_log_entry(cause_of_death,killer,killer_item);
 
-        player.current_window=WINDOW_DEATH;
+        player.current_window=WINDOW_DEATH_1;
     }
     else{
         if(cause_of_death==CAUSE_OF_DEATH_MELEE){

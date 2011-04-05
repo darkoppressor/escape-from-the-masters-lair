@@ -239,7 +239,7 @@ void render(int frame_rate, double ms_per_frame){
     glClear(GL_COLOR_BUFFER_BIT);
 
     if(player.game_in_progress){
-        if(player.current_window==WINDOW_NONE){
+        if(player.current_window==WINDOW_NONE || player.current_window==WINDOW_DEATH_1){
             //Used to keep track of what spaces have something rendered on them this frame.
             vector< vector<bool> > tile_rendered;
             tile_rendered.resize(vector_levels[current_level].level_x,vector<bool>(vector_levels[current_level].level_y));

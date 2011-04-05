@@ -135,6 +135,7 @@ class Player: public Creature{
     void handle_input_interactive_inventory_all();
     void handle_input_item_info();
     void handle_input_death();
+    void handle_input_death_1();
 
     //Render the windows.
     void render_no_game();

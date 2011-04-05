@@ -502,6 +502,13 @@ void Player::handle_input_death(){
     }
 }
 
+void Player::handle_input_death_1(){
+    //Display the death window.
+    if(event.key.keysym.sym==SDLK_SPACE){
+        current_window=WINDOW_DEATH;
+    }
+}
+
 void Player::render_no_game(){
     //If no player name has yet been entered.
     if(name=="\x1F"){
