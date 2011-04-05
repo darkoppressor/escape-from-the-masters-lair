@@ -391,6 +391,12 @@ color_data color_name_to_doubles(short color_number){
     case COLOR_FROST:
         new_color=color_shorts_to_doubles(176,224,230);
         break;
+    case COLOR_BLOOD:
+        new_color=color_shorts_to_doubles(203,65,11);
+        break;
+    case COLOR_BLOOD_DRIED:
+        new_color=color_shorts_to_doubles(203,100,59);
+        break;
 
     }
 

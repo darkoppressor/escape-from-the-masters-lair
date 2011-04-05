@@ -23,6 +23,12 @@ string Item::return_save_data(){
     save<<color<<"\n";
     save<<weight<<"\n";
 
+    save<<coverings.size()<<"\n";
+    for(int n=0;n<coverings.size();n++){
+        save<<coverings[n].type<<"\n";
+        save<<coverings[n].age<<"\n";
+    }
+
     save<<owner<<"\n";
 
     save<<light_on<<"\n";
@@ -122,6 +128,25 @@ void Item::load_data(stringstream* load){
     getline(*load,line);
     weight=atof(line.c_str());
 
+    int coverings_size=0;
+
+    getline(*load,line);
+    coverings_size=atoi(line.c_str());
+
+    for(int n=0;n<coverings_size;n++){
+        int number=0;
+
+        getline(*load,line);
+        number=atoi(line.c_str());
+
+        coverings.push_back(Covering(number));
+
+        getline(*load,line);
+        number=atoi(line.c_str());
+
+        coverings[n].age=number;
+    }
+
     getline(*load,line);
     owner=atoi(line.c_str());
 
@@ -199,7 +224,6 @@ void Item::load_data(stringstream* load){
     fov_angle=atof(line.c_str());
 
     int effects_size=0;
-    effects.clear();
 
     getline(*load,line);
     effects_size=atoi(line.c_str());

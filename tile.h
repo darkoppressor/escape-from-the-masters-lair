@@ -11,10 +11,6 @@
 class Tile: public Object{
     private:
     public:
-    Tile();
-
-    //Render the tile to the screen.
-    void render(std::vector< std::vector<bool> >* tile_rendered);
 
     //The actual physical type of the tile.
     //In other words, what the tile IS.
@@ -24,8 +20,13 @@ class Tile: public Object{
     //In other words, what the tile is MADE OF.
     short material;
 
-    //
-    short covering;
+    Tile();
+
+    //Render the tile to the screen.
+    void render(std::vector< std::vector<bool> >* tile_rendered);
+
+    //Handle anything that needs handling on each game turn.
+    void process_turn();
 };
 
 #endif

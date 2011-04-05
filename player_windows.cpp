@@ -8,6 +8,7 @@
 #include "material_properties.h"
 #include "version.h"
 #include "player_starting_gold.h"
+#include "covering_conversions.h"
 
 using namespace std;
 using namespace boost::algorithm;
@@ -1239,6 +1240,7 @@ void Player::render_inventory(bool all_categories){
 
                 if(inventory[i].category==n && inventory[i].inventory_letter!='$'){
                     string str_dye="";
+                    string str_coverings="";
 
                     render_color=inventory[i].color;
 
@@ -1249,6 +1251,24 @@ void Player::render_inventory(bool all_categories){
                         str_dye=" (dyed ";
                         str_dye+=color_to_string(inventory[i].dye);
                         str_dye+=")";
+                    }
+
+                    //If the item has something covering it.
+                    if(inventory[i].coverings.size()>0){
+                        str_coverings=" (covered in ";
+                        for(int j=COVERING_ICE;j<COVERING_BLOOD_DRIED+1;j++){
+                            if(inventory[i].has_covering(j)){
+                                str_coverings+=covering_to_string(j);
+                                str_coverings+=", ";
+                            }
+                        }
+                        erase_tail(str_coverings,2);
+                        str_coverings+=")";
+                    }
+
+                    short temp_color=coverings_to_color(&inventory[i]);
+                    if(temp_color!=COLOR_RAINBOW){
+                        render_color=temp_color;
                     }
 
                     string item_amount_prefix="";
@@ -1360,7 +1380,7 @@ void Player::render_inventory(bool all_categories){
                         }
                     }
 
-                    ss.clear();ss.str("");ss<<" ";ss<<inventory[i].inventory_letter;ss<<" - ";ss<<item_amount_prefix;ss<<inventory[i].return_full_name();ss<<str_item;ss<<str_dye;ss<<"\xA";msg=ss.str();
+                    ss.clear();ss.str("");ss<<" ";ss<<inventory[i].inventory_letter;ss<<" - ";ss<<item_amount_prefix;ss<<inventory[i].return_full_name();ss<<str_item;ss<<str_dye;ss<<str_coverings;ss<<"\xA";msg=ss.str();
 
                     font_small.show(5+column*column_width,font_small.spacing_y*2+2+font_small.spacing_y*lines_rendered++,msg,render_color);
                 }

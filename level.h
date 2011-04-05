@@ -26,6 +26,8 @@ class Level{
     //Returns the absolute (i.e., not in terms of tiles, but of pixels) y dimension of the level.
     double return_absolute_y();
 
+    void draw_circle_covering(short center_x,short center_y,short max_radius,short covering_type,int covering_chance=100);
+
     //The dimensions of the level map, in tiles.
     short level_x,level_y;
 

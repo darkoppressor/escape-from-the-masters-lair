@@ -149,12 +149,17 @@
 			<Add option="-static-libstdc++" />
 		</Linker>
 		<Unit filename="MersenneTwister.h" />
+		<Unit filename="age_limits.h" />
 		<Unit filename="ai.h" />
 		<Unit filename="ai_keys.h" />
 		<Unit filename="collision.cpp" />
 		<Unit filename="collision.h" />
 		<Unit filename="combat_all.cpp" />
 		<Unit filename="combat_all.h" />
+		<Unit filename="covering.cpp" />
+		<Unit filename="covering.h" />
+		<Unit filename="covering_conversions.cpp" />
+		<Unit filename="covering_conversions.h" />
 		<Unit filename="creature.cpp" />
 		<Unit filename="creature.h" />
 		<Unit filename="creature_alchemy.cpp" />

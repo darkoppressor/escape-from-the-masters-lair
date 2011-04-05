@@ -5,6 +5,8 @@
 #include "world.h"
 #include "message_log.h"
 #include "material_properties.h"
+#include "age_limits.h"
+#include "covering_conversions.h"
 
 using namespace std;
 
@@ -346,6 +348,13 @@ void Item::move(){
 }
 
 void Item::process_turn(){
+    for(int i=0;i<coverings.size();i++){
+        if(!coverings[i].process_turn()){
+            coverings.erase(coverings.begin()+i);
+            i--;
+        }
+    }
+
     //If the item has a light radius.
     if(fov_radius!=LIGHT_NONE){
         //If the light item is on.
@@ -380,7 +389,7 @@ void Item::process_turn(){
         age++;
 
         //If the corpse reaches its decay age.
-        if(age>=100){
+        if(age>=AGE_CORPSE_DECAY){
             //The corpse becomes a skeleton.
 
             //Create a temporary skeleton item.
@@ -504,6 +513,11 @@ void Item::render(vector< vector<bool> >* tile_rendered){
                 //If the item is dyed.
                 if(dye!=0){
                     render_color=dye;
+                }
+
+                short temp_color=coverings_to_color(this);
+                if(temp_color!=COLOR_RAINBOW){
+                    render_color=temp_color;
                 }
 
                 font.show((int)(return_absolute_x()-player.camera_x),(int)(return_absolute_y()-player.camera_y),appearance,render_color);

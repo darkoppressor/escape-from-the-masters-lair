@@ -355,11 +355,6 @@ void Monster::move(){
 
         process_move();
 
-        //Process the inventory items' turn stuff.
-        for(int i=0;i<inventory.size();i++){
-            inventory[i].process_turn();
-        }
-
         ///update_fov();
     }
 }

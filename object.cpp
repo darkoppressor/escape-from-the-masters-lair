@@ -37,3 +37,13 @@ bool Object::object_nearby(short object_x,short object_y,int range){
 
     return false;
 }
+
+bool Object::has_covering(short covering){
+    for(int i=0;i<coverings.size();i++){
+        if(coverings[i].type==covering){
+            return true;
+        }
+    }
+
+    return false;
+}

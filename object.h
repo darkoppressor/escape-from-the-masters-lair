@@ -4,7 +4,10 @@
 #ifndef object_h
 #define object_h
 
+#include "covering.h"
+
 #include <string>
+#include <vector>
 #include <stdint.h>
 
 //An object is anything that is going to be rendered in the world. This means the tiles, the items, and even the player and npcs.
@@ -27,6 +30,10 @@ class Object{
     //Returns false if the object is farther away.
     bool object_nearby(short object_x,short object_y,int range);
 
+    //Returns true if the passed covering is on the object.
+    //Returns false if the passed covering is not on the object.
+    bool has_covering(short covering);
+
     //The current coordinates of the object, in tiles.
     short x,y;
 
@@ -41,6 +48,9 @@ class Object{
 
     //The weight of the object.
     double weight;
+
+    //The coverings on this object.
+    std::vector<Covering> coverings;
 };
 
 #endif

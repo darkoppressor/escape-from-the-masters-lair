@@ -9,6 +9,7 @@
 #include "save_load.h"
 #include "message_log.h"
 #include "player_starting_gold.h"
+#include "covering_conversions.h"
 
 using namespace std;
 
@@ -767,11 +768,6 @@ void Player::move(){
 
         process_move();
 
-        //Process the inventory items' turn stuff.
-        for(int i=0;i<inventory.size();i++){
-            inventory[i].process_turn();
-        }
-
         update_fov();
     }
 }
@@ -955,7 +951,14 @@ void Player::render(vector< vector<bool> >* tile_rendered){
         if(!tile_rendered->at(x)[y]){
             //Render the player if the player is in the camera bounds:
             if(return_absolute_x()>=camera_x-TILE_SIZE_X && return_absolute_x()<=camera_x+camera_w && return_absolute_y()>=camera_y-TILE_SIZE_Y && return_absolute_y()<=camera_y+camera_h){
-                font.show((int)(return_absolute_x()-camera_x),(int)(return_absolute_y()-camera_y),appearance,color);
+                short render_color=color;
+
+                short temp_color=coverings_to_color(this);
+                if(temp_color!=COLOR_RAINBOW){
+                    render_color=temp_color;
+                }
+
+                font.show((int)(return_absolute_x()-camera_x),(int)(return_absolute_y()-camera_y),appearance,render_color);
 
                 if(player.option_healthbars){
                     short health_bar_color=COLOR_GREEN;

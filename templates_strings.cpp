@@ -448,6 +448,12 @@ short Templates::string_to_color(string line){
     else if(line=="frost"){
         color=COLOR_FROST;
     }
+    else if(line=="blood"){
+        color=COLOR_BLOOD;
+    }
+    else if(line=="dried blood"){
+        color=COLOR_BLOOD_DRIED;
+    }
 
     return color;
 }

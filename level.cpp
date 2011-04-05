@@ -28,6 +28,164 @@ double Level::return_absolute_y(){
     return level_y*TILE_SIZE_Y;
 }
 
+void Level::draw_circle_covering(short center_x,short center_y,short max_radius,short covering_type,int covering_chance){
+    short radius=0;
+
+    for(;radius<max_radius;radius++){
+        short offset=1;
+        short x=0;
+        short y=radius-offset;
+
+        short diameter=3-2*(radius-offset);
+
+        while(y>=x){
+            if(center_x+x>=0 && center_x+x<=level_x-1 && center_y+y>=0 && center_y+y<=level_y-1){
+                if(tiles[center_x+x][center_y+y].type!=TILE_TYPE_LIQUID && tiles[center_x+x][center_y+y].type!=TILE_TYPE_FOUNTAIN){
+                    if(random_range(0,99)<covering_chance){
+                        tiles[center_x+x][center_y+y].coverings.push_back(covering_type);
+                    }
+                    for(int i=0;i<items.size();i++){
+                        if(items[i].x==center_x+x && items[i].y==center_y+y){
+                            if(random_range(0,99)<covering_chance){
+                                items[i].coverings.push_back(covering_type);
+                            }
+                        }
+                    }
+                }
+            }
+            if(center_x-x>=0 && center_x-x<=level_x-1 && center_y+y>=0 && center_y+y<=level_y-1){
+                if(tiles[center_x-x][center_y+y].type!=TILE_TYPE_LIQUID && tiles[center_x-x][center_y+y].type!=TILE_TYPE_FOUNTAIN){
+                    if(random_range(0,99)<covering_chance){
+                        tiles[center_x-x][center_y+y].coverings.push_back(covering_type);
+                    }
+                    for(int i=0;i<items.size();i++){
+                        if(items[i].x==center_x-x && items[i].y==center_y+y){
+                            if(random_range(0,99)<covering_chance){
+                                items[i].coverings.push_back(covering_type);
+                            }
+                        }
+                    }
+                }
+            }
+            if(center_x+x>=0 && center_x+x<=level_x-1 && center_y-y>=0 && center_y-y<=level_y-1){
+                if(tiles[center_x+x][center_y-y].type!=TILE_TYPE_LIQUID && tiles[center_x+x][center_y-y].type!=TILE_TYPE_FOUNTAIN){
+                    if(random_range(0,99)<covering_chance){
+                        tiles[center_x+x][center_y-y].coverings.push_back(covering_type);
+                    }
+                    for(int i=0;i<items.size();i++){
+                        if(items[i].x==center_x+x && items[i].y==center_y-y){
+                            if(random_range(0,99)<covering_chance){
+                                items[i].coverings.push_back(covering_type);
+                            }
+                        }
+                    }
+                }
+            }
+            if(center_x-x>=0 && center_x-x<=level_x-1 && center_y-y>=0 && center_y-y<=level_y-1){
+                if(tiles[center_x-x][center_y-y].type!=TILE_TYPE_LIQUID && tiles[center_x-x][center_y-y].type!=TILE_TYPE_FOUNTAIN){
+                    if(random_range(0,99)<covering_chance){
+                        tiles[center_x-x][center_y-y].coverings.push_back(covering_type);
+                    }
+                    for(int i=0;i<items.size();i++){
+                        if(items[i].x==center_x-x && items[i].y==center_y-y){
+                            if(random_range(0,99)<covering_chance){
+                                items[i].coverings.push_back(covering_type);
+                            }
+                        }
+                    }
+                }
+            }
+
+            if(center_x+y>=0 && center_x+y<=level_x-1 && center_y+x>=0 && center_y+x<=level_y-1){
+                if(tiles[center_x+y][center_y+x].type!=TILE_TYPE_LIQUID && tiles[center_x+y][center_y+x].type!=TILE_TYPE_FOUNTAIN){
+                    if(random_range(0,99)<covering_chance){
+                        tiles[center_x+y][center_y+x].coverings.push_back(covering_type);
+                    }
+                    for(int i=0;i<items.size();i++){
+                        if(items[i].x==center_x+y && items[i].y==center_y+x){
+                            if(random_range(0,99)<covering_chance){
+                                items[i].coverings.push_back(covering_type);
+                            }
+                        }
+                    }
+                }
+            }
+            if(center_x-y>=0 && center_x-y<=level_x-1 && center_y+x>=0 && center_y+x<=level_y-1){
+                if(tiles[center_x-y][center_y+x].type!=TILE_TYPE_LIQUID && tiles[center_x-y][center_y+x].type!=TILE_TYPE_FOUNTAIN){
+                    if(random_range(0,99)<covering_chance){
+                        tiles[center_x-y][center_y+x].coverings.push_back(covering_type);
+                    }
+                    for(int i=0;i<items.size();i++){
+                        if(items[i].x==center_x-y && items[i].y==center_y+x){
+                            if(random_range(0,99)<covering_chance){
+                                items[i].coverings.push_back(covering_type);
+                            }
+                        }
+                    }
+                }
+            }
+            if(center_x+y>=0 && center_x+y<=level_x-1 && center_y-x>=0 && center_y-x<=level_y-1){
+                if(tiles[center_x+y][center_y-x].type!=TILE_TYPE_LIQUID && tiles[center_x+y][center_y-x].type!=TILE_TYPE_FOUNTAIN){
+                    if(random_range(0,99)<covering_chance){
+                        tiles[center_x+y][center_y-x].coverings.push_back(covering_type);
+                    }
+                    for(int i=0;i<items.size();i++){
+                        if(items[i].x==center_x+y && items[i].y==center_y-x){
+                            if(random_range(0,99)<covering_chance){
+                                items[i].coverings.push_back(covering_type);
+                            }
+                        }
+                    }
+                }
+            }
+            if(center_x-y>=0 && center_x-y<=level_x-1 && center_y-x>=0 && center_y-x<=level_y-1){
+                if(tiles[center_x-y][center_y-x].type!=TILE_TYPE_LIQUID && tiles[center_x-y][center_y-x].type!=TILE_TYPE_FOUNTAIN){
+                    if(random_range(0,99)<covering_chance){
+                        tiles[center_x-y][center_y-x].coverings.push_back(covering_type);
+                    }
+                    for(int i=0;i<items.size();i++){
+                        if(items[i].x==center_x-y && items[i].y==center_y-x){
+                            if(random_range(0,99)<covering_chance){
+                                items[i].coverings.push_back(covering_type);
+                            }
+                        }
+                    }
+                }
+            }
+
+            if(diameter<0){
+                diameter+=4*x+6;
+            }
+            else{
+                diameter+=4*(x-y)+10;
+                y--;
+            }
+            x++;
+        }
+
+        for(short fill_y=center_y-radius;fill_y<center_y+radius;fill_y++){
+            for(short fill_x=center_x-radius;fill_x<center_x+radius;fill_x++){
+                if(fill_x>0 && fill_x<level_x-1 && fill_y>0 && fill_y<level_y-1){
+                    if(tiles[fill_x-1][fill_y].has_covering(covering_type) && tiles[fill_x+1][fill_y].has_covering(covering_type) && tiles[fill_x][fill_y-1].has_covering(covering_type) && tiles[fill_x][fill_y+1].has_covering(covering_type)){
+                        if(tiles[fill_x][fill_y].type!=TILE_TYPE_LIQUID && tiles[fill_x][fill_y].type!=TILE_TYPE_FOUNTAIN){
+                            if(random_range(0,99)<covering_chance){
+                                tiles[fill_x][fill_y].coverings.push_back(covering_type);
+                            }
+                            for(int i=0;i<items.size();i++){
+                                if(items[i].x==fill_x && items[i].y==fill_y){
+                                    if(random_range(0,99)<covering_chance){
+                                        items[i].coverings.push_back(covering_type);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 bool Level::onMap(unsigned short x, unsigned short y){
 	return (x<level_x && y<level_y);
 }

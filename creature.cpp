@@ -230,7 +230,17 @@ inventory_match Creature::check_for_inventory_match(Item* item_to_check){
     for(int i=0;i<inventory.size();i++){
         ///I might later need to modify what constitutes a match.
         ///I definitely need to add in effects matching eventually.
-        if(inventory[i].name==item_to_check->name && inventory[i].plural_name==item_to_check->plural_name && inventory[i].color==item_to_check->color &&
+
+        bool matching_coverings=true;
+
+        for(int n=COVERING_ICE;n<COVERING_BLOOD_DRIED+1;n++){
+            if(inventory[i].has_covering(n)!=item_to_check->has_covering(n)){
+                matching_coverings=false;
+                break;
+            }
+        }
+
+        if(matching_coverings && inventory[i].name==item_to_check->name && inventory[i].plural_name==item_to_check->plural_name && inventory[i].color==item_to_check->color &&
            inventory[i].appearance==item_to_check->appearance && inventory[i].weight==item_to_check->weight && inventory[i].race==item_to_check->race &&
            inventory[i].dye==item_to_check->dye && inventory[i].writing==item_to_check->writing && inventory[i].category==item_to_check->category &&
            inventory[i].material==item_to_check->material && inventory[i].weapon_category==item_to_check->weapon_category && inventory[i].armor_category==item_to_check->armor_category){
@@ -289,8 +299,20 @@ void Creature::return_inventory_letter(char returning_letter){
 }
 
 void Creature::process_turn(){
-    //Look through all the items.
+    for(int i=0;i<coverings.size();i++){
+        if(!coverings[i].process_turn()){
+            coverings.erase(coverings.begin()+i);
+            i--;
+        }
+    }
+
+    //Process the inventory items' turn stuff.
     for(int i=0;i<inventory.size();i++){
+        inventory[i].process_turn();
+    }
+
+    //Look through all the items.
+    /**for(int i=0;i<inventory.size();i++){
         //If the item has a light radius.
         if(inventory[i].fov_radius!=LIGHT_NONE){
             //If the light item is on.
@@ -327,7 +349,7 @@ void Creature::process_turn(){
                 }
             }
         }
-    }
+    }*/
 
     if(rc_regain_mana()){
         int mana_regen=1;

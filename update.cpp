@@ -39,6 +39,13 @@ void turn(){
         vector_levels[current_level].items[i].process_turn();
     }
 
+    //Process the tiles' turn stuff.
+    for(int x=0;x<vector_levels[current_level].level_x;x++){
+        for(int y=0;y<vector_levels[current_level].level_y;y++){
+            vector_levels[current_level].tiles[x][y].process_turn();
+        }
+    }
+
     bool player_moved=false;
 
     //As long as the player has not moved.
@@ -161,6 +168,17 @@ void events(){
 
             //Assign an identifier to the new item.
             vector_levels[current_level].items[vector_levels[current_level].items.size()-1].assign_identifier();
+
+            //Add blood around this creature's current tile.
+            if(random_range(0,99)<75){
+                ///Maybe this should be based on the creature's size.
+                if(random_range(0,99)<30){
+                    vector_levels[current_level].draw_circle_covering(vector_levels[current_level].monsters[i].x,vector_levels[current_level].monsters[i].y,random_range(4,5),COVERING_BLOOD_LOTS,60);
+                }
+                else{
+                    vector_levels[current_level].draw_circle_covering(vector_levels[current_level].monsters[i].x,vector_levels[current_level].monsters[i].y,random_range(3,4),COVERING_BLOOD_LITTLE,60);
+                }
+            }
 
             //Remove the monster from the game.
 

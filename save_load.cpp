@@ -102,7 +102,13 @@ void save_game(){
                 save<<vector_levels[i].tiles[x][y].y<<"\n";
                 save<<vector_levels[i].tiles[x][y].type<<"\n";
                 save<<vector_levels[i].tiles[x][y].material<<"\n";
-                save<<vector_levels[i].tiles[x][y].covering<<"\n";
+
+                save<<vector_levels[i].tiles[x][y].coverings.size()<<"\n";
+
+                for(int n=0;n<vector_levels[i].tiles[x][y].coverings.size();n++){
+                    save<<vector_levels[i].tiles[x][y].coverings[n].type<<"\n";
+                    save<<vector_levels[i].tiles[x][y].coverings[n].age<<"\n";
+                }
             }
         }
 
@@ -300,8 +306,24 @@ void load_game(){
                     getline(load,line);
                     vector_levels[i].tiles[x][y].material=atoi(line.c_str());
 
+                    int coverings_size=0;
+
                     getline(load,line);
-                    vector_levels[i].tiles[x][y].covering=atoi(line.c_str());
+                    coverings_size=atoi(line.c_str());
+
+                    for(int n=0;n<coverings_size;n++){
+                        int number=0;
+
+                        getline(load,line);
+                        number=atoi(line.c_str());
+
+                        vector_levels[i].tiles[x][y].coverings.push_back(Covering(number));
+
+                        getline(load,line);
+                        number=atoi(line.c_str());
+
+                        vector_levels[i].tiles[x][y].coverings[n].age=number;
+                    }
                 }
             }
 

@@ -88,7 +88,9 @@ enum{
     //Covering colors//
 
     COLOR_ICE,
-    COLOR_FROST
+    COLOR_FROST,
+    COLOR_BLOOD,
+    COLOR_BLOOD_DRIED
 };
 
 //******//
@@ -160,7 +162,6 @@ enum{
 //************//
 
 enum{
-    COVERING_NONE,
     COVERING_ICE,
     COVERING_BLOOD_LOTS,
     COVERING_BLOOD_LITTLE,
