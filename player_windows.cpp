@@ -312,9 +312,9 @@ void Player::handle_input_get_starting_items(){
                         //Determine the monetary value of the item.
                         int item_value=0;
 
-                        item_template this_item_template=return_item_template(available_starting_items[i]);
+                        item_template_data item_template=return_item_template(available_starting_items[i]);
 
-                        item_value=templates.template_items[this_item_template.item_category][this_item_template.item_index].monetary_value;
+                        item_value=templates.template_items[item_template.category][item_template.index].monetary_value;
 
                         //Remove the purchased item.
                         starting_items.erase(starting_items.begin()+n);
@@ -333,9 +333,9 @@ void Player::handle_input_get_starting_items(){
                     //Determine the monetary value of the item.
                     int item_value=0;
 
-                    item_template this_item_template=return_item_template(available_starting_items[i]);
+                    item_template_data item_template=return_item_template(available_starting_items[i]);
 
-                    item_value=templates.template_items[this_item_template.item_category][this_item_template.item_index].monetary_value;
+                    item_value=templates.template_items[item_template.category][item_template.index].monetary_value;
 
                     //If the player can afford to purchase this item.
                     if(item_value<starting_items_gold){
@@ -883,9 +883,9 @@ void Player::render_get_starting_items(){
         //Determine the monetary value of the item.
         int item_value=0;
 
-        item_template this_item_template=return_item_template(available_starting_items[i]);
+        item_template_data item_template=return_item_template(available_starting_items[i]);
 
-        item_value=templates.template_items[this_item_template.item_category][this_item_template.item_index].monetary_value;
+        item_value=templates.template_items[item_template.category][item_template.index].monetary_value;
 
         ss.clear();ss.str("");ss<<(char)letter;ss<<purchased;ss<<available_starting_items[i];ss<<" (cost: ";ss<<item_value;ss<<")";ss<<"\xA";msg=ss.str();
 
@@ -1054,7 +1054,7 @@ void Player::render_death(){
     ss.clear();ss.str("");ss<<"in the Lair of Loathing, it being an office of record, do hereby certify that the records in my";msg=ss.str();
     font_small.show(50,95+font.spacing_y+font_small.spacing_y,msg,COLOR_WHITE);
 
-    ss.clear();ss.str("");ss<<"office show that ";ss<<name;ss<<" died at ";ss<<end_time;ss<<" on dungeon level ";ss<<current_level+1;ss<<", having reached";msg=ss.str();
+    ss.clear();ss.str("");ss<<"office show that ";ss<<name;ss<<" died at ";ss<<end_time;ss<<" on dungeon level ";ss<<current_level+1;ss<<", having reached, at the highest,";msg=ss.str();
     font_small.show(50,95+font.spacing_y+font_small.spacing_y*2,msg,COLOR_WHITE);
 
     ss.clear();ss.str("");ss<<"dungeon level ";ss<<max_level+1;ss<<", on ";ss<<end_date;ss<<".";msg=ss.str();

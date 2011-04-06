@@ -4,7 +4,7 @@
 
 //This needs to be the first other item.
 <item category:other>
-	<DON'T SPAWN>
+	<DO NOT SPAWN>
 	name:skeleton
 	plural name:skeletons
 	writing:
@@ -27,6 +27,18 @@
 	size:0.00055
 	color:gold
 	material:gold
+</item>
+
+<item category:other>
+	<DO NOT SPAWN>
+	name:Runestone
+	plural name:Runestones
+	writing:
+	appearance:*
+	stackable:0
+	size:1.0
+	color:stone
+	material:stone
 </item>
 
 <item category:other>

@@ -20,9 +20,9 @@ struct inventory_match{
 };
 
 //Holds data referring to a specific item template.
-struct item_template{
-    int item_category;
-    int item_index;
+struct item_template_data{
+    int category;
+    int index;
 };
 
 class Creature: public Object{
@@ -150,8 +150,8 @@ class Creature: public Object{
     //Returns false if the item was not added to inventory.
     bool give_item(std::string item_name,int stack_size=1,char force_inventory_letter=-1);
 
-    //
-    item_template return_item_template(std::string item_name);
+    //Returns the template category and index of the item with passed name.
+    item_template_data return_item_template(std::string item_name);
 
     //Assign an identifier to the creature.
     void assign_identifier();

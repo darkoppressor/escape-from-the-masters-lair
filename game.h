@@ -19,6 +19,8 @@ class Game{
     //Background music will be loaded into this variable.
     Mix_Music *music;
 
+    short generated_level_x,generated_level_y;
+
     short level_variations[LEVEL_VARIATION_LAVA+1];
 
     short generated_temperature;
@@ -41,6 +43,9 @@ class Game{
     //Available identifiers for objects.
     //0 is reserved to mean "no identifier assigned."
     std::vector< std::vector<uint32_t> > identifiers;
+
+    //The levels with guaranteed runes.
+    int guaranteed_rune_levels[3];
 
     //The default constructor. It does not currently do anything.
     Game();
@@ -97,8 +102,6 @@ class Game{
     //If the level already exists when the player goes there, only this is run.
     //If the level must first be generated, generate_level() is run, and then change_level().
     void change_level(short direction);
-
-    short generated_level_x,generated_level_y;
 };
 
 #endif

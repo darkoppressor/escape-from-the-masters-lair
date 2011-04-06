@@ -861,7 +861,7 @@ void Templates::load_template_item(short category){
 
         //The item data name strings used in the file.
 
-        string spawnable="<DON'T SPAWN>";
+        string spawnable="<DO NOT SPAWN>";
         string name="name:";
         string plural_name="plural name:";
         string writing="writing:";

@@ -178,25 +178,25 @@ bool Creature::give_item(string item_name,int stack_size,char force_inventory_le
     return false;
 }
 
-item_template Creature::return_item_template(string item_name){
-    item_template item_stuff;
+item_template_data Creature::return_item_template(string item_name){
+    item_template_data item_template;
 
-    item_stuff.item_category=-1;
-    item_stuff.item_index=-1;
+    item_template.category=-1;
+    item_template.index=-1;
 
     bool item_found=false;
 
     for(int i=0;i<templates.template_items.size() && !item_found;i++){
         for(int n=0;n<templates.template_items[i].size() && !item_found;n++){
             if(templates.template_items[i][n].name==item_name){
-                item_stuff.item_category=i;
-                item_stuff.item_index=n;
+                item_template.category=i;
+                item_template.index=n;
                 item_found=true;
             }
         }
     }
 
-    return item_stuff;
+    return item_template;
 }
 
 void Creature::assign_identifier(){

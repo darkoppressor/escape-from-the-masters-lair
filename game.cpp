@@ -26,6 +26,10 @@ Game::Game(){
     generated_temperature=TEMP_ROOM_TEMPERATURE;
 
     level_theme=LEVEL_THEME_RECTANGLES_AND_CIRCLES;
+
+    guaranteed_rune_levels[0]=-1;
+    guaranteed_rune_levels[1]=-1;
+    guaranteed_rune_levels[2]=-1;
 }
 
 Game::~Game(){
@@ -95,6 +99,17 @@ void Game::new_game(){
 
     player.set_inventory();
 
+    //Determine the guaranteed rune levels.
+    for(int i=0;i<3;i++){
+        while(guaranteed_rune_levels[i]==-1){
+            int random_level=random_range(0,DUNGEON_DEPTH-1);
+
+            if(guaranteed_rune_levels[0]!=random_level && guaranteed_rune_levels[1]!=random_level && guaranteed_rune_levels[2]!=random_level){
+                guaranteed_rune_levels[i]=random_level;
+            }
+        }
+    }
+
     //Generate all but the deepest level.
     for(int i=0;i<DUNGEON_DEPTH-1;i++){
         generate_level();
@@ -103,8 +118,7 @@ void Game::new_game(){
     //Generate the deepest level.
     generate_level(true);
 
-    ///current_level=DUNGEON_DEPTH-1;
-    current_level=0;
+    current_level=DUNGEON_DEPTH-1;
     max_level=current_level;
     change_level(NONE);
 

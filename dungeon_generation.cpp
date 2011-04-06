@@ -345,7 +345,7 @@ void Game::generate_level(bool deepest_level){
         }
     }
 
-    if(random_range(0,99)<10){
+    if(!level_variations[LEVEL_VARIATION_LAVA] && random_range(0,99)<2){
         if(random_range(0,99)<75){
             level_variations[LEVEL_VARIATION_FROZEN]=true;
         }
@@ -355,17 +355,16 @@ void Game::generate_level(bool deepest_level){
     }
 
     //Determine the level's starting temperature.
+    generated_temperature=TEMP_ROOM_TEMPERATURE;
+
     if(level_variations[LEVEL_VARIATION_FROZEN]){
         generated_temperature=TEMP_FREEZING;
     }
-    else if(level_variations[LEVEL_VARIATION_ICY]){
+    if(level_variations[LEVEL_VARIATION_ICY]){
         generated_temperature=TEMP_ABSOLUTE_ZERO;
     }
-    else if(level_variations[LEVEL_VARIATION_LAVA]){
+    if(level_variations[LEVEL_VARIATION_LAVA]){
         generated_temperature=TEMP_BOILING;
-    }
-    else{
-        generated_temperature=TEMP_ROOM_TEMPERATURE;
     }
 
     int random=random_range(0,99);
@@ -688,17 +687,47 @@ void Game::generate_level(bool deepest_level){
 
     //Add the items.
 
+    //Add the rune, if any.
+    if(guaranteed_rune_levels[0]==vector_levels.size() || guaranteed_rune_levels[1]==vector_levels.size() || guaranteed_rune_levels[2]==vector_levels.size() || random_range(0,99)<5){
+        while(true){
+            //Choose a random location in the level.
+            short x=random_range(0,generated_level_x-1);
+            short y=random_range(0,generated_level_y-1);
+
+            item_template_data item_template=player.return_item_template("Runestone");
+
+            //If the tile at the random position is an appropriate tile for an item.
+            if(generated_tiles[x][y].type==TILE_TYPE_FLOOR){
+                //Generate the item.
+                generated_items.push_back(Item());
+
+                //Assign an identifier to the item.
+                generated_items[generated_items.size()-1].assign_identifier();
+
+                //Apply the selected template to the item.
+                generated_items[generated_items.size()-1]=templates.template_items[item_template.category][item_template.index];
+
+                //Run the item's setup function.
+                generated_items[generated_items.size()-1].setup();
+
+                //Set the newly generated item's position.
+                generated_items[generated_items.size()-1].x=x;
+                generated_items[generated_items.size()-1].y=y;
+
+                break;
+            }
+        }
+    }
+
     //The maximum number of items.
     int max_items=random_range((generated_level_x*generated_level_y)/500,(generated_level_x*generated_level_y)/250);
     //The maximum number of tries.
     int random_amount_items=random_range((generated_level_x*generated_level_y)/10,(generated_level_x*generated_level_y)/4);
 
-    for(int i=0;i<random_amount_items;i++){
-        short x,y;
-
+    for(int i=0;i<random_amount_items && generated_items.size()<max_items;i++){
         //Choose a random location in the level.
-        x=random_range(0,generated_level_x-1);
-        y=random_range(0,generated_level_y-1);
+        short x=random_range(0,generated_level_x-1);
+        short y=random_range(0,generated_level_y-1);
 
         //Randomly determine the item category.
         ///For now, equal chance for all categories.
@@ -718,9 +747,8 @@ void Game::generate_level(bool deepest_level){
         int random_item_stack=1;
         //If the item is stackable.
         if(templates.template_items[random_item_category][random_item_template].stackable){
-            int stackable=random_range(0,99);
-            if(stackable<10){
-                random_item_stack=random_range(1,3);
+            if(random_range(0,99)<10){
+                random_item_stack=random_range(2,5);
             }
         }
 
@@ -745,11 +773,6 @@ void Game::generate_level(bool deepest_level){
             //Set the newly generated item's position.
             generated_items[generated_items.size()-1].x=x;
             generated_items[generated_items.size()-1].y=y;
-        }
-
-        //If the number of items generated has exceeded the maximum.
-        if(generated_items.size()>max_items){
-            break;
         }
     }
 

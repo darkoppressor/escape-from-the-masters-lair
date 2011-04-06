@@ -60,6 +60,10 @@ void save_game(){
     save<<current_level<<"\n";
     save<<max_level<<"\n";
 
+    for(int i=0;i<3;i++){
+        save<<game.guaranteed_rune_levels[i]<<"\n";
+    }
+
     //*******************//
     // Save player data. //
     //*******************//
@@ -229,6 +233,11 @@ void load_game(){
 
         getline(load,line);
         max_level=atoi(line.c_str());
+
+        for(int i=0;i<3;i++){
+            getline(load,line);
+            game.guaranteed_rune_levels[i]=atoi(line.c_str());
+        }
 
         //*******************//
         // Load player data. //
