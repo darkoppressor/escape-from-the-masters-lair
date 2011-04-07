@@ -63,6 +63,22 @@ void Player::save_game_log_entry(short cause_of_death,string killer,string kille
 
         end_time=buff;
 
+        //Determine whether the player won the game.
+
+        won=false;
+
+        runestones=0;
+
+        for(int i=0;i<inventory.size();i++){
+            if(inventory[i].name=="Runestone"){
+                runestones++;
+            }
+        }
+
+        if(runestones>=3){
+            won=true;
+        }
+
         //Calculate score.
 
         score=0;
@@ -91,7 +107,10 @@ void Player::save_game_log_entry(short cause_of_death,string killer,string kille
             score+=5*skills[i][SKILL_EXPERIENCE_LEVEL];
         }
 
-        ///Double the total score if the player won.
+        //Double the total score if the player won.
+        if(won){
+            score*=2;
+        }
 
         save_log<<"name:"<<name<<"\n";
         save_log<<"version:"<<AutoVersion::MAJOR<<"."<<AutoVersion::MINOR<<"\n";
@@ -146,8 +165,17 @@ void Player::save_game_log_entry(short cause_of_death,string killer,string kille
             death_message="Drowned.";
         }
 
+        //If the player died.
         if(cause_of_death!=CAUSE_OF_DEATH_NONE){
             save_log<<death_message<<"\n";
+        }
+        //If the player escaped but did not win.
+        else if(cause_of_death==CAUSE_OF_DEATH_NONE && !won){
+            save_log<<"Escaped from the Lair."<<"\n";
+        }
+        //If the player escaped and won.
+        else if(cause_of_death==CAUSE_OF_DEATH_NONE && won){
+            save_log<<"Escaped from the Lair with "<<runestones<<" Runestones."<<"\n";
         }
 
         save_log<<"\n\n";

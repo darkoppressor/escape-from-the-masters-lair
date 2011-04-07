@@ -93,6 +93,10 @@ Player::Player(){
     score=0;
     score_from_game=0;
 
+    won=false;
+
+    runestones=0;
+
     //Chat stuff:
 
     chat_mode=false;

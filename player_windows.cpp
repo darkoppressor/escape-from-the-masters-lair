@@ -498,7 +498,7 @@ void Player::handle_input_item_info(){
 
 void Player::handle_input_death(){
     //Close the game.
-    if(event.key.keysym.sym==SDLK_ESCAPE || event.key.keysym.sym==SDLK_SPACE){
+    if(event.key.keysym.sym==SDLK_RETURN || event.key.keysym.sym==SDLK_KP_ENTER){
         quit_game();
     }
 }
@@ -530,7 +530,7 @@ void Player::handle_input_confirm_leave_dungeon(){
 
 void Player::handle_input_leave_dungeon(){
     //Close the game.
-    if(event.key.keysym.sym==SDLK_ESCAPE || event.key.keysym.sym==SDLK_SPACE){
+    if(event.key.keysym.sym==SDLK_RETURN || event.key.keysym.sym==SDLK_KP_ENTER){
         quit_game();
     }
 }
@@ -561,9 +561,16 @@ void Player::render_get_name(){
     ss.clear();ss.str("");ss<<"\xA";msg+=ss.str();
     ss.clear();ss.str("");ss<<"Who are you? ";ss<<get_name;ss<<"\xA";msg+=ss.str();
 
-    font_small.show(0,0,msg,COLOR_WHITE);
+    font_small.show(0,font_small.spacing_y*2,msg,COLOR_WHITE);
 
-    font_small.show(13*font_small.spacing_x+font_small.spacing_x*get_name.length(),font_small.spacing_y*4,"\x7F",COLOR_WHITE,cursor_opacity*0.1);
+    font_small.show(13*font_small.spacing_x+font_small.spacing_x*get_name.length(),font_small.spacing_y*6,"\x7F",COLOR_WHITE,cursor_opacity*0.1);
+
+    if(get_name.length()>0){
+        ss.clear();ss.str("");ss<<"Press [Enter] to continue -->  ";msg=ss.str();
+        font_small.show(main_window.SCREEN_WIDTH-font_small.spacing_x*msg.length(),0,msg,COLOR_WHITE);
+    }
+    ss.clear();ss.str("");ss<<"  <-- Press [Escape] to quit";msg=ss.str();
+    font_small.show(0,0,msg,COLOR_WHITE);
 }
 
 void Player::render_get_race(){
@@ -604,6 +611,13 @@ void Player::render_get_race(){
 
         font_small.show(5+column*column_width,font_small.spacing_y*2+font_small.spacing_y*lines_rendered++,msg,COLOR_WHITE);
     }
+
+    if(get_race.length()>0 && atoi(get_race.c_str())<templates.template_races.size()){
+        ss.clear();ss.str("");ss<<"Press [Enter] to continue -->  ";msg=ss.str();
+        font_small.show(main_window.SCREEN_WIDTH-font_small.spacing_x*msg.length(),0,msg,COLOR_WHITE);
+    }
+    ss.clear();ss.str("");ss<<"  <-- Press [Escape] to go back";msg=ss.str();
+    font_small.show(0,0,msg,COLOR_WHITE);
 }
 
 void Player::render_get_focused_skills(){
@@ -826,6 +840,13 @@ void Player::render_get_focused_skills(){
     ss.clear();ss.str("");ss<<"Summoning Magic";ss<<"\xA";msg+=ss.str();
 
     font_small.show(450,60,msg,COLOR_WHITE);
+
+    if(focused_skills[0]!=-1 && focused_skills[1]!=-1 && focused_skills[2]!=-1){
+        ss.clear();ss.str("");ss<<"Press [Enter] to continue -->  ";msg=ss.str();
+        font_small.show(main_window.SCREEN_WIDTH-font_small.spacing_x*msg.length(),0,msg,COLOR_WHITE);
+    }
+    ss.clear();ss.str("");ss<<"  <-- Press [Escape] to go back";msg=ss.str();
+    font_small.show(0,0,msg,COLOR_WHITE);
 }
 
 void Player::render_get_starting_items(){
@@ -833,7 +854,7 @@ void Player::render_get_starting_items(){
 
     font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2,0,msg,COLOR_WHITE);
 
-    ss.clear();ss.str("");ss<<"You have ";ss<<starting_items_gold;ss<<" gold.";msg=ss.str();
+    ss.clear();ss.str("");ss<<"You have ";ss<<starting_items_gold;ss<<" gold to spend.";msg=ss.str();
 
     font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2,font_small.spacing_y,msg,COLOR_WHITE);
 
@@ -891,6 +912,11 @@ void Player::render_get_starting_items(){
 
         font_small.show(5+column*column_width,font_small.spacing_y*2+font_small.spacing_y*lines_rendered++,msg,COLOR_WHITE);
     }
+
+    ss.clear();ss.str("");ss<<"Press [Enter] to continue -->  ";msg=ss.str();
+    font_small.show(main_window.SCREEN_WIDTH-font_small.spacing_x*msg.length(),0,msg,COLOR_WHITE);
+    ss.clear();ss.str("");ss<<"  <-- Press [Escape] to go back";msg=ss.str();
+    font_small.show(0,0,msg,COLOR_WHITE);
 }
 
 void Player::render_levelup(){
@@ -979,6 +1005,11 @@ void Player::render_levelup(){
     msg+="\xA";
 
     font_small.show(330,60,msg,COLOR_WHITE);
+
+    if(levelup_all_attributes_set()){
+        ss.clear();ss.str("");ss<<"Press [Enter] to continue -->  ";msg=ss.str();
+        font_small.show(main_window.SCREEN_WIDTH-font_small.spacing_x*msg.length(),0,msg,COLOR_WHITE);
+    }
 }
 
 void Player::render_item_info(){
@@ -1094,6 +1125,9 @@ void Player::render_death(){
 
     ss.clear();ss.str("");ss<<"Final score: ";ss<<score;msg=ss.str();
     font_small.show(50,95+font.spacing_y+font_small.spacing_y*12,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"  <-- Press [Enter] to quit -->  ";msg=ss.str();
+    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2.0,main_window.SCREEN_HEIGHT-font_small.spacing_y*2,msg,COLOR_WHITE);
 }
 
 void Player::render_leave_dungeon(){
@@ -1121,15 +1155,6 @@ void Player::render_leave_dungeon(){
     font.show(0,main_window.SCREEN_HEIGHT-font.h,"\xB0",COLOR_WHITE);
     font.show(main_window.SCREEN_WIDTH-font.w/256,main_window.SCREEN_HEIGHT-font.h,"\xB0",COLOR_WHITE);
 
-    /**ss.clear();ss.str("");ss<<"Lair of Loathing";msg=ss.str();
-    font_small.show(170,45,msg,COLOR_WHITE);
-
-    ss.clear();ss.str("");ss<<"Adventurer Reclamations Department";msg=ss.str();
-    font_small.show(500,45,msg,COLOR_WHITE);*/
-
-    /**ss.clear();ss.str("");ss<<"Death Certificate";msg=ss.str();
-    font.show((main_window.SCREEN_WIDTH-msg.length()*font.spacing_x)/2.0,80,msg,COLOR_WHITE);*/
-
     ss.clear();ss.str("");ss<<"Farewell, ";ss<<name;ss<<" the ";ss<<player.race_name;ss<<" ";ss<<player.class_name;ss<<"...";msg=ss.str();
     font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2.0,95+font.spacing_y,msg,COLOR_WHITE);
 
@@ -1146,6 +1171,14 @@ void Player::render_leave_dungeon(){
 
     ss.clear();ss.str("");ss<<"You were level ";ss<<experience_level;ss<<" with a maximum of ";ss<<health_max;ss<<" health and ";ss<<mana_max;ss<<" mana when you escaped.";msg=ss.str();
     font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2.0,95+font.spacing_y+font_small.spacing_y*3,msg,COLOR_WHITE);
+
+    if(won){
+        ss.clear();ss.str("");ss<<"You collected ";ss<<runestones;ss<<" Runestones!";msg=ss.str();
+        font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2.0,95+font.spacing_y+font_small.spacing_y*5,msg,COLOR_WHITE);
+    }
+
+    ss.clear();ss.str("");ss<<"  <-- Press [Enter] to quit -->  ";msg=ss.str();
+    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2.0,main_window.SCREEN_HEIGHT-font_small.spacing_y*2,msg,COLOR_WHITE);
 }
 
 void Player::render_stats(){
@@ -1234,6 +1267,9 @@ void Player::render_stats(){
     ss.clear();ss.str("");ss<<"Summoning Magic - ";ss<<return_skill_magic_summoning();ss<<" (";ss<<skills[SKILL_MAGIC_SUMMONING][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_MAGIC_SUMMONING][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
 
     font_small.show(500,30,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"  <-- Press [Space] to quit -->  ";msg=ss.str();
+    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2.0,main_window.SCREEN_HEIGHT-font_small.spacing_y,msg,COLOR_WHITE);
 }
 
 bool Player::render_inventory_category(short category){

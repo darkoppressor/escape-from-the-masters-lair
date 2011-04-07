@@ -35,7 +35,7 @@ class Player: public Creature{
     std::string start_time;
 
     //The score accumulated during this game.
-    int score_from_game;
+    unsigned int score_from_game;
 
     int turn;
 
@@ -47,7 +47,13 @@ class Player: public Creature{
     //**************************************************//
 
     //The score for this game.
-    int score;
+    unsigned int score;
+
+    //Did the player win the game?
+    bool won;
+
+    //The number of runestones the player left the dungeon with.
+    int runestones;
 
     //If true, a game is currently in progress.
     //If false, a game is not currently in progress.
