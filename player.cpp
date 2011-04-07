@@ -45,6 +45,8 @@ Player::Player(){
 
     done_focusing_skills=false;
 
+    done_buying_start_items=false;
+
     starting_items_gold=STARTING_ITEMS_GOLD;
 
     available_starting_items.push_back("dagger");
@@ -90,8 +92,9 @@ Player::Player(){
     end_date="";
     end_time="";
 
-    score=0;
     score_from_game=0;
+
+    score=0;
 
     won=false;
 

@@ -14,6 +14,8 @@
 #include <SDL.h>
 #include <SDL_mixer.h>
 
+const int GUARANTEED_RUNES=7;
+
 class Game{
     private:
     //Background music will be loaded into this variable.
@@ -45,7 +47,7 @@ class Game{
     std::vector< std::vector<uint32_t> > identifiers;
 
     //The levels with guaranteed runes.
-    int guaranteed_rune_levels[3];
+    int guaranteed_rune_levels[GUARANTEED_RUNES];
 
     //The default constructor. It does not currently do anything.
     Game();

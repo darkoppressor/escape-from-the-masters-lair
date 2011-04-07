@@ -691,8 +691,17 @@ void Game::generate_level(bool deepest_level){
 
     //Add the items.
 
-    //Add the rune, if any.
-    if(guaranteed_rune_levels[0]==vector_levels.size() || guaranteed_rune_levels[1]==vector_levels.size() || guaranteed_rune_levels[2]==vector_levels.size() || random_range(0,99)<5){
+    //Add the runestone, if any.
+    bool runestone_this_level=false;
+
+    for(int i=0;i<GUARANTEED_RUNES;i++){
+        if(guaranteed_rune_levels[i]==vector_levels.size()){
+            runestone_this_level=true;
+            break;
+        }
+    }
+
+    if(runestone_this_level){
         while(true){
             //Choose a random location in the level.
             short x=random_range(0,generated_level_x-1);

@@ -44,8 +44,11 @@ void Player::handle_input_no_game(){
                     handle_input_get_focused_skills();
                 }
                 //If the starting items have not been selected.
-                else{
+                else if(!done_buying_start_items){
                     handle_input_get_starting_items();
+                }
+                else{
+                    handle_input_start_message();
                 }
                 break;
         }
@@ -166,6 +169,7 @@ void Player::handle_input_get_focused_skills(){
         focused_skills[0]=-1;
         focused_skills[1]=-1;
         focused_skills[2]=-1;
+        done_focusing_skills=false;
     }
 
     else if(event.key.keysym.unicode>=(Uint16)'a' && event.key.keysym.unicode<=(Uint16)'u'){
@@ -283,6 +287,7 @@ void Player::handle_input_get_starting_items(){
 
         starting_items_gold=STARTING_ITEMS_GOLD;
         starting_items.clear();
+        done_buying_start_items=false;
     }
 
     else if((event.key.keysym.unicode>=(Uint16)'a' && event.key.keysym.unicode<=(Uint16)'z') || (event.key.keysym.unicode>=(Uint16)'A' && event.key.keysym.unicode<=(Uint16)'Z')){
@@ -353,17 +358,23 @@ void Player::handle_input_get_starting_items(){
     }
 
     else if(event.key.keysym.sym==SDLK_RETURN || event.key.keysym.sym==SDLK_KP_ENTER){
+        done_buying_start_items=true;
+
+        //Make sure that enter is cleared before moving to the next screen.
+        Uint8 *keystates=SDL_GetKeyState(NULL);
+        keystates[SDLK_RETURN]=NULL;
+        keystates[SDLK_KP_ENTER]=NULL;
+    }
+}
+
+void Player::handle_input_start_message(){
+    if(event.key.keysym.sym==SDLK_RETURN || event.key.keysym.sym==SDLK_KP_ENTER || event.key.keysym.sym==SDLK_SPACE){
         //Apply the focused skills' initial bonuses to their corresponding skills.
         for(int i=0;i<3;i++){
             gain_skill_experience(focused_skills[i],skills[focused_skills[i]][SKILL_EXPERIENCE_MAX]-skills[focused_skills[i]][SKILL_EXPERIENCE],0,false);
         }
 
         game.new_game();
-
-        //Make sure that enter is cleared before moving to the next screen.
-        Uint8 *keystates=SDL_GetKeyState(NULL);
-        keystates[SDLK_RETURN]=NULL;
-        keystates[SDLK_KP_ENTER]=NULL;
     }
 }
 
@@ -549,13 +560,16 @@ void Player::render_no_game(){
         render_get_focused_skills();
     }
     //If the starting items have not been selected.
-    else{
+    else if(!done_buying_start_items){
         render_get_starting_items();
+    }
+    else{
+        render_start_message();
     }
 }
 
 void Player::render_get_name(){
-    ss.clear();ss.str("");ss<<"Hello, welcome to Escape from the Master's Lair ";ss<<AutoVersion::MAJOR;ss<<".";ss<<AutoVersion::MINOR;ss<<" ";ss<<AutoVersion::STATUS;ss<<"!";ss<<"\xA";msg=ss.str();
+    ss.clear();ss.str("");ss<<"Hello, and welcome to Escape from the Master's Lair ";ss<<AutoVersion::MAJOR;ss<<".";ss<<AutoVersion::MINOR;ss<<" ";ss<<AutoVersion::STATUS;ss<<"!";ss<<"\xA";msg=ss.str();
     ss.clear();ss.str("");ss<<"Copyright (c) 2011 Kevin Wells";ss<<"\xA";msg+=ss.str();
     ss.clear();ss.str("");ss<<"Escape from the Master's Lair may be freely redistributed.  See license for details.";ss<<"\xA";msg+=ss.str();
     ss.clear();ss.str("");ss<<"\xA";msg+=ss.str();
@@ -919,6 +933,62 @@ void Player::render_get_starting_items(){
     font_small.show(0,0,msg,COLOR_WHITE);
 }
 
+void Player::render_start_message(){
+    ss.clear();ss.str("");ss<<"In an ancient time,";msg=ss.str();
+    font.show(10,75+font.spacing_y-font_small.spacing_y/2.0,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"there lived an evil mage named Gram.";msg=ss.str();
+    font_small.show(80,75+font.spacing_y*2,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"Gram grew exceedingly powerful.";msg=ss.str();
+    font_small.show(80,75+font.spacing_y*2+font_small.spacing_y,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"So powerful did Gram become that his mortal form could no longer hold all of his awesome might.";msg=ss.str();
+    font_small.show(80,75+font.spacing_y*2+font_small.spacing_y*2,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"Not wishing to give up any of his precious power,";msg=ss.str();
+    font_small.show(80,75+font.spacing_y*2+font_small.spacing_y*3,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"Gram stored this excess power within seven Runestones of his creation.";msg=ss.str();
+    font_small.show(80,75+font.spacing_y*2+font_small.spacing_y*4,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"Soon after, Gram was defeated by a band of heroic adventurers,";msg=ss.str();
+    font_small.show(80,75+font.spacing_y*2+font_small.spacing_y*5,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"and the lands were free of evil once again.";msg=ss.str();
+    font_small.show(80,75+font.spacing_y*2+font_small.spacing_y*6,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"However, the Runestones remained.";ss<<"\xA";msg=ss.str();
+    font_small.show(80,75+font.spacing_y*2+font_small.spacing_y*7,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"The Runestones were hidden, untouched, for countless centuries,";msg=ss.str();
+    font_small.show(80,75+font.spacing_y*2+font_small.spacing_y*8,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"until a certain fiendishly evil villain happened upon them.";msg=ss.str();
+    font_small.show(80,75+font.spacing_y*2+font_small.spacing_y*9,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"Your Master, a most fiendishly evil villain, seeks to wield the power of the ancient Runestones.";msg=ss.str();
+    font_small.show(40,75+font.spacing_y*2+font_small.spacing_y*11,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"You, not wishing to see your Master's evil deeds corrupt the world above,";msg=ss.str();
+    font_small.show(40,75+font.spacing_y*2+font_small.spacing_y*12,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"have determined to steal the Runestones and escape from the Lair of Loathing.";msg=ss.str();
+    font_small.show(40,75+font.spacing_y*2+font_small.spacing_y*13,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"The Master needs at least five of the Runestones to activate the power within them,";msg=ss.str();
+    font_small.show(40,75+font.spacing_y*2+font_small.spacing_y*14,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"so you must take at least three with you.";msg=ss.str();
+    font_small.show(40,75+font.spacing_y*2+font_small.spacing_y*15,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"Go forth, young ";ss<<class_name;ss<<", go forth and achieve your destiny!";msg=ss.str();
+    font_small.show(40,75+font.spacing_y*2+font_small.spacing_y*16,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"  <-- Press [Enter] to continue -->  ";msg=ss.str();
+    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2.0,main_window.SCREEN_HEIGHT-font_small.spacing_y,msg,COLOR_WHITE);
+}
+
 void Player::render_levelup(){
     ss.clear();ss.str("");ss<<"You have gained a level!";msg=ss.str();
 
@@ -1046,50 +1116,55 @@ void Player::render_item_info(){
 }
 
 void Player::render_death(){
+    short border_color=COLOR_SEPIA;
+    short font_color=COLOR_BLACK;
+
+    render_rectangle(0,0,main_window.SCREEN_WIDTH,main_window.SCREEN_HEIGHT,1.0,COLOR_WHITE);
+
     for(int i=font.w/256;i<main_window.SCREEN_WIDTH-font.w/256;i+=font.w/256){
-        font.show(i,0,"\xCD",COLOR_WHITE);
+        font.show(i,0,"\xCD",border_color);
     }
 
     for(int i=font.w/256;i<main_window.SCREEN_WIDTH-font.w/256;i+=font.w/256){
-        font.show(i,main_window.SCREEN_HEIGHT-font.h,"\xCD",COLOR_WHITE);
+        font.show(i,main_window.SCREEN_HEIGHT-font.h,"\xCD",border_color);
     }
 
     for(int i=font.h;i<main_window.SCREEN_HEIGHT-font.h*2;i+=font.h){
-        font.show(0,i,"\xBA",COLOR_WHITE);
+        font.show(0,i,"\xBA",border_color);
     }
 
     for(int i=font.h;i<main_window.SCREEN_HEIGHT-font.h*2;i+=font.h){
-        font.show(main_window.SCREEN_WIDTH-font.w/256,i,"\xBA",COLOR_WHITE);
+        font.show(main_window.SCREEN_WIDTH-font.w/256,i,"\xBA",border_color);
     }
 
-    font.show(0,main_window.SCREEN_HEIGHT-font.h*2,"\xBA",COLOR_WHITE);
-    font.show(main_window.SCREEN_WIDTH-font.w/256,main_window.SCREEN_HEIGHT-font.h*2,"\xBA",COLOR_WHITE);
+    font.show(0,main_window.SCREEN_HEIGHT-font.h*2,"\xBA",border_color);
+    font.show(main_window.SCREEN_WIDTH-font.w/256,main_window.SCREEN_HEIGHT-font.h*2,"\xBA",border_color);
 
-    font.show(0,0,"\xC9",COLOR_WHITE);
-    font.show(main_window.SCREEN_WIDTH-font.w/256,0,"\xBB",COLOR_WHITE);
-    font.show(0,main_window.SCREEN_HEIGHT-font.h,"\xC8",COLOR_WHITE);
-    font.show(main_window.SCREEN_WIDTH-font.w/256,main_window.SCREEN_HEIGHT-font.h,"\xBC",COLOR_WHITE);
+    font.show(0,0,"\xC9",border_color);
+    font.show(main_window.SCREEN_WIDTH-font.w/256,0,"\xBB",border_color);
+    font.show(0,main_window.SCREEN_HEIGHT-font.h,"\xC8",border_color);
+    font.show(main_window.SCREEN_WIDTH-font.w/256,main_window.SCREEN_HEIGHT-font.h,"\xBC",border_color);
 
     ss.clear();ss.str("");ss<<"Lair of Loathing";msg=ss.str();
-    font_small.show(170,45,msg,COLOR_WHITE);
+    font_small.show(170,45,msg,font_color);
 
     ss.clear();ss.str("");ss<<"Adventurer Reclamations Department";msg=ss.str();
-    font_small.show(500,45,msg,COLOR_WHITE);
+    font_small.show(500,45,msg,font_color);
 
     ss.clear();ss.str("");ss<<"Death Certificate";msg=ss.str();
-    font.show((main_window.SCREEN_WIDTH-msg.length()*font.spacing_x)/2.0,80,msg,COLOR_WHITE);
+    font.show((main_window.SCREEN_WIDTH-msg.length()*font.spacing_x)/2.0,80,msg,font_color);
 
     ss.clear();ss.str("");ss<<"I, Aesop Thanatos, Clerk of the Department of Adventurer Reclamations";msg=ss.str();
-    font_small.show(240,95+font.spacing_y,msg,COLOR_WHITE);
+    font_small.show(240,95+font.spacing_y,msg,font_color);
 
     ss.clear();ss.str("");ss<<"in the Lair of Loathing, it being an office of record, do hereby certify that the records in my";msg=ss.str();
-    font_small.show(50,95+font.spacing_y+font_small.spacing_y,msg,COLOR_WHITE);
+    font_small.show(50,95+font.spacing_y+font_small.spacing_y,msg,font_color);
 
     ss.clear();ss.str("");ss<<"office show that ";ss<<name;ss<<" died at ";ss<<end_time;ss<<" on dungeon level ";ss<<current_level+1;ss<<", having reached, at the highest,";msg=ss.str();
-    font_small.show(50,95+font.spacing_y+font_small.spacing_y*2,msg,COLOR_WHITE);
+    font_small.show(50,95+font.spacing_y+font_small.spacing_y*2,msg,font_color);
 
     ss.clear();ss.str("");ss<<"dungeon level ";ss<<max_level+1;ss<<", on ";ss<<end_date;ss<<".";msg=ss.str();
-    font_small.show(50,95+font.spacing_y+font_small.spacing_y*3,msg,COLOR_WHITE);
+    font_small.show(50,95+font.spacing_y+font_small.spacing_y*3,msg,font_color);
 
     string gender_string="";
     if(gender==GENDER_MALE){
@@ -1103,60 +1178,65 @@ void Player::render_death(){
     }
 
     ss.clear();ss.str("");ss<<"Gender: ";ss<<gender_string;msg=ss.str();
-    font_small.show(50,95+font.spacing_y+font_small.spacing_y*5,msg,COLOR_WHITE);
+    font_small.show(50,95+font.spacing_y+font_small.spacing_y*5,msg,font_color);
 
     ss.clear();ss.str("");ss<<"Age: ";ss<<turn;ss<<" turns";msg=ss.str();
-    font_small.show(50,95+font.spacing_y+font_small.spacing_y*6,msg,COLOR_WHITE);
+    font_small.show(50,95+font.spacing_y+font_small.spacing_y*6,msg,font_color);
 
     ss.clear();ss.str("");ss<<"Cause of death: ";ss<<death_message;msg=ss.str();
-    font_small.show(50,95+font.spacing_y+font_small.spacing_y*7,msg,COLOR_WHITE);
+    font_small.show(50,95+font.spacing_y+font_small.spacing_y*7,msg,font_color);
 
     ss.clear();ss.str("");ss<<"Class: ";ss<<class_name;msg=ss.str();
-    font_small.show(50,95+font.spacing_y+font_small.spacing_y*8,msg,COLOR_WHITE);
+    font_small.show(50,95+font.spacing_y+font_small.spacing_y*8,msg,font_color);
 
     ss.clear();ss.str("");ss<<"Level: ";ss<<experience_level;msg=ss.str();
-    font_small.show(50,95+font.spacing_y+font_small.spacing_y*9,msg,COLOR_WHITE);
+    font_small.show(50,95+font.spacing_y+font_small.spacing_y*9,msg,font_color);
 
     ss.clear();ss.str("");ss<<"Maximum health at time of death: ";ss<<health_max;msg=ss.str();
-    font_small.show(50,95+font.spacing_y+font_small.spacing_y*10,msg,COLOR_WHITE);
+    font_small.show(50,95+font.spacing_y+font_small.spacing_y*10,msg,font_color);
 
     ss.clear();ss.str("");ss<<"Maximum mana at time of death: ";ss<<mana_max;msg=ss.str();
-    font_small.show(50,95+font.spacing_y+font_small.spacing_y*11,msg,COLOR_WHITE);
+    font_small.show(50,95+font.spacing_y+font_small.spacing_y*11,msg,font_color);
 
     ss.clear();ss.str("");ss<<"Final score: ";ss<<score;msg=ss.str();
-    font_small.show(50,95+font.spacing_y+font_small.spacing_y*12,msg,COLOR_WHITE);
+    font_small.show(50,95+font.spacing_y+font_small.spacing_y*12,msg,font_color);
 
     ss.clear();ss.str("");ss<<"  <-- Press [Enter] to quit -->  ";msg=ss.str();
-    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2.0,main_window.SCREEN_HEIGHT-font_small.spacing_y*2,msg,COLOR_WHITE);
+    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2.0,main_window.SCREEN_HEIGHT-font_small.spacing_y*2,msg,font_color);
 }
 
 void Player::render_leave_dungeon(){
+    short border_color=COLOR_SEPIA;
+    short font_color=COLOR_BLACK;
+
+    render_rectangle(0,0,main_window.SCREEN_WIDTH,main_window.SCREEN_HEIGHT,1.0,COLOR_WHEAT);
+
     for(int i=font.w/256;i<main_window.SCREEN_WIDTH-font.w/256;i+=font.w/256){
-        font.show(i,0,"\xB0",COLOR_WHITE);
+        font.show(i,0,"\xB0",border_color);
     }
 
     for(int i=font.w/256;i<main_window.SCREEN_WIDTH-font.w/256;i+=font.w/256){
-        font.show(i,main_window.SCREEN_HEIGHT-font.h,"\xB0",COLOR_WHITE);
+        font.show(i,main_window.SCREEN_HEIGHT-font.h,"\xB0",border_color);
     }
 
     for(int i=font.h;i<main_window.SCREEN_HEIGHT-font.h*2;i+=font.h){
-        font.show(0,i,"\xB0",COLOR_WHITE);
+        font.show(0,i,"\xB0",border_color);
     }
 
     for(int i=font.h;i<main_window.SCREEN_HEIGHT-font.h*2;i+=font.h){
-        font.show(main_window.SCREEN_WIDTH-font.w/256,i,"\xB0",COLOR_WHITE);
+        font.show(main_window.SCREEN_WIDTH-font.w/256,i,"\xB0",border_color);
     }
 
-    font.show(0,main_window.SCREEN_HEIGHT-font.h*2,"\xB0",COLOR_WHITE);
-    font.show(main_window.SCREEN_WIDTH-font.w/256,main_window.SCREEN_HEIGHT-font.h*2,"\xB0",COLOR_WHITE);
+    font.show(0,main_window.SCREEN_HEIGHT-font.h*2,"\xB0",border_color);
+    font.show(main_window.SCREEN_WIDTH-font.w/256,main_window.SCREEN_HEIGHT-font.h*2,"\xB0",border_color);
 
-    font.show(0,0,"\xB0",COLOR_WHITE);
-    font.show(main_window.SCREEN_WIDTH-font.w/256,0,"\xB0",COLOR_WHITE);
-    font.show(0,main_window.SCREEN_HEIGHT-font.h,"\xB0",COLOR_WHITE);
-    font.show(main_window.SCREEN_WIDTH-font.w/256,main_window.SCREEN_HEIGHT-font.h,"\xB0",COLOR_WHITE);
+    font.show(0,0,"\xB0",border_color);
+    font.show(main_window.SCREEN_WIDTH-font.w/256,0,"\xB0",border_color);
+    font.show(0,main_window.SCREEN_HEIGHT-font.h,"\xB0",border_color);
+    font.show(main_window.SCREEN_WIDTH-font.w/256,main_window.SCREEN_HEIGHT-font.h,"\xB0",border_color);
 
     ss.clear();ss.str("");ss<<"Farewell, ";ss<<name;ss<<" the ";ss<<player.race_name;ss<<" ";ss<<player.class_name;ss<<"...";msg=ss.str();
-    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2.0,95+font.spacing_y,msg,COLOR_WHITE);
+    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2.0,95+font.spacing_y,msg,font_color);
 
     string turns="";
     if(turn==1){
@@ -1167,18 +1247,18 @@ void Player::render_leave_dungeon(){
     }
 
     ss.clear();ss.str("");ss<<"You escaped the dungeon with a score of ";ss<<score;ss<<", after ";ss<<turn;ss<<turns;ss<<".";msg=ss.str();
-    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2.0,95+font.spacing_y+font_small.spacing_y*2,msg,COLOR_WHITE);
+    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2.0,95+font.spacing_y+font_small.spacing_y*2,msg,font_color);
 
     ss.clear();ss.str("");ss<<"You were level ";ss<<experience_level;ss<<" with a maximum of ";ss<<health_max;ss<<" health and ";ss<<mana_max;ss<<" mana when you escaped.";msg=ss.str();
-    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2.0,95+font.spacing_y+font_small.spacing_y*3,msg,COLOR_WHITE);
+    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2.0,95+font.spacing_y+font_small.spacing_y*3,msg,font_color);
 
     if(won){
         ss.clear();ss.str("");ss<<"You collected ";ss<<runestones;ss<<" Runestones!";msg=ss.str();
-        font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2.0,95+font.spacing_y+font_small.spacing_y*5,msg,COLOR_WHITE);
+        font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2.0,95+font.spacing_y+font_small.spacing_y*5,msg,font_color);
     }
 
     ss.clear();ss.str("");ss<<"  <-- Press [Enter] to quit -->  ";msg=ss.str();
-    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2.0,main_window.SCREEN_HEIGHT-font_small.spacing_y*2,msg,COLOR_WHITE);
+    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2.0,main_window.SCREEN_HEIGHT-font_small.spacing_y*2,msg,font_color);
 }
 
 void Player::render_stats(){

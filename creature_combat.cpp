@@ -398,7 +398,7 @@ void Creature::die(short cause_of_death,string killer,string killer_item){
     string message="";
 
     if(is_player){
-        if(CAUSE_OF_DEATH_DROWN){
+        if(cause_of_death==CAUSE_OF_DEATH_DROWN){
             message="You sink beneath the waves... Press [Spacebar] to continue.";
         }
         else{

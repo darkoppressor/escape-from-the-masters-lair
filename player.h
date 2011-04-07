@@ -69,6 +69,10 @@ class Player: public Creature{
     //If false, the player has not finished selecting focused skills.
     bool done_focusing_skills;
 
+    //If true, the player has finished selecting starting items.
+    //If false, the player has not finished selecting starting items.
+    bool done_buying_start_items;
+
     //Keeps track of the starting items the player has selected.
     std::vector<int> starting_items;
 
@@ -136,6 +140,7 @@ class Player: public Creature{
     void handle_input_get_race();
     void handle_input_get_focused_skills();
     void handle_input_get_starting_items();
+    void handle_input_start_message();
 
     void handle_input_inventory();
     void handle_input_stats();
@@ -154,6 +159,7 @@ class Player: public Creature{
     void render_get_race();
     void render_get_focused_skills();
     void render_get_starting_items();
+    void render_start_message();
 
     void render_inventory(bool all_categories);
     void render_stats();

@@ -27,9 +27,9 @@ Game::Game(){
 
     level_theme=LEVEL_THEME_RECTANGLES_AND_CIRCLES;
 
-    guaranteed_rune_levels[0]=-1;
-    guaranteed_rune_levels[1]=-1;
-    guaranteed_rune_levels[2]=-1;
+    for(int i=0;i<GUARANTEED_RUNES;i++){
+        guaranteed_rune_levels[i]=-1;
+    }
 }
 
 Game::~Game(){
@@ -100,11 +100,20 @@ void Game::new_game(){
     player.set_inventory();
 
     //Determine the guaranteed rune levels.
-    for(int i=0;i<3;i++){
+    for(int i=0;i<GUARANTEED_RUNES;i++){
         while(guaranteed_rune_levels[i]==-1){
             int random_level=random_range(0,DUNGEON_DEPTH-1);
 
-            if(guaranteed_rune_levels[0]!=random_level && guaranteed_rune_levels[1]!=random_level && guaranteed_rune_levels[2]!=random_level){
+            bool level_claimed=false;
+
+            for(int n=0;n<GUARANTEED_RUNES;n++){
+                if(guaranteed_rune_levels[n]==random_level){
+                    level_claimed=true;
+                    break;
+                }
+            }
+
+            if(!level_claimed){
                 guaranteed_rune_levels[i]=random_level;
             }
         }
@@ -124,6 +133,16 @@ void Game::new_game(){
 
     //Update initial fov.
     player.update_fov();
+
+    string welcome="Welcome, ";
+    welcome+=player.name;
+    welcome+="! You are a ";
+    welcome+=player.race_name;
+    welcome+=" ";
+    welcome+=player.class_name;
+    welcome+=".";
+
+    update_text_log(welcome.c_str(),true);
 }
 
 void Game::old_game(){
