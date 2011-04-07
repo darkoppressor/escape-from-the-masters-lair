@@ -398,7 +398,12 @@ void Creature::die(short cause_of_death,string killer,string killer_item){
     string message="";
 
     if(is_player){
-        message="You die... Press spacebar to continue.";
+        if(CAUSE_OF_DEATH_DROWN){
+            message="You sink beneath the waves... Press [Spacebar] to continue.";
+        }
+        else{
+            message="You die... Press [Spacebar] to continue.";
+        }
 
         player.save_game_log_entry(cause_of_death,killer,killer_item);
 

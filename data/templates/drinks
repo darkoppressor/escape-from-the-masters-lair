@@ -91,3 +91,33 @@
 		thirst quenched:1
 	</drink>
 </item>
+
+<item category:drink>
+	name:bottle of red dye
+	plural name:bottles of red dye
+	writing:
+	appearance:!
+	stackable:1
+	size:0.5
+	color:red
+	material:glass
+	effect:dye
+	<drink>
+		thirst quenched:1
+	</drink>
+</item>
+
+<item category:drink>
+	name:bottle of blue dye
+	plural name:bottles of blue dye
+	writing:
+	appearance:!
+	stackable:1
+	size:0.5
+	color:blue
+	material:glass
+	effect:dye
+	<drink>
+		thirst quenched:1
+	</drink>
+</item>

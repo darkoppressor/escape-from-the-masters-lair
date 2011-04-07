@@ -101,7 +101,7 @@ void Tile::render(vector< vector<bool> >* tile_rendered){
                     msg="\xB2";
                 }
                 else if(type==TILE_TYPE_LIQUID){
-                    msg="~";
+                    msg="\xF7";
                 }
                 else if(type==TILE_TYPE_DOWN_STAIRS){
                     msg=">";

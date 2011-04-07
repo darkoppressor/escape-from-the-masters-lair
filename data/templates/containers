@@ -3,6 +3,8 @@
 //*************//
 
 <item category:container>
+	//For now, I am disabling bags, since I may just cut containers entirely.
+	<DO NOT SPAWN>
 	name:bag
 	plural name:bags
 	writing:
