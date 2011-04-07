@@ -336,7 +336,11 @@ void Game::generate_level(bool deepest_level){
 
     //Determine the level's variation(s).
 
-    if(random_range(0,99)<8){
+    for(int i=0;i<LEVEL_VARIATION_LAVA+1;i++){
+        level_variations[i]=false;
+    }
+
+    if(random_range(0,99)<6){
         if(random_range(0,99)<75){
             level_variations[LEVEL_VARIATION_WATERY]=true;
         }
@@ -345,7 +349,7 @@ void Game::generate_level(bool deepest_level){
         }
     }
 
-    if(!level_variations[LEVEL_VARIATION_LAVA] && random_range(0,99)<2){
+    if(!level_variations[LEVEL_VARIATION_LAVA] && random_range(0,99)<6){
         if(random_range(0,99)<75){
             level_variations[LEVEL_VARIATION_FROZEN]=true;
         }

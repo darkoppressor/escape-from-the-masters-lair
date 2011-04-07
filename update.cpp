@@ -110,6 +110,9 @@ void events(){
             //Set the item's info to the corpse's race.
             temp_item.race=vector_levels[current_level].monsters[i].race;
 
+            //Transfer the monster's coverings to the corpse.
+            temp_item.coverings=vector_levels[current_level].monsters[i].coverings;
+
             string temp_name=templates.template_races[temp_item.race].name;
             temp_name+=" ";
             temp_item.name=temp_name+temp_item.name;

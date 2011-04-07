@@ -343,9 +343,13 @@ void Item::move(){
         if(momentum==0){
             //It doesn't matter what caused the item to move, since it has stopped moving.
             clear_owner_data_all();
-
-            check_this_tile();
         }
+    }
+
+    //If the item is not moving.
+    //This check occurs whether the item just stopped moving or has already been stationary.
+    if(momentum==0){
+        check_this_tile();
     }
 }
 

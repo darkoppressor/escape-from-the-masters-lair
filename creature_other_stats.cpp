@@ -9,11 +9,11 @@ using namespace std;
 int Creature::return_health(){
     double number=health;
 
-    //Apply the racial modifier.
-    number+=templates.template_races[race].health_max;
-
     //Apply the hardiness bonus.
     number+=number*((double)return_attribute_hardiness()/100.0);
+
+    //Apply the racial modifier.
+    number+=templates.template_races[race].health_max;
 
     return (int)number;
 }
@@ -21,11 +21,11 @@ int Creature::return_health(){
 int Creature::return_health_max(){
     double number=health_max;
 
-    //Apply the racial modifier.
-    number+=templates.template_races[race].health_max;
-
     //Apply the hardiness bonus.
     number+=number*((double)return_attribute_hardiness()/100.0);
+
+    //Apply the racial modifier.
+    number+=templates.template_races[race].health_max;
 
     return (int)number;
 }
@@ -33,14 +33,14 @@ int Creature::return_health_max(){
 int Creature::return_mana(){
     double number=mana;
 
-    //Apply the racial modifier.
-    number+=templates.template_races[race].mana_max;
-
     //Apply the comprehension bonus.
     number+=number*((double)return_attribute_comprehension()/100.0);
 
     //Apply the acumen bonus.
     number+=number*(((double)return_attribute_acumen()/2.0)/100.0);
+
+    //Apply the racial modifier.
+    number+=templates.template_races[race].mana_max;
 
     return (int)number;
 }
@@ -48,14 +48,14 @@ int Creature::return_mana(){
 int Creature::return_mana_max(){
     double number=mana_max;
 
-    //Apply the racial modifier.
-    number+=templates.template_races[race].mana_max;
-
     //Apply the comprehension bonus.
     number+=number*((double)return_attribute_comprehension()/100.0);
 
     //Apply the acumen bonus.
     number+=number*(((double)return_attribute_acumen()/2.0)/100.0);
+
+    //Apply the racial modifier.
+    number+=templates.template_races[race].mana_max;
 
     return (int)number;
 }
@@ -89,8 +89,8 @@ int Creature::return_armor(){
 int Creature::return_movement_speed(){
     double speed=movement_speed;
 
-    //Apply the racial modifier.
-    speed+=templates.template_races[race].movement_speed;
+    //Subtract the speed skill bonus.
+    speed-=return_skill_speed()/4.0;
 
     //Subtract the agility bonus.
     speed-=return_attribute_agility()/8.0;
@@ -98,14 +98,14 @@ int Creature::return_movement_speed(){
     //Subtract the hardiness bonus.
     speed-=return_attribute_hardiness()/10.0;
 
-    //Subtract the speed skill bonus.
-    speed-=return_skill_speed()/4.0;
-
     //If the creature is bloated.
     if(thirst<=THIRST_BLOATED){
         //Being bloated causes a penalty to speed.
         speed+=speed*0.25;
     }
+
+    //Apply the racial modifier.
+    speed+=templates.template_races[race].movement_speed;
 
     if(speed<1.0){
         speed=1.0;
@@ -117,8 +117,8 @@ int Creature::return_movement_speed(){
 int Creature::return_next_move(){
     double speed=next_move;
 
-    //Apply the racial modifier.
-    speed+=templates.template_races[race].movement_speed;
+    //Subtract the speed skill bonus.
+    speed-=return_skill_speed()/4.0;
 
     //Subtract the agility bonus.
     speed-=return_attribute_agility()/8.0;
@@ -126,14 +126,14 @@ int Creature::return_next_move(){
     //Subtract the hardiness bonus.
     speed-=return_attribute_hardiness()/10.0;
 
-    //Subtract the speed skill bonus.
-    speed-=return_skill_speed()/4.0;
-
     //If the creature is bloated.
     if(thirst<=THIRST_BLOATED){
         //Being bloated causes a penalty to speed.
         speed+=speed*0.25;
     }
+
+    //Apply the racial modifier.
+    speed+=templates.template_races[race].movement_speed;
 
     return (int)speed;
 }
@@ -167,14 +167,14 @@ double Creature::return_inventory_weight(short item_category){
 double Creature::return_carry_capacity(){
     double number=carry_capacity;
 
-    //Apply the weight bonus.
-    number+=weight/6.0;
-
     //Add the strength bonus.
     number+=return_attribute_strength()*3;
 
     //Add the hardiness bonus.
     number+=return_attribute_hardiness();
+
+    //Apply the weight bonus.
+    number+=weight/12.0;
 
     return number;
 }

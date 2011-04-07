@@ -89,6 +89,11 @@ void Player::save_game_log_entry(short cause_of_death,string killer,string kille
         //Add the gold value of all inventory items.
         for(int i=0;i<inventory.size();i++){
             score+=inventory[i].monetary_value*inventory[i].stack;
+
+            //Add a score bonus if the item is a Runestone.
+            if(inventory[i].name=="Runestone"){
+                score+=100;
+            }
         }
 
         //Add the dungeon level bonus.

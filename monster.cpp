@@ -8,6 +8,7 @@
 #include "ai_keys.h"
 #include "render.h"
 #include "dungeon.h"
+#include "covering_conversions.h"
 
 using namespace std;
 
@@ -368,7 +369,14 @@ void Monster::render(vector< vector<bool> >* tile_rendered){
             if(return_absolute_x()>=player.camera_x-TILE_SIZE_X && return_absolute_x()<=player.camera_x+player.camera_w && return_absolute_y()>=player.camera_y-TILE_SIZE_Y && return_absolute_y()<=player.camera_y+player.camera_h){
                 //If the monster's position is seen.
                 if(vector_levels[current_level].fog[x][y]>FOG_FOG || player.option_dev){
-                    font.show((int)(return_absolute_x()-player.camera_x),(int)(return_absolute_y()-player.camera_y),appearance,color);
+                    short render_color=color;
+
+                    short temp_color=coverings_to_color(this);
+                    if(temp_color!=COLOR_RAINBOW){
+                        render_color=temp_color;
+                    }
+
+                    font.show((int)(return_absolute_x()-player.camera_x),(int)(return_absolute_y()-player.camera_y),appearance,render_color);
 
                     if(player.option_healthbars){
                         short health_bar_color=COLOR_GREEN;
