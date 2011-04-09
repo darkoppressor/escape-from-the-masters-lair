@@ -1,0 +1,21 @@
+//********//
+// Armor: //
+//********//
+	
+	//*******//
+	// Neck: //
+	//*******//
+
+	<item category:armor>
+		name:copper amulet
+		plural name:copper amulets
+		writing:
+		appearance:"
+		stackable:0
+		size:0.5
+		color:copper
+		material:copper
+		<armor>
+			armor category:neck
+		</armor>
+	</item>

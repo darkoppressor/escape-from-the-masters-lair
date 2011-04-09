@@ -1,0 +1,21 @@
+//********//
+// Armor: //
+//********//
+
+	//**********//
+	// Fingers: //
+	//**********//
+
+	<item category:armor>
+		name:copper ring
+		plural name:copper rings
+		writing:
+		appearance:=
+		stackable:0
+		size:0.25
+		color:copper
+		material:copper
+		<armor>
+			armor category:fingers
+		</armor>
+	</item>

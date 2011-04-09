@@ -1,0 +1,22 @@
+//********//
+// Armor: //
+//********//
+	
+	//********//
+	// Shirt: //
+	//********//
+
+	<item category:armor>
+		name:shirt
+		plural name:shirts
+		writing:I explored the Lair of Loathing and all I got was this lousy T-shirt!
+		appearance:[
+		stackable:0
+		size:4.0
+		color:cloth
+		material:cloth
+		<armor>
+			armor category:shirt
+		</armor>
+	</item>
+	
