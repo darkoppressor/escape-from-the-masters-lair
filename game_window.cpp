@@ -16,14 +16,106 @@ Game_Window::Game_Window(){
     //Here we are going to set the resolution and color depth of our game screen.
     SCREEN_WIDTH=800;
     SCREEN_HEIGHT=600;
-    ///SCREEN_WIDTH=640;
-    ///SCREEN_HEIGHT=480;
 
     //Since we've set the screen's color depth to 0, SDL will attempt to set it to the computer's color depth when initializing.
     SCREEN_BPP=32;
 
     //This surface will be used as our screen.
     screen=NULL;
+}
+
+void Game_Window::load_framebuffer(){
+    if(player.option_fbo){
+        if(GLEW_VERSION_3_0 || GLEW_ARB_framebuffer_object){
+            //Setup the framebuffer object.
+
+            glGenFramebuffers(1,&fbo);
+
+            glBindFramebuffer(GL_FRAMEBUFFER,fbo);
+
+            //Setup the renderbuffer object.
+
+            glGenRenderbuffers(1,&depth_buffer);
+
+            glBindRenderbuffer(GL_RENDERBUFFER,depth_buffer);
+
+            glRenderbufferStorage(GL_RENDERBUFFER,GL_DEPTH_COMPONENT,SCREEN_WIDTH,SCREEN_HEIGHT);
+
+            glFramebufferRenderbuffer(GL_FRAMEBUFFER,GL_DEPTH_ATTACHMENT,GL_RENDERBUFFER,depth_buffer);
+
+            //Setup the texture object.
+
+            glGenTextures(1,&texture);
+
+            glBindTexture(GL_TEXTURE_2D,texture);
+
+            glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_CLAMP);
+            glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_CLAMP);
+            glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+
+            glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA8,SCREEN_WIDTH,SCREEN_HEIGHT,0,GL_RGBA,GL_UNSIGNED_BYTE,NULL);
+
+            glFramebufferTexture2D(GL_FRAMEBUFFER,GL_COLOR_ATTACHMENT0,GL_TEXTURE_2D,texture,0);
+
+            //Check the status of the bound framebuffer object.
+            GLenum status=glCheckFramebufferStatus(GL_FRAMEBUFFER);
+        }
+        else{
+            //Setup the framebuffer object.
+
+            glGenFramebuffersEXT(1,&fbo);
+
+            glBindFramebufferEXT(GL_FRAMEBUFFER_EXT,fbo);
+
+            //Setup the renderbuffer object.
+
+            glGenRenderbuffersEXT(1,&depth_buffer);
+
+            glBindRenderbufferEXT(GL_RENDERBUFFER_EXT,depth_buffer);
+
+            glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT,GL_DEPTH_COMPONENT,SCREEN_WIDTH,SCREEN_HEIGHT);
+
+            glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT,GL_DEPTH_ATTACHMENT_EXT,GL_RENDERBUFFER_EXT,depth_buffer);
+
+            //Setup the texture object.
+
+            glGenTextures(1,&texture);
+
+            glBindTexture(GL_TEXTURE_2D,texture);
+
+            glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_CLAMP);
+            glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_CLAMP);
+            glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+
+            glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA8,SCREEN_WIDTH,SCREEN_HEIGHT,0,GL_RGBA,GL_UNSIGNED_BYTE,NULL);
+
+            glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT,GL_COLOR_ATTACHMENT0_EXT,GL_TEXTURE_2D,texture,0);
+
+            //Check the status of the bound framebuffer object.
+            GLenum status=glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
+        }
+    }
+}
+
+void Game_Window::unload_framebuffer(){
+    if(player.option_fbo){
+        if(GLEW_VERSION_3_0 || GLEW_ARB_framebuffer_object){
+            glDeleteFramebuffers(1,&fbo);
+
+            glDeleteRenderbuffers(1,&depth_buffer);
+
+            glDeleteTextures(1,&texture);
+        }
+        else{
+            glDeleteFramebuffersEXT(1,&fbo);
+
+            glDeleteRenderbuffersEXT(1,&depth_buffer);
+
+            glDeleteTextures(1,&texture);
+        }
+    }
 }
 
 bool Game_Window::initialize_opengl(){
@@ -76,14 +168,23 @@ bool Game_Window::initialize_opengl(){
         return false;
     }
 
-    //If OpenGL version 1.5 is not supported, check for the needed extension.
-    //If that is also unsupported, the game cannot run.
-    /**if(!GLEW_VERSION_1_5){
-        if(!GLEW_ARB_vertex_buffer_object){
-            fprintf(stderr,"GLEW Error: Extension ARB_vertex_buffer_object is not supported by your video card drivers.\n");
-            return false;
+    //If OpenGL version is not at least 1.1.
+    if(!GLEW_VERSION_1_1){
+        fprintf(stderr,"OpenGL version is not at least 1.1.\n");
+        return false;
+    }
+    else{
+        //If OpenGL version is not at least 3.0, check for the needed extension.
+        //If that is also unsupported, the game cannot run.
+        if(!GLEW_VERSION_3_0){
+            if(!GLEW_ARB_framebuffer_object){
+                if(!GLEW_EXT_framebuffer_object){
+                    fprintf(stderr,"GLEW Error: Extension GL_EXT_framebuffer_object is not supported by your system.\n");
+                    return false;
+                }
+            }
         }
-    }*/
+    }
 
     return true;
 }
@@ -139,6 +240,7 @@ void Game_Window::toggle_fullscreen(){
     options_save();
 
     //To toggle fullscreen with OpenGL, we must reinitialize all of the OpenGL stuff and reload the textures.
+
     initialize_opengl();
 
     unload_world();

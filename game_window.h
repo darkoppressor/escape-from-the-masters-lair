@@ -16,6 +16,10 @@ class Game_Window{
 
     Game_Window();
 
+    void load_framebuffer();
+
+    void unload_framebuffer();
+
     bool initialize_opengl();
 
     bool init();
@@ -31,6 +35,17 @@ class Game_Window{
     short SCREEN_BPP;
 
     SDL_Surface *screen;
+
+
+
+    //Framebuffer object.
+    GLuint fbo;
+
+    //Depth buffer renderbuffer object.
+    GLuint depth_buffer;
+
+    //Texture object.
+    GLuint texture;
 };
 
 #endif

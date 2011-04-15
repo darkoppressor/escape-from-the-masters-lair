@@ -49,8 +49,84 @@ GLuint load_texture(string filename){
     return texture;
 }
 
-void render_texture(double x,double y,image_data image_source,double opacity){
+void render_window(){
+    if(player.option_fbo){
+        render_start_standard();
+
+        //Bind the texture object.
+        if(image.current_texture!=main_window.texture){
+            glBindTexture(GL_TEXTURE_2D,main_window.texture);
+            image.current_texture=main_window.texture;
+        }
+
+        //Move to the offset of the image we want to place.
+        glTranslated(0,0,0);
+
+        glColor4d(1.0,1.0,1.0,1.0);
+
+        //Start quad.
+        glBegin(GL_QUADS);
+
+        //Apply the texture to the screen:
+        glTexCoord2d(0,0);  glVertex3d(0,0,0);
+        glTexCoord2d(1,0);  glVertex3d(main_window.SCREEN_WIDTH,0,0);
+        glTexCoord2d(1,1);  glVertex3d(main_window.SCREEN_WIDTH,main_window.SCREEN_HEIGHT,0);
+        glTexCoord2d(0,1);  glVertex3d(0,main_window.SCREEN_HEIGHT,0);
+
+        //End quad.
+        glEnd();
+
+        render_finish_standard();
+    }
+}
+
+void render_start_fbo(){
+    if(GLEW_VERSION_3_0 || GLEW_ARB_framebuffer_object){
+        glBindFramebuffer(GL_FRAMEBUFFER,main_window.fbo);
+
+        glPushAttrib(GL_VIEWPORT_BIT);
+
+        glViewport(0,0,main_window.SCREEN_WIDTH,main_window.SCREEN_HEIGHT);
+    }
+    else{
+        glBindFramebufferEXT(GL_FRAMEBUFFER_EXT,main_window.fbo);
+
+        glPushAttrib(GL_VIEWPORT_BIT);
+
+        glViewport(0,0,main_window.SCREEN_WIDTH,main_window.SCREEN_HEIGHT);
+    }
+}
+
+void render_finish_fbo(){
+    if(GLEW_VERSION_3_0 || GLEW_ARB_framebuffer_object){
+        glPopAttrib();
+
+        glBindFramebuffer(GL_FRAMEBUFFER,0);
+    }
+    else{
+        glPopAttrib();
+
+        glBindFramebufferEXT(GL_FRAMEBUFFER_EXT,0);
+    }
+}
+
+void render_start_standard(){
     glPushMatrix();
+}
+
+void render_finish_standard(){
+    //Reset.
+    glPopMatrix();
+}
+
+void render_texture(double x,double y,image_data image_source,double opacity){
+    if(!player.option_fbo){
+        render_start_standard();
+    }
+    else{
+        render_start_fbo();
+    }
+
     //Bind the texture object.
     if(image.current_texture!=image_source.texture){
         glBindTexture(GL_TEXTURE_2D,image_source.texture);
@@ -74,12 +150,16 @@ void render_texture(double x,double y,image_data image_source,double opacity){
     //End quad.
     glEnd();
 
-    //Reset.
-    glPopMatrix();
+    if(!player.option_fbo){
+        render_finish_standard();
+    }
+    else{
+        render_finish_fbo();
+    }
 }
 
 void render_sprite(double x,double y,image_data image_source,SDL_Rect* texture_clip,double opacity,double scale_x,double scale_y){
-    glPushMatrix();
+    /**glPushMatrix();
     //Bind the texture object.
     if(image.current_texture!=image_source.texture){
         glBindTexture(GL_TEXTURE_2D,image_source.texture);
@@ -118,11 +198,61 @@ void render_sprite(double x,double y,image_data image_source,SDL_Rect* texture_c
     glEnd();
 
     //Reset.
-    glPopMatrix();
+    glPopMatrix();*/
+    if(!player.option_fbo){
+        render_start_standard();
+    }
+    else{
+        render_start_fbo();
+    }
+
+    //Bind the texture object.
+    if(image.current_texture!=image_source.texture){
+        glBindTexture(GL_TEXTURE_2D,image_source.texture);
+        image.current_texture=image_source.texture;
+    }
+
+    //Move to the offset of the image we want to place.
+    glTranslated(x,y,0);
+
+    glScaled(scale_x,scale_y,1.0);
+
+    glColor4d(1.0,1.0,1.0,opacity);
+
+    //Start quad.
+    glBegin(GL_QUADS);
+
+    //Apply the texture to the screen:
+
+    //Bottom left corner.
+    glTexCoord2d((texture_clip->x)/image_source.w,(texture_clip->y+texture_clip->h)/image_source.h);
+    glVertex3d(0,texture_clip->h,0);
+
+    //Bottom right corner.
+    glTexCoord2d((texture_clip->x+texture_clip->w)/image_source.w,(texture_clip->y+texture_clip->h)/image_source.h);
+    glVertex3d(texture_clip->w,texture_clip->h,0);
+
+    //Top right corner.
+    glTexCoord2d((texture_clip->x+texture_clip->w)/image_source.w,(texture_clip->y)/image_source.h);
+    glVertex3d(texture_clip->w,0,0);
+
+    //Top left corner.
+    glTexCoord2d((texture_clip->x)/image_source.w,(texture_clip->y)/image_source.h);
+    glVertex3d(0,0,0);
+
+    //End quad.
+    glEnd();
+
+    if(!player.option_fbo){
+        render_finish_standard();
+    }
+    else{
+        render_finish_fbo();
+    }
 }
 
 void render_rectangle(double x,double y,double w,double h,double opacity,short color_name){
-    glPushMatrix();
+    /**glPushMatrix();
     //Bind the texture object.
     glBindTexture(GL_TEXTURE_2D,NULL);
     image.current_texture=0;
@@ -146,11 +276,46 @@ void render_rectangle(double x,double y,double w,double h,double opacity,short c
     glEnd();
 
     //Reset.
-    glPopMatrix();
+    glPopMatrix();*/
+    if(!player.option_fbo){
+        render_start_standard();
+    }
+    else{
+        render_start_fbo();
+    }
+
+    //Bind the texture object.
+    glBindTexture(GL_TEXTURE_2D,NULL);
+    image.current_texture=0;
+
+    //Move to the offset of the image we want to place.
+    glTranslated(x,y,0);
+
+    color_data color=color_name_to_doubles(color_name);
+    glColor4d(color.red,color.green,color.blue,opacity);
+
+    //Start quad.
+    glBegin(GL_QUADS);
+
+    //Apply the texture to the screen:
+    glTexCoord2d(0,0);  glVertex3d(0,0,0);
+    glTexCoord2d(1,0);  glVertex3d(w,0,0);
+    glTexCoord2d(1,1);  glVertex3d(w,h,0);
+    glTexCoord2d(0,1);  glVertex3d(0,h,0);
+
+    //End quad.
+    glEnd();
+
+    if(!player.option_fbo){
+        render_finish_standard();
+    }
+    else{
+        render_finish_fbo();
+    }
 }
 
 void render_font(double x,double y,image_data image_source,SDL_Rect* texture_clip,short color_name,double opacity,double scale){
-    glPushMatrix();
+    /**glPushMatrix();
     //Move to the offset of the image we want to place.
     glTranslated(x,y,0);
 
@@ -193,7 +358,61 @@ void render_font(double x,double y,image_data image_source,SDL_Rect* texture_cli
     glEnd();
 
     //Reset.
-    glPopMatrix();
+    glPopMatrix();*/
+    if(!player.option_fbo){
+        render_start_standard();
+    }
+    else{
+        render_start_fbo();
+    }
+
+    //Move to the offset of the image we want to place.
+    glTranslated(x,y,0);
+
+    glScaled(scale,scale,1.0);
+
+    //Set the font color.
+    color_data color=color_name_to_doubles(color_name);
+    glColor4d(color.red,color.green,color.blue,opacity);
+
+    //Start quad.
+    glBegin(GL_QUADS);
+
+    //Apply the texture to the screen:
+
+    //Bottom left corner.
+    glTexCoord2d((texture_clip->x)/image_source.w,(texture_clip->y+texture_clip->h)/image_source.h);
+
+    //Bottom left corner.
+    glVertex3d(0,texture_clip->h,0);
+
+    //Bottom right corner.
+    glTexCoord2d((texture_clip->x+texture_clip->w)/image_source.w,(texture_clip->y+texture_clip->h)/image_source.h);
+
+    //Bottom right corner.
+    glVertex3d(texture_clip->w,texture_clip->h,0);
+
+    //Top right corner.
+    glTexCoord2d((texture_clip->x+texture_clip->w)/image_source.w,(texture_clip->y)/image_source.h);
+
+    //Top right corner.
+    glVertex3d(texture_clip->w,0,0);
+
+    //Top left corner.
+    glTexCoord2d((texture_clip->x)/image_source.w,(texture_clip->y)/image_source.h);
+
+    //Top left corner.
+    glVertex3d(0,0,0);
+
+    //End quad.
+    glEnd();
+
+    if(!player.option_fbo){
+        render_finish_standard();
+    }
+    else{
+        render_finish_fbo();
+    }
 }
 
 color_data color_name_to_doubles(short color_number){

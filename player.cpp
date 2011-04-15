@@ -115,6 +115,7 @@ Player::Player(){
 
     //Options:
     option_fullscreen=false;
+    option_fbo=true;
     option_dev=false;
     option_fps=true;
     option_healthbars=false;
@@ -122,10 +123,10 @@ Player::Player(){
     //Set the camera's initial location and its dimensions.
     camera_x=0.0;
     camera_y=0.0;
-    camera_w=800.0;
-    camera_h=420.0;
-    ///camera_w=640.0;
-    ///camera_h=300.0;
+    ///camera_w=main_window.SCREEN_WIDTH;
+    ///camera_h=main_window.SCREEN_HEIGHT-180;
+    camera_w=800;
+    camera_h=420;
 }
 
 void Player::set_inventory(){

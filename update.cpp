@@ -238,7 +238,7 @@ void camera(int frame_rate, double ms_per_frame){
 
 //Render everything to the screen.
 void render(int frame_rate, double ms_per_frame){
-    //Clear the screen, filling it with the clear color set in Window.init().
+    //Clear the screen, filling it with the clear color.
     glClear(GL_COLOR_BUFFER_BIT);
 
     if(player.game_in_progress){
@@ -540,6 +540,8 @@ void render(int frame_rate, double ms_per_frame){
     if(tooltip.on){
         tooltip.render();
     }
+
+    render_window();
 
     //Swap the buffers, updating the screen.
     SDL_GL_SwapBuffers();
