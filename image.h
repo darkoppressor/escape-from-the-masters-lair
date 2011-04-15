@@ -25,8 +25,7 @@ class Image{
     GLuint current_texture;
 
     //Global images.
-    image_data inventory;
-    image_data icon_item_lights;
+    ///image_data inventory;
 };
 
 #endif
