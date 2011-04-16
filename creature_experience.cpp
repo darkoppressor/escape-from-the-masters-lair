@@ -42,16 +42,54 @@ void Creature::level_up(){
     experience_level++;
 
     //Increase max health.
+
+    int health_gain=0;
+
     //Apply the base increase.
-    health_max+=random_range(templates.base_stats.levelup_hp_min,templates.base_stats.levelup_hp_max);
+    health_gain+=random_range(templates.base_stats.levelup_hp_min,templates.base_stats.levelup_hp_max);
+
     //Apply the racial modifier.
-    health_max+=random_range(templates.template_races[race].levelup_hp_min,templates.template_races[race].levelup_hp_max);
+    //If the race has a levelup health bonus.
+    if(templates.template_races[race].levelup_hp_bonus){
+        health_gain+=random_range(templates.template_races[race].levelup_hp_min,templates.template_races[race].levelup_hp_max);
+    }
+    //If the race has a levelup health penalty.
+    else{
+        health_gain-=random_range(templates.template_races[race].levelup_hp_min,templates.template_races[race].levelup_hp_max);
+    }
+
+    if(health_gain<0){
+        health_gain=0;
+    }
+
+    health_max+=health_gain;
 
     //Increase max mana.
+
+    int mana_gain=0;
+
     //Apply the base increase.
-    mana_max+=random_range(templates.base_stats.levelup_mana_min,templates.base_stats.levelup_mana_max);
+    mana_gain+=random_range(templates.base_stats.levelup_mana_min,templates.base_stats.levelup_mana_max);
+
     //Apply the racial modifier.
-    mana_max+=random_range(templates.template_races[race].levelup_mana_min,templates.template_races[race].levelup_mana_max);
+    //If the race has a levelup mana bonus.
+    if(templates.template_races[race].levelup_mana_bonus){
+        mana_gain+=random_range(templates.template_races[race].levelup_mana_min,templates.template_races[race].levelup_mana_max);
+    }
+    //If the race has a levelup mana penalty.
+    else{
+        mana_gain-=random_range(templates.template_races[race].levelup_mana_min,templates.template_races[race].levelup_mana_max);
+    }
+
+    if(mana_gain<0){
+        mana_gain=0;
+    }
+
+    mana_max+=mana_gain;
+
+    ss.clear();ss.str("");ss<<health_gain;ss<<",";ss<<mana_gain;msg=ss.str();
+
+    update_text_log(msg.c_str(),true);
 
     //Determine whether 1, 2, or 3 attributes are to be improved this level.
     int attributes_to_improve=(experience_level%3)+1;
@@ -179,21 +217,24 @@ void Creature::level_up_skill(short skill,int experience_gained){
 }
 
 void Creature::gain_skill_experience(short skill,int points_gained,int experience_gained,bool allow_focused_bonus){
-    //If this skill is a focused skill.
-    if(allow_focused_bonus && is_focused_skill(skill)){
-        //Apply the focused skill bonus to this skill's experience gain.
-        points_gained*=2.0;
-    }
+    //As long as at least one point is being gained.
+    if(points_gained>0){
+        //If this skill is a focused skill.
+        if(allow_focused_bonus && is_focused_skill(skill)){
+            //Apply the focused skill bonus to this skill's experience gain.
+            points_gained*=2.0;
+        }
 
-    //The creature gains experience for gaining skill experience.
-    gain_experience(experience_gained);
+        //The creature gains experience for gaining skill experience.
+        gain_experience(experience_gained);
 
-    //Add points_gained to the skill's experience.
-    skills[skill][SKILL_EXPERIENCE]+=points_gained;
+        //Add points_gained to the skill's experience.
+        skills[skill][SKILL_EXPERIENCE]+=points_gained;
 
-    //If the skill's experience reaches its current maximum experience.
-    if(skills[skill][SKILL_EXPERIENCE]>=skills[skill][SKILL_EXPERIENCE_MAX]){
-        //The skill levels up.
-        level_up_skill(skill,experience_gained*5.0);
+        //If the skill's experience reaches its current maximum experience.
+        if(skills[skill][SKILL_EXPERIENCE]>=skills[skill][SKILL_EXPERIENCE_MAX]){
+            //The skill levels up.
+            level_up_skill(skill,experience_gained*5.0);
+        }
     }
 }

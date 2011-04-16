@@ -204,6 +204,10 @@ void Player::set_base_stats(){
     next_move=movement_speed;
 
     carry_capacity=templates.base_stats.carry_capacity;
+
+    for(int i=SKILL_BLADED_WEAPONS;i<SKILL_MAGIC_SUMMONING+1;i++){
+        skills[i][SKILL_EXPERIENCE_MAX]+=templates.template_races[race].skills[i][SKILL_EXPERIENCE_MAX];
+    }
 }
 
 void Player::handle_input(){

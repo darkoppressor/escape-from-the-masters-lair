@@ -86,6 +86,10 @@ void Monster::set_base_stats(short pass_level){
 
     carry_capacity=templates.base_stats.carry_capacity;
 
+    for(int i=SKILL_BLADED_WEAPONS;i<SKILL_MAGIC_SUMMONING+1;i++){
+        skills[i][SKILL_EXPERIENCE_MAX]+=templates.template_races[race].skills[i][SKILL_EXPERIENCE_MAX];
+    }
+
     //Set the monster's focused skills.
     for(int i=0;i<3;){
         //Choose a random skill.

@@ -480,7 +480,7 @@ void Templates::load_template_race(){
     }
 
     for(int i=0;i<SKILL_MAGIC_SUMMONING+1;i++){
-        temp_race.skills[i][SKILL_EXPERIENCE_LEVEL]=0;
+        temp_race.skills[i][SKILL_EXPERIENCE_MAX]=0;
     }
 
     //As long as we haven't reached the end of the file.
@@ -595,9 +595,9 @@ void Templates::load_template_race(){
 
             //Look through the characters remaining in line.
             for(int i=0;i<line.length();i++){
-                //If the dash is encountered.
-                if(line[i]=='-'){
-                    //Erase the dash.
+                //If the comma is encountered.
+                if(line[i]==','){
+                    //Erase the comma.
                     line.erase(i,1);
 
                     for(int n=i;n<line.length();n++){
@@ -613,6 +613,13 @@ void Templates::load_template_race(){
 
             temp_race.levelup_hp_min=atoi(min_number.c_str());
             temp_race.levelup_hp_max=atoi(max_number.c_str());
+
+            //If the hp modifier is a penalty.
+            if(temp_race.levelup_hp_max<0){
+                temp_race.levelup_hp_bonus=false;
+                temp_race.levelup_hp_min=abs(temp_race.levelup_hp_min);
+                temp_race.levelup_hp_max=abs(temp_race.levelup_hp_max);
+            }
         }
         //Level up mana Range.
         else if(icontains(line,mana_range)){
@@ -624,9 +631,9 @@ void Templates::load_template_race(){
 
             //Look through the characters remaining in line.
             for(int i=0;i<line.length();i++){
-                //If the dash is encountered.
-                if(line[i]=='-'){
-                    //Erase the dash.
+                //If the comma is encountered.
+                if(line[i]==','){
+                    //Erase the comma.
                     line.erase(i,1);
 
                     for(int n=i;n<line.length();n++){
@@ -642,6 +649,13 @@ void Templates::load_template_race(){
 
             temp_race.levelup_mana_min=atoi(min_number.c_str());
             temp_race.levelup_mana_max=atoi(max_number.c_str());
+
+            //If the mana modifier is a penalty.
+            if(temp_race.levelup_mana_max<0){
+                temp_race.levelup_mana_bonus=false;
+                temp_race.levelup_mana_min=abs(temp_race.levelup_mana_min);
+                temp_race.levelup_mana_max=abs(temp_race.levelup_mana_max);
+            }
         }
         //Health.
         else if(icontains(line,health)){
@@ -667,9 +681,9 @@ void Templates::load_template_race(){
 
             //Look through the characters remaining in line.
             for(int i=0;i<line.length();i++){
-                //If the dash is encountered.
-                if(line[i]=='-'){
-                    //Erase the dash.
+                //If the comma is encountered.
+                if(line[i]==','){
+                    //Erase the comma.
                     line.erase(i,1);
 
                     for(int n=i;n<line.length();n++){
@@ -696,9 +710,9 @@ void Templates::load_template_race(){
 
             //Look through the characters remaining in line.
             for(int i=0;i<line.length();i++){
-                //If the dash is encountered.
-                if(line[i]=='-'){
-                    //Erase the dash.
+                //If the comma is encountered.
+                if(line[i]==','){
+                    //Erase the comma.
                     line.erase(i,1);
 
                     for(int n=i;n<line.length();n++){
@@ -725,9 +739,9 @@ void Templates::load_template_race(){
 
             //Look through the characters remaining in line.
             for(int i=0;i<line.length();i++){
-                //If the dash is encountered.
-                if(line[i]=='-'){
-                    //Erase the dash.
+                //If the comma is encountered.
+                if(line[i]==','){
+                    //Erase the comma.
                     line.erase(i,1);
 
                     for(int n=i;n<line.length();n++){
@@ -798,147 +812,147 @@ void Templates::load_template_race(){
             //Clear the data name.
             line.erase(0,bladed_weapons.length());
 
-            temp_race.skills[SKILL_BLADED_WEAPONS][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+            temp_race.skills[SKILL_BLADED_WEAPONS][SKILL_EXPERIENCE_MAX]=atoi(line.c_str());
         }
         //Blunt weapons
         else if(icontains(line,blunt_weapons)){
             //Clear the data name.
             line.erase(0,blunt_weapons.length());
 
-            temp_race.skills[SKILL_BLUNT_WEAPONS][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+            temp_race.skills[SKILL_BLUNT_WEAPONS][SKILL_EXPERIENCE_MAX]=atoi(line.c_str());
         }
         //Stabbing weapons
         else if(icontains(line,stabbing_weapons)){
             //Clear the data name.
             line.erase(0,stabbing_weapons.length());
 
-            temp_race.skills[SKILL_STABBING_WEAPONS][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+            temp_race.skills[SKILL_STABBING_WEAPONS][SKILL_EXPERIENCE_MAX]=atoi(line.c_str());
         }
         //Unarmed
         else if(icontains(line,unarmed)){
             //Clear the data name.
             line.erase(0,unarmed.length());
 
-            temp_race.skills[SKILL_UNARMED][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+            temp_race.skills[SKILL_UNARMED][SKILL_EXPERIENCE_MAX]=atoi(line.c_str());
         }
         //Security
         else if(icontains(line,security)){
             //Clear the data name.
             line.erase(0,security.length());
 
-            temp_race.skills[SKILL_SECURITY][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+            temp_race.skills[SKILL_SECURITY][SKILL_EXPERIENCE_MAX]=atoi(line.c_str());
         }
         //Stealth
         else if(icontains(line,stealth)){
             //Clear the data name.
             line.erase(0,stealth.length());
 
-            temp_race.skills[SKILL_STEALTH][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+            temp_race.skills[SKILL_STEALTH][SKILL_EXPERIENCE_MAX]=atoi(line.c_str());
         }
         //Launcher weapons
         else if(icontains(line,launcher_weapons)){
             //Clear the data name.
             line.erase(0,launcher_weapons.length());
 
-            temp_race.skills[SKILL_LAUNCHER_WEAPONS][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+            temp_race.skills[SKILL_LAUNCHER_WEAPONS][SKILL_EXPERIENCE_MAX]=atoi(line.c_str());
         }
         //Thrown weapons
         else if(icontains(line,thrown_weapons)){
             //Clear the data name.
             line.erase(0,thrown_weapons.length());
 
-            temp_race.skills[SKILL_THROWN_WEAPONS][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+            temp_race.skills[SKILL_THROWN_WEAPONS][SKILL_EXPERIENCE_MAX]=atoi(line.c_str());
         }
         //Dual wielding
         else if(icontains(line,dual_wielding)){
             //Clear the data name.
             line.erase(0,dual_wielding.length());
 
-            temp_race.skills[SKILL_DUAL_WIELDING][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+            temp_race.skills[SKILL_DUAL_WIELDING][SKILL_EXPERIENCE_MAX]=atoi(line.c_str());
         }
         //Speed
         else if(icontains(line,speed)){
             //Clear the data name.
             line.erase(0,speed.length());
 
-            temp_race.skills[SKILL_SPEED][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+            temp_race.skills[SKILL_SPEED][SKILL_EXPERIENCE_MAX]=atoi(line.c_str());
         }
         //Fighting
         else if(icontains(line,fighting)){
             //Clear the data name.
             line.erase(0,fighting.length());
 
-            temp_race.skills[SKILL_FIGHTING][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+            temp_race.skills[SKILL_FIGHTING][SKILL_EXPERIENCE_MAX]=atoi(line.c_str());
         }
         //Dodging
         else if(icontains(line,dodging)){
             //Clear the data name.
             line.erase(0,dodging.length());
 
-            temp_race.skills[SKILL_DODGING][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+            temp_race.skills[SKILL_DODGING][SKILL_EXPERIENCE_MAX]=atoi(line.c_str());
         }
         //Armor
         else if(icontains(line,armor)){
             //Clear the data name.
             line.erase(0,armor.length());
 
-            temp_race.skills[SKILL_ARMOR][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+            temp_race.skills[SKILL_ARMOR][SKILL_EXPERIENCE_MAX]=atoi(line.c_str());
         }
         //Air magic
         else if(icontains(line,air_magic)){
             //Clear the data name.
             line.erase(0,air_magic.length());
 
-            temp_race.skills[SKILL_MAGIC_AIR][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+            temp_race.skills[SKILL_MAGIC_AIR][SKILL_EXPERIENCE_MAX]=atoi(line.c_str());
         }
         //Fire magic
         else if(icontains(line,fire_magic)){
             //Clear the data name.
             line.erase(0,fire_magic.length());
 
-            temp_race.skills[SKILL_MAGIC_FIRE][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+            temp_race.skills[SKILL_MAGIC_FIRE][SKILL_EXPERIENCE_MAX]=atoi(line.c_str());
         }
         //Water magic
         else if(icontains(line,water_magic)){
             //Clear the data name.
             line.erase(0,water_magic.length());
 
-            temp_race.skills[SKILL_MAGIC_WATER][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+            temp_race.skills[SKILL_MAGIC_WATER][SKILL_EXPERIENCE_MAX]=atoi(line.c_str());
         }
         //Cold magic
         else if(icontains(line,cold_magic)){
             //Clear the data name.
             line.erase(0,cold_magic.length());
 
-            temp_race.skills[SKILL_MAGIC_COLD][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+            temp_race.skills[SKILL_MAGIC_COLD][SKILL_EXPERIENCE_MAX]=atoi(line.c_str());
         }
         //Earth magic
         else if(icontains(line,earth_magic)){
             //Clear the data name.
             line.erase(0,earth_magic.length());
 
-            temp_race.skills[SKILL_MAGIC_EARTH][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+            temp_race.skills[SKILL_MAGIC_EARTH][SKILL_EXPERIENCE_MAX]=atoi(line.c_str());
         }
         //Conjuration magic
         else if(icontains(line,conjuration_magic)){
             //Clear the data name.
             line.erase(0,conjuration_magic.length());
 
-            temp_race.skills[SKILL_MAGIC_CONJURATION][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+            temp_race.skills[SKILL_MAGIC_CONJURATION][SKILL_EXPERIENCE_MAX]=atoi(line.c_str());
         }
         //Enchantment magic
         else if(icontains(line,enchantment_magic)){
             //Clear the data name.
             line.erase(0,enchantment_magic.length());
 
-            temp_race.skills[SKILL_MAGIC_ENCHANTMENT][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+            temp_race.skills[SKILL_MAGIC_ENCHANTMENT][SKILL_EXPERIENCE_MAX]=atoi(line.c_str());
         }
         //Summoning magic
         else if(icontains(line,summoning_magic)){
             //Clear the data name.
             line.erase(0,summoning_magic.length());
 
-            temp_race.skills[SKILL_MAGIC_SUMMONING][SKILL_EXPERIENCE_LEVEL]=atoi(line.c_str());
+            temp_race.skills[SKILL_MAGIC_SUMMONING][SKILL_EXPERIENCE_MAX]=atoi(line.c_str());
         }
         //Item
         else if(icontains(line,item)){

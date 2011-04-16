@@ -5,13 +5,14 @@
 //************//
 // B - bears: //
 //************//
+//Slight health bonus
 
 <race>
 	name:polar bear
 	appearance:B
 	color:white
 	weight:350
-	health:50
+	health:5
 </race>
 
 <race>
@@ -19,7 +20,7 @@
 	appearance:B
 	color:dark blue
 	weight:125
-	health:50
+	health:5
 </race>
 
 <race>
@@ -27,7 +28,7 @@
 	appearance:B
 	color:brown
 	weight:300
-	health:50
+	health:5
 </race>
 
 <race>
@@ -35,20 +36,40 @@
 	appearance:B
 	color:blue
 	weight:125
-	health:50
+	health:5
 </race>
 
 //**************//
 // r - rodents: //
 //**************//
+//Slow
+//HP on levelup bonus
 
 <race>
-	name:rat
+	name:sewer rat
+	appearance:r
+	color:dark brown
+	weight:0.5
+	levelup hp range:1,2
+	movement speed:2
+</race>
+
+<race>
+	name:giant rat
 	appearance:r
 	color:dark gray
 	weight:0.5
-	damage melee:2-4
-	movement speed:5
+	levelup hp range:1,2
+	movement speed:2
+</race>
+
+<race>
+	name:groundhog
+	appearance:r
+	color:brown
+	weight:0.5
+	levelup hp range:1,2
+	movement speed:2
 </race>
 
 <race>
@@ -56,21 +77,180 @@
 	appearance:r
 	color:light gray
 	weight:0.02
-	damage melee:2-4
-	movement speed:5
+	levelup hp range:1,2
+	movement speed:2
+</race>
+
+//**************//
+// d - canines: //
+//**************//
+//Unarmed bonus
+
+<race>
+	name:puppy
+	appearance:d
+	color:white
+	weight:300
+	unarmed:-50
+</race>
+
+<race>
+	name:dog
+	appearance:d
+	color:white
+	weight:300
+	unarmed:-50
+</race>
+
+<race>
+	name:large dog
+	appearance:d
+	color:white
+	weight:300
+	unarmed:-50
+</race>
+
+<race>
+	name:hell hound pup
+	appearance:d
+	color:red
+	weight:300
+	unarmed:-50
+</race>
+
+<race>
+	name:hell hound
+	appearance:d
+	color:red
+	weight:300
+	unarmed:-50
+</race>
+
+<race>
+	name:wolf cub
+	appearance:d
+	color:gray
+	weight:300
+	unarmed:-50
+</race>
+
+<race>
+	name:wolf
+	appearance:d
+	color:gray
+	weight:300
+	unarmed:-50
+</race>
+
+<race>
+	name:coyote
+	appearance:d
+	color:paynes gray
+	weight:300
+	unarmed:-50
+</race>
+
+<race>
+	name:jackal
+	appearance:d
+	color:brown
+	weight:300
+	unarmed:-50
+</race>
+
+<race>
+	name:fox
+	appearance:d
+	color:sepia
+	weight:300
+	unarmed:-50
 </race>
 
 //**************//
 // f - felines: //
 //**************//
+//Fast
+//Melee damage bonus
+//Health penalty
+
+<race>
+	name:kitten
+	appearance:f
+	color:blue
+	weight:300
+	damage melee:2,4
+	movement speed:-2
+	health:-15
+</race>
+
+<race>
+	name:housecat
+	appearance:f
+	color:blue
+	weight:300
+	damage melee:2,4
+	movement speed:-2
+	health:-15
+</race>
+
+<race>
+	name:jaguar
+	appearance:f
+	color:carrot orange
+	weight:300
+	damage melee:2,4
+	movement speed:-2
+	health:-15
+</race>
+
+<race>
+	name:lynx
+	appearance:f
+	color:burnt sienna
+	weight:300
+	damage melee:2,4
+	movement speed:-2
+	health:-15
+</race>
+
+<race>
+	name:leopard
+	appearance:f
+	color:pumpkin
+	weight:300
+	damage melee:2,4
+	movement speed:-2
+	health:-15
+</race>
+
+<race>
+	name:cougar
+	appearance:f
+	color:sandy brown
+	weight:300
+	damage melee:2,4
+	movement speed:-2
+	health:-15
+</race>
+
+<race>
+	name:pink panther
+	appearance:f
+	color:pink
+	weight:300
+	damage melee:2,4
+	movement speed:-2
+	health:-15
+</race>
 
 <race>
 	name:tiger
 	appearance:f
 	color:orange
 	weight:300
-	damage melee:2-4
-	movement speed:-5
+	damage melee:2,4
+	movement speed:-2
+	health:-15
 </race>
 
 <race>
@@ -78,21 +258,24 @@
 	appearance:f
 	color:burnt orange
 	weight:250
-	damage melee:2-4
-	movement speed:-5
+	damage melee:2,4
+	movement speed:-2
+	health:-15
 </race>
 
 //*****************//
 // q - quadrupeds: //
 //*****************//
+//Slow
+//Health bonus
 
 <race>
 	name:wild boar
 	appearance:q
 	color:pale brown
 	weight:90
-	health:50
-	damage melee:2-4
+	health:15
+	movement speed:2
 </race>
 
 <race>
@@ -101,8 +284,44 @@
 	appearance:q
 	color:light gray
 	weight:4175
-	health:50
-	damage melee:2-4
+	health:15
+	movement speed:2
+</race>
+
+<race>
+	name:woolly mammoth
+	appearance:q
+	color:gray
+	weight:4175
+	health:15
+	movement speed:2
+</race>
+
+<race>
+	name:mastodon
+	appearance:q
+	color:dark gray
+	weight:4175
+	health:15
+	movement speed:2
+</race>
+
+<race>
+	name:yak
+	appearance:q
+	color:brown
+	weight:4175
+	health:15
+	movement speed:2
+</race>
+
+<race>
+	name:wumpus
+	appearance:q
+	color:blue
+	weight:4175
+	health:15
+	movement speed:2
 </race>
 
 <race>
@@ -110,8 +329,8 @@
 	appearance:q
 	color:dark brown
 	weight:1760
-	health:50
-	damage melee:2-4
+	health:15
+	movement speed:2
 </race>
 
 <race>
@@ -119,8 +338,8 @@
 	appearance:q
 	color:burnt sienna
 	weight:450
-	health:50
-	damage melee:2-4
+	health:15
+	movement speed:2
 </race>
 
 <race>
@@ -128,8 +347,91 @@
 	appearance:q
 	color:payne's gray
 	weight:850
-	health:50
-	damage melee:2-4
+	health:15
+	movement speed:2
+</race>
+
+//***********//
+// o - orcs: //
+//***********//
+//Bladed weapons skill bonus
+//Slight melee damage bonus
+//Slight health penalty
+
+<race>
+	name:orc
+	prefix article:an
+	appearance:o
+	color:green
+	weight:55
+	bladed weapons:-50
+	damage melee:1,2
+	health:-5
+</race>
+
+<race>
+	name:hill orc
+	appearance:o
+	color:yellow
+	weight:55
+	bladed weapons:-50
+	damage melee:1,2
+	health:-5
+</race>
+
+<race>
+	name:cave orc
+	appearance:o
+	color:gray
+	weight:55
+	bladed weapons:-50
+	damage melee:1,2
+	health:-5
+</race>
+
+<race>
+	name:Beoghan orc
+	appearance:o
+	color:blue
+	weight:55
+	bladed weapons:-50
+	damage melee:1,2
+	health:-5
+</race>
+
+//****************//
+// @ - humanoids: //
+//****************//
+//Bladed weapons skill bonus
+//Slight melee damage bonus
+//Armor penalty
+
+<race>
+	name:human
+	appearance:@
+	color:white
+	weight:55
+	bladed weapons:-50
+	damage melee:1,2
+	armor:50
+</race>
+
+//************//
+// e - elves: //
+//************//
+//Launcher weapons skill bonus
+//Slight ranged damage bonus
+//Slight levelup hp gain penalty.
+
+<race>
+	name:elf
+	prefix article:an
+	appearance:@
+	color:sandy brown
+	weight:55
+	launcher weapons:-50
+	damage ranged:1,2
+	levelup hp range:-1,-2
 </race>
 
 <race>
@@ -137,14 +439,4 @@
 	appearance:x
 	color:purple
 	weight:0.07
-	movement speed:1
-</race>
-
-<race>
-	name:human
-	appearance:@
-	color:white
-	weight:55
-	item:dagger
-	item:simple leather helm
 </race>
