@@ -6,11 +6,11 @@
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
-			<Target title="Release-Tiles-Windows-32">
+			<Target title="Release-Windows">
 				<Option platforms="Windows;" />
-				<Option output="bin\Release-Tiles-Windows-32\Escape.exe" prefix_auto="1" extension_auto="0" />
+				<Option output="bin\Release-Windows\Escape.exe" prefix_auto="1" extension_auto="0" />
 				<Option working_dir="" />
-				<Option object_output="obj\Release-Tiles-Windows-32\" />
+				<Option object_output="obj\Release-Windows\" />
 				<Option type="5" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -49,53 +49,7 @@
 					<Add directory="..\..\Boost\stage\lib" />
 				</Linker>
 			</Target>
-			<Target title="Release-Console-Windows-32">
-				<Option platforms="Windows;" />
-				<Option output="bin\Release-Console-Windows-32\Escape.exe" prefix_auto="1" extension_auto="0" />
-				<Option working_dir="" />
-				<Option object_output="obj\Release-Console-Windows-32\" />
-				<Option type="5" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-O2" />
-					<Add option="-DCONSOLE_MODE" />
-					<Add directory="..\..\MinGW\include" />
-					<Add directory="..\..\SDL\include\SDL" />
-					<Add directory="..\..\SDL\SDL_image\include" />
-					<Add directory="..\..\SDL\SDL_gfx\include" />
-					<Add directory="..\..\SDL\SDL_mixer\include" />
-					<Add directory="..\..\glew\include\GL" />
-					<Add directory="..\..\Boost" />
-					<Add directory="..\..\PDCurses" />
-					<Add directory="..\..\PDCurses\win32" />
-				</Compiler>
-				<Linker>
-					<Add option="-s" />
-					<Add option="-lws2_32" />
-					<Add option="-lmingw32" />
-					<Add option="-lSDLmain" />
-					<Add option="-lSDL" />
-					<Add option="-mwindows" />
-					<Add option="-Wl,--stack,16777216" />
-					<Add library="..\..\SDL\lib\libSDL.dll.a" />
-					<Add library="..\..\SDL\lib\libSDLmain.a" />
-					<Add library="..\..\glew\lib\glew32s.lib" />
-					<Add library="..\..\MinGW\lib\libopengl32.a" />
-					<Add library="..\..\MinGW\lib\libglu32.a" />
-					<Add library="..\..\SDL\SDL_image\lib\SDL_image.lib" />
-					<Add library="..\..\SDL\SDL_gfx\lib\libSDL_gfx.dll.a" />
-					<Add library="..\..\SDL\SDL_mixer\lib\SDL_mixer.lib" />
-					<Add library="..\..\Boost\stage\lib\libboost_system-mgw45-mt-1_46_1.a" />
-					<Add library="..\..\Boost\stage\lib\libboost_filesystem-mgw45-mt-1_46_1.a" />
-					<Add library="..\..\Boost\stage\lib\libboost_iostreams-mgw45-mt-1_46_1.a" />
-					<Add library="..\..\Boost\stage\lib\libboost_bzip2-mgw45-mt-1_46_1.a" />
-					<Add library="..\..\PDCurses\sdl1\libpdcurses.a" />
-					<Add directory="..\..\SDL\lib" />
-					<Add directory="..\..\glew\lib" />
-					<Add directory="..\..\Boost\stage\lib" />
-				</Linker>
-			</Target>
-			<Target title="Release-Tiles-Linux-32">
+			<Target title="Release-Linux">
 				<Option platforms="Unix;" />
 				<Option output="Escape" prefix_auto="1" extension_auto="0" />
 				<Option working_dir="" />

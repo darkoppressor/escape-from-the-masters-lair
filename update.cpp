@@ -285,12 +285,12 @@ void render(int frame_rate, double ms_per_frame){
 
             //Render chat stuff:
 
-            render_rectangle(0,main_window.SCREEN_HEIGHT-122,main_window.SCREEN_WIDTH,122,1.0,COLOR_GRAY);
-            render_rectangle(2,main_window.SCREEN_HEIGHT-120,796,118,1.0,COLOR_BLACK);
+            render_rectangle(0,player.option_screen_height-122,player.option_screen_width,122,1.0,COLOR_GRAY);
+            render_rectangle(2,player.option_screen_height-120,796,118,1.0,COLOR_BLACK);
 
             if(player.chat_mode){
-                render_rectangle(2,main_window.SCREEN_HEIGHT-font_small.spacing_y-6,796,font.spacing_y-4,1.0,COLOR_GRAY);
-                render_rectangle(4,main_window.SCREEN_HEIGHT-font_small.spacing_y-4,792,font.spacing_y-8,1.0,COLOR_BLACK);
+                render_rectangle(2,player.option_screen_height-font_small.spacing_y-6,796,font.spacing_y-4,1.0,COLOR_GRAY);
+                render_rectangle(4,player.option_screen_height-font_small.spacing_y-4,792,font.spacing_y-8,1.0,COLOR_BLACK);
             }
 
             double opacity=1.0;
@@ -321,17 +321,17 @@ void render(int frame_rate, double ms_per_frame){
                     //If the message is a system message, print it to screen in yellow system message text.
                     if(player.text_log[i].rfind("\x1F",0,1)!=string::npos && player.text_log[i].rfind("\x1F",0,1)==0){
                         string temp_string=player.text_log[i].substr(1);
-                        font_small.show(4,main_window.SCREEN_HEIGHT-36-n*font_small.spacing_y,temp_string,COLOR_SYSTEM,opacity);
+                        font_small.show(4,player.option_screen_height-36-n*font_small.spacing_y,temp_string,COLOR_SYSTEM,opacity);
                     }
                     //Otherwise, print it to screen normally.
                     else{
-                        font_small.show(4,main_window.SCREEN_HEIGHT-36-n*font_small.spacing_y,player.text_log[i],COLOR_WHITE,opacity);
+                        font_small.show(4,player.option_screen_height-36-n*font_small.spacing_y,player.text_log[i],COLOR_WHITE,opacity);
                     }
                 }
             }
 
             if(player.chat_mode){
-                short chat_input_height=main_window.SCREEN_HEIGHT-font_small.spacing_y-2;
+                short chat_input_height=player.option_screen_height-font_small.spacing_y-2;
                 font_small.show(4,chat_input_height,"> "+string_input_chat.str1,COLOR_WHITE,1.0);
                 font_small.show(17+font_small.spacing_x*string_input_chat.str1.length(),chat_input_height,"\x7F",COLOR_WHITE,player.cursor_opacity*0.1);
             }
@@ -460,11 +460,11 @@ void render(int frame_rate, double ms_per_frame){
 
             int size_last_msg=0;
 
-            render_rectangle(0,main_window.SCREEN_HEIGHT-174,800,54,1.0,COLOR_GRAY);
-            render_rectangle(2,main_window.SCREEN_HEIGHT-172,796,50,1.0,COLOR_BLACK);
+            render_rectangle(0,player.option_screen_height-174,800,54,1.0,COLOR_GRAY);
+            render_rectangle(2,player.option_screen_height-172,796,50,1.0,COLOR_BLACK);
 
             ss.clear();ss.str("");ss<<player.name;ss<<" the ";ss<<player.race_name;ss<<" ";ss<<player.class_name;msg=ss.str();
-            font_small.show(5,main_window.SCREEN_HEIGHT-170,msg,COLOR_WHITE);
+            font_small.show(5,player.option_screen_height-170,msg,COLOR_WHITE);
             size_last_msg=msg.length();
 
             //If the player is anything other than not thirsty.
@@ -475,7 +475,7 @@ void render(int frame_rate, double ms_per_frame){
                 else{
                     ss.clear();ss.str("");ss<<" is ";ss<<player.return_thirst_state();msg=ss.str();
                 }
-                font_small.show(5+font_small.spacing_x*size_last_msg,main_window.SCREEN_HEIGHT-170,msg,thirst_color);
+                font_small.show(5+font_small.spacing_x*size_last_msg,player.option_screen_height-170,msg,thirst_color);
                 size_last_msg+=msg.length();
             }
 
@@ -487,26 +487,26 @@ void render(int frame_rate, double ms_per_frame){
                 else{
                     ss.clear();ss.str("");ss<<" and ";ss<<player.return_encumbrance_state();ss<<".";msg=ss.str();
                 }
-                font_small.show(5+font_small.spacing_x*size_last_msg,main_window.SCREEN_HEIGHT-170,msg,burden_color);
+                font_small.show(5+font_small.spacing_x*size_last_msg,player.option_screen_height-170,msg,burden_color);
             }
 
             ss.clear();ss.str("");ss<<"Experience Level:";ss<<player.experience_level;msg=ss.str();
             ss.clear();ss.str("");ss<<" (";ss<<player.experience;ss<<"/";ss<<player.experience_max;ss<<")";msg+=ss.str();
             ss.clear();ss.str("");ss<<"  Dungeon Level:";ss<<current_level+1;msg+=ss.str();
             ss.clear();ss.str("");ss<<"  Turn:";ss<<player.turn;msg+=ss.str();
-            font_small.show(5,main_window.SCREEN_HEIGHT-170+font_small.spacing_y,msg,COLOR_WHITE);
+            font_small.show(5,player.option_screen_height-170+font_small.spacing_y,msg,COLOR_WHITE);
 
             ss.clear();ss.str("");ss<<"Health:";ss<<player.return_health();ss<<"/";ss<<player.return_health_max();msg=ss.str();
-            font_small.show(5,main_window.SCREEN_HEIGHT-170+font_small.spacing_y*2,msg,health_color);
+            font_small.show(5,player.option_screen_height-170+font_small.spacing_y*2,msg,health_color);
             size_last_msg=msg.length();
 
             ss.clear();ss.str("");ss<<"  Mana:";ss<<player.return_mana();ss<<"/";ss<<player.return_mana_max();msg=ss.str();
-            font_small.show(5+font_small.spacing_x*size_last_msg,main_window.SCREEN_HEIGHT-170+font_small.spacing_y*2,msg,mana_color);
+            font_small.show(5+font_small.spacing_x*size_last_msg,player.option_screen_height-170+font_small.spacing_y*2,msg,mana_color);
             size_last_msg+=msg.length();
 
             ss.clear();ss.str("");ss<<"  Armor:";ss<<player.return_armor();msg=ss.str();
             ss.clear();ss.str("");ss<<"  Carrying:";ss<<(int)player.return_inventory_weight();ss<<"/";ss<<(int)player.return_carry_capacity();msg+=ss.str();
-            font_small.show(5+font_small.spacing_x*size_last_msg,main_window.SCREEN_HEIGHT-170+font_small.spacing_y*2,msg,COLOR_WHITE);
+            font_small.show(5+font_small.spacing_x*size_last_msg,player.option_screen_height-170+font_small.spacing_y*2,msg,COLOR_WHITE);
         }
         else if(player.current_window==WINDOW_INVENTORY){
             player.render_inventory(true);
@@ -540,8 +540,6 @@ void render(int frame_rate, double ms_per_frame){
     if(tooltip.on){
         tooltip.render();
     }
-
-    render_window();
 
     //Swap the buffers, updating the screen.
     SDL_GL_SwapBuffers();

@@ -48,8 +48,6 @@ Image image;
 
 //This function is called at the beginning of the game.
 void load_world(){
-    main_window.load_framebuffer();
-
     //Generate the fonts.
     font.build_font("data/images/bitmap_font.png",4096,16,11,24);
     font_small.build_font("data/images/bitmap_font_small.png",2048,12,7,16);
@@ -63,8 +61,6 @@ void load_world(){
 
 //This is called in quit_game(). It frees all of the memory allocated in load_world().
 void unload_world(){
-    main_window.unload_framebuffer();
-
     image.current_texture=0;
 
     //Unload the fonts.

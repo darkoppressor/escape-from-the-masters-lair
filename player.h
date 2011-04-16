@@ -105,7 +105,8 @@ class Player: public Creature{
     int text_log_display_position;
 
     bool option_fullscreen;
-    bool option_fbo;
+    short option_screen_width;
+    short option_screen_height;
     bool option_dev;
     bool option_fps;
     bool option_healthbars;

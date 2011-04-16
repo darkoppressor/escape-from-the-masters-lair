@@ -115,7 +115,8 @@ Player::Player(){
 
     //Options:
     option_fullscreen=false;
-    option_fbo=true;
+    option_screen_width=800;
+    option_screen_height=600;
     option_dev=false;
     option_fps=true;
     option_healthbars=false;
@@ -123,10 +124,8 @@ Player::Player(){
     //Set the camera's initial location and its dimensions.
     camera_x=0.0;
     camera_y=0.0;
-    ///camera_w=main_window.SCREEN_WIDTH;
-    ///camera_h=main_window.SCREEN_HEIGHT-180;
-    camera_w=800;
-    camera_h=420;
+    camera_w=option_screen_width;
+    camera_h=option_screen_height-180;
 }
 
 void Player::set_inventory(){
@@ -234,7 +233,7 @@ void Player::handle_input(){
 
             case SDL_MOUSEBUTTONDOWN:
                 //If the cursor is over the chat box.
-                if(mouse_x>=0 && mouse_x<=main_window.SCREEN_WIDTH && mouse_y>=main_window.SCREEN_HEIGHT-122 && mouse_y<=main_window.SCREEN_HEIGHT){
+                if(mouse_x>=0 && mouse_x<=option_screen_width && mouse_y>=option_screen_height-122 && mouse_y<=option_screen_height){
                     if(event.button.button==SDL_BUTTON_WHEELUP){
                         if(text_log_display_position<text_log.size()-1){
                             text_log_display_position++;

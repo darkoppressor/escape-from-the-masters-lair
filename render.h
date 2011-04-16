@@ -23,21 +23,6 @@ SDL_Surface *load_image_opengl(std::string filename);
 //Call this when loading image files to be used as textures throughout the program.
 GLuint load_texture(std::string filename);
 
-//
-void render_window();
-
-//
-void render_start_fbo();
-
-//
-void render_start_standard();
-
-//
-void render_finish_fbo();
-
-//
-void render_finish_standard();
-
 //Render a full texture to the screen.
 void render_texture(double x,double y,image_data image_source,double opacity=1.0);
 

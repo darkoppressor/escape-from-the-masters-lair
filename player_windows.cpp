@@ -581,7 +581,7 @@ void Player::render_get_name(){
 
     if(get_name.length()>0){
         ss.clear();ss.str("");ss<<"Press [Enter] to continue -->  ";msg=ss.str();
-        font_small.show(main_window.SCREEN_WIDTH-font_small.spacing_x*msg.length(),0,msg,COLOR_WHITE);
+        font_small.show(option_screen_width-font_small.spacing_x*msg.length(),0,msg,COLOR_WHITE);
     }
     ss.clear();ss.str("");ss<<"  <-- Press [Escape] to quit";msg=ss.str();
     font_small.show(0,0,msg,COLOR_WHITE);
@@ -590,13 +590,13 @@ void Player::render_get_name(){
 void Player::render_get_race(){
     ss.clear();ss.str("");ss<<"What race do you want to be?";msg=ss.str();
 
-    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2,0,msg,COLOR_WHITE);
+    font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2,0,msg,COLOR_WHITE);
 
     ss.clear();ss.str("");ss<<get_race;msg=ss.str();
 
-    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2,font_small.spacing_y,msg,COLOR_WHITE);
+    font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2,font_small.spacing_y,msg,COLOR_WHITE);
 
-    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2+msg.length()*font_small.spacing_x,font_small.spacing_y,"\x7F",COLOR_WHITE,cursor_opacity*0.1);
+    font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2+msg.length()*font_small.spacing_x,font_small.spacing_y,"\x7F",COLOR_WHITE,cursor_opacity*0.1);
 
     msg="";
 
@@ -628,7 +628,7 @@ void Player::render_get_race(){
 
     if(get_race.length()>0 && atoi(get_race.c_str())<templates.template_races.size()){
         ss.clear();ss.str("");ss<<"Press [Enter] to continue -->  ";msg=ss.str();
-        font_small.show(main_window.SCREEN_WIDTH-font_small.spacing_x*msg.length(),0,msg,COLOR_WHITE);
+        font_small.show(option_screen_width-font_small.spacing_x*msg.length(),0,msg,COLOR_WHITE);
     }
     ss.clear();ss.str("");ss<<"  <-- Press [Escape] to go back";msg=ss.str();
     font_small.show(0,0,msg,COLOR_WHITE);
@@ -637,7 +637,7 @@ void Player::render_get_race(){
 void Player::render_get_focused_skills(){
     ss.clear();ss.str("");ss<<"Select 3 skills to focus in.";ss<<"\xA";msg=ss.str();
 
-    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2,0,msg,COLOR_WHITE);
+    font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2,0,msg,COLOR_WHITE);
 
     msg="";
 
@@ -857,7 +857,7 @@ void Player::render_get_focused_skills(){
 
     if(focused_skills[0]!=-1 && focused_skills[1]!=-1 && focused_skills[2]!=-1){
         ss.clear();ss.str("");ss<<"Press [Enter] to continue -->  ";msg=ss.str();
-        font_small.show(main_window.SCREEN_WIDTH-font_small.spacing_x*msg.length(),0,msg,COLOR_WHITE);
+        font_small.show(option_screen_width-font_small.spacing_x*msg.length(),0,msg,COLOR_WHITE);
     }
     ss.clear();ss.str("");ss<<"  <-- Press [Escape] to go back";msg=ss.str();
     font_small.show(0,0,msg,COLOR_WHITE);
@@ -866,11 +866,11 @@ void Player::render_get_focused_skills(){
 void Player::render_get_starting_items(){
     ss.clear();ss.str("");ss<<"Select your starting item(s).";msg=ss.str();
 
-    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2,0,msg,COLOR_WHITE);
+    font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2,0,msg,COLOR_WHITE);
 
     ss.clear();ss.str("");ss<<"You have ";ss<<starting_items_gold;ss<<" gold to spend.";msg=ss.str();
 
-    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2,font_small.spacing_y,msg,COLOR_WHITE);
+    font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2,font_small.spacing_y,msg,COLOR_WHITE);
 
     msg="";
 
@@ -928,7 +928,7 @@ void Player::render_get_starting_items(){
     }
 
     ss.clear();ss.str("");ss<<"Press [Enter] to continue -->  ";msg=ss.str();
-    font_small.show(main_window.SCREEN_WIDTH-font_small.spacing_x*msg.length(),0,msg,COLOR_WHITE);
+    font_small.show(option_screen_width-font_small.spacing_x*msg.length(),0,msg,COLOR_WHITE);
     ss.clear();ss.str("");ss<<"  <-- Press [Escape] to go back";msg=ss.str();
     font_small.show(0,0,msg,COLOR_WHITE);
 }
@@ -986,13 +986,13 @@ void Player::render_start_message(){
     font_small.show(40,75+font.spacing_y*2+font_small.spacing_y*16,msg,COLOR_WHITE);
 
     ss.clear();ss.str("");ss<<"  <-- Press [Enter] to continue -->  ";msg=ss.str();
-    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2.0,main_window.SCREEN_HEIGHT-font_small.spacing_y,msg,COLOR_WHITE);
+    font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2.0,option_screen_height-font_small.spacing_y,msg,COLOR_WHITE);
 }
 
 void Player::render_levelup(){
     ss.clear();ss.str("");ss<<"You have gained a level!";msg=ss.str();
 
-    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2,0,msg,COLOR_WHITE);
+    font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2,0,msg,COLOR_WHITE);
 
     ss.clear();ss.str("");ss<<"Select ";msg=ss.str();
     ss.clear();ss.str("");ss<<levelup_attributes.size();msg+=ss.str();
@@ -1004,7 +1004,7 @@ void Player::render_levelup(){
     }
     ss.clear();ss.str("");ss<<"to improve.";ss<<"\xA";msg+=ss.str();
 
-    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2,font.spacing_y,msg,COLOR_WHITE);
+    font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2,font.spacing_y,msg,COLOR_WHITE);
 
     msg="";
 
@@ -1078,7 +1078,7 @@ void Player::render_levelup(){
 
     if(levelup_all_attributes_set()){
         ss.clear();ss.str("");ss<<"Press [Enter] to continue -->  ";msg=ss.str();
-        font_small.show(main_window.SCREEN_WIDTH-font_small.spacing_x*msg.length(),0,msg,COLOR_WHITE);
+        font_small.show(option_screen_width-font_small.spacing_x*msg.length(),0,msg,COLOR_WHITE);
     }
 }
 
@@ -1119,31 +1119,31 @@ void Player::render_death(){
     short border_color=COLOR_SEPIA;
     short font_color=COLOR_BLACK;
 
-    render_rectangle(0,0,main_window.SCREEN_WIDTH,main_window.SCREEN_HEIGHT,1.0,COLOR_WHITE);
+    render_rectangle(0,0,option_screen_width,option_screen_height,1.0,COLOR_WHITE);
 
-    for(int i=font.w/256;i<main_window.SCREEN_WIDTH-font.w/256;i+=font.w/256){
+    for(int i=font.w/256;i<option_screen_width-font.w/256;i+=font.w/256){
         font.show(i,0,"\xCD",border_color);
     }
 
-    for(int i=font.w/256;i<main_window.SCREEN_WIDTH-font.w/256;i+=font.w/256){
-        font.show(i,main_window.SCREEN_HEIGHT-font.h,"\xCD",border_color);
+    for(int i=font.w/256;i<option_screen_width-font.w/256;i+=font.w/256){
+        font.show(i,option_screen_height-font.h,"\xCD",border_color);
     }
 
-    for(int i=font.h;i<main_window.SCREEN_HEIGHT-font.h*2;i+=font.h){
+    for(int i=font.h;i<option_screen_height-font.h*2;i+=font.h){
         font.show(0,i,"\xBA",border_color);
     }
 
-    for(int i=font.h;i<main_window.SCREEN_HEIGHT-font.h*2;i+=font.h){
-        font.show(main_window.SCREEN_WIDTH-font.w/256,i,"\xBA",border_color);
+    for(int i=font.h;i<option_screen_height-font.h*2;i+=font.h){
+        font.show(option_screen_width-font.w/256,i,"\xBA",border_color);
     }
 
-    font.show(0,main_window.SCREEN_HEIGHT-font.h*2,"\xBA",border_color);
-    font.show(main_window.SCREEN_WIDTH-font.w/256,main_window.SCREEN_HEIGHT-font.h*2,"\xBA",border_color);
+    font.show(0,option_screen_height-font.h*2,"\xBA",border_color);
+    font.show(option_screen_width-font.w/256,option_screen_height-font.h*2,"\xBA",border_color);
 
     font.show(0,0,"\xC9",border_color);
-    font.show(main_window.SCREEN_WIDTH-font.w/256,0,"\xBB",border_color);
-    font.show(0,main_window.SCREEN_HEIGHT-font.h,"\xC8",border_color);
-    font.show(main_window.SCREEN_WIDTH-font.w/256,main_window.SCREEN_HEIGHT-font.h,"\xBC",border_color);
+    font.show(option_screen_width-font.w/256,0,"\xBB",border_color);
+    font.show(0,option_screen_height-font.h,"\xC8",border_color);
+    font.show(option_screen_width-font.w/256,option_screen_height-font.h,"\xBC",border_color);
 
     ss.clear();ss.str("");ss<<"Lair of Loathing";msg=ss.str();
     font_small.show(170,45,msg,font_color);
@@ -1152,7 +1152,7 @@ void Player::render_death(){
     font_small.show(500,45,msg,font_color);
 
     ss.clear();ss.str("");ss<<"Death Certificate";msg=ss.str();
-    font.show((main_window.SCREEN_WIDTH-msg.length()*font.spacing_x)/2.0,80,msg,font_color);
+    font.show((option_screen_width-msg.length()*font.spacing_x)/2.0,80,msg,font_color);
 
     ss.clear();ss.str("");ss<<"I, Aesop Thanatos, Clerk of the Department of Adventurer Reclamations";msg=ss.str();
     font_small.show(240,95+font.spacing_y,msg,font_color);
@@ -1202,41 +1202,41 @@ void Player::render_death(){
     font_small.show(50,95+font.spacing_y+font_small.spacing_y*12,msg,font_color);
 
     ss.clear();ss.str("");ss<<"  <-- Press [Enter] to quit -->  ";msg=ss.str();
-    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2.0,main_window.SCREEN_HEIGHT-font_small.spacing_y*2,msg,font_color);
+    font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2.0,option_screen_height-font_small.spacing_y*2,msg,font_color);
 }
 
 void Player::render_leave_dungeon(){
     short border_color=COLOR_SEPIA;
     short font_color=COLOR_BLACK;
 
-    render_rectangle(0,0,main_window.SCREEN_WIDTH,main_window.SCREEN_HEIGHT,1.0,COLOR_WHEAT);
+    render_rectangle(0,0,option_screen_width,option_screen_height,1.0,COLOR_WHEAT);
 
-    for(int i=font.w/256;i<main_window.SCREEN_WIDTH-font.w/256;i+=font.w/256){
+    for(int i=font.w/256;i<option_screen_width-font.w/256;i+=font.w/256){
         font.show(i,0,"\xB0",border_color);
     }
 
-    for(int i=font.w/256;i<main_window.SCREEN_WIDTH-font.w/256;i+=font.w/256){
-        font.show(i,main_window.SCREEN_HEIGHT-font.h,"\xB0",border_color);
+    for(int i=font.w/256;i<option_screen_width-font.w/256;i+=font.w/256){
+        font.show(i,option_screen_height-font.h,"\xB0",border_color);
     }
 
-    for(int i=font.h;i<main_window.SCREEN_HEIGHT-font.h*2;i+=font.h){
+    for(int i=font.h;i<option_screen_height-font.h*2;i+=font.h){
         font.show(0,i,"\xB0",border_color);
     }
 
-    for(int i=font.h;i<main_window.SCREEN_HEIGHT-font.h*2;i+=font.h){
-        font.show(main_window.SCREEN_WIDTH-font.w/256,i,"\xB0",border_color);
+    for(int i=font.h;i<option_screen_height-font.h*2;i+=font.h){
+        font.show(option_screen_width-font.w/256,i,"\xB0",border_color);
     }
 
-    font.show(0,main_window.SCREEN_HEIGHT-font.h*2,"\xB0",border_color);
-    font.show(main_window.SCREEN_WIDTH-font.w/256,main_window.SCREEN_HEIGHT-font.h*2,"\xB0",border_color);
+    font.show(0,option_screen_height-font.h*2,"\xB0",border_color);
+    font.show(option_screen_width-font.w/256,option_screen_height-font.h*2,"\xB0",border_color);
 
     font.show(0,0,"\xB0",border_color);
-    font.show(main_window.SCREEN_WIDTH-font.w/256,0,"\xB0",border_color);
-    font.show(0,main_window.SCREEN_HEIGHT-font.h,"\xB0",border_color);
-    font.show(main_window.SCREEN_WIDTH-font.w/256,main_window.SCREEN_HEIGHT-font.h,"\xB0",border_color);
+    font.show(option_screen_width-font.w/256,0,"\xB0",border_color);
+    font.show(0,option_screen_height-font.h,"\xB0",border_color);
+    font.show(option_screen_width-font.w/256,option_screen_height-font.h,"\xB0",border_color);
 
     ss.clear();ss.str("");ss<<"Farewell, ";ss<<name;ss<<" the ";ss<<player.race_name;ss<<" ";ss<<player.class_name;ss<<"...";msg=ss.str();
-    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2.0,95+font.spacing_y,msg,font_color);
+    font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2.0,95+font.spacing_y,msg,font_color);
 
     string turns="";
     if(turn==1){
@@ -1247,18 +1247,18 @@ void Player::render_leave_dungeon(){
     }
 
     ss.clear();ss.str("");ss<<"You escaped the dungeon with a score of ";ss<<score;ss<<", after ";ss<<turn;ss<<turns;ss<<".";msg=ss.str();
-    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2.0,95+font.spacing_y+font_small.spacing_y*2,msg,font_color);
+    font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2.0,95+font.spacing_y+font_small.spacing_y*2,msg,font_color);
 
     ss.clear();ss.str("");ss<<"You were level ";ss<<experience_level;ss<<" with a maximum of ";ss<<health_max;ss<<" health and ";ss<<mana_max;ss<<" mana when you escaped.";msg=ss.str();
-    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2.0,95+font.spacing_y+font_small.spacing_y*3,msg,font_color);
+    font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2.0,95+font.spacing_y+font_small.spacing_y*3,msg,font_color);
 
     if(won){
         ss.clear();ss.str("");ss<<"You collected ";ss<<runestones;ss<<" Runestones!";msg=ss.str();
-        font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2.0,95+font.spacing_y+font_small.spacing_y*5,msg,font_color);
+        font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2.0,95+font.spacing_y+font_small.spacing_y*5,msg,font_color);
     }
 
     ss.clear();ss.str("");ss<<"  <-- Press [Enter] to quit -->  ";msg=ss.str();
-    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2.0,main_window.SCREEN_HEIGHT-font_small.spacing_y*2,msg,font_color);
+    font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2.0,option_screen_height-font_small.spacing_y*2,msg,font_color);
 }
 
 void Player::render_stats(){
@@ -1349,7 +1349,7 @@ void Player::render_stats(){
     font_small.show(500,30,msg,COLOR_WHITE);
 
     ss.clear();ss.str("");ss<<"  <-- Press [Space] to quit -->  ";msg=ss.str();
-    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2.0,main_window.SCREEN_HEIGHT-font_small.spacing_y,msg,COLOR_WHITE);
+    font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2.0,option_screen_height-font_small.spacing_y,msg,COLOR_WHITE);
 }
 
 bool Player::render_inventory_category(short category){
@@ -1380,10 +1380,10 @@ void Player::render_inventory(bool all_categories){
     int column_width=400;
 
     ss.clear();ss.str("");ss<<"Weight/Capacity: ";ss<<(int)return_inventory_weight();ss<<"/";ss<<(int)return_carry_capacity();msg=ss.str();
-    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2,0,msg,render_color);
+    font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2,0,msg,render_color);
 
     ss.clear();ss.str("");ss<<"You are currently ";ss<<return_encumbrance_state();ss<<".";msg=ss.str();
-    font_small.show((main_window.SCREEN_WIDTH-msg.length()*font_small.spacing_x)/2,font_small.spacing_y,msg,render_color);
+    font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2,font_small.spacing_y,msg,render_color);
 
     for(short n=ITEM_WEAPON;n<ITEM_OTHER+1;n++){
         //If the maximum number of lines for this column have been rendered.

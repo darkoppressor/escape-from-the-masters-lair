@@ -447,6 +447,8 @@ bool options_load(){
 
     if(load!=NULL){
         load>>player.option_fullscreen;
+        load>>player.option_screen_width;
+        load>>player.option_screen_height;
         load>>player.option_dev;
         load>>player.option_fps;
         load>>player.option_healthbars;
@@ -460,6 +462,9 @@ bool options_load(){
         }
     }
 
+    player.camera_w=player.option_screen_width;
+    player.camera_h=player.option_screen_height-180;
+
     return true;
 }
 
@@ -468,6 +473,8 @@ bool options_save(){
 
     if(save!=NULL){
         save<<player.option_fullscreen<<"\n";
+        save<<player.option_screen_width<<"\n";
+        save<<player.option_screen_height<<"\n";
         save<<player.option_dev<<"\n";
         save<<player.option_fps<<"\n";
         save<<player.option_healthbars<<"\n";
