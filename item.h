@@ -83,10 +83,6 @@ class Item: public Object{
     //A value of 0 means no dye.
     short dye;
 
-    ///Not sure if this will be used or not, yet.
-    //Special effects (both positive and negative) conferred by the item to its owner.
-    ///std::vector<Effect> effects;
-
     //The direction the item is moving.
     short move_direction;
 

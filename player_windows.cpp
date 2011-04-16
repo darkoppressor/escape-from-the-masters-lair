@@ -1093,7 +1093,16 @@ void Player::render_item_info(){
     string item_amount_prefix="";
 
     if(inventory[item_info].stack==1){
-        item_amount_prefix="a ";
+        //If the item is a corpse or skeleton.
+        if(inventory[item_info].is_corpse || inventory[item_info].is_skeleton){
+            item_amount_prefix=templates.template_races[inventory[item_info].race].prefix_article;
+            item_amount_prefix+=" ";
+        }
+        //If the item is anything else.
+        else{
+            item_amount_prefix=inventory[item_info].prefix_article;
+            item_amount_prefix+=" ";
+        }
     }
 
     ss.clear();ss.str("");ss<<inventory[item_info].appearance;ss<<" - ";ss<<item_amount_prefix;ss<<inventory[item_info].return_full_name();ss<<"\xA";msg=ss.str();

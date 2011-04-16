@@ -4,6 +4,6 @@
 #ifndef player_starting_gold_h
 #define player_starting_gold_h
 
-const int STARTING_ITEMS_GOLD=150;
+const int STARTING_ITEMS_GOLD=25;
 
 #endif

@@ -403,8 +403,6 @@ void Item::process_turn(){
             //Create a temporary skeleton item.
             Item temp_item=templates.template_items[ITEM_OTHER][0];
 
-            double temp_item_size=0.0;
-
             //Set the item's info to the corpse's race.
             string temp_name=templates.template_races[race].name;
             temp_name+=" ";
@@ -412,54 +410,15 @@ void Item::process_turn(){
 
             temp_item.weight=templates.template_races[race].weight;
 
-            temp_item_size=(temp_item.weight*2)/specific_gravities[temp_item.material];
+            temp_item.monetary_value=-1;
+            temp_item.defense=-1;
+            temp_item.damage_max_melee=-1;
+            temp_item.damage_max_thrown=-1;
+            temp_item.damage_max_ranged=-1;
 
-            temp_item.monetary_value=(temp_item.weight*values[temp_item.material])/2.0;
-            temp_item.monetary_value+=(temp_item.effects.size()*values[temp_item.material])/4.0;
-            if(temp_item.category==ITEM_WEAPON){
-                temp_item.monetary_value+=(6*values[temp_item.material])/4.0;
-            }
-            else if(temp_item.category==ITEM_ARMOR){
-                temp_item.monetary_value+=(5*values[temp_item.material])/4.0;
-            }
-            else if(temp_item.category==ITEM_FOOD){
-                temp_item.monetary_value+=(1*values[temp_item.material])/4.0;
-            }
-            else if(temp_item.category==ITEM_DRINK){
-                temp_item.monetary_value+=(3*values[temp_item.material])/4.0;
-            }
-            else if(temp_item.category==ITEM_SCROLL){
-                temp_item.monetary_value+=(4*values[temp_item.material])/4.0;
-            }
-            else if(temp_item.category==ITEM_BOOK){
-                temp_item.monetary_value+=(4*values[temp_item.material])/4.0;
-            }
-            else if(temp_item.category==ITEM_CONTAINER){
-                temp_item.monetary_value+=(2*values[temp_item.material])/4.0;
-            }
-            else if(temp_item.category==ITEM_OTHER){
-                temp_item.monetary_value+=(1*values[temp_item.material])/4.0;
-            }
+            double temp_item_size=(temp_item.weight*2.0)/specific_gravities[temp_item.material];
 
-            temp_item.damage_min_melee=1;
-            temp_item.damage_max_melee=(temp_item_size*temp_item.weight)/6.0;
-
-            if(temp_item.damage_min_melee<1){
-                temp_item.damage_min_melee=1;
-            }
-            if(temp_item.damage_max_melee<1){
-                temp_item.damage_max_melee=1;
-            }
-
-            temp_item.damage_min_thrown=1;
-            temp_item.damage_max_thrown=temp_item.damage_max_melee/2.0;
-
-            if(temp_item.damage_min_thrown<1){
-                temp_item.damage_min_thrown=1;
-            }
-            if(temp_item.damage_max_thrown<1){
-                temp_item.damage_max_thrown=1;
-            }
+            templates.calculate_item_attributes(&temp_item,temp_item_size);
 
             name=temp_item.name;
 

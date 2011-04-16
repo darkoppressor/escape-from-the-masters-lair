@@ -151,6 +151,8 @@
 		<Unit filename="item.h" />
 		<Unit filename="item_combat.cpp" />
 		<Unit filename="item_save_load.cpp" />
+		<Unit filename="item_template.cpp" />
+		<Unit filename="item_template.h" />
 		<Unit filename="level.cpp" />
 		<Unit filename="level.h" />
 		<Unit filename="level_size.h" />

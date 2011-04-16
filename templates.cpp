@@ -5,14 +5,142 @@
 #include "enumerations.h"
 #include "render.h"
 #include "material_properties.h"
+#include "random_number_generator.h"
 
 using namespace std;
 using namespace boost::algorithm;
 
 Templates::Templates(){
     for(int i=ITEM_WEAPON;i<ITEM_OTHER+1;i++){
-        template_items.push_back(vector<Item>());
+        template_items.push_back(vector<Item_Template>());
     }
+}
+
+void Templates::calculate_item_attributes(Item* item,double temp_item_size){
+    //As long as no weight was set.
+    if(item->weight==-1.0){
+        item->weight=(temp_item_size*specific_gravities[item->material])/2.0;
+    }
+
+    //As long as no value was set.
+    if(item->monetary_value==-1){
+        item->monetary_value=(item->weight*values[item->material])/2.0;
+
+        item->monetary_value+=(item->effects.size()*values[item->material])/4.0;
+
+        if(item->category==ITEM_WEAPON){
+            item->monetary_value+=(6*values[item->material])/4.0;
+        }
+        else if(item->category==ITEM_ARMOR){
+            item->monetary_value+=(5*values[item->material])/4.0;
+        }
+        else if(item->category==ITEM_FOOD){
+            item->monetary_value+=(1*values[item->material])/4.0;
+        }
+        else if(item->category==ITEM_DRINK){
+            item->monetary_value+=(3*values[item->material])/4.0;
+        }
+        else if(item->category==ITEM_SCROLL){
+            item->monetary_value+=(4*values[item->material])/4.0;
+        }
+        else if(item->category==ITEM_BOOK){
+            item->monetary_value+=(4*values[item->material])/4.0;
+        }
+        else if(item->category==ITEM_CONTAINER){
+            item->monetary_value+=(2*values[item->material])/4.0;
+        }
+        else if(item->category==ITEM_OTHER){
+            item->monetary_value+=(1*values[item->material])/4.0;
+        }
+
+        item->monetary_value/=4.0;
+    }
+
+    //If the item is armor and no defense was set.
+    if(item->category==ITEM_ARMOR && item->defense==-1){
+        item->defense=(temp_item_size*toughness[item->material])/8.0;
+    }
+
+    //If no melee damage max was set.
+    if(item->damage_max_melee==-1){
+        //If the item is a melee weapon.
+        if(item->category==ITEM_WEAPON && item->weapon_category>=WEAPON_SHORT_BLADES && item->weapon_category<=WEAPON_STAVES){
+            item->damage_min_melee=temp_item_size*toughness[item->material]*3.0;
+            item->damage_max_melee=temp_item_size*toughness[item->material]*4.0;
+        }
+        //If the item is not a melee weapon.
+        else{
+            item->damage_min_melee=1;
+            item->damage_max_melee=(temp_item_size*(item->weight/2.0))/8.0;
+        }
+
+        if(item->damage_min_melee<1){
+            item->damage_min_melee=1;
+        }
+        if(item->damage_max_melee<1){
+            item->damage_max_melee=1;
+        }
+    }
+
+    //If no thrown damage max was set.
+    if(item->damage_max_thrown==-1){
+        //If the item is a thrown weapon.
+        if(item->category==ITEM_WEAPON && item->weapon_category==WEAPON_THROWN){
+            item->damage_min_thrown=temp_item_size*toughness[item->material]*3.0;
+            item->damage_max_thrown=temp_item_size*toughness[item->material]*4.0;
+        }
+        //If the item is not a thrown weapon.
+        else{
+            item->damage_min_thrown=1;
+            item->damage_max_thrown=item->damage_max_melee/2.0;
+        }
+
+        if(item->damage_min_thrown<1){
+            item->damage_min_thrown=1;
+        }
+        if(item->damage_max_thrown<1){
+            item->damage_max_thrown=1;
+        }
+    }
+
+    //If no ranged damage max was set.
+    if(item->damage_max_ranged==-1){
+        //If the item is a ranged weapon.
+        if(item->category==ITEM_WEAPON && item->weapon_category>=WEAPON_BOWS && item->weapon_category<=WEAPON_SLINGS){
+            item->damage_min_ranged=temp_item_size*toughness[item->material]*3.0;
+            item->damage_max_ranged=temp_item_size*toughness[item->material]*4.0;
+
+            if(item->damage_min_ranged<1){
+                item->damage_min_ranged=1;
+            }
+            if(item->damage_max_ranged<1){
+                item->damage_max_ranged=1;
+            }
+        }
+        //If the item is not a ranged weapon.
+        else{
+            item->damage_min_ranged=0;
+            item->damage_max_ranged=0;
+        }
+    }
+}
+
+void Templates::determine_item_material(Item* item,int item_category,int item_template_index){
+    int random_material=random_range(0,template_items[item_category][item_template_index].allowed_materials.size()-1);
+
+    item->material=template_items[item_category][item_template_index].allowed_materials[random_material];
+
+    item->color=string_to_color(material_to_string(item->material));
+
+    /**if(item->material==MATERIAL_IRON){
+        item->prefix_article="an";
+    }*/
+
+    replace_first(item->name,"MATERIAL",material_to_string(item->material));
+
+    replace_first(item->plural_name,"MATERIAL",material_to_string(item->material));
+
+    calculate_item_attributes(item,template_items[item_category][item_template_index].size);
 }
 
 bool Templates::load_templates(){
@@ -40,18 +168,6 @@ bool Templates::load_templates(){
 
                     //Clear initial whitespace from the line.
                     trim(line);
-
-                    //While the line still has text.
-                    /**while(line.length()>0){
-                        //If the character is a space or tab, delete it.
-                        if(line[0]==' ' || line[0]=='\x09'){
-                            line.erase(0,1);
-                        }
-                        //If the character is anything else, stop checking the line.
-                        else{
-                            break;
-                        }
-                    }*/
 
                     //If the line is a comment.
                     if(istarts_with(line,"//")){
@@ -837,8 +953,7 @@ void Templates::load_template_race(){
             ///Ensure the race is legitimate.
 
             //Add this race to its templates vector.
-            template_races.push_back(Race());
-            template_races[template_races.size()-1]=temp_race;
+            template_races.push_back(temp_race);
 
             return;
         }
@@ -846,9 +961,9 @@ void Templates::load_template_race(){
 }
 
 void Templates::load_template_item(short category){
-    //Create a temporary item based on category.
+    //Create a temporary item template based on category.
 
-    Item temp_item;
+    Item_Template temp_item;
 
     temp_item.category=category;
 
@@ -864,7 +979,8 @@ void Templates::load_template_item(short category){
     temp_item.damage_max_thrown=-1;
     temp_item.damage_max_ranged=-1;
 
-    double temp_item_size=0.0;
+    temp_item.color=-1;
+    temp_item.material=-1;
 
     //As long as we haven't reached the end of the file.
     while(!load.eof()){
@@ -883,6 +999,7 @@ void Templates::load_template_item(short category){
         string weight="weight:";
         string size="size:";
         string monetary_value="value:";
+        string allowed_material="allowed material:";
         string material="material:";
         string damage_melee="melee damage:";
         string damage_thrown="thrown damage:";
@@ -985,7 +1102,7 @@ void Templates::load_template_item(short category){
             //Clear the data name.
             line.erase(0,size.length());
 
-            temp_item_size=atof(line.c_str());
+            temp_item.size=atof(line.c_str());
         }
         //Monetary value.
         else if(icontains(line,monetary_value)){
@@ -993,6 +1110,13 @@ void Templates::load_template_item(short category){
             line.erase(0,monetary_value.length());
 
             temp_item.monetary_value=atoi(line.c_str());
+        }
+        //Allowed material.
+        else if(icontains(line,allowed_material)){
+            //Clear the data name.
+            line.erase(0,allowed_material.length());
+
+            temp_item.allowed_materials.push_back(string_to_material(line));
         }
         //Material.
         else if(icontains(line,material)){
@@ -1159,116 +1283,15 @@ void Templates::load_template_item(short category){
 
         //If the line ends the item.
         else if(icontains(line,"</item>")){
-            //As long as no weight was set.
-            if(temp_item.weight==-1.0){
-                temp_item.weight=(temp_item_size*specific_gravities[temp_item.material])/2.0;
-            }
-
-            //As long as no value was set.
-            if(temp_item.monetary_value==-1){
-                temp_item.monetary_value=(temp_item.weight*values[temp_item.material])/2.0;
-
-                temp_item.monetary_value+=(temp_item.effects.size()*values[temp_item.material])/4.0;
-
-                if(temp_item.category==ITEM_WEAPON){
-                    temp_item.monetary_value+=(6*values[temp_item.material])/4.0;
-                }
-                else if(temp_item.category==ITEM_ARMOR){
-                    temp_item.monetary_value+=(5*values[temp_item.material])/4.0;
-                }
-                else if(temp_item.category==ITEM_FOOD){
-                    temp_item.monetary_value+=(1*values[temp_item.material])/4.0;
-                }
-                else if(temp_item.category==ITEM_DRINK){
-                    temp_item.monetary_value+=(3*values[temp_item.material])/4.0;
-                }
-                else if(temp_item.category==ITEM_SCROLL){
-                    temp_item.monetary_value+=(4*values[temp_item.material])/4.0;
-                }
-                else if(temp_item.category==ITEM_BOOK){
-                    temp_item.monetary_value+=(4*values[temp_item.material])/4.0;
-                }
-                else if(temp_item.category==ITEM_CONTAINER){
-                    temp_item.monetary_value+=(2*values[temp_item.material])/4.0;
-                }
-                else if(temp_item.category==ITEM_OTHER){
-                    temp_item.monetary_value+=(1*values[temp_item.material])/4.0;
-                }
-            }
-
-            //If the item is armor and no defense was set.
-            if(temp_item.category==ITEM_ARMOR && temp_item.defense==-1){
-                temp_item.defense=(temp_item_size*toughness[temp_item.material])/8.0;
-            }
-
-            //If no melee damage max was set.
-            if(temp_item.damage_max_melee==-1){
-                //If the item is a melee weapon.
-                if(temp_item.category==ITEM_WEAPON && temp_item.weapon_category>=WEAPON_SHORT_BLADES && temp_item.weapon_category<=WEAPON_STAVES){
-                    temp_item.damage_min_melee=temp_item_size*toughness[temp_item.material]*3.0;
-                    temp_item.damage_max_melee=temp_item_size*toughness[temp_item.material]*4.0;
-                }
-                //If the item is not a melee weapon.
-                else{
-                    temp_item.damage_min_melee=1;
-                    temp_item.damage_max_melee=(temp_item_size*temp_item.weight)/6.0;
-                }
-
-                if(temp_item.damage_min_melee<1){
-                    temp_item.damage_min_melee=1;
-                }
-                if(temp_item.damage_max_melee<1){
-                    temp_item.damage_max_melee=1;
-                }
-            }
-
-            //If no thrown damage max was set.
-            if(temp_item.damage_max_thrown==-1){
-                //If the item is a thrown weapon.
-                if(temp_item.category==ITEM_WEAPON && temp_item.weapon_category==WEAPON_THROWN){
-                    temp_item.damage_min_thrown=temp_item_size*toughness[temp_item.material]*3.0;
-                    temp_item.damage_max_thrown=temp_item_size*toughness[temp_item.material]*4.0;
-                }
-                //If the item is not a thrown weapon.
-                else{
-                    temp_item.damage_min_thrown=1;
-                    temp_item.damage_max_thrown=temp_item.damage_max_melee/2.0;
-                }
-
-                if(temp_item.damage_min_thrown<1){
-                    temp_item.damage_min_thrown=1;
-                }
-                if(temp_item.damage_max_thrown<1){
-                    temp_item.damage_max_thrown=1;
-                }
-            }
-
-            //If no ranged damage max was set.
-            if(temp_item.damage_max_ranged==-1){
-                //If the item is a ranged weapon.
-                if(temp_item.category==ITEM_WEAPON && temp_item.weapon_category>=WEAPON_BOWS && temp_item.weapon_category<=WEAPON_SLINGS){
-                    temp_item.damage_min_ranged=temp_item_size*toughness[temp_item.material]*3.0;
-                    temp_item.damage_max_ranged=temp_item_size*toughness[temp_item.material]*4.0;
-
-                    if(temp_item.damage_min_ranged<1){
-                        temp_item.damage_min_ranged=1;
-                    }
-                    if(temp_item.damage_max_ranged<1){
-                        temp_item.damage_max_ranged=1;
-                    }
-                }
-                //If the item is not a ranged weapon.
-                else{
-                    temp_item.damage_min_ranged=0;
-                    temp_item.damage_max_ranged=0;
-                }
+            //If the item is a standard item with a predefined material.
+            if(temp_item.allowed_materials.size()==0){
+                calculate_item_attributes(&temp_item,temp_item.size);
             }
 
             ///Ensure the item is legitimate.
 
             //Add this item to its templates vector.
-            template_items[category].push_back(Item());
-            template_items[category][template_items[category].size()-1]=temp_item;
+            template_items[category].push_back(temp_item);
 
             return;
         }

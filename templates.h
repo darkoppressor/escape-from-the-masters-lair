@@ -8,6 +8,7 @@
 #include "save_load.h"
 #include "race.h"
 #include "creature.h"
+#include "item_template.h"
 
 #include <vector>
 #include <fstream>
@@ -21,7 +22,7 @@ class Templates{
 
     std::ifstream load;
 
-    std::vector< std::vector<Item> > template_items;
+    std::vector< std::vector<Item_Template> > template_items;
 
     std::vector<Race> template_races;
 
@@ -76,6 +77,12 @@ class Templates{
     //Pass a string representing an item effect.
     //Returns the short for that item effect.
     short string_to_item_effect(std::string line);
+
+    //Randomly chooses a material from the list of allowed materials for the passed item.
+    void determine_item_material(Item* item,int item_category,int item_template_index);
+
+    //Calculates various attriutes of the passed item.
+    void calculate_item_attributes(Item* item,double temp_item_size);
 };
 
 #endif

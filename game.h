@@ -70,9 +70,6 @@ class Game{
     //Returns an identifier to the list.
     void return_identifier(short object_type,uint32_t returning_identifier);
 
-    //Returns true if the checked tile is a wall.
-    ///short tile_check(short check_x,short check_y);
-
     //Recursively fills the whole generated dungeon with "reachable" flags for each walkable tile.
     void flood_fill_reachable(int x,int y);
 

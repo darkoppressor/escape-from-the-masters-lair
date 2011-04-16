@@ -49,33 +49,33 @@ Player::Player(){
 
     starting_items_gold=STARTING_ITEMS_GOLD;
 
-    available_starting_items.push_back("dagger");
+    available_starting_items.push_back("simple wooden dagger");
 
-    available_starting_items.push_back("bow");
+    available_starting_items.push_back("simple wooden bow");
 
-    available_starting_items.push_back("arrow");
+    available_starting_items.push_back("simple wooden arrow");
 
     available_starting_items.push_back("shuriken");
 
-    available_starting_items.push_back("leather helm");
+    available_starting_items.push_back("simple leather helm");
 
-    available_starting_items.push_back("pair of leather spaulders");
+    available_starting_items.push_back("pair of simple leather spaulders");
 
-    available_starting_items.push_back("leather chestpiece");
+    available_starting_items.push_back("simple leather chestpiece");
 
-    available_starting_items.push_back("leather cloak");
+    available_starting_items.push_back("simple leather cloak");
 
-    available_starting_items.push_back("leather belt");
+    available_starting_items.push_back("simple leather belt");
 
-    available_starting_items.push_back("pair of leather trousers");
+    available_starting_items.push_back("pair of simple leather trousers");
 
-    available_starting_items.push_back("pair of leather boots");
+    available_starting_items.push_back("pair of simple leather boots");
 
-    available_starting_items.push_back("pair of leather gloves");
+    available_starting_items.push_back("pair of simple leather gloves");
 
-    available_starting_items.push_back("pair of leather bracers");
+    available_starting_items.push_back("pair of simple leather bracers");
 
-    available_starting_items.push_back("leather shield");
+    available_starting_items.push_back("simple leather shield");
 
     available_starting_items.push_back("bottle of water");
 

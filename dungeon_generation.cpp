@@ -5,22 +5,10 @@
 #include "world.h"
 #include "random_number_generator.h"
 #include "random_chance.h"
+#include "templates.h"
+#include "material_properties.h"
 
 using namespace std;
-
-/**short Game::tile_check(short check_x,short check_y){
-    if(check_x>0 && check_x<level_x-1 && check_y>0 && check_y<level_y-1){
-        if(generated_tiles[check_x][check_y].type==TILE_TYPE_DOOR_CLOSED){
-            return TILE_TYPE_WALL;
-        }
-        else{
-            return generated_tiles[check_x][check_y].type;
-        }
-    }
-
-    //If no tile was found, this tile is outside the level bounds.
-    return TILE_TYPE_WALL;
-}*/
 
 void Game::flood_fill_reachable(int x,int y){
     //If the tile is within level bounds.
@@ -776,6 +764,11 @@ void Game::generate_level(bool deepest_level){
 
             //Apply the selected template to the item.
             generated_items[generated_items.size()-1]=templates.template_items[random_item_category][random_item_template];
+
+            //If this item's template has only certain materials allowed.
+            if(templates.template_items[random_item_category][random_item_template].allowed_materials.size()>0){
+                templates.determine_item_material(&generated_items[generated_items.size()-1],random_item_category,random_item_template);
+            }
 
             //Run the item's setup function.
             generated_items[generated_items.size()-1].setup();
