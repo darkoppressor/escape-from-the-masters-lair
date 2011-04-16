@@ -1,0 +1,127 @@
+//**********//
+// Weapons: //
+//**********//
+
+	//********//
+	// Melee: //
+	//********//
+	
+	<item category:weapon>
+		name:tiny MATERIAL dagger
+		plural name:tiny MATERIAL daggers
+		writing:
+		appearance:)
+		stackable:0
+		size:0.5
+		allowed material:copper
+		allowed material:brass
+		allowed material:bronze
+		allowed material:iron
+		allowed material:steel
+		allowed material:silver
+		allowed material:gold
+		allowed material:bone
+		allowed material:wood
+		allowed material:stone
+		allowed material:glass
+		<weapon>
+			governing weapon skill:bladed weapons
+			weapon category:short blades
+		</weapon>
+	</item>
+	
+	<item category:weapon>
+		name:small MATERIAL dagger
+		plural name:small MATERIAL daggers
+		writing:
+		appearance:)
+		stackable:0
+		size:0.75
+		allowed material:copper
+		allowed material:brass
+		allowed material:bronze
+		allowed material:iron
+		allowed material:steel
+		allowed material:silver
+		allowed material:gold
+		allowed material:bone
+		allowed material:wood
+		allowed material:stone
+		allowed material:glass
+		<weapon>
+			governing weapon skill:bladed weapons
+			weapon category:short blades
+		</weapon>
+	</item>
+
+	<item category:weapon>
+		name:medium MATERIAL dagger
+		plural name:medium MATERIAL daggers
+		writing:
+		appearance:)
+		stackable:0
+		size:1.0
+		allowed material:copper
+		allowed material:brass
+		allowed material:bronze
+		allowed material:iron
+		allowed material:steel
+		allowed material:silver
+		allowed material:gold
+		allowed material:bone
+		allowed material:wood
+		allowed material:stone
+		allowed material:glass
+		<weapon>
+			governing weapon skill:bladed weapons
+			weapon category:short blades
+		</weapon>
+	</item>
+	
+	<item category:weapon>
+		name:large MATERIAL dagger
+		plural name:large MATERIAL daggers
+		writing:
+		appearance:)
+		stackable:0
+		size:1.25
+		allowed material:copper
+		allowed material:brass
+		allowed material:bronze
+		allowed material:iron
+		allowed material:steel
+		allowed material:silver
+		allowed material:gold
+		allowed material:bone
+		allowed material:wood
+		allowed material:stone
+		allowed material:glass
+		<weapon>
+			governing weapon skill:bladed weapons
+			weapon category:short blades
+		</weapon>
+	</item>
+	
+	<item category:weapon>
+		name:huge MATERIAL dagger
+		plural name:huge MATERIAL daggers
+		writing:
+		appearance:)
+		stackable:0
+		size:1.5
+		allowed material:copper
+		allowed material:brass
+		allowed material:bronze
+		allowed material:iron
+		allowed material:steel
+		allowed material:silver
+		allowed material:gold
+		allowed material:bone
+		allowed material:wood
+		allowed material:stone
+		allowed material:glass
+		<weapon>
+			governing weapon skill:bladed weapons
+			weapon category:short blades
+		</weapon>
+	</item>

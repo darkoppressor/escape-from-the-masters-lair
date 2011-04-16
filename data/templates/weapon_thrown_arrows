@@ -1,0 +1,24 @@
+//**********//
+// Weapons: //
+//**********//
+	
+	//*********//
+	// Thrown: //
+	//*********//
+	
+	<item category:weapon>
+		name:arrow made of MATERIAL
+		plural name:arrows made of MATERIAL
+		prefix article:an
+		writing:
+		appearance:)
+		stackable:1
+		size:0.5
+		allowed material:bone
+		allowed material:wood
+		<weapon>
+			governing weapon skill:thrown weapons
+			weapon category:thrown
+			launcher:bows
+		</weapon>
+	</item>

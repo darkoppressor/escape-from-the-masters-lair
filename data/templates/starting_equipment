@@ -1,0 +1,260 @@
+//Starting equipment for the player.
+
+//**********//
+// Weapons: //
+//**********//
+
+	//********//
+	// Melee: //
+	//********//
+	
+	<item category:weapon>
+		<DO NOT SPAWN>
+		name:simple wooden dagger
+		plural name:simple wooden daggers
+		writing:
+		appearance:)
+		stackable:0
+		size:0.5
+		color:wood
+		material:wood
+		<weapon>
+			governing weapon skill:bladed weapons
+			weapon category:short blades
+		</weapon>
+	</item>
+	
+	//*********//
+	// Ranged: //
+	//*********//
+	
+	<item category:weapon>
+		<DO NOT SPAWN>
+		name:simple wooden bow
+		plural name:simple wooden bows
+		writing:
+		appearance:)
+		stackable:0
+		size:6.0
+		color:wood
+		material:wood
+		<weapon>
+			governing weapon skill:launcher weapons
+			weapon category:bows
+		</weapon>
+	</item>
+	
+	//*********//
+	// Thrown: //
+	//*********//
+	
+	<item category:weapon>
+		<DO NOT SPAWN>
+		name:simple wooden arrow
+		plural name:simple wooden arrows
+		writing:
+		appearance:)
+		stackable:1
+		size:0.25
+		color:wood
+		material:wood
+		<weapon>
+			governing weapon skill:thrown weapons
+			weapon category:thrown
+			launcher:bows
+		</weapon>
+	</item>
+
+//********//
+// Armor: //
+//********//
+
+	//*******//
+	// Head: //
+	//*******//
+
+	<item category:armor>
+		<DO NOT SPAWN>
+		name:simple leather helm
+		plural name:simple leather helms
+		writing:
+		appearance:[
+		stackable:0
+		size:3.0
+		color:leather
+		material:leather
+		<armor>
+			armor category:head
+		</armor>
+	</item>
+	
+	//************//
+	// Shoulders: //
+	//************//
+
+	<item category:armor>
+		<DO NOT SPAWN>
+		name:pair of simple leather spaulders
+		plural name:pairs of simple leather spaulders
+		writing:
+		appearance:[
+		stackable:0
+		size:4.0
+		color:leather
+		material:leather
+		<armor>
+			armor category:shoulders
+		</armor>
+	</item>
+	
+	//********//
+	// Chest: //
+	//********//
+
+	<item category:armor>
+		<DO NOT SPAWN>
+		name:simple leather chestpiece
+		plural name:simple leather chestpieces
+		writing:
+		appearance:[
+		stackable:0
+		size:8.0
+		color:leather
+		material:leather
+		<armor>
+			armor category:chest
+		</armor>
+	</item>
+	
+	//*******//
+	// Back: //
+	//*******//
+
+	<item category:armor>
+		<DO NOT SPAWN>
+		name:simple leather cloak
+		plural name:simple leather cloaks
+		writing:
+		appearance:[
+		stackable:0
+		size:2.0
+		color:leather
+		material:leather
+		<armor>
+			armor category:back
+		</armor>
+	</item>
+	
+	//********//
+	// Waist: //
+	//********//
+
+	<item category:armor>
+		<DO NOT SPAWN>
+		name:simple leather belt
+		plural name:simple leather belts
+		writing:
+		appearance:[
+		stackable:0
+		size:5.0
+		color:leather
+		material:leather
+		<armor>
+			armor category:waist
+		</armor>
+	</item>
+	
+	//*******//
+	// Legs: //
+	//*******//
+
+	<item category:armor>
+		<DO NOT SPAWN>
+		name:pair of simple leather trousers
+		plural name:pairs of simple leather trousers
+		writing:
+		appearance:[
+		stackable:0
+		size:7.0
+		color:leather
+		material:leather
+		<armor>
+			armor category:legs
+		</armor>
+	</item>
+	
+	//*******//
+	// Feet: //
+	//*******//
+
+	<item category:armor>
+		<DO NOT SPAWN>
+		name:pair of simple leather boots
+		plural name:pairs of simple leather boots
+		writing:
+		appearance:[
+		stackable:0
+		size:2.0
+		color:leather
+		material:leather
+		<armor>
+			armor category:feet
+		</armor>
+	</item>
+
+	//********//
+	// Hands: //
+	//********//
+
+	<item category:armor>
+		<DO NOT SPAWN>
+		name:pair of simple leather gloves
+		plural name:pairs of simple leather gloves
+		writing:
+		appearance:[
+		stackable:0
+		size:1.0
+		color:leather
+		material:leather
+		<armor>
+			armor category:hands
+		</armor>
+	</item>
+	
+	//*********//
+	// Wrists: //
+	//*********//
+
+	<item category:armor>
+		<DO NOT SPAWN>
+		name:pair of simple leather bracers
+		plural name:pairs of simple leather bracers
+		writing:
+		appearance:[
+		stackable:0
+		size:0.5
+		color:leather
+		material:leather
+		<armor>
+			armor category:wrists
+		</armor>
+	</item>
+	
+	//*********//
+	// Shield: //
+	//*********//
+
+	<item category:armor>
+		<DO NOT SPAWN>
+		name:simple leather shield
+		plural name:simple leather shields
+		writing:
+		appearance:[
+		stackable:0
+		size:6.0
+		color:leather
+		material:leather
+		<armor>
+			armor category:shield
+		</armor>
+	</item>
