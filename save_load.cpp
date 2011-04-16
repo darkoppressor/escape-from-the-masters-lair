@@ -16,7 +16,6 @@ void create_top_level_directories(){
     boost::filesystem::create_directory("data/images");
     boost::filesystem::create_directory("data/music");
     boost::filesystem::create_directory("data/sounds");
-    boost::filesystem::create_directory("data/text");
 
     boost::filesystem::create_directory("saves");
     boost::filesystem::create_directory("screenshots");

@@ -374,6 +374,7 @@ void Templates::load_template_race(){
         //The data name strings used in the file.
 
         string name="name:";
+        string prefix_article="prefix article:";
         string appearance="appearance:";
         string color="color:";
         string weight="weight:";
@@ -435,6 +436,16 @@ void Templates::load_template_race(){
             temp_race.name=line;
             if(temp_race.name.length()==0){
                 temp_race.name=" ";
+            }
+        }
+        //Prefix article.
+        else if(icontains(line,prefix_article)){
+            //Clear the data name.
+            line.erase(0,prefix_article.length());
+
+            temp_race.prefix_article=line;
+            if(temp_race.prefix_article.length()==0){
+                temp_race.prefix_article=" ";
             }
         }
         //Appearance.
@@ -864,6 +875,7 @@ void Templates::load_template_item(short category){
         string spawnable="<DO NOT SPAWN>";
         string name="name:";
         string plural_name="plural name:";
+        string prefix_article="prefix article:";
         string writing="writing:";
         string appearance="appearance:";
         string color="color:";
@@ -908,6 +920,16 @@ void Templates::load_template_item(short category){
             temp_item.plural_name=line;
             if(temp_item.plural_name.length()==0){
                 temp_item.plural_name=" ";
+            }
+        }
+        //Prefix article.
+        else if(icontains(line,prefix_article)){
+            //Clear the data name.
+            line.erase(0,prefix_article.length());
+
+            temp_item.prefix_article=line;
+            if(temp_item.prefix_article.length()==0){
+                temp_item.prefix_article=" ";
             }
         }
         //Writing.

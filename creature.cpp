@@ -9,6 +9,7 @@
 #include "save_load.h"
 #include "message_log.h"
 #include "random_chance.h"
+#include "max_item_stack_size.h"
 
 using namespace std;
 
@@ -31,6 +32,8 @@ Creature::Creature(){
 
     race=-1;
     race_name="";
+
+    prefix_article="a";
 
     ///class_name="";
     class_name="<class name>";
@@ -97,7 +100,11 @@ Creature::Creature(){
     }
 }
 
-bool Creature::give_item(string item_name,int stack_size,char force_inventory_letter){
+bool Creature::give_item(string item_name,int stack_size){
+    if(stack_size>MAX_ITEM_STACK_SIZE){
+        stack_size=MAX_ITEM_STACK_SIZE;
+    }
+
     short item_category=-1;
     int item_index=-1;
 
@@ -131,10 +138,36 @@ bool Creature::give_item(string item_name,int stack_size,char force_inventory_le
                 temp_item.stack=stack_size;
             }
 
-            //If an inventory letter is being forced.
-            if(force_inventory_letter!=-1){
-                //Assign the forced inventory letter to the item.
-                temp_item.inventory_letter=force_inventory_letter;
+            //Check to see if there is an identical item already in the inventory.
+            inventory_match match_check=check_for_inventory_match(&temp_item);
+
+            //If there is already an identical item in the inventory, and the item is stackable.
+            if(match_check.match_found && temp_item.stackable){
+                //If adding the item's stack to the inventory item would put the inventory item's stack over the max stack size.
+                if(inventory[match_check.inventory_slot].stack+temp_item.stack>MAX_ITEM_STACK_SIZE){
+                    //The amount to add to the inventory item's stack.
+                    int amount_to_add=MAX_ITEM_STACK_SIZE-inventory[match_check.inventory_slot].stack;
+
+                    //Add what can be added to the inventory item.
+                    inventory[match_check.inventory_slot].stack+=amount_to_add;
+
+                    //Remove the amount from the temp item's stack.
+                    temp_item.stack-=amount_to_add;
+
+                    //Add another item to inventory with the remaining stack size.
+                    give_item(temp_item.name,temp_item.stack);
+                }
+                //If the inventory item has enough space in its stack to hold the whole thing.
+                else{
+                    inventory[match_check.inventory_slot].stack+=temp_item.stack;
+                }
+            }
+            //If there is no identical item in the inventory, or the item is not stackable.
+            else{
+                //Determine an inventory letter for the item.
+
+                //Assign the item an available inventory letter.
+                temp_item.inventory_letter=assign_inventory_letter();
 
                 //Add the item to the inventory items vector.
                 inventory.push_back(temp_item);
@@ -145,38 +178,81 @@ bool Creature::give_item(string item_name,int stack_size,char force_inventory_le
                 //Assign an owner identifier to the item.
                 inventory[inventory.size()-1].owner=identifier;
             }
-            //If no inventory letter is forced.
-            else{
-                //Check to see if there is an identical item already in the inventory.
-                inventory_match match_check=check_for_inventory_match(&temp_item);
-
-                //If there is already an identical item in the inventory, and the item is stackable.
-                if(match_check.match_found && temp_item.stackable){
-                    inventory[match_check.inventory_slot].stack+=temp_item.stack;
-                }
-                //If there is no identical item in the inventory, or the item is not stackable.
-                else{
-                    //Determine an inventory letter for the item.
-
-                    //Assign the item an available inventory letter.
-                    temp_item.inventory_letter=assign_inventory_letter();
-
-                    //Add the item to the inventory items vector.
-                    inventory.push_back(temp_item);
-
-                    //Assign an identifier to the item.
-                    inventory[inventory.size()-1].assign_identifier();
-
-                    //Assign an owner identifier to the item.
-                    inventory[inventory.size()-1].owner=identifier;
-                }
-            }
 
             return true;
         }
     }
 
     return false;
+}
+
+int Creature::give_item(Item* item){
+    //If the inventory is not full, add the item.
+    if(inventory.size()<INVENTORY_MAX_SIZE){
+        //Check to see if there is an identical item already in the inventory.
+        inventory_match match_check=check_for_inventory_match(item);
+
+        //If there is already an identical item in the inventory, and the item is stackable.
+        if(match_check.match_found && item->stackable){
+            //If adding the item's stack to the inventory item would put the inventory item's stack over the max stack size.
+            if(inventory[match_check.inventory_slot].stack+item->stack>MAX_ITEM_STACK_SIZE){
+                //The amount to add to the inventory item's stack.
+                int amount_to_add=MAX_ITEM_STACK_SIZE-inventory[match_check.inventory_slot].stack;
+
+                //Add what can be added to the inventory item.
+                inventory[match_check.inventory_slot].stack+=amount_to_add;
+
+                //Remove the amount from the temp item's stack.
+                item->stack-=amount_to_add;
+
+                //Add another item to inventory with the remaining stack size.
+                give_item(item);
+            }
+            //If the inventory item has enough space in its stack to hold the whole thing.
+            else{
+                inventory[match_check.inventory_slot].stack+=item->stack;
+            }
+
+            return match_check.inventory_slot;
+        }
+        //If there is no identical item in the inventory, or the item is not stackable.
+        else{
+            //Determine an inventory letter for the item.
+
+            //If the item already has an inventory letter, this means the player assigned one to it, and then dropped it.
+            //So we only do this check for the player.
+            if(is_player && item->inventory_letter!=0){
+                //If the item's inventory letter is available.
+                if(check_inventory_letter_availability(item->inventory_letter)){
+                    //Remove the item's inventory letter from the inventory letters list.
+                    assign_inventory_letter(item->inventory_letter);
+                }
+                //If the item's inventory letter is unavailable.
+                else{
+                    //Assign the item an available inventory number.
+                    item->inventory_letter=assign_inventory_letter();
+                }
+            }
+            //If the creature is not the player, or the item has no inventory letter already assigned.
+            else{
+                //Assign the item an available inventory number.
+                item->inventory_letter=assign_inventory_letter();
+            }
+
+            //Add the item to the inventory items vector.
+            inventory.push_back(*item);
+
+            //Assign an identifier to the new item.
+            inventory[inventory.size()-1].assign_identifier();
+
+            //Assign an owner identifier to the new item.
+            inventory[inventory.size()-1].owner=identifier;
+
+            return inventory.size()-1;
+        }
+    }
+
+    return -1;
 }
 
 item_template_data Creature::return_item_template(string item_name){
@@ -243,9 +319,12 @@ inventory_match Creature::check_for_inventory_match(Item* item_to_check){
            inventory[i].appearance==item_to_check->appearance && inventory[i].weight==item_to_check->weight && inventory[i].race==item_to_check->race &&
            inventory[i].dye==item_to_check->dye && inventory[i].writing==item_to_check->writing && inventory[i].category==item_to_check->category &&
            inventory[i].material==item_to_check->material && inventory[i].weapon_category==item_to_check->weapon_category && inventory[i].armor_category==item_to_check->armor_category){
-            match_check.match_found=true;
-            match_check.inventory_slot=i;
-            break;
+            //Even if there is a match, we ignore the item if its stack size is at the max.
+            if(inventory[i].stack<MAX_ITEM_STACK_SIZE){
+                match_check.match_found=true;
+                match_check.inventory_slot=i;
+                break;
+            }
         }
     }
 

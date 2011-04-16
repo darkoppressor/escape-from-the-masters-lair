@@ -178,72 +178,27 @@ void Creature::execute_command(short command){
         for(int i=0;i<vector_levels[current_level].items.size();i++){
             //We've found an item at the creature's position.
             if(vector_levels[current_level].items[i].x==x && vector_levels[current_level].items[i].y==y){
-                //If the inventory is not full, pick up the item.
-                if(inventory.size()<INVENTORY_MAX_SIZE){
-                    //The inventory index of the item being picked up.
-                    int picked_up_item_index=-1;
+                //Setup a pick up message.
 
-                    //Check to see if there is an identical item already in the inventory.
-                    inventory_match match_check=check_for_inventory_match(&vector_levels[current_level].items[i]);
+                string grab_item="";
 
-                    //If there is already an identical item in the inventory, and the item is stackable.
-                    if(match_check.match_found && vector_levels[current_level].items[i].stackable){
-                        inventory[match_check.inventory_slot].stack+=vector_levels[current_level].items[i].stack;
+                //If the creature is the player.
+                if(is_player){
+                    grab_item="You pick up the ";
+                }
+                else{
+                    grab_item="The ";
+                    grab_item+=return_full_name();
+                    grab_item+=" picks up the ";
+                }
 
-                        picked_up_item_index=match_check.inventory_slot;
-                    }
-                    //If there is no identical item in the inventory, or the item is not stackable.
-                    else{
-                        //Determine an inventory letter for the item.
+                grab_item+=vector_levels[current_level].items[i].return_full_name();
 
-                        //If the item already has an inventory letter, this means the player assigned one to it, and then dropped it.
-                        //So we only do this check for the player.
-                        if(is_player && vector_levels[current_level].items[i].inventory_letter!=0){
-                            //If the item's inventory letter is available.
-                            if(check_inventory_letter_availability(vector_levels[current_level].items[i].inventory_letter)){
-                                //Remove the item's inventory letter from the inventory letters list.
-                                assign_inventory_letter(vector_levels[current_level].items[i].inventory_letter);
-                            }
-                            //If the item's inventory letter is unavailable.
-                            else{
-                                //Assign the item an available inventory number.
-                                vector_levels[current_level].items[i].inventory_letter=assign_inventory_letter();
-                            }
-                        }
-                        //If the creature is not the player, or the item has no inventory letter already assigned.
-                        else{
-                            //Assign the item an available inventory number.
-                            vector_levels[current_level].items[i].inventory_letter=assign_inventory_letter();
-                        }
+                //Try to add the item to the inventory.
+                int picked_up_item_index=give_item(&vector_levels[current_level].items[i]);
 
-                        //Add the item to the inventory items vector.
-                        inventory.push_back(vector_levels[current_level].items[i]);
-
-                        //Assign an identifier to the item.
-                        inventory[inventory.size()-1].assign_identifier();
-
-                        //Assign an owner identifier to the new item.
-                        inventory[inventory.size()-1].owner=identifier;
-
-                        picked_up_item_index=inventory.size()-1;
-                    }
-
-                    //Setup a pick up message.
-
-                    string grab_item="";
-
-                    //If the creature is the player.
-                    if(is_player){
-                        grab_item="You pick up the ";
-                    }
-                    else{
-                        grab_item="The ";
-                        grab_item+=return_full_name();
-                        grab_item+=" picks up the ";
-                    }
-
-                    grab_item+=vector_levels[current_level].items[i].return_full_name();
-
+                //If the item was picked up.
+                if(picked_up_item_index!=-1){
                     if(is_player){
                         grab_item+=" - ";
                         grab_item+=inventory[picked_up_item_index].inventory_letter;

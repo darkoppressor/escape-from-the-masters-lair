@@ -24,6 +24,7 @@
 	<item category:weapon>
 		name:arrow
 		plural name:arrows
+		prefix article:an
 		writing:
 		appearance:)
 		stackable:1

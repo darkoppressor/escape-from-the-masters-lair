@@ -53,6 +53,8 @@ string Item::return_save_data(){
 
     save<<plural_name<<"\n";
 
+    save<<prefix_article<<"\n";
+
     save<<monetary_value<<"\n";
 
     save<<category<<"\n";
@@ -186,6 +188,9 @@ void Item::load_data(stringstream* load){
 
     getline(*load,line);
     plural_name=line;
+
+    getline(*load,line);
+    prefix_article=line;
 
     getline(*load,line);
     monetary_value=atoi(line.c_str());

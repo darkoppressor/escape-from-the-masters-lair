@@ -115,6 +115,9 @@ class Item: public Object{
     //The name of the item if stack>1.
     std::string plural_name;
 
+    //The article ('a' or 'an') to be used before a single one of this item in a sentence.
+    std::string prefix_article;
+
     //The item's value in terms of money.
     short monetary_value;
 

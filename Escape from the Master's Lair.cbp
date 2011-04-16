@@ -159,6 +159,7 @@
 		<Unit filename="main.h" />
 		<Unit filename="material_properties.cpp" />
 		<Unit filename="material_properties.h" />
+		<Unit filename="max_item_stack_size.h" />
 		<Unit filename="max_objects.h" />
 		<Unit filename="message_log.cpp" />
 		<Unit filename="message_log.h" />
@@ -189,8 +190,6 @@
 		<Unit filename="save_load.h" />
 		<Unit filename="string_input.cpp" />
 		<Unit filename="string_input.h" />
-		<Unit filename="strings.cpp" />
-		<Unit filename="strings.h" />
 		<Unit filename="templates.cpp" />
 		<Unit filename="templates.h" />
 		<Unit filename="templates_strings.cpp" />

@@ -107,6 +107,7 @@
 
 <race>
 	name:elephant
+	prefix article:an
 	appearance:q
 	color:light gray
 	weight:4175

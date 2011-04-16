@@ -3,6 +3,7 @@
 //**********//
 
 <item category:scroll>
+	<DO NOT SPAWN>
 	name:scroll of identify
 	plural name:scrolls of identify
 	writing:
@@ -12,6 +13,5 @@
 	color:paper
 	material:paper
 	//<scroll>
-		//is corpse:0
 	//</scroll>
 </item>

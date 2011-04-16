@@ -14,6 +14,5 @@
 	color:cloth
 	material:cloth
 	//<container>
-		//is corpse:0
 	//</container>
 </item>

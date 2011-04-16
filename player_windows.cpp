@@ -343,7 +343,7 @@ void Player::handle_input_get_starting_items(){
                     item_value=templates.template_items[item_template.category][item_template.index].monetary_value;
 
                     //If the player can afford to purchase this item.
-                    if(item_value<starting_items_gold){
+                    if(item_value<=starting_items_gold){
                         //Add the purchased item.
                         starting_items.push_back(i);
 
@@ -1473,7 +1473,16 @@ void Player::render_inventory(bool all_categories){
                     string item_amount_prefix="";
 
                     if(inventory[i].stack==1){
-                        item_amount_prefix="a ";
+                        //If the item is a corpse or skeleton.
+                        if(inventory[i].is_corpse || inventory[i].is_skeleton){
+                            item_amount_prefix=templates.template_races[inventory[i].race].prefix_article;
+                            item_amount_prefix+=" ";
+                        }
+                        //If the item is anything else.
+                        else{
+                            item_amount_prefix=inventory[i].prefix_article;
+                            item_amount_prefix+=" ";
+                        }
                     }
 
                     string str_item="";

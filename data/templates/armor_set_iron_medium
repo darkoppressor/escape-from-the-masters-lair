@@ -9,6 +9,7 @@
 	<item category:armor>
 		name:iron helm
 		plural name:iron helms
+		prefix article:an
 		writing:
 		appearance:[
 		stackable:0
@@ -45,6 +46,7 @@
 	<item category:armor>
 		name:iron chestpiece
 		plural name:iron chestpieces
+		prefix article:an
 		writing:
 		appearance:[
 		stackable:0
@@ -63,6 +65,7 @@
 	<item category:armor>
 		name:iron cloak
 		plural name:iron cloaks
+		prefix article:an
 		writing:
 		appearance:[
 		stackable:0
@@ -81,6 +84,7 @@
 	<item category:armor>
 		name:iron belt
 		plural name:iron belts
+		prefix article:an
 		writing:
 		appearance:[
 		stackable:0
@@ -171,6 +175,7 @@
 	<item category:armor>
 		name:iron shield
 		plural name:iron shields
+		prefix article:an
 		writing:
 		appearance:[
 		stackable:0

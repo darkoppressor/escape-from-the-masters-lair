@@ -35,6 +35,8 @@ Item::Item(){
 
     plural_name=" ";
 
+    prefix_article="a";
+
     monetary_value=1;
 
     category=ITEM_WEAPON;

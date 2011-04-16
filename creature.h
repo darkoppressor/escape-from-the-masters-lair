@@ -72,6 +72,9 @@ class Creature: public Object{
     short race;
     std::string race_name;
 
+    //The article ('a' or 'an') to be used before a single one of this creature in a sentence.
+    std::string prefix_article;
+
     std::string class_name;
 
     int health;
@@ -148,7 +151,12 @@ class Creature: public Object{
     //Adds stack_size passed items to the creature's inventory.
     //Returns true if the item was added to inventory.
     //Returns false if the item was not added to inventory.
-    bool give_item(std::string item_name,int stack_size=1,char force_inventory_letter=-1);
+    bool give_item(std::string item_name,int stack_size=1);
+
+    //Adds passed item to the creature's inventory.
+    //Returns the index of the item in inventory if added.
+    //Returns -1 if the item was not added to inventory.
+    int give_item(Item* item);
 
     //Returns the template category and index of the item with passed name.
     item_template_data return_item_template(std::string item_name);

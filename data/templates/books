@@ -3,6 +3,7 @@
 //********//
 
 <item category:book>
+	<DO NOT SPAWN>
 	name:spellbook of detect monsters
 	plural name:spellbooks of detect monsters
 	writing:
@@ -12,6 +13,5 @@
 	color:paper
 	material:paper
 	//<book>
-		//is corpse:0
 	//</book>
 </item>
