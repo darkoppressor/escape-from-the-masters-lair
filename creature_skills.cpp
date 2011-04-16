@@ -67,7 +67,7 @@ int Creature::return_skill_unarmed(){
     return (int)skill;
 }
 
-int Creature::return_skill_security(){
+/**int Creature::return_skill_security(){
     double skill=skills[SKILL_SECURITY][SKILL_EXPERIENCE_LEVEL];
 
     //Apply the racial modifier.
@@ -78,9 +78,9 @@ int Creature::return_skill_security(){
     }
 
     return (int)skill;
-}
+}*/
 
-int Creature::return_skill_stealth(){
+/**int Creature::return_skill_stealth(){
     double skill=skills[SKILL_STEALTH][SKILL_EXPERIENCE_LEVEL];
 
     //Apply the racial modifier.
@@ -91,7 +91,7 @@ int Creature::return_skill_stealth(){
     }
 
     return (int)skill;
-}
+}*/
 
 int Creature::return_skill_launcher_weapons(){
     double skill=skills[SKILL_LAUNCHER_WEAPONS][SKILL_EXPERIENCE_LEVEL];
@@ -151,7 +151,7 @@ int Creature::return_skill_speed(){
     return (int)skill;
 }
 
-int Creature::return_skill_fighting(){
+/**int Creature::return_skill_fighting(){
     double skill=skills[SKILL_FIGHTING][SKILL_EXPERIENCE_LEVEL];
 
     //Apply the racial modifier.
@@ -175,7 +175,7 @@ int Creature::return_skill_dodging(){
     }
 
     return (int)skill;
-}
+}*/
 
 int Creature::return_skill_armor(){
     double skill=skills[SKILL_ARMOR][SKILL_EXPERIENCE_LEVEL];
@@ -190,7 +190,7 @@ int Creature::return_skill_armor(){
     return (int)skill;
 }
 
-int Creature::return_skill_magic_air(){
+/**int Creature::return_skill_magic_air(){
     double skill=skills[SKILL_MAGIC_AIR][SKILL_EXPERIENCE_LEVEL];
 
     //Apply the racial modifier.
@@ -292,4 +292,4 @@ int Creature::return_skill_magic_summoning(){
     }
 
     return (int)skill;
-}
+}*/

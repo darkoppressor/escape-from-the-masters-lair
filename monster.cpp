@@ -90,6 +90,11 @@ void Monster::set_base_stats(short pass_level){
     for(int i=0;i<3;){
         //Choose a random skill.
         short random_skill=random_range(SKILL_BLADED_WEAPONS,SKILL_MAGIC_SUMMONING);
+        ///Disable some skills.
+        while(random_skill==SKILL_SECURITY || random_skill==SKILL_STEALTH || random_skill==SKILL_FIGHTING || random_skill==SKILL_DODGING){
+            random_skill=random_range(SKILL_BLADED_WEAPONS,SKILL_ARMOR);
+        }
+        ///
 
         //If the random skill is different from all of the focused skills.
         if(random_skill!=focused_skills[0] && random_skill!=focused_skills[1] && random_skill!=focused_skills[2]){

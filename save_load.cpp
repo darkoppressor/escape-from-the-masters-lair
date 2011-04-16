@@ -382,66 +382,6 @@ void load_game(){
     }
 }
 
-bool load_commands(){
-    ifstream load("data/text/commands.txt");
-
-    if(load!=NULL){
-        getline(load,string_command_what_direction);
-        getline(load,string_command_drop_what);
-        getline(load,string_door_not_there);
-        getline(load,string_door_wont_move);
-        getline(load,string_door_opens);
-        getline(load,string_door_already_open);
-        getline(load,string_door_closes);
-        getline(load,string_door_already_closed);
-        getline(load,string_up_stairs_not_here);
-        getline(load,string_down_stairs_not_here);
-        getline(load,string_no_item_this_tile);
-        getline(load,string_inventory_full);
-        getline(load,string_command_canceled);
-        getline(load,string_discover_secret_door);
-
-        load.close();
-        load.clear();
-    }
-    else{
-        if(!save_commands()){
-            return false;
-        }
-    }
-
-    return true;
-}
-
-bool save_commands(){
-    ofstream save("data/text/commands.txt");
-
-    if(save!=NULL){
-        save<<string_command_what_direction<<"\n";
-        save<<string_command_drop_what<<"\n";
-        save<<string_door_not_there<<"\n";
-        save<<string_door_wont_move<<"\n";
-        save<<string_door_opens<<"\n";
-        save<<string_door_already_open<<"\n";
-        save<<string_door_closes<<"\n";
-        save<<string_door_already_closed<<"\n";
-        save<<string_up_stairs_not_here<<"\n";
-        save<<string_down_stairs_not_here<<"\n";
-        save<<string_no_item_this_tile<<"\n";
-        save<<string_inventory_full<<"\n";
-        save<<string_command_canceled<<"\n";
-        save<<string_discover_secret_door<<"\n";
-
-        save.close();
-        save.clear();
-    }
-    else{
-        return false;
-    }
-
-    return true;
-}
-
 bool options_load(){
     ifstream load("options.cfg");
 

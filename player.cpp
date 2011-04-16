@@ -318,12 +318,12 @@ void Player::handle_input(){
                         //Cancel directional or inventory input.
                         else if(event.key.keysym.sym==SDLK_ESCAPE || event.key.keysym.sym==SDLK_SPACE){
                             if(input_directional!=DIRECTIONAL_COMMAND_NONE){
-                                update_text_log(string_command_canceled.c_str(),is_player);
+                                update_text_log("Nevermind.",is_player);
 
                                 input_directional=DIRECTIONAL_COMMAND_NONE;
                             }
                             if(input_inventory!=INVENTORY_COMMAND_NONE){
-                                update_text_log(string_command_canceled.c_str(),is_player);
+                                update_text_log("Nevermind.",is_player);
 
                                 input_inventory=INVENTORY_COMMAND_NONE;
                             }
@@ -331,21 +331,21 @@ void Player::handle_input(){
 
                         //Open door.
                         else if(input_directional==DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'o'){
-                            update_text_log(string_command_what_direction.c_str(),is_player);
+                            update_text_log("In what direction?",is_player);
 
                             input_directional=DIRECTIONAL_COMMAND_OPEN_DOOR;
                         }
 
                         //Close door.
                         else if(input_directional==DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'c'){
-                            update_text_log(string_command_what_direction.c_str(),is_player);
+                            update_text_log("In what direction?",is_player);
 
                             input_directional=DIRECTIONAL_COMMAND_CLOSE_DOOR;
                         }
 
                         //Fire item.
                         else if(input_directional==DIRECTIONAL_COMMAND_NONE && input_inventory==INVENTORY_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'f'){
-                            update_text_log(string_command_what_direction.c_str(),is_player);
+                            update_text_log("In what direction?",is_player);
 
                             input_directional=DIRECTIONAL_COMMAND_FIRE_ITEM;
                         }
@@ -443,7 +443,7 @@ void Player::handle_input(){
 
                         //Drop item.
                         else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'d'){
-                            update_text_log(string_command_drop_what.c_str(),is_player);
+                            update_text_log("Drop what?",is_player);
 
                             input_inventory=INVENTORY_COMMAND_DROP_ITEM;
                         }

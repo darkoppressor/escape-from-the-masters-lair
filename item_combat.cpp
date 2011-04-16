@@ -24,7 +24,7 @@ void Item::assign_owner_data_thrown(Creature* creature){
 
     owner_data_thrown[0].strength=creature->return_attribute_strength();
     owner_data_thrown[0].agility=creature->return_attribute_agility();
-    owner_data_thrown[0].fighting_skill=creature->return_skill_fighting();
+    ///owner_data_thrown[0].fighting_skill=creature->return_skill_fighting();
     owner_data_thrown[0].thrown_weapons_skill=creature->return_skill_thrown_weapons();
     owner_data_thrown[0].experience_level=creature->experience_level;
     owner_data_thrown[0].base_damage_min_thrown=creature->base_damage_thrown_min;
@@ -41,7 +41,7 @@ void Item::assign_owner_data_fired(Creature* creature,int launcher_item){
 
     owner_data_fired[0].strength=creature->return_attribute_strength();
     owner_data_fired[0].agility=creature->return_attribute_agility();
-    owner_data_fired[0].fighting_skill=creature->return_skill_fighting();
+    ///owner_data_fired[0].fighting_skill=creature->return_skill_fighting();
     owner_data_fired[0].launcher_weapons_skill=creature->return_skill_launcher_weapons();
     owner_data_fired[0].experience_level=creature->experience_level;
     owner_data_fired[0].base_damage_min_ranged=creature->base_damage_ranged_min;
@@ -78,9 +78,9 @@ void Item::attack_thrown(Creature* target){
     string outcome="";
 
     //If the attacker succeeds its hit check.
-    if(rc_attack_hit(owner_data_thrown[0].fighting_skill,owner_data_thrown[0].agility,owner_data_thrown[0].experience_level,target)){
+    /**if(rc_attack_hit(owner_data_thrown[0].fighting_skill,owner_data_thrown[0].agility,owner_data_thrown[0].experience_level,target)){
        //If the defender fails its dodge check.
-       if(!rc_attack_dodge(owner_data_thrown[0].experience_level,target)){
+       if(!rc_attack_dodge(owner_data_thrown[0].experience_level,target)){*/
             //The attack will hit.
             //We now determine the maximum amount of damage the attacker can do (before the target's reduction(s)).
 
@@ -128,10 +128,10 @@ void Item::attack_thrown(Creature* target){
             }
 
             //If the attacker succeeds in a critical strike.
-            if(rc_attack_critical_strike(owner_data_thrown[0].agility,owner_data_thrown[0].experience_level,target)){
+            /**if(rc_attack_critical_strike(owner_data_thrown[0].agility,owner_data_thrown[0].experience_level,target)){
                 damage+=random_range(damage/4,damage/2);
-            }
-       }
+            }*/
+       /**}
         //If the defender succeeds in its dodge check.
         else{
             if(owner_data_thrown[0].is_player){
@@ -152,8 +152,8 @@ void Item::attack_thrown(Creature* target){
             update_text_log(outcome.c_str(),true);
 
             return;
-        }
-    }
+        }*/
+    /**}
     //If the attacker fails its hit check.
     else{
         if(owner_data_thrown[0].is_player){
@@ -174,7 +174,7 @@ void Item::attack_thrown(Creature* target){
         update_text_log(outcome.c_str(),true);
 
         return;
-    }
+    }*/
 
     //If the attack succeeded and did damage.
     if(damage>0){
@@ -232,9 +232,9 @@ void Item::attack_fired(Creature* target){
     string outcome="";
 
     //If the attacker succeeds its hit check.
-    if(rc_attack_hit(owner_data_fired[0].fighting_skill,owner_data_fired[0].agility,owner_data_fired[0].experience_level,target)){
+    /**if(rc_attack_hit(owner_data_fired[0].fighting_skill,owner_data_fired[0].agility,owner_data_fired[0].experience_level,target)){
        //If the defender fails its dodge check.
-       if(!rc_attack_dodge(owner_data_fired[0].experience_level,target)){
+       if(!rc_attack_dodge(owner_data_fired[0].experience_level,target)){*/
             //The attack will hit.
             //We now determine the maximum amount of damage the attacker can do (before the target's reduction(s)).
 
@@ -287,10 +287,10 @@ void Item::attack_fired(Creature* target){
             }
 
             //If the attacker succeeds in a critical strike.
-            if(rc_attack_critical_strike(owner_data_fired[0].agility,owner_data_fired[0].experience_level,target)){
+            /**if(rc_attack_critical_strike(owner_data_fired[0].agility,owner_data_fired[0].experience_level,target)){
                 damage+=random_range(damage/4,damage/2);
-            }
-       }
+            }*/
+       /**}
         //If the defender succeeds in its dodge check.
         else{
             if(owner_data_fired[0].is_player){
@@ -311,8 +311,8 @@ void Item::attack_fired(Creature* target){
             update_text_log(outcome.c_str(),true);
 
             return;
-        }
-    }
+        }*/
+    /**}
     //If the attacker fails its hit check.
     else{
         if(owner_data_fired[0].is_player){
@@ -333,7 +333,7 @@ void Item::attack_fired(Creature* target){
         update_text_log(outcome.c_str(),true);
 
         return;
-    }
+    }*/
 
     //If the attack succeeded and did damage.
     if(damage>0){

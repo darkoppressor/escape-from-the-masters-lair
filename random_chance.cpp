@@ -6,7 +6,7 @@
 
 using namespace std;
 
-bool rc_attack_critical_strike(short attacker_agility,int attacker_experience_level,Creature* target){
+/**bool rc_attack_critical_strike(short attacker_agility,int attacker_experience_level,Creature* target){
     int max_chance_range=99-((double)attacker_agility/10)*((double)attacker_experience_level/(double)target->experience_level);
     if(max_chance_range<0){
         max_chance_range=0;
@@ -28,9 +28,6 @@ bool rc_attack_dodge(int attacker_experience_level,Creature* target){
         max_chance_range=0;
     }
 
-    ///
-    return false;
-
     int random_attempt=random_range(0,max_chance_range);
 
     if(random_attempt==0){
@@ -47,9 +44,6 @@ bool rc_attack_hit(short attacker_fighting_skill,short attacker_agility,int atta
         max_chance_range=0;
     }
 
-    ///
-    return true;
-
     int random_attempt=random_range(0,max_chance_range);
 
     if(random_attempt>=0 && random_attempt<89){
@@ -58,7 +52,7 @@ bool rc_attack_hit(short attacker_fighting_skill,short attacker_agility,int atta
     else{
         return false;
     }
-}
+}*/
 
 bool rc_open_door(){
     int random_attempt=random_range(0,99);
@@ -93,7 +87,7 @@ bool rc_discover_secret_door(){
     }
 }
 
-bool rc_regain_mana(){
+/**bool rc_regain_mana(){
     int random_attempt=random_range(0,99);
 
     if(random_attempt>=0 && random_attempt<20){
@@ -118,7 +112,7 @@ bool rc_regain_mana_bonus(short attribute){
     else{
         return false;
     }
-}
+}*/
 
 bool rc_regain_health(){
     int random_attempt=random_range(0,99);

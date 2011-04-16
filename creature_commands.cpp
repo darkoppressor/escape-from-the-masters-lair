@@ -26,7 +26,7 @@ void Creature::check_command(short command){
         //
         else{
             //No down stairs here.
-            update_text_log(string_down_stairs_not_here.c_str(),is_player);
+            update_text_log("You see no down stairs here.",is_player);
         }
     }
 
@@ -46,7 +46,7 @@ void Creature::check_command(short command){
         //If creature is located on anything else.
         else{
             //No up stairs here.
-            update_text_log(string_up_stairs_not_here.c_str(),is_player);
+            update_text_log("You see no up stairs here.",is_player);
         }
     }
 
@@ -82,14 +82,14 @@ void Creature::check_command(short command){
 
         //There are no items on the current tile.
         if(!item_here){
-            update_text_log(string_no_item_this_tile.c_str(),is_player);
+            update_text_log("There are no items here.",is_player);
 
             return;
         }
 
         //Inventory is full.
         if(inventory.size()>=INVENTORY_MAX_SIZE){
-            update_text_log(string_inventory_full.c_str(),is_player);
+            update_text_log("Your inventory is full.",is_player);
 
             return;
         }
@@ -369,7 +369,7 @@ void Creature::check_command_directional(short direction){
     //Handle command target being outside level bounds.
     if(coords.check_x<0 || coords.check_x>vector_levels[current_level].level_x-1 || coords.check_y<0 || coords.check_y>vector_levels[current_level].level_y-1){
         if(command==DIRECTIONAL_COMMAND_OPEN_DOOR || command==DIRECTIONAL_COMMAND_CLOSE_DOOR){
-            update_text_log(string_door_not_there.c_str(),is_player);
+            update_text_log("There is no door there.",is_player);
 
             //No directional command will be executed.
             input_directional=0;
@@ -413,7 +413,7 @@ void Creature::check_command_directional(short direction){
         //
         else if(vector_levels[current_level].tiles[coords.check_x][coords.check_y].type==TILE_TYPE_DOOR_OPEN){
             //Door already open.
-            update_text_log(string_door_already_open.c_str(),is_player);
+            update_text_log("The door is already open.",is_player);
 
             //No directional command will be executed.
             input_directional=0;
@@ -424,7 +424,7 @@ void Creature::check_command_directional(short direction){
         //
         else{
             //No door there.
-            update_text_log(string_door_not_there.c_str(),is_player);
+            update_text_log("There is no door there.",is_player);
 
             //No directional command will be executed.
             input_directional=0;
@@ -444,7 +444,7 @@ void Creature::check_command_directional(short direction){
         //
         else if(vector_levels[current_level].tiles[coords.check_x][coords.check_y].type==TILE_TYPE_DOOR_CLOSED){
             //Door already closed.
-            update_text_log(string_door_already_closed.c_str(),is_player);
+            update_text_log("The door is already closed.",is_player);
 
             //No directional command will be executed.
             input_directional=0;
@@ -455,7 +455,7 @@ void Creature::check_command_directional(short direction){
         //
         else{
             //No door there.
-            update_text_log(string_door_not_there.c_str(),is_player);
+            update_text_log("There is no door there.",is_player);
 
             //No directional command will be executed.
             input_directional=0;
@@ -666,10 +666,10 @@ void Creature::execute_command_directional(short direction){
             //Try to open door.
             if(rc_open_door()){
                 vector_levels[current_level].tiles[coords.check_x][coords.check_y].type=TILE_TYPE_DOOR_OPEN;
-                update_text_log(string_door_opens.c_str(),is_player);
+                update_text_log("The door opens.",is_player);
             }
             else{
-                update_text_log(string_door_wont_move.c_str(),is_player);
+                update_text_log("The door refuses to budge.",is_player);
             }
         }
         //If the target tile is not what was expected, it must have changed between the time
@@ -685,10 +685,10 @@ void Creature::execute_command_directional(short direction){
             //Try to close door.
             if(rc_close_door()){
                 vector_levels[current_level].tiles[coords.check_x][coords.check_y].type=TILE_TYPE_DOOR_CLOSED;
-                update_text_log(string_door_closes.c_str(),is_player);
+                update_text_log("The door closes.",is_player);
             }
             else{
-                update_text_log(string_door_wont_move.c_str(),is_player);
+                update_text_log("The door refuses to budge.",is_player);
             }
         }
         //If the target tile is not what was expected, it must have changed between the time
@@ -723,7 +723,7 @@ void Creature::execute_command_directional(short direction){
         //If the item's stack is not 0.
         if(inventory[inventory_item_index].stack!=0){
             //Exercise the fighting skill.
-            gain_skill_experience(SKILL_FIGHTING,1);
+            ///gain_skill_experience(SKILL_FIGHTING,1);
 
             //If the item is an actual thrown weapon.
             if(inventory[inventory_item_index].category==ITEM_WEAPON && inventory[inventory_item_index].governing_skill_weapon==SKILL_THROWN_WEAPONS){
@@ -825,7 +825,7 @@ void Creature::execute_command_directional(short direction){
         //If the quivered item's stack is not 0.
         if(inventory[quivered_item].stack!=0){
             //Exercise the fighting skill.
-            gain_skill_experience(SKILL_FIGHTING,1);
+            ///gain_skill_experience(SKILL_FIGHTING,1);
 
             //Exercise the launcher weapons skill.
             gain_skill_experience(SKILL_LAUNCHER_WEAPONS,1);

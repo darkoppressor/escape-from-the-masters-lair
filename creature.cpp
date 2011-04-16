@@ -310,47 +310,7 @@ void Creature::process_turn(){
         inventory[i].process_turn();
     }
 
-    //Look through all the items.
-    /**for(int i=0;i<inventory.size();i++){
-        //If the item has a light radius.
-        if(inventory[i].fov_radius!=LIGHT_NONE){
-            //If the light item is on.
-            if(inventory[i].light_on){
-                //Decrement the item's fuel.
-                inventory[i].fuel--;
-
-                //If the item is out of fuel.
-                if(inventory[i].fuel<=0){
-                    //Ensure the item has exactly 0 fuel.
-                    inventory[i].fuel=0;
-
-                    //Turn off the item's light.
-                    inventory[i].light_on=false;
-
-                    //Set up a light turning off message.
-
-                    string message="";
-
-                    if(is_player){
-                        message="Your ";
-                        message+=inventory[i].return_full_name(1);
-                        message+=" has run out of fuel.";
-                    }
-                    else{
-                        message="The ";
-                        message+=return_full_name();
-                        message+="'s ";
-                        message+=inventory[i].return_full_name(1);
-                        message+=" has run out of fuel.";
-                    }
-
-                    update_text_log(message.c_str(),true);
-                }
-            }
-        }
-    }*/
-
-    if(rc_regain_mana()){
+    /**if(rc_regain_mana()){
         int mana_regen=1;
 
         //Apply the acumen bonus.
@@ -368,7 +328,7 @@ void Creature::process_turn(){
         if(return_mana()>return_mana_max()){
             mana=mana_max;
         }
-    }
+    }*/
 
     if(rc_regain_health()){
         health++;
@@ -578,10 +538,10 @@ void Creature::execute_movement(short check_x,short check_y){
             //Try to open door.
             if(rc_open_door()){
                 vector_levels[current_level].tiles[check_x][check_y].type=TILE_TYPE_DOOR_OPEN;
-                update_text_log(string_door_opens.c_str(),is_player);
+                update_text_log("The door opens.",is_player);
             }
             else{
-                update_text_log(string_door_wont_move.c_str(),is_player);
+                update_text_log("The door refuses to budge.",is_player);
             }
             break;
     }
@@ -675,7 +635,7 @@ void Creature::search(){
                     //The secret door becomes a floor tile.
                     vector_levels[current_level].tiles[int_x][int_y].type=TILE_TYPE_FLOOR;
 
-                    update_text_log(string_discover_secret_door.c_str(),is_player);
+                    update_text_log("You stumble upon a hidden passage!",is_player);
                 }
             }
         }

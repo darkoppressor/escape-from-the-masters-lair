@@ -171,11 +171,6 @@ int main(int argc, char* args[]){
         return 1;
     }
 
-    if(!load_commands()){
-        fprintf(stderr,"Failed to load 'data/text/commands.txt.'\n");
-        return 1;
-    }
-
     prepare_specific_gravities();
     prepare_toughness();
     prepare_values();

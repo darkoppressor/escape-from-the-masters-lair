@@ -79,7 +79,7 @@ int Creature::return_attribute_hardiness(){
     return (int)attribute;
 }
 
-int Creature::return_attribute_comprehension(){
+/**int Creature::return_attribute_comprehension(){
     double attribute=attributes[ATTRIBUTE_COMPREHENSION];
 
     //Apply the racial modifier.
@@ -116,4 +116,4 @@ int Creature::return_attribute_luck(){
     }
 
     return (int)attribute;
-}
+}*/

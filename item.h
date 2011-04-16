@@ -20,7 +20,7 @@ class Creature;
 struct Owner_Data_Thrown{
     short strength;
     short agility;
-    short fighting_skill;
+    ///short fighting_skill;
     short thrown_weapons_skill;
     short experience_level;
     short base_damage_min_thrown;
@@ -34,7 +34,7 @@ struct Owner_Data_Thrown{
 struct Owner_Data_Fired{
     short strength;
     short agility;
-    short fighting_skill;
+    ///short fighting_skill;
     short launcher_weapons_skill;
     short experience_level;
     short base_damage_min_ranged;

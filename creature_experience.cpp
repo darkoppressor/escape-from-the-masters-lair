@@ -91,7 +91,9 @@ void Creature::level_up(){
         ///Right now this is random, but the monster should be somewhat intelligent about this.
         //Determine the attributes to improve.
         for(int i=0;i<levelup_attributes.size();i++){
-            levelup_attributes[i]=random_range(ATTRIBUTE_STRENGTH,ATTRIBUTE_LUCK);
+            ///Disable some attributes.
+            levelup_attributes[i]=random_range(ATTRIBUTE_STRENGTH,ATTRIBUTE_HARDINESS);
+            ///
         }
 
         //Apply the selected attribute bonuses.

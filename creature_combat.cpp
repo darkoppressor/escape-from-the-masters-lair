@@ -18,7 +18,7 @@ void Creature::attack_melee(Creature* target){
     //Handle the attacker's skill gains.
 
     //Exercise the fighting skill.
-    gain_skill_experience(SKILL_FIGHTING,1);
+    ///gain_skill_experience(SKILL_FIGHTING,1);
 
     //Check for items wielded in either hand.
     for(int i=EQUIP_HOLD_RIGHT;i<EQUIP_HOLD_LEFT+1;i++){
@@ -57,9 +57,9 @@ void Creature::attack_melee(Creature* target){
     }
 
     //If the attacker succeeds its hit check.
-    if(rc_attack_hit(return_skill_fighting(),return_attribute_agility(),experience_level,target)){
+    /**if(rc_attack_hit(return_skill_fighting(),return_attribute_agility(),experience_level,target)){
        //If the defender fails its dodge check.
-       if(!rc_attack_dodge(experience_level,target)){
+       if(!rc_attack_dodge(experience_level,target)){*/
             //The attack will hit.
             //We now determine the maximum amount of damage the attacker can do (before the target's reduction(s)).
 
@@ -133,10 +133,10 @@ void Creature::attack_melee(Creature* target){
             }
 
             //If the attacker succeeds in a critical strike.
-            if(rc_attack_critical_strike(return_attribute_agility(),experience_level,target)){
+            /**if(rc_attack_critical_strike(return_attribute_agility(),experience_level,target)){
                 damage+=random_range(damage/4,damage/2);
-            }
-       }
+            }*/
+       /**}
         //If the defender succeeds in its dodge check.
         else{
             if(is_player){
@@ -153,8 +153,8 @@ void Creature::attack_melee(Creature* target){
             update_text_log(outcome.c_str(),true);
 
             return;
-        }
-    }
+        }*/
+    /**}
     //If the attacker fails its hit check.
     else{
         if(is_player){
@@ -171,7 +171,7 @@ void Creature::attack_melee(Creature* target){
         update_text_log(outcome.c_str(),true);
 
         return;
-    }
+    }*/
 
     //If the attack succeeded and did damage.
     if(damage>0){

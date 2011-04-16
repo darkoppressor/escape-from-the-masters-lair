@@ -304,8 +304,8 @@ class Creature: public Object{
     //Returns the current TRUE value (with all relevant bonuses, penalties, etc.) for the corresponding stats.
     int return_health();
     int return_health_max();
-    int return_mana();
-    int return_mana_max();
+    ///int return_mana();
+    ///int return_mana_max();
     int return_armor();
     int return_movement_speed();
     int return_next_move();
@@ -315,32 +315,32 @@ class Creature: public Object{
     int return_attribute_strength();
     int return_attribute_agility();
     int return_attribute_hardiness();
-    int return_attribute_comprehension();
-    int return_attribute_acumen();
-    int return_attribute_luck();
+    ///int return_attribute_comprehension();
+    ///int return_attribute_acumen();
+    ///int return_attribute_luck();
 
     //Each of these functions returns the current TRUE skill value (with all relevant bonuses, penalties, etc.) for the corresponding skill.
     int return_skill_bladed_weapons();
     int return_skill_blunt_weapons();
     int return_skill_stabbing_weapons();
     int return_skill_unarmed();
-    int return_skill_security();
-    int return_skill_stealth();
+    ///int return_skill_security();
+    ///int return_skill_stealth();
     int return_skill_launcher_weapons();
     int return_skill_thrown_weapons();
     int return_skill_dual_wielding();
     int return_skill_speed();
-    int return_skill_fighting();
-    int return_skill_dodging();
+    ///int return_skill_fighting();
+    ///int return_skill_dodging();
     int return_skill_armor();
-    int return_skill_magic_air();
+    /**int return_skill_magic_air();
     int return_skill_magic_fire();
     int return_skill_magic_water();
     int return_skill_magic_cold();
     int return_skill_magic_earth();
     int return_skill_magic_conjuration();
     int return_skill_magic_enchantment();
-    int return_skill_magic_summoning();
+    int return_skill_magic_summoning();*/
 
     //Returns true if the passed skill is a focused skill.
     //Returns false if the passed skill is not a focused skill.

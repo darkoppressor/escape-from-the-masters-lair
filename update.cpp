@@ -444,7 +444,7 @@ void render(int frame_rate, double ms_per_frame){
                 health_color=COLOR_RED;
             }
 
-            short mana_color=COLOR_WHITE;
+            /**short mana_color=COLOR_WHITE;
             if(player.return_mana()>=player.return_mana_max()*0.75){
                 mana_color=COLOR_GREEN;
             }
@@ -456,7 +456,7 @@ void render(int frame_rate, double ms_per_frame){
             }
             else{
                 mana_color=COLOR_RED;
-            }
+            }*/
 
             int size_last_msg=0;
 
@@ -500,9 +500,9 @@ void render(int frame_rate, double ms_per_frame){
             font_small.show(5,player.option_screen_height-170+font_small.spacing_y*2,msg,health_color);
             size_last_msg=msg.length();
 
-            ss.clear();ss.str("");ss<<"  Mana:";ss<<player.return_mana();ss<<"/";ss<<player.return_mana_max();msg=ss.str();
+            /**ss.clear();ss.str("");ss<<"  Mana:";ss<<player.return_mana();ss<<"/";ss<<player.return_mana_max();msg=ss.str();
             font_small.show(5+font_small.spacing_x*size_last_msg,player.option_screen_height-170+font_small.spacing_y*2,msg,mana_color);
-            size_last_msg+=msg.length();
+            size_last_msg+=msg.length();*/
 
             ss.clear();ss.str("");ss<<"  Armor:";ss<<player.return_armor();msg=ss.str();
             ss.clear();ss.str("");ss<<"  Carrying:";ss<<(int)player.return_inventory_weight();ss<<"/";ss<<(int)player.return_carry_capacity();msg+=ss.str();

@@ -30,7 +30,7 @@ int Creature::return_health_max(){
     return (int)number;
 }
 
-int Creature::return_mana(){
+/**int Creature::return_mana(){
     double number=mana;
 
     //Apply the comprehension bonus.
@@ -58,7 +58,7 @@ int Creature::return_mana_max(){
     number+=templates.template_races[race].mana_max;
 
     return (int)number;
-}
+}*/
 
 int Creature::return_armor(){
     double number=0.0;

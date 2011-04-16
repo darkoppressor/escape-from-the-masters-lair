@@ -194,14 +194,6 @@ enum{
 };
 
 //***************//
-// Item Effects: //
-//***************//
-///May not be needed.
-/**enum{
-    EFFECT_
-};*/
-
-//***************//
 // Temperatures: //
 //***************//
 ///I might just make these a regular enum, and throw out the values.

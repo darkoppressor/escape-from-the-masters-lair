@@ -20,10 +20,6 @@ void save_game();
 
 void load_game();
 
-bool load_commands();
-
-bool save_commands();
-
 bool options_load();
 
 bool options_save();

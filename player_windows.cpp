@@ -188,12 +188,12 @@ void Player::handle_input_get_focused_skills(){
         case (Uint16)'d':
             skill=SKILL_UNARMED;
             break;
-        case (Uint16)'e':
+        /**case (Uint16)'e':
             skill=SKILL_SECURITY;
             break;
         case (Uint16)'f':
             skill=SKILL_STEALTH;
-            break;
+            break;*/
         case (Uint16)'g':
             skill=SKILL_LAUNCHER_WEAPONS;
             break;
@@ -206,16 +206,16 @@ void Player::handle_input_get_focused_skills(){
         case (Uint16)'j':
             skill=SKILL_SPEED;
             break;
-        case (Uint16)'k':
+        /**case (Uint16)'k':
             skill=SKILL_FIGHTING;
             break;
         case (Uint16)'l':
             skill=SKILL_DODGING;
-            break;
+            break;*/
         case (Uint16)'m':
             skill=SKILL_ARMOR;
             break;
-        case (Uint16)'n':
+        /**case (Uint16)'n':
             skill=SKILL_MAGIC_AIR;
             break;
         case (Uint16)'o':
@@ -238,7 +238,7 @@ void Player::handle_input_get_focused_skills(){
             break;
         case (Uint16)'u':
             skill=SKILL_MAGIC_SUMMONING;
-            break;
+            break;*/
         }
 
         //If the skill is already a focused skill.
@@ -406,7 +406,7 @@ void Player::handle_input_levelup(){
         case (Uint16)'c':
             attribute=ATTRIBUTE_HARDINESS;
             break;
-        case (Uint16)'d':
+        /**case (Uint16)'d':
             attribute=ATTRIBUTE_COMPREHENSION;
             break;
         case (Uint16)'e':
@@ -414,7 +414,7 @@ void Player::handle_input_levelup(){
             break;
         case (Uint16)'f':
             attribute=ATTRIBUTE_LUCK;
-            break;
+            break;*/
         }
 
         //If this attribute has already been selected.
@@ -681,7 +681,7 @@ void Player::render_get_focused_skills(){
     ss.clear();ss.str("");ss<<"Unarmed";ss<<"\xA";msg+=ss.str();
     msg+="\xA";
 
-    ss.clear();ss.str("");ss<<"(e) ";msg+=ss.str();
+    /**ss.clear();ss.str("");ss<<"(e) ";msg+=ss.str();
     if(is_focused_skill(SKILL_SECURITY)){
         ss.clear();ss.str("");ss<<"+ ";msg+=ss.str();
     }
@@ -699,7 +699,7 @@ void Player::render_get_focused_skills(){
         ss.clear();ss.str("");ss<<"- ";msg+=ss.str();
     }
     ss.clear();ss.str("");ss<<"Stealth";ss<<"\xA";msg+=ss.str();
-    msg+="\xA";
+    msg+="\xA";*/
 
     ss.clear();ss.str("");ss<<"(g) ";msg+=ss.str();
     if(is_focused_skill(SKILL_LAUNCHER_WEAPONS)){
@@ -744,7 +744,7 @@ void Player::render_get_focused_skills(){
 
     msg="";
 
-    ss.clear();ss.str("");ss<<"(k) ";msg+=ss.str();
+    /**ss.clear();ss.str("");ss<<"(k) ";msg+=ss.str();
     if(is_focused_skill(SKILL_FIGHTING)){
         ss.clear();ss.str("");ss<<"+ ";msg+=ss.str();
     }
@@ -762,7 +762,7 @@ void Player::render_get_focused_skills(){
         ss.clear();ss.str("");ss<<"- ";msg+=ss.str();
     }
     ss.clear();ss.str("");ss<<"Dodging";ss<<"\xA";msg+=ss.str();
-    msg+="\xA";
+    msg+="\xA";*/
 
     ss.clear();ss.str("");ss<<"(m) ";msg+=ss.str();
     if(is_focused_skill(SKILL_ARMOR)){
@@ -774,7 +774,7 @@ void Player::render_get_focused_skills(){
     ss.clear();ss.str("");ss<<"Armor";ss<<"\xA";msg+=ss.str();
     msg+="\xA";
 
-    ss.clear();ss.str("");ss<<"(n) ";msg+=ss.str();
+    /**ss.clear();ss.str("");ss<<"(n) ";msg+=ss.str();
     if(is_focused_skill(SKILL_MAGIC_AIR)){
         ss.clear();ss.str("");ss<<"+ ";msg+=ss.str();
     }
@@ -851,7 +851,7 @@ void Player::render_get_focused_skills(){
     else{
         ss.clear();ss.str("");ss<<"- ";msg+=ss.str();
     }
-    ss.clear();ss.str("");ss<<"Summoning Magic";ss<<"\xA";msg+=ss.str();
+    ss.clear();ss.str("");ss<<"Summoning Magic";ss<<"\xA";msg+=ss.str();*/
 
     font_small.show(450,60,msg,COLOR_WHITE);
 
@@ -1041,7 +1041,7 @@ void Player::render_levelup(){
     ss.clear();ss.str("");ss<<" (+";ss<<1+attribute_level_bonuses[ATTRIBUTE_HARDINESS];ss<<")";ss<<"\xA";msg+=ss.str();
     msg+="\xA";
 
-    ss.clear();ss.str("");ss<<"(d) ";msg+=ss.str();
+    /**ss.clear();ss.str("");ss<<"(d) ";msg+=ss.str();
     if(levelup_is_selected_attribute(ATTRIBUTE_COMPREHENSION)){
         ss.clear();ss.str("");ss<<"+ ";msg+=ss.str();
     }
@@ -1072,7 +1072,7 @@ void Player::render_levelup(){
     }
     ss.clear();ss.str("");ss<<"Luck";msg+=ss.str();
     ss.clear();ss.str("");ss<<" (+";ss<<1+attribute_level_bonuses[ATTRIBUTE_LUCK];ss<<")";ss<<"\xA";msg+=ss.str();
-    msg+="\xA";
+    msg+="\xA";*/
 
     font_small.show(330,60,msg,COLOR_WHITE);
 
@@ -1166,7 +1166,7 @@ void Player::render_death(){
     ss.clear();ss.str("");ss<<"dungeon level ";ss<<max_level+1;ss<<", on ";ss<<end_date;ss<<".";msg=ss.str();
     font_small.show(50,95+font.spacing_y+font_small.spacing_y*3,msg,font_color);
 
-    string gender_string="";
+    /**string gender_string="";
     if(gender==GENDER_MALE){
         gender_string="Male";
     }
@@ -1178,28 +1178,28 @@ void Player::render_death(){
     }
 
     ss.clear();ss.str("");ss<<"Gender: ";ss<<gender_string;msg=ss.str();
-    font_small.show(50,95+font.spacing_y+font_small.spacing_y*5,msg,font_color);
+    font_small.show(50,95+font.spacing_y+font_small.spacing_y*5,msg,font_color);*/
 
     ss.clear();ss.str("");ss<<"Age: ";ss<<turn;ss<<" turns";msg=ss.str();
-    font_small.show(50,95+font.spacing_y+font_small.spacing_y*6,msg,font_color);
+    font_small.show(50,95+font.spacing_y+font_small.spacing_y*5,msg,font_color);
 
     ss.clear();ss.str("");ss<<"Cause of death: ";ss<<death_message;msg=ss.str();
-    font_small.show(50,95+font.spacing_y+font_small.spacing_y*7,msg,font_color);
+    font_small.show(50,95+font.spacing_y+font_small.spacing_y*6,msg,font_color);
 
     ss.clear();ss.str("");ss<<"Class: ";ss<<class_name;msg=ss.str();
-    font_small.show(50,95+font.spacing_y+font_small.spacing_y*8,msg,font_color);
+    font_small.show(50,95+font.spacing_y+font_small.spacing_y*7,msg,font_color);
 
     ss.clear();ss.str("");ss<<"Level: ";ss<<experience_level;msg=ss.str();
+    font_small.show(50,95+font.spacing_y+font_small.spacing_y*8,msg,font_color);
+
+    ss.clear();ss.str("");ss<<"Maximum health at time of death: ";ss<<return_health_max();msg=ss.str();
     font_small.show(50,95+font.spacing_y+font_small.spacing_y*9,msg,font_color);
 
-    ss.clear();ss.str("");ss<<"Maximum health at time of death: ";ss<<health_max;msg=ss.str();
-    font_small.show(50,95+font.spacing_y+font_small.spacing_y*10,msg,font_color);
-
-    ss.clear();ss.str("");ss<<"Maximum mana at time of death: ";ss<<mana_max;msg=ss.str();
-    font_small.show(50,95+font.spacing_y+font_small.spacing_y*11,msg,font_color);
+    /**ss.clear();ss.str("");ss<<"Maximum mana at time of death: ";ss<<return_mana_max();msg=ss.str();
+    font_small.show(50,95+font.spacing_y+font_small.spacing_y*10,msg,font_color);*/
 
     ss.clear();ss.str("");ss<<"Final score: ";ss<<score;msg=ss.str();
-    font_small.show(50,95+font.spacing_y+font_small.spacing_y*12,msg,font_color);
+    font_small.show(50,95+font.spacing_y+font_small.spacing_y*10,msg,font_color);
 
     ss.clear();ss.str("");ss<<"  <-- Press [Enter] to quit -->  ";msg=ss.str();
     font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2.0,option_screen_height-font_small.spacing_y*2,msg,font_color);
@@ -1275,7 +1275,7 @@ void Player::render_stats(){
     ss.clear();ss.str("");ss<<"Experience Level: ";ss<<experience_level;ss<<"\xA";msg=ss.str();
     ss.clear();ss.str("");ss<<"Experience: ";ss<<experience;ss<<"/";ss<<experience_max;ss<<"\xA";msg+=ss.str();
     ss.clear();ss.str("");ss<<"Health: ";ss<<return_health();ss<<"/";ss<<return_health_max();ss<<"\xA";msg+=ss.str();
-    ss.clear();ss.str("");ss<<"Mana: ";ss<<return_mana();ss<<"/";ss<<return_mana_max();ss<<"\xA";msg+=ss.str();
+    ///ss.clear();ss.str("");ss<<"Mana: ";ss<<return_mana();ss<<"/";ss<<return_mana_max();ss<<"\xA";msg+=ss.str();
     ss.clear();ss.str("");ss<<"Armor: ";ss<<return_armor();ss<<"\xA";msg+=ss.str();
     ss.clear();ss.str("");ss<<"Carrying: ";ss<<(int)player.return_inventory_weight();ss<<"/";ss<<(int)player.return_carry_capacity();msg+=ss.str();
 
@@ -1288,9 +1288,9 @@ void Player::render_stats(){
     ss.clear();ss.str("");ss<<"Strength - ";ss<<return_attribute_strength();ss<<"\xA";msg=ss.str();
     ss.clear();ss.str("");ss<<"Agility - ";ss<<return_attribute_agility();ss<<"\xA";msg+=ss.str();
     ss.clear();ss.str("");ss<<"Hardiness - ";ss<<return_attribute_hardiness();ss<<"\xA";msg+=ss.str();
-    ss.clear();ss.str("");ss<<"Comprehension - ";ss<<return_attribute_comprehension();ss<<"\xA";msg+=ss.str();
-    ss.clear();ss.str("");ss<<"Acumen - ";ss<<return_attribute_acumen();ss<<"\xA";msg+=ss.str();
-    ss.clear();ss.str("");ss<<"Luck - ";ss<<return_attribute_luck();ss<<"\xA";msg+=ss.str();
+    ///ss.clear();ss.str("");ss<<"Comprehension - ";ss<<return_attribute_comprehension();ss<<"\xA";msg+=ss.str();
+    ///ss.clear();ss.str("");ss<<"Acumen - ";ss<<return_attribute_acumen();ss<<"\xA";msg+=ss.str();
+    ///ss.clear();ss.str("");ss<<"Luck - ";ss<<return_attribute_luck();ss<<"\xA";msg+=ss.str();
 
     font_small.show(5,225,msg,COLOR_WHITE);
 
@@ -1307,10 +1307,10 @@ void Player::render_stats(){
     ss.clear();ss.str("");ss<<"Unarmed - ";ss<<return_skill_unarmed();ss<<" (";ss<<skills[SKILL_UNARMED][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_UNARMED][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
     msg+="\xA";
 
-    ss.clear();ss.str("");ss<<"Security - ";ss<<return_skill_security();ss<<" (";ss<<skills[SKILL_SECURITY][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_SECURITY][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
+    /**ss.clear();ss.str("");ss<<"Security - ";ss<<return_skill_security();ss<<" (";ss<<skills[SKILL_SECURITY][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_SECURITY][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
     msg+="\xA";
     ss.clear();ss.str("");ss<<"Stealth - ";ss<<return_skill_stealth();ss<<" (";ss<<skills[SKILL_STEALTH][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_STEALTH][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
-    msg+="\xA";
+    msg+="\xA";*/
     ss.clear();ss.str("");ss<<"Launcher Weapons - ";ss<<return_skill_launcher_weapons();ss<<" (";ss<<skills[SKILL_LAUNCHER_WEAPONS][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_LAUNCHER_WEAPONS][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
     msg+="\xA";
     ss.clear();ss.str("");ss<<"Thrown Weapons - ";ss<<return_skill_thrown_weapons();ss<<" (";ss<<skills[SKILL_THROWN_WEAPONS][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_THROWN_WEAPONS][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
@@ -1321,15 +1321,17 @@ void Player::render_stats(){
 
     font_small.show(200,30,msg,COLOR_WHITE);
 
-    ss.clear();ss.str("");ss<<"Fighting - ";ss<<return_skill_fighting();ss<<" (";ss<<skills[SKILL_FIGHTING][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_FIGHTING][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg=ss.str();
+    /**ss.clear();ss.str("");ss<<"Fighting - ";ss<<return_skill_fighting();ss<<" (";ss<<skills[SKILL_FIGHTING][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_FIGHTING][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg=ss.str();
     msg+="\xA";
     ss.clear();ss.str("");ss<<"Dodging - ";ss<<return_skill_dodging();ss<<" (";ss<<skills[SKILL_DODGING][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_DODGING][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
+    msg+="\xA";*/
+
+    ///ss.clear();ss.str("");ss<<"Armor - ";ss<<return_skill_armor();ss<<" (";ss<<skills[SKILL_ARMOR][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_ARMOR][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
+    ///USE THIS LINE INSTEAD OF THE ABOVE LINE.
+    ss.clear();ss.str("");ss<<"Armor - ";ss<<return_skill_armor();ss<<" (";ss<<skills[SKILL_ARMOR][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_ARMOR][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg=ss.str();
     msg+="\xA";
 
-    ss.clear();ss.str("");ss<<"Armor - ";ss<<return_skill_armor();ss<<" (";ss<<skills[SKILL_ARMOR][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_ARMOR][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
-    msg+="\xA";
-
-    ss.clear();ss.str("");ss<<"Air Magic - ";ss<<return_skill_magic_air();ss<<" (";ss<<skills[SKILL_MAGIC_AIR][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_MAGIC_AIR][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
+    /**ss.clear();ss.str("");ss<<"Air Magic - ";ss<<return_skill_magic_air();ss<<" (";ss<<skills[SKILL_MAGIC_AIR][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_MAGIC_AIR][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
     msg+="\xA";
     ss.clear();ss.str("");ss<<"Fire Magic - ";ss<<return_skill_magic_fire();ss<<" (";ss<<skills[SKILL_MAGIC_FIRE][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_MAGIC_FIRE][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
     msg+="\xA";
@@ -1345,7 +1347,7 @@ void Player::render_stats(){
     ss.clear();ss.str("");ss<<"Enchantment Magic - ";ss<<return_skill_magic_enchantment();ss<<" (";ss<<skills[SKILL_MAGIC_ENCHANTMENT][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_MAGIC_ENCHANTMENT][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
     msg+="\xA";
     ss.clear();ss.str("");ss<<"Summoning Magic - ";ss<<return_skill_magic_summoning();ss<<" (";ss<<skills[SKILL_MAGIC_SUMMONING][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_MAGIC_SUMMONING][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
-
+*/
     font_small.show(500,30,msg,COLOR_WHITE);
 
     ss.clear();ss.str("");ss<<"  <-- Press [Space] to quit -->  ";msg=ss.str();

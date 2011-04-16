@@ -11,11 +11,11 @@
 
 //Combat//
 
-bool rc_attack_critical_strike(short attacker_agility,int attacker_experience_level,Creature* target);
+///bool rc_attack_critical_strike(short attacker_agility,int attacker_experience_level,Creature* target);
 
-bool rc_attack_dodge(int attacker_experience_level,Creature* target);
+///bool rc_attack_dodge(int attacker_experience_level,Creature* target);
 
-bool rc_attack_hit(short attacker_fighting_skill,short attacker_agility,int attacker_experience_level,Creature* target);
+///bool rc_attack_hit(short attacker_fighting_skill,short attacker_agility,int attacker_experience_level,Creature* target);
 
 //Level interaction//
 
@@ -27,9 +27,9 @@ bool rc_discover_secret_door();
 
 //Turn stuff//
 
-bool rc_regain_mana();
+///bool rc_regain_mana();
 
-bool rc_regain_mana_bonus(short attribute);
+///bool rc_regain_mana_bonus(short attribute);
 
 bool rc_regain_health();
 
