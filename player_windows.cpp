@@ -1172,10 +1172,10 @@ void Player::render_death(){
     ss.clear();ss.str("");ss<<"Death Certificate";msg=ss.str();
     font.show((option_screen_width-msg.length()*font.spacing_x)/2.0,80,msg,font_color);
 
-    ss.clear();ss.str("");ss<<"I, Aesop Thanatos, Clerk of the Department of Adventurer Reclamations";msg=ss.str();
-    font_small.show(240,95+font.spacing_y,msg,font_color);
+    ss.clear();ss.str("");ss<<"I, Aesop Thanatos, Clerk of the Department of Adventurer Reclamations in the Lair of Loathing,";msg=ss.str();
+    font_small.show(50,95+font.spacing_y,msg,font_color);
 
-    ss.clear();ss.str("");ss<<"in the Lair of Loathing, it being an office of record, do hereby certify that the records in my";msg=ss.str();
+    ss.clear();ss.str("");ss<<"it being an office of record, do hereby certify that the records in my";msg=ss.str();
     font_small.show(50,95+font.spacing_y+font_small.spacing_y,msg,font_color);
 
     ss.clear();ss.str("");ss<<"office show that ";ss<<name;ss<<" died at ";ss<<end_time;ss<<" on dungeon level ";ss<<current_level+1;ss<<", having reached, at the highest,";msg=ss.str();

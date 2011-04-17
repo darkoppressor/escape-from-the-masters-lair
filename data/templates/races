@@ -241,7 +241,7 @@
 <race>
 	name:pink panther
 	appearance:f
-	color:pink
+	color:rose
 	weight:300
 	damage melee:2,4
 	movement speed:-2

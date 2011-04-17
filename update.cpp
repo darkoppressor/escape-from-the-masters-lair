@@ -143,10 +143,10 @@ void events(){
             if(random_range(0,99)<75){
                 ///Maybe this should be based on the creature's size.
                 if(random_range(0,99)<30){
-                    vector_levels[current_level].draw_circle_covering(vector_levels[current_level].monsters[i].x,vector_levels[current_level].monsters[i].y,random_range(4,5),COVERING_BLOOD_LOTS,60);
+                    vector_levels[current_level].draw_circle_covering(vector_levels[current_level].monsters[i].x,vector_levels[current_level].monsters[i].y,random_range(3,3),COVERING_BLOOD_LOTS,60);
                 }
                 else{
-                    vector_levels[current_level].draw_circle_covering(vector_levels[current_level].monsters[i].x,vector_levels[current_level].monsters[i].y,random_range(3,4),COVERING_BLOOD_LITTLE,60);
+                    vector_levels[current_level].draw_circle_covering(vector_levels[current_level].monsters[i].x,vector_levels[current_level].monsters[i].y,random_range(3,3),COVERING_BLOOD_LITTLE,60);
                 }
             }
 

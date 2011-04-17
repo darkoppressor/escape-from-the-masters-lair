@@ -51,8 +51,6 @@ Player::Player(){
 
     available_starting_items.push_back("simple wooden dagger");
 
-    available_starting_items.push_back("simple wooden short sword");
-
     available_starting_items.push_back("simple wooden long sword");
 
     available_starting_items.push_back("simple wooden axe");

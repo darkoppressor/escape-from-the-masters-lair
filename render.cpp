@@ -396,10 +396,10 @@ color_data color_name_to_doubles(short color_number){
         new_color=color_shorts_to_doubles(176,224,230);
         break;
     case COLOR_BLOOD:
-        new_color=color_shorts_to_doubles(203,65,11);
+        new_color=color_shorts_to_doubles(244,60,22);
         break;
     case COLOR_BLOOD_DRIED:
-        new_color=color_shorts_to_doubles(203,100,59);
+        new_color=color_shorts_to_doubles(203,65,11);
         break;
 
     }

@@ -26,22 +26,6 @@
 	
 	<item category:weapon>
 		<DO NOT SPAWN>
-		name:simple wooden short sword
-		plural name:simple wooden short swords
-		writing:
-		appearance:)
-		stackable:0
-		size:1.5
-		color:wood
-		material:wood
-		<weapon>
-			governing weapon skill:bladed weapons
-			weapon category:short blades
-		</weapon>
-	</item>
-	
-	<item category:weapon>
-		<DO NOT SPAWN>
 		name:simple wooden long sword
 		plural name:simple wooden long swords
 		writing:
