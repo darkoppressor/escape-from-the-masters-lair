@@ -49,28 +49,33 @@ ai_action Monster::ai_determine_action(){
 
     coordinates hostile_creature=ai_nearest_hostile();
 
-    Race* monster_race=&templates.template_races[race];
+    Race* mr=&templates.template_races[race];
 
     //-Survival-//
 
-    if(ai_state_low_health() && ai_state_hostile_nearby(hostile_creature.x,hostile_creature.y)){
+    if(mr->ai_trait_flees && ai_state_low_health() && ai_state_hostile_nearby(hostile_creature.x,hostile_creature.y)){
         action.action=AI_ACTION_MOVE;
         coordinates flee_coords=ai_opposite_direction(hostile_creature.x,hostile_creature.y);
         action.coords.x=flee_coords.x;
         action.coords.y=flee_coords.y;
     }
-    else if(ai_state_low_health() && !ai_state_hostile_nearby(hostile_creature.x,hostile_creature.y)){
+    else if(mr->ai_trait_uses_items && ai_state_low_health() && !ai_state_hostile_nearby(hostile_creature.x,hostile_creature.y)){
         action.action=AI_ACTION_HEAL;
     }
     else if(ai_state_thirsty()){
-        action.action=AI_ACTION_DRINK;
+        if(mr->ai_trait_uses_items && /**Has thirst quenching item*/){
+            action.action=AI_ACTION_DRINK;
+        }
+        else{
+            action.action=AI_ACTION_SEEK_WATER;
+        }
     }
     else if(!ai_state_low_health() && ai_state_hostile_nearby(hostile_creature.x,hostile_creature.y)){
         action.action=AI_ACTION_MOVE;
         action.coords.x=hostile_creature.x;
         action.coords.y=hostile_creature.y;
     }
-    else{
+    else if(mr->ai_trait_wanders){
         action.action=AI_ACTION_MOVE;
         action.coords.x=random_range(0,vector_levels[current_level].level_x-1);
         action.coords.y=random_range(0,vector_levels[current_level].level_y-1);

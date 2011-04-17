@@ -37,11 +37,11 @@
 	<File name="covering_conversions.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="325" topLine="0" />
 	</File>
-	<File name="creature.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="758" topLine="24" />
+	<File name="creature.cpp" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="999" topLine="24" />
 	</File>
 	<File name="creature.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="8832" topLine="230" />
+		<Cursor1 position="3704" topLine="109" />
 	</File>
 	<File name="creature_alchemy.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="3400" topLine="48" />
@@ -61,8 +61,8 @@
 	<File name="creature_experience.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="1694" topLine="41" />
 	</File>
-	<File name="creature_other_stats.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="1976" topLine="56" />
+	<File name="creature_other_stats.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="2518" topLine="56" />
 	</File>
 	<File name="creature_save_load.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="3482" topLine="150" />
@@ -184,11 +184,11 @@
 	<File name="monster.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="313" topLine="31" />
 	</File>
-	<File name="monster_ai.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="2389" topLine="60" />
+	<File name="monster_ai.cpp" open="1" top="1" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="2051" topLine="56" />
 	</File>
 	<File name="monster_ai_states.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="1586" topLine="33" />
+		<Cursor1 position="1747" topLine="33" />
 	</File>
 	<File name="object.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="1144" topLine="74" />
@@ -223,11 +223,11 @@
 	<File name="quit.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="132" topLine="0" />
 	</File>
-	<File name="race.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="293" topLine="0" />
+	<File name="race.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="401" topLine="0" />
 	</File>
-	<File name="race.h" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="298" topLine="0" />
+	<File name="race.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="18" topLine="0" />
 	</File>
 	<File name="random_chance.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="4101" topLine="164" />
@@ -259,8 +259,8 @@
 	<File name="string_input.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="242" topLine="0" />
 	</File>
-	<File name="templates.cpp" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="21185" topLine="180" />
+	<File name="templates.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="25599" topLine="420" />
 	</File>
 	<File name="templates.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="207" topLine="0" />

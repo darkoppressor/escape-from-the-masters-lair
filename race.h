@@ -26,6 +26,7 @@ class Race: public Creature{
 
     bool ai_trait_flees;
     bool ai_trait_uses_items;
+    bool ai_trait_wanders;
 
     Race();
 };
