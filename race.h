@@ -12,15 +12,20 @@ class Race: public Creature{
 
     int levelup_hp_min;
     int levelup_hp_max;
-    bool levelup_hp_bonus;
 
     int levelup_mana_min;
     int levelup_mana_max;
-    bool levelup_mana_bonus;
+
+    int natural_armor;
 
     //A list of inventory item names.
     //These are the items that a member of this race starts with.
     std::vector<std::string> inventory_items;
+
+    //AI Traits:
+
+    bool ai_trait_flees;
+    bool ai_trait_uses_items;
 
     Race();
 };

@@ -69,7 +69,15 @@ void Creature::attack_melee(Creature* target){
             damage=base_damage;
 
             //Add the racial base melee damage modifier.
-            damage+=random_range(templates.template_races[race].base_damage_melee_min,templates.template_races[race].base_damage_melee_max);
+
+            //If the race has a melee damage bonus.
+            if(templates.template_races[race].base_damage_melee_max>=0){
+                damage+=random_range(templates.template_races[race].base_damage_melee_min,templates.template_races[race].base_damage_melee_max);
+            }
+            //If the race has a melee damage penalty.
+            else{
+                damage-=random_range(abs(templates.template_races[race].base_damage_melee_min),abs(templates.template_races[race].base_damage_melee_max));
+            }
 
             //Add in melee weapon damage.
 

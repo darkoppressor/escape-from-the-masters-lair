@@ -502,6 +502,7 @@ void Templates::load_template_race(){
         string base_damage_ranged="damage ranged:";
         string base_damage_thrown="damage thrown:";
         string movement_speed="movement speed:";
+        string natural_armor="natural armor:";
         string strength="strength:";
         string agility="agility:";
         string hardiness="hardiness:";
@@ -613,13 +614,6 @@ void Templates::load_template_race(){
 
             temp_race.levelup_hp_min=atoi(min_number.c_str());
             temp_race.levelup_hp_max=atoi(max_number.c_str());
-
-            //If the hp modifier is a penalty.
-            if(temp_race.levelup_hp_max<0){
-                temp_race.levelup_hp_bonus=false;
-                temp_race.levelup_hp_min=abs(temp_race.levelup_hp_min);
-                temp_race.levelup_hp_max=abs(temp_race.levelup_hp_max);
-            }
         }
         //Level up mana Range.
         else if(icontains(line,mana_range)){
@@ -649,13 +643,6 @@ void Templates::load_template_race(){
 
             temp_race.levelup_mana_min=atoi(min_number.c_str());
             temp_race.levelup_mana_max=atoi(max_number.c_str());
-
-            //If the mana modifier is a penalty.
-            if(temp_race.levelup_mana_max<0){
-                temp_race.levelup_mana_bonus=false;
-                temp_race.levelup_mana_min=abs(temp_race.levelup_mana_min);
-                temp_race.levelup_mana_max=abs(temp_race.levelup_mana_max);
-            }
         }
         //Health.
         else if(icontains(line,health)){
@@ -764,6 +751,13 @@ void Templates::load_template_race(){
             line.erase(0,movement_speed.length());
 
             temp_race.movement_speed=atoi(line.c_str());
+        }
+        //Natural armor.
+        else if(icontains(line,natural_armor)){
+            //Clear the data name.
+            line.erase(0,natural_armor.length());
+
+            temp_race.natural_armor=atoi(line.c_str());
         }
         //Strength.
         else if(icontains(line,strength)){

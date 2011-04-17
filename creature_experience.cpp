@@ -50,12 +50,12 @@ void Creature::level_up(){
 
     //Apply the racial modifier.
     //If the race has a levelup health bonus.
-    if(templates.template_races[race].levelup_hp_bonus){
+    if(templates.template_races[race].levelup_hp_max>=0){
         health_gain+=random_range(templates.template_races[race].levelup_hp_min,templates.template_races[race].levelup_hp_max);
     }
     //If the race has a levelup health penalty.
     else{
-        health_gain-=random_range(templates.template_races[race].levelup_hp_min,templates.template_races[race].levelup_hp_max);
+        health_gain-=random_range(abs(templates.template_races[race].levelup_hp_min),abs(templates.template_races[race].levelup_hp_max));
     }
 
     if(health_gain<0){
@@ -73,7 +73,7 @@ void Creature::level_up(){
 
     //Apply the racial modifier.
     //If the race has a levelup mana bonus.
-    if(templates.template_races[race].levelup_mana_bonus){
+    if(templates.template_races[race].levelup_mana_max>=0){
         mana_gain+=random_range(templates.template_races[race].levelup_mana_min,templates.template_races[race].levelup_mana_max);
     }
     //If the race has a levelup mana penalty.
@@ -86,10 +86,6 @@ void Creature::level_up(){
     }
 
     mana_max+=mana_gain;
-
-    ss.clear();ss.str("");ss<<health_gain;ss<<",";ss<<mana_gain;msg=ss.str();
-
-    update_text_log(msg.c_str(),true);
 
     //Determine whether 1, 2, or 3 attributes are to be improved this level.
     int attributes_to_improve=(experience_level%3)+1;

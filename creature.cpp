@@ -47,7 +47,7 @@ Creature::Creature(){
     experience_level=1;
 
     experience=0;
-    experience_max=10;
+    experience_max=300;
 
     thirst=THIRST_THIRSTY-500;
 

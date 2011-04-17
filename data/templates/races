@@ -82,13 +82,13 @@
 </race>
 
 //**************//
-// d - canines: //
+// c - canines: //
 //**************//
 //Unarmed bonus
 
 <race>
 	name:puppy
-	appearance:d
+	appearance:c
 	color:white
 	weight:300
 	unarmed:-50
@@ -96,7 +96,7 @@
 
 <race>
 	name:dog
-	appearance:d
+	appearance:c
 	color:white
 	weight:300
 	unarmed:-50
@@ -104,7 +104,7 @@
 
 <race>
 	name:large dog
-	appearance:d
+	appearance:c
 	color:white
 	weight:300
 	unarmed:-50
@@ -112,7 +112,7 @@
 
 <race>
 	name:hell hound pup
-	appearance:d
+	appearance:c
 	color:red
 	weight:300
 	unarmed:-50
@@ -120,7 +120,7 @@
 
 <race>
 	name:hell hound
-	appearance:d
+	appearance:c
 	color:red
 	weight:300
 	unarmed:-50
@@ -128,7 +128,7 @@
 
 <race>
 	name:wolf cub
-	appearance:d
+	appearance:c
 	color:gray
 	weight:300
 	unarmed:-50
@@ -136,7 +136,7 @@
 
 <race>
 	name:wolf
-	appearance:d
+	appearance:c
 	color:gray
 	weight:300
 	unarmed:-50
@@ -144,7 +144,7 @@
 
 <race>
 	name:coyote
-	appearance:d
+	appearance:c
 	color:paynes gray
 	weight:300
 	unarmed:-50
@@ -152,7 +152,7 @@
 
 <race>
 	name:jackal
-	appearance:d
+	appearance:c
 	color:brown
 	weight:300
 	unarmed:-50
@@ -160,7 +160,7 @@
 
 <race>
 	name:fox
-	appearance:d
+	appearance:c
 	color:sepia
 	weight:300
 	unarmed:-50
@@ -180,7 +180,7 @@
 	weight:300
 	damage melee:2,4
 	movement speed:-2
-	health:-15
+	health:-25
 </race>
 
 <race>
@@ -190,7 +190,7 @@
 	weight:300
 	damage melee:2,4
 	movement speed:-2
-	health:-15
+	health:-25
 </race>
 
 <race>
@@ -200,7 +200,7 @@
 	weight:300
 	damage melee:2,4
 	movement speed:-2
-	health:-15
+	health:-25
 </race>
 
 <race>
@@ -210,7 +210,7 @@
 	weight:300
 	damage melee:2,4
 	movement speed:-2
-	health:-15
+	health:-25
 </race>
 
 <race>
@@ -220,7 +220,7 @@
 	weight:300
 	damage melee:2,4
 	movement speed:-2
-	health:-15
+	health:-25
 </race>
 
 <race>
@@ -230,7 +230,7 @@
 	weight:300
 	damage melee:2,4
 	movement speed:-2
-	health:-15
+	health:-25
 </race>
 
 <race>
@@ -240,7 +240,7 @@
 	weight:300
 	damage melee:2,4
 	movement speed:-2
-	health:-15
+	health:-25
 </race>
 
 <race>
@@ -250,7 +250,7 @@
 	weight:300
 	damage melee:2,4
 	movement speed:-2
-	health:-15
+	health:-25
 </race>
 
 <race>
@@ -260,7 +260,7 @@
 	weight:250
 	damage melee:2,4
 	movement speed:-2
-	health:-15
+	health:-25
 </race>
 
 //*****************//
@@ -359,7 +359,7 @@
 //Slight health penalty
 
 <race>
-	name:orc
+	name:valley orc
 	prefix article:an
 	appearance:o
 	color:green
@@ -399,13 +399,13 @@
 	health:-5
 </race>
 
-//****************//
-// @ - humanoids: //
-//****************//
+//************//
+// humanoids: //
+//************//
+
 //Bladed weapons skill bonus
 //Slight melee damage bonus
-//Armor penalty
-
+//Armor skill penalty
 <race>
 	name:human
 	appearance:@
@@ -416,6 +416,19 @@
 	armor:50
 </race>
 
+//Blunt weapons skill bonus
+//Natural armor
+//Agility penalty
+<race>
+	name:dwarf
+	appearance:d
+	color:white
+	weight:55
+	blunt weapons:-50
+	natural armor:5
+	agility:-1
+</race>
+
 //************//
 // e - elves: //
 //************//
@@ -424,10 +437,49 @@
 //Slight levelup hp gain penalty.
 
 <race>
-	name:elf
-	prefix article:an
-	appearance:@
+	name:wood elf
+	appearance:e
+	color:light brown
+	weight:55
+	launcher weapons:-50
+	damage ranged:1,2
+	levelup hp range:-1,-2
+</race>
+
+<race>
+	name:high elf
+	appearance:e
 	color:sandy brown
+	weight:55
+	launcher weapons:-50
+	damage ranged:1,2
+	levelup hp range:-1,-2
+</race>
+
+<race>
+	name:night elf
+	appearance:e
+	color:indigo
+	weight:55
+	launcher weapons:-50
+	damage ranged:1,2
+	levelup hp range:-1,-2
+</race>
+
+<race>
+	name:cave elf
+	appearance:e
+	color:light gray
+	weight:55
+	launcher weapons:-50
+	damage ranged:1,2
+	levelup hp range:-1,-2
+</race>
+
+<race>
+	name:kokiri
+	appearance:e
+	color:green
 	weight:55
 	launcher weapons:-50
 	damage ranged:1,2

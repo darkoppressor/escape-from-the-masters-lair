@@ -8,9 +8,12 @@ using namespace std;
 Race::Race(){
     levelup_hp_min=0;
     levelup_hp_max=0;
-    levelup_hp_bonus=true;
 
     levelup_mana_min=0;
     levelup_mana_max=0;
-    levelup_mana_bonus=true;
+
+    natural_armor=0;
+
+    ai_trait_flees=false;
+    ai_trait_uses_items=false;
 }

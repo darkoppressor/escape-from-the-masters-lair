@@ -83,6 +83,13 @@ int Creature::return_armor(){
         }
     }
 
+    //Apply the racial modifier.
+    number+=templates.template_races[race].natural_armor;
+
+    if(number<0.0){
+        number=0.0;
+    }
+
     return (int)number;
 }
 

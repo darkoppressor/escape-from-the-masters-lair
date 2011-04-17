@@ -90,7 +90,15 @@ void Item::attack_thrown(Creature* target){
             damage=base_damage;
 
             //Add the racial base thrown damage modifier.
-            damage+=random_range(templates.template_races[owner_data_thrown[0].race].base_damage_thrown_min,templates.template_races[owner_data_thrown[0].race].base_damage_thrown_max);
+
+            //If the race has a thrown damage bonus.
+            if(templates.template_races[owner_data_thrown[0].race].base_damage_thrown_max>=0){
+                damage+=random_range(templates.template_races[owner_data_thrown[0].race].base_damage_thrown_min,templates.template_races[owner_data_thrown[0].race].base_damage_thrown_max);
+            }
+            //If the race has a thrown damage penalty.
+            else{
+                damage-=random_range(abs(templates.template_races[owner_data_thrown[0].race].base_damage_thrown_min),abs(templates.template_races[owner_data_thrown[0].race].base_damage_thrown_max));
+            }
 
             //Add in thrown weapon damage.
 
@@ -244,7 +252,15 @@ void Item::attack_fired(Creature* target){
             damage=base_damage;
 
             //Add the racial base ranged damage modifier.
-            damage+=random_range(templates.template_races[owner_data_fired[0].race].base_damage_ranged_min,templates.template_races[owner_data_fired[0].race].base_damage_ranged_max);
+
+            //If the race has a ranged damage bonus.
+            if(templates.template_races[owner_data_fired[0].race].base_damage_ranged_max>=0){
+                damage+=random_range(templates.template_races[owner_data_fired[0].race].base_damage_ranged_min,templates.template_races[owner_data_fired[0].race].base_damage_ranged_max);
+            }
+            //If the race has a ranged damage penalty.
+            else{
+                damage-=random_range(abs(templates.template_races[owner_data_fired[0].race].base_damage_ranged_min),abs(templates.template_races[owner_data_fired[0].race].base_damage_ranged_max));
+            }
 
             //Add the actual projectile's thrown weapon damage.
 

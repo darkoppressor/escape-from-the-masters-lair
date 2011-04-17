@@ -49,6 +49,8 @@ ai_action Monster::ai_determine_action(){
 
     coordinates hostile_creature=ai_nearest_hostile();
 
+    Race* monster_race=&templates.template_races[race];
+
     //-Survival-//
 
     if(ai_state_low_health() && ai_state_hostile_nearby(hostile_creature.x,hostile_creature.y)){
