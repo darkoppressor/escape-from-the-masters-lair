@@ -63,11 +63,12 @@ ai_action Monster::ai_determine_action(){
         action.action=AI_ACTION_HEAL;
     }
     else if(ai_state_thirsty()){
-        if(mr->ai_trait_uses_items && /**Has thirst quenching item*/){
+        if(mr->ai_trait_uses_items/** && Has thirst quenching item*/){
             action.action=AI_ACTION_DRINK;
         }
         else{
-            action.action=AI_ACTION_SEEK_WATER;
+            action.action=AI_ACTION_SEEK_FOUNTAIN;
+            ///Set action coords to nearest fountain.
         }
     }
     else if(!ai_state_low_health() && ai_state_hostile_nearby(hostile_creature.x,hostile_creature.y)){
@@ -147,6 +148,10 @@ void Monster::handle_ai(){
                     break;
                 }
             }
+        }
+        else if(action.action==AI_ACTION_SEEK_FOUNTAIN){
+            ///If target location is this monster's location, drink from the fountain here.
+            ///If not, move towards the location.
         }
         else if(action.action==AI_ACTION_DROP_WEIGHT){
             ///Find the heaviest non-equipped item.

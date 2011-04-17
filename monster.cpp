@@ -19,7 +19,9 @@ void Monster::set_inventory(){
     }
 
     //Add some random bottles of water.
-    give_item("bottle of water",random_range(1,2));
+    if(templates.template_races[race].ai_trait_uses_items){
+        give_item("bottle of water",random_range(1,2));
+    }
 
     //Give the monster any race-specific items.
     for(int i=0;i<templates.template_races[race].inventory_items.size();i++){

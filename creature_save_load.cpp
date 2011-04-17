@@ -35,8 +35,6 @@ string Creature::return_save_data(){
 
     save<<race_name<<"\n";
 
-    save<<prefix_article<<"\n";
-
     save<<class_name<<"\n";
 
     save<<health<<"\n";
@@ -158,9 +156,6 @@ void Creature::load_data(stringstream* load){
 
     getline(*load,line);
     race_name=line;
-
-    getline(*load,line);
-    prefix_article=line;
 
     getline(*load,line);
     class_name=line;

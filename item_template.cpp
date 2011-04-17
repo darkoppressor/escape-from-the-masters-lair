@@ -7,4 +7,5 @@ using namespace std;
 
 Item_Template::Item_Template(){
     size=0.0;
+    random_size=false;
 }

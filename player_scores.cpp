@@ -14,7 +14,7 @@
 using namespace std;
 using namespace boost::algorithm;
 
-void Player::save_game_log_entry(short cause_of_death,string killer,string killer_item){
+void Player::save_game_log_entry(short cause_of_death,string killer,string killer_item,string killer_article,string killer_item_article){
     ofstream save_log("game_log",ifstream::app);
 
     if(save_log!=NULL){
@@ -142,21 +142,31 @@ void Player::save_game_log_entry(short cause_of_death,string killer,string kille
         }*/
 
         if(cause_of_death==CAUSE_OF_DEATH_MELEE){
-            death_message="Killed by a ";
+            death_message="Killed by ";
+            death_message+=killer_article;
+            death_message+=" ";
             death_message+=killer;
             death_message+=".";
         }
         else if(cause_of_death==CAUSE_OF_DEATH_THROWN){
-            death_message="Killed by a ";
+            death_message="Killed by ";
+            death_message+=killer_item_article;
+            death_message+=" ";
             death_message+=killer_item;
-            death_message+=" thrown by a ";
+            death_message+=" thrown by ";
+            death_message+=killer_article;
+            death_message+=" ";
             death_message+=killer;
             death_message+=".";
         }
         else if(cause_of_death==CAUSE_OF_DEATH_RANGED){
-            death_message="Killed by a ";
+            death_message="Killed by ";
+            death_message+=killer_item_article;
+            death_message+=" ";
             death_message+=killer_item;
-            death_message+=" fired by a ";
+            death_message+=" fired by ";
+            death_message+=killer_article;
+            death_message+=" ";
             death_message+=killer;
             death_message+=".";
         }
@@ -164,7 +174,7 @@ void Player::save_game_log_entry(short cause_of_death,string killer,string kille
             death_message="Died of thirst.";
         }
         else if(cause_of_death==CAUSE_OF_DEATH_LAVA){
-            death_message="Incinerated by lava.";
+            death_message="Incinerated by molten lava.";
         }
         else if(cause_of_death==CAUSE_OF_DEATH_DROWN){
             death_message="Drowned.";

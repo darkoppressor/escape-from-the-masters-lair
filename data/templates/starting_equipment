@@ -24,6 +24,102 @@
 		</weapon>
 	</item>
 	
+	<item category:weapon>
+		<DO NOT SPAWN>
+		name:simple wooden short sword
+		plural name:simple wooden short swords
+		writing:
+		appearance:)
+		stackable:0
+		size:1.5
+		color:wood
+		material:wood
+		<weapon>
+			governing weapon skill:bladed weapons
+			weapon category:short blades
+		</weapon>
+	</item>
+	
+	<item category:weapon>
+		<DO NOT SPAWN>
+		name:simple wooden long sword
+		plural name:simple wooden long swords
+		writing:
+		appearance:)
+		stackable:0
+		size:2.5
+		color:wood
+		material:wood
+		<weapon>
+			governing weapon skill:bladed weapons
+			weapon category:long blades
+		</weapon>
+	</item>
+
+	<item category:weapon>
+		<DO NOT SPAWN>
+		name:simple wooden axe
+		plural name:simple wooden axes
+		writing:
+		appearance:)
+		stackable:0
+		size:1.5
+		color:wood
+		material:wood
+		<weapon>
+			governing weapon skill:bladed weapons
+			weapon category:axes
+		</weapon>
+	</item>
+	
+	<item category:weapon>
+		<DO NOT SPAWN>
+		name:simple wooden mace
+		plural name:simple wooden maces
+		writing:
+		appearance:)
+		stackable:0
+		size:1.5
+		color:wood
+		material:wood
+		<weapon>
+			governing weapon skill:blunt weapons
+			weapon category:maces
+		</weapon>
+	</item>
+	
+	<item category:weapon>
+		<DO NOT SPAWN>
+		name:simple wooden quarterstaff
+		plural name:simple wooden quarterstaves
+		writing:
+		appearance:)
+		stackable:0
+		size:1.5
+		color:wood
+		material:wood
+		<weapon>
+			governing weapon skill:blunt weapons
+			weapon category:staves
+		</weapon>
+	</item>
+	
+	<item category:weapon>
+		<DO NOT SPAWN>
+		name:simple wooden spear
+		plural name:simple wooden spears
+		writing:
+		appearance:)
+		stackable:0
+		size:2.5
+		color:wood
+		material:wood
+		<weapon>
+			governing weapon skill:stabbing weapons
+			weapon category:polearms
+		</weapon>
+	</item>
+	
 	//*********//
 	// Ranged: //
 	//*********//
@@ -35,12 +131,44 @@
 		writing:
 		appearance:)
 		stackable:0
-		size:6.0
+		size:4.0
 		color:wood
 		material:wood
 		<weapon>
 			governing weapon skill:launcher weapons
 			weapon category:bows
+		</weapon>
+	</item>
+	
+	<item category:weapon>
+		<DO NOT SPAWN>
+		name:simple wooden crossbow
+		plural name:simple wooden crossbows
+		writing:
+		appearance:)
+		stackable:0
+		size:3.5
+		color:wood
+		material:wood
+		<weapon>
+			governing weapon skill:launcher weapons
+			weapon category:crossbows
+		</weapon>
+	</item>
+	
+	<item category:weapon>
+		<DO NOT SPAWN>
+		name:simple sling
+		plural name:simple slings
+		writing:
+		appearance:)
+		stackable:0
+		size:2.5
+		color:cloth
+		material:cloth
+		<weapon>
+			governing weapon skill:launcher weapons
+			weapon category:slings
 		</weapon>
 	</item>
 	
@@ -62,6 +190,56 @@
 			governing weapon skill:thrown weapons
 			weapon category:thrown
 			launcher:bows
+		</weapon>
+	</item>
+	
+	<item category:weapon>
+		<DO NOT SPAWN>
+		name:simple wooden crossbow bolt
+		plural name:simple wooden crossbow bolts
+		writing:
+		appearance:)
+		stackable:1
+		size:0.25
+		color:wood
+		material:wood
+		<weapon>
+			governing weapon skill:thrown weapons
+			weapon category:thrown
+			launcher:crossbows
+		</weapon>
+	</item>
+	
+	<item category:weapon>
+		<DO NOT SPAWN>
+		name:simple stone
+		plural name:simple stones
+		writing:
+		appearance:)
+		stackable:1
+		size:0.25
+		color:stone
+		material:stone
+		<weapon>
+			governing weapon skill:thrown weapons
+			weapon category:thrown
+			launcher:slings
+		</weapon>
+	</item>
+	
+	<item category:weapon>
+		<DO NOT SPAWN>
+		name:simple bone shuriken
+		plural name:simple bone shurikens
+		writing:
+		appearance:)
+		stackable:1
+		size:0.25
+		color:bone
+		material:bone
+		<weapon>
+			governing weapon skill:thrown weapons
+			weapon category:thrown
 		</weapon>
 	</item>
 

@@ -1,0 +1,54 @@
+//**********//
+// Weapons: //
+//**********//
+	
+	//*********//
+	// Ranged: //
+	//*********//
+
+	<item category:weapon>
+		<RANDOM SIZE>
+		name:SIZE MATERIAL bow
+		plural name:SIZE MATERIAL bows
+		writing:
+		appearance:)
+		stackable:0
+		size:8.0
+		allowed material:bone
+		allowed material:wood
+		<weapon>
+			governing weapon skill:launcher weapons
+			weapon category:bows
+		</weapon>
+	</item>
+	
+	<item category:weapon>
+		<RANDOM SIZE>
+		name:SIZE MATERIAL crossbow
+		plural name:SIZE MATERIAL crossbows
+		writing:
+		appearance:)
+		stackable:0
+		size:7.0
+		allowed material:bone
+		allowed material:wood
+		<weapon>
+			governing weapon skill:launcher weapons
+			weapon category:crossbows
+		</weapon>
+	</item>
+	
+	<item category:weapon>
+		<RANDOM SIZE>
+		name:SIZE MATERIAL sling
+		plural name:SIZE MATERIAL slings
+		writing:
+		appearance:)
+		stackable:0
+		size:5.0
+		allowed material:cloth
+		<weapon>
+			governing weapon skill:launcher weapons
+			weapon category:slings
+		</weapon>
+	</item>

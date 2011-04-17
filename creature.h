@@ -72,9 +72,6 @@ class Creature: public Object{
     short race;
     std::string race_name;
 
-    //The article ('a' or 'an') to be used before a single one of this creature in a sentence.
-    std::string prefix_article;
-
     std::string class_name;
 
     int health;
@@ -250,7 +247,7 @@ class Creature: public Object{
 
     void attack_melee(Creature* target);
 
-    void die(short cause_of_death,std::string killer="",std::string killer_item="");
+    void die(short cause_of_death,std::string killer="",std::string killer_item="",std::string killer_article="",std::string killer_item_article="");
 
     //Level up the creature.
     void level_up();

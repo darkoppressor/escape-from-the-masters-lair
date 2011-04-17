@@ -9,6 +9,7 @@
 #include "message_log.h"
 #include "combat_all.h"
 #include "world.h"
+#include "grammar.h"
 
 using namespace std;
 
@@ -230,7 +231,7 @@ void Item::attack_thrown(Creature* target){
 
     //If the target's health drops to 0 or below, it has been killed.
     if(target->return_health()<=0){
-        target->die(CAUSE_OF_DEATH_THROWN,owner_data_thrown[0].full_name,return_full_name(1));
+        target->die(CAUSE_OF_DEATH_THROWN,owner_data_thrown[0].full_name,return_full_name(1),a_vs_an(owner_data_thrown[0].race),a_vs_an(this));
     }
 }
 
@@ -397,6 +398,6 @@ void Item::attack_fired(Creature* target){
 
     //If the target's health drops to 0 or below, it has been killed.
     if(target->return_health()<=0){
-        target->die(CAUSE_OF_DEATH_RANGED,owner_data_fired[0].full_name,return_full_name(1));
+        target->die(CAUSE_OF_DEATH_RANGED,owner_data_fired[0].full_name,return_full_name(1),a_vs_an(owner_data_fired[0].race),a_vs_an(this));
     }
 }

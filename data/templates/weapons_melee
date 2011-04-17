@@ -7,56 +7,9 @@
 	//********//
 	
 	<item category:weapon>
-		name:tiny MATERIAL dagger
-		plural name:tiny MATERIAL daggers
-		writing:
-		appearance:)
-		stackable:0
-		size:0.5
-		allowed material:copper
-		allowed material:brass
-		allowed material:bronze
-		allowed material:iron
-		allowed material:steel
-		allowed material:silver
-		allowed material:gold
-		allowed material:bone
-		allowed material:wood
-		allowed material:stone
-		allowed material:glass
-		<weapon>
-			governing weapon skill:bladed weapons
-			weapon category:short blades
-		</weapon>
-	</item>
-	
-	<item category:weapon>
-		name:small MATERIAL dagger
-		plural name:small MATERIAL daggers
-		writing:
-		appearance:)
-		stackable:0
-		size:0.75
-		allowed material:copper
-		allowed material:brass
-		allowed material:bronze
-		allowed material:iron
-		allowed material:steel
-		allowed material:silver
-		allowed material:gold
-		allowed material:bone
-		allowed material:wood
-		allowed material:stone
-		allowed material:glass
-		<weapon>
-			governing weapon skill:bladed weapons
-			weapon category:short blades
-		</weapon>
-	</item>
-
-	<item category:weapon>
-		name:medium MATERIAL dagger
-		plural name:medium MATERIAL daggers
+		<RANDOM SIZE>
+		name:SIZE MATERIAL dagger
+		plural name:SIZE MATERIAL daggers
 		writing:
 		appearance:)
 		stackable:0
@@ -79,12 +32,13 @@
 	</item>
 	
 	<item category:weapon>
-		name:large MATERIAL dagger
-		plural name:large MATERIAL daggers
+		<RANDOM SIZE>
+		name:SIZE MATERIAL short sword
+		plural name:SIZE MATERIAL short swords
 		writing:
 		appearance:)
 		stackable:0
-		size:1.25
+		size:3.0
 		allowed material:copper
 		allowed material:brass
 		allowed material:bronze
@@ -94,8 +48,6 @@
 		allowed material:gold
 		allowed material:bone
 		allowed material:wood
-		allowed material:stone
-		allowed material:glass
 		<weapon>
 			governing weapon skill:bladed weapons
 			weapon category:short blades
@@ -103,12 +55,13 @@
 	</item>
 	
 	<item category:weapon>
-		name:huge MATERIAL dagger
-		plural name:huge MATERIAL daggers
+		<RANDOM SIZE>
+		name:SIZE MATERIAL long sword
+		plural name:SIZE MATERIAL long swords
 		writing:
 		appearance:)
 		stackable:0
-		size:1.5
+		size:5.0
 		allowed material:copper
 		allowed material:brass
 		allowed material:bronze
@@ -118,10 +71,93 @@
 		allowed material:gold
 		allowed material:bone
 		allowed material:wood
-		allowed material:stone
-		allowed material:glass
 		<weapon>
 			governing weapon skill:bladed weapons
-			weapon category:short blades
+			weapon category:long blades
+		</weapon>
+	</item>
+
+	<item category:weapon>
+		<RANDOM SIZE>
+		name:SIZE MATERIAL axe
+		plural name:SIZE MATERIAL axes
+		writing:
+		appearance:)
+		stackable:0
+		size:3.0
+		allowed material:copper
+		allowed material:brass
+		allowed material:bronze
+		allowed material:iron
+		allowed material:steel
+		allowed material:silver
+		allowed material:gold
+		allowed material:bone
+		allowed material:wood
+		<weapon>
+			governing weapon skill:bladed weapons
+			weapon category:axes
+		</weapon>
+	</item>
+	
+	<item category:weapon>
+		<RANDOM SIZE>
+		name:SIZE MATERIAL mace
+		plural name:SIZE MATERIAL maces
+		writing:
+		appearance:)
+		stackable:0
+		size:3.0
+		allowed material:copper
+		allowed material:brass
+		allowed material:bronze
+		allowed material:iron
+		allowed material:steel
+		allowed material:silver
+		allowed material:gold
+		allowed material:bone
+		allowed material:wood
+		<weapon>
+			governing weapon skill:blunt weapons
+			weapon category:maces
+		</weapon>
+	</item>
+	
+	<item category:weapon>
+		<RANDOM SIZE>
+		name:SIZE MATERIAL quarterstaff
+		plural name:SIZE MATERIAL quarterstaves
+		writing:
+		appearance:)
+		stackable:0
+		size:3.0
+		allowed material:bone
+		allowed material:wood
+		<weapon>
+			governing weapon skill:blunt weapons
+			weapon category:staves
+		</weapon>
+	</item>
+	
+	<item category:weapon>
+		<RANDOM SIZE>
+		name:SIZE MATERIAL spear
+		plural name:SIZE MATERIAL spears
+		writing:
+		appearance:)
+		stackable:0
+		size:5.0
+		allowed material:copper
+		allowed material:brass
+		allowed material:bronze
+		allowed material:iron
+		allowed material:steel
+		allowed material:silver
+		allowed material:gold
+		allowed material:bone
+		allowed material:wood
+		<weapon>
+			governing weapon skill:stabbing weapons
+			weapon category:polearms
 		</weapon>
 	</item>

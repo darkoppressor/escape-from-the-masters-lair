@@ -7,9 +7,10 @@
 #include "quit.h"
 #include "material_properties.h"
 #include "version.h"
-#include "player_starting_gold.h"
+#include "player_starting_values.h"
 #include "covering_conversions.h"
 #include "message_log.h"
+#include "grammar.h"
 
 using namespace std;
 using namespace boost::algorithm;
@@ -621,9 +622,11 @@ void Player::render_get_race(){
             continue;
         }
 
+        short render_color=templates.template_races[i].color;
+
         ss.clear();ss.str("");ss<<i;ss<<" - ";ss<<templates.template_races[i].name;ss<<"\xA";msg=ss.str();
 
-        font_small.show(5+column*column_width,font_small.spacing_y*2+font_small.spacing_y*lines_rendered++,msg,COLOR_WHITE);
+        font_small.show(5+column*column_width,font_small.spacing_y*2+font_small.spacing_y*lines_rendered++,msg,render_color);
     }
 
     if(get_race.length()>0 && atoi(get_race.c_str())<templates.template_races.size()){
@@ -922,9 +925,22 @@ void Player::render_get_starting_items(){
 
         item_value=templates.template_items[item_template.category][item_template.index].monetary_value;
 
-        ss.clear();ss.str("");ss<<(char)letter;ss<<purchased;ss<<available_starting_items[i];ss<<" (cost: ";ss<<item_value;ss<<")";ss<<"\xA";msg=ss.str();
+        string stack_size="";
 
-        font_small.show(5+column*column_width,font_small.spacing_y*2+font_small.spacing_y*lines_rendered++,msg,COLOR_WHITE);
+        //If this item is a thrown weapon.
+        if(templates.template_items[item_template.category][item_template.index].category==ITEM_WEAPON &&
+           templates.template_items[item_template.category][item_template.index].weapon_category==WEAPON_THROWN){
+               //Ammo items should cost a bit more, since you get a stack of them.
+               item_value*=2.5;
+               //The store should display the size of the stack you will get.
+               ss.clear();ss.str("");ss<<" x";ss<<STARTING_THROWN_STACK_SIZE;stack_size=ss.str();
+        }
+
+        short render_color=templates.template_items[item_template.category][item_template.index].color;
+
+        ss.clear();ss.str("");ss<<(char)letter;ss<<purchased;ss<<available_starting_items[i];ss<<stack_size;ss<<" (cost: ";ss<<item_value;ss<<")";ss<<"\xA";msg=ss.str();
+
+        font_small.show(5+column*column_width,font_small.spacing_y*2+font_small.spacing_y*lines_rendered++,msg,render_color);
     }
 
     ss.clear();ss.str("");ss<<"Press [Enter] to continue -->  ";msg=ss.str();
@@ -1093,16 +1109,9 @@ void Player::render_item_info(){
     string item_amount_prefix="";
 
     if(inventory[item_info].stack==1){
-        //If the item is a corpse or skeleton.
-        if(inventory[item_info].is_corpse || inventory[item_info].is_skeleton){
-            item_amount_prefix=templates.template_races[inventory[item_info].race].prefix_article;
-            item_amount_prefix+=" ";
-        }
-        //If the item is anything else.
-        else{
-            item_amount_prefix=inventory[item_info].prefix_article;
-            item_amount_prefix+=" ";
-        }
+        item_amount_prefix=a_vs_an(&inventory[item_info]);
+
+        item_amount_prefix+=" ";
     }
 
     ss.clear();ss.str("");ss<<inventory[item_info].appearance;ss<<" - ";ss<<item_amount_prefix;ss<<inventory[item_info].return_full_name();ss<<"\xA";msg=ss.str();
@@ -1482,16 +1491,9 @@ void Player::render_inventory(bool all_categories){
                     string item_amount_prefix="";
 
                     if(inventory[i].stack==1){
-                        //If the item is a corpse or skeleton.
-                        if(inventory[i].is_corpse || inventory[i].is_skeleton){
-                            item_amount_prefix=templates.template_races[inventory[i].race].prefix_article;
-                            item_amount_prefix+=" ";
-                        }
-                        //If the item is anything else.
-                        else{
-                            item_amount_prefix=inventory[i].prefix_article;
-                            item_amount_prefix+=" ";
-                        }
+                        item_amount_prefix=a_vs_an(&inventory[i]);
+
+                        item_amount_prefix+=" ";
                     }
 
                     string str_item="";

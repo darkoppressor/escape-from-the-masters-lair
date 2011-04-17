@@ -4,6 +4,6 @@
 #ifndef dungeon_h
 #define dungeon_h
 
-const int DUNGEON_DEPTH=26;
+const int DUNGEON_DEPTH=13;
 
 #endif

@@ -7,6 +7,7 @@
 #include "random_number_generator.h"
 #include "world.h"
 #include "combat_all.h"
+#include "grammar.h"
 
 using namespace std;
 
@@ -97,15 +98,15 @@ void Creature::attack_melee(Creature* target){
 
                     //If the item is governed by the bladed weapons skill.
                     if(inventory[item_identifier].category==ITEM_WEAPON && inventory[item_identifier].governing_skill_weapon==SKILL_BLADED_WEAPONS){
-                        weapon_damage+=weapon_damage*(return_skill_bladed_weapons()/10);
+                        weapon_damage+=weapon_damage*(return_skill_bladed_weapons()/10.0);
                     }
                     //If the item is governed by the blunt weapons skill.
                     else if(inventory[item_identifier].category==ITEM_WEAPON && inventory[item_identifier].governing_skill_weapon==SKILL_BLUNT_WEAPONS){
-                        weapon_damage+=weapon_damage*(return_skill_blunt_weapons()/10);
+                        weapon_damage+=weapon_damage*(return_skill_blunt_weapons()/10.0);
                     }
                     //If the item is governed by the stabbing weapons skill.
                     else if(inventory[item_identifier].category==ITEM_WEAPON && inventory[item_identifier].governing_skill_weapon==SKILL_STABBING_WEAPONS){
-                        weapon_damage+=weapon_damage*(return_skill_stabbing_weapons()/10);
+                        weapon_damage+=weapon_damage*(return_skill_stabbing_weapons()/10.0);
                     }
 
                     //Add the weapon's damage to the attack's damage.
@@ -115,18 +116,24 @@ void Creature::attack_melee(Creature* target){
 
             //If items are being dual-wielded.
             if(equipment[EQUIP_HOLD_RIGHT]!=0 && equipment[EQUIP_HOLD_LEFT]!=0){
-                //Add the dual-wielding bonus.
-                damage+=return_skill_dual_wielding()/2;
+                //Apply the dual-wielding modifier.
+
+                if(return_skill_dual_wielding()<10){
+                    damage-=50.0/return_skill_dual_wielding();
+                }
+                else{
+                    damage+=return_skill_dual_wielding()/2.0;
+                }
             }
 
             //If there are no items being wielded.
             else if(equipment[EQUIP_HOLD_RIGHT]==0 && equipment[EQUIP_HOLD_LEFT]==0){
                 //Apply the unarmed weapon skill.
-                damage+=base_damage*(return_skill_unarmed()/10);
+                damage+=base_damage*(return_skill_unarmed()/10.0);
             }
 
             //Apply the strength bonus.
-            damage+=damage*(return_attribute_strength()/4);
+            damage+=damage*(return_attribute_strength()/4.0);
 
             //We have finished determining the maximum damage the attacker can do.
             //Now, we determine the damage reduction based on the target's stats.
@@ -393,11 +400,11 @@ void Creature::attack_melee(Creature* target){
 
     //If the target's health drops to 0 or below, it has been killed.
     if(target->return_health()<=0){
-        target->die(CAUSE_OF_DEATH_MELEE,return_full_name(),"");
+        target->die(CAUSE_OF_DEATH_MELEE,return_full_name(),"",a_vs_an(this),"");
     }
 }
 
-void Creature::die(short cause_of_death,string killer,string killer_item){
+void Creature::die(short cause_of_death,string killer,string killer_item,string killer_article,string killer_item_article){
     //The creature is now dead.
     alive=false;
 
@@ -406,14 +413,20 @@ void Creature::die(short cause_of_death,string killer,string killer_item){
     string message="";
 
     if(is_player){
-        if(cause_of_death==CAUSE_OF_DEATH_DROWN){
+        if(cause_of_death==CAUSE_OF_DEATH_THIRST){
+            message="You succumb to thirst... Press [Spacebar] to continue.";
+        }
+        else if(cause_of_death==CAUSE_OF_DEATH_LAVA){
+            message="You melt into nothing... Press [Spacebar] to continue.";
+        }
+        else if(cause_of_death==CAUSE_OF_DEATH_DROWN){
             message="You sink beneath the waves... Press [Spacebar] to continue.";
         }
         else{
             message="You die... Press [Spacebar] to continue.";
         }
 
-        player.save_game_log_entry(cause_of_death,killer,killer_item);
+        player.save_game_log_entry(cause_of_death,killer,killer_item,killer_article,killer_item_article);
 
         player.current_window=WINDOW_DEATH_1;
     }

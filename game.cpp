@@ -9,6 +9,7 @@
 #include "max_objects.h"
 #include "dungeon.h"
 #include "message_log.h"
+#include "grammar.h"
 
 #include <fstream>
 
@@ -136,7 +137,9 @@ void Game::new_game(){
 
     string welcome="Welcome, ";
     welcome+=player.name;
-    welcome+="! You are a ";
+    welcome+="! You are ";
+    welcome+=a_vs_an(&player);
+    welcome+=" ";
     welcome+=player.race_name;
     welcome+=" ";
     welcome+=player.class_name;

@@ -107,8 +107,8 @@ void Templates::calculate_item_attributes(Item* item,double temp_item_size){
     if(item->damage_max_ranged==-1){
         //If the item is a ranged weapon.
         if(item->category==ITEM_WEAPON && item->weapon_category>=WEAPON_BOWS && item->weapon_category<=WEAPON_SLINGS){
-            item->damage_min_ranged=temp_item_size*toughness[item->material]*3.0;
-            item->damage_max_ranged=temp_item_size*toughness[item->material]*4.0;
+            item->damage_min_ranged=temp_item_size*toughness[item->material]*0.25;
+            item->damage_max_ranged=temp_item_size*toughness[item->material]*0.35;
 
             if(item->damage_min_ranged<1){
                 item->damage_min_ranged=1;
@@ -140,7 +140,56 @@ void Templates::determine_item_material(Item* item,int item_category,int item_te
 
     replace_first(item->plural_name,"MATERIAL",material_to_string(item->material));
 
-    calculate_item_attributes(item,template_items[item_category][item_template_index].size);
+    //Determine the size to use for the item's attribute calculations.
+    double size_to_use=template_items[item_category][item_template_index].size;
+
+    //If the item is set to have a random size.
+    if(template_items[item_category][item_template_index].random_size){
+        size_to_use=determine_item_size(item,item_category,item_template_index);
+    }
+
+    calculate_item_attributes(item,size_to_use);
+}
+
+double Templates::determine_item_size(Item* item,int item_category,int item_template_index){
+    //Start with the item's medium size, which is defined by its template entry.
+    double size=template_items[item_category][item_template_index].size;
+
+    //Choose a random size.
+    int random_size=random_range(0,4);
+
+    //Tiny
+    if(random_size==0){
+        size*=0.5;
+        replace_first(item->name,"SIZE","tiny");
+        replace_first(item->plural_name,"SIZE","tiny");
+    }
+    //Small
+    else if(random_size==1){
+        size*=0.75;
+        replace_first(item->name,"SIZE","small");
+        replace_first(item->plural_name,"SIZE","small");
+    }
+    //Medium
+    else if(random_size==2){
+        //Leave the size alone.
+        replace_first(item->name,"SIZE","medium");
+        replace_first(item->plural_name,"SIZE","medium");
+    }
+    //Large
+    else if(random_size==3){
+        size*=1.25;
+        replace_first(item->name,"SIZE","large");
+        replace_first(item->plural_name,"SIZE","large");
+    }
+    //Huge
+    else if(random_size==4){
+        size*=1.5;
+        replace_first(item->name,"SIZE","huge");
+        replace_first(item->plural_name,"SIZE","huge");
+    }
+
+    return size;
 }
 
 bool Templates::load_templates(){
@@ -956,6 +1005,11 @@ void Templates::load_template_race(){
             temp_race.inventory_items.push_back(line);
         }
 
+        //If the line begins ai traits data.
+        else if(icontains(line,"<ai traits")){
+            load_template_race_ai_traits(&temp_race);
+        }
+
         //If the line ends the race.
         else if(icontains(line,"</race>")){
             ///Ensure the race is legitimate.
@@ -963,6 +1017,60 @@ void Templates::load_template_race(){
             //Add this race to its templates vector.
             template_races.push_back(temp_race);
 
+            return;
+        }
+    }
+}
+
+void Templates::load_template_race_ai_traits(Race* temp_race){
+    //As long as we haven't reached the end of the file.
+    while(!load.eof()){
+        string line="";
+
+        //The data name strings used in the file.
+
+        string flees="flees:";
+        string uses_items="uses items:";
+        string wanders="wanders:";
+
+        //Grab the next line of the file.
+        getline(load,line);
+
+        //Clear initial whitespace from the line.
+        trim(line);
+
+        //If the line is a comment.
+        if(istarts_with(line,"//")){
+            //Ignore this line.
+        }
+
+        //Load data based on the line.
+
+        //Flees.
+        else if(icontains(line,flees)){
+            //Clear the data name.
+            line.erase(0,flees.length());
+
+            temp_race->ai_trait_flees=(bool)atoi(line.c_str());
+        }
+        //Uses items.
+        else if(icontains(line,uses_items)){
+            //Clear the data name.
+            line.erase(0,uses_items.length());
+
+            temp_race->ai_trait_uses_items=(bool)atoi(line.c_str());
+        }
+        //Wanders.
+        else if(icontains(line,wanders)){
+            //Clear the data name.
+            line.erase(0,wanders.length());
+
+            temp_race->ai_trait_wanders=(bool)atoi(line.c_str());
+        }
+
+        //If the line ends the ai traits.
+        else if(icontains(line,"</ai traits>")){
+            //Done reading ai traits data.
             return;
         }
     }
@@ -997,6 +1105,7 @@ void Templates::load_template_item(short category){
         //The item data name strings used in the file.
 
         string spawnable="<DO NOT SPAWN>";
+        string random_size="<RANDOM SIZE>";
         string name="name:";
         string plural_name="plural name:";
         string prefix_article="prefix article:";
@@ -1036,6 +1145,13 @@ void Templates::load_template_item(short category){
             line.erase(0,spawnable.length());
 
             temp_item.spawnable=false;
+        }
+        //Random size.
+        else if(icontains(line,random_size)){
+            //Clear the data name.
+            line.erase(0,random_size.length());
+
+            temp_item.random_size=true;
         }
         //Plural name.
         else if(icontains(line,plural_name)){

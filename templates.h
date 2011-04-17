@@ -36,6 +36,8 @@ class Templates{
 
     void load_template_race();
 
+    void load_template_race_ai_traits(Race* temp_race);
+
     void load_template_item(short category);
 
     void load_template_item_weapon(Item* temp_item);
@@ -80,6 +82,9 @@ class Templates{
 
     //Randomly chooses a material from the list of allowed materials for the passed item.
     void determine_item_material(Item* item,int item_category,int item_template_index);
+
+    //Randomly chooses a size from the (global) list of allowed sizes for the passed item.
+    double determine_item_size(Item* item,int item_category,int item_template_index);
 
     //Calculates various attriutes of the passed item.
     void calculate_item_attributes(Item* item,double temp_item_size);

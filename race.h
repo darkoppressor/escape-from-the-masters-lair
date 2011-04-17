@@ -22,6 +22,9 @@ class Race: public Creature{
     //These are the items that a member of this race starts with.
     std::vector<std::string> inventory_items;
 
+    //The article ('a' or 'an') to be used before a single one of this creature in a sentence.
+    std::string prefix_article;
+
     //AI Traits:
 
     bool ai_trait_flees;

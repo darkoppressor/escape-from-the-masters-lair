@@ -9,7 +9,7 @@
 	damage ranged:6-10
 	damage thrown:4-8
 	movement speed:50
-	carrying capacity:350
+	carrying capacity:150
 	levelup hp range:2-3
 	levelup mana range:1-2
 </base stats>

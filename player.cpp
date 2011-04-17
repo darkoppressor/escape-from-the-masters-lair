@@ -8,7 +8,7 @@
 #include "quit.h"
 #include "save_load.h"
 #include "message_log.h"
-#include "player_starting_gold.h"
+#include "player_starting_values.h"
 #include "covering_conversions.h"
 
 using namespace std;
@@ -51,11 +51,31 @@ Player::Player(){
 
     available_starting_items.push_back("simple wooden dagger");
 
+    available_starting_items.push_back("simple wooden short sword");
+
+    available_starting_items.push_back("simple wooden long sword");
+
+    available_starting_items.push_back("simple wooden axe");
+
+    available_starting_items.push_back("simple wooden mace");
+
+    available_starting_items.push_back("simple wooden quarterstaff");
+
+    available_starting_items.push_back("simple wooden spear");
+
     available_starting_items.push_back("simple wooden bow");
+
+    available_starting_items.push_back("simple wooden crossbow");
+
+    available_starting_items.push_back("simple sling");
 
     available_starting_items.push_back("simple wooden arrow");
 
-    available_starting_items.push_back("shuriken");
+    available_starting_items.push_back("simple wooden crossbow bolt");
+
+    available_starting_items.push_back("simple stone");
+
+    available_starting_items.push_back("simple bone shuriken");
 
     available_starting_items.push_back("simple leather helm");
 
@@ -140,11 +160,17 @@ void Player::set_inventory(){
     for(int i=0;i<starting_items.size();i++){
         int stack=1;
 
-        if(available_starting_items[starting_items[i]]=="arrow"){
-            stack=20;
+        if(available_starting_items[starting_items[i]]=="simple wooden arrow"){
+            stack=STARTING_THROWN_STACK_SIZE;
         }
-        else if(available_starting_items[starting_items[i]]=="shuriken"){
-            stack=20;
+        else if(available_starting_items[starting_items[i]]=="simple wooden crossbow bolt"){
+            stack=STARTING_THROWN_STACK_SIZE;
+        }
+        else if(available_starting_items[starting_items[i]]=="simple stone"){
+            stack=STARTING_THROWN_STACK_SIZE;
+        }
+        else if(available_starting_items[starting_items[i]]=="simple bone shuriken"){
+            stack=STARTING_THROWN_STACK_SIZE;
         }
 
         give_item(available_starting_items[starting_items[i]],stack);
@@ -693,13 +719,6 @@ void Player::handle_input(){
         ///******************///
 
         if(option_dev){
-            //Die
-            /**if(keystates[SDLK_d]){
-                die();
-
-                keystates[SDLK_d]=NULL;
-            }*/
-
             //Command: DESTROY WALL (TEST)
             /**if(keystates[SDLK_t]){
                 execute_command(-1);
@@ -712,16 +731,6 @@ void Player::handle_input(){
                 execute_command(-2);
 
                 keystates[SDLK_w]=NULL;
-            }*/
-
-            //Command: Toggle all light items in current dungeon level. (TEST)
-            /**if(keystates[SDLK_f]){
-                for(short i=0;i<vector_levels[current_level].vector_item_lights.size();i++){
-                    //If the light item is on.
-                    vector_levels[current_level].vector_item_lights[i].on=!vector_levels[current_level].vector_item_lights[i].on;
-                }
-
-                keystates[SDLK_f]=NULL;
             }*/
 
             if(SDL_GetMouseState(NULL,NULL)&SDL_BUTTON(SDL_BUTTON_LEFT)){

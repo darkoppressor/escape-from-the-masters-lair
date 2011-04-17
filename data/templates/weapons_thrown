@@ -7,14 +7,72 @@
 	//*********//
 	
 	<item category:weapon>
-		name:shuriken
-		plural name:shurikens
+		<RANDOM SIZE>
+		name:SIZE arrow made of MATERIAL
+		plural name:SIZE arrows made of MATERIAL
 		writing:
 		appearance:)
 		stackable:1
 		size:0.5
-		color:iron
-		material:iron
+		allowed material:bone
+		allowed material:wood
+		<weapon>
+			governing weapon skill:thrown weapons
+			weapon category:thrown
+			launcher:bows
+		</weapon>
+	</item>
+	
+	<item category:weapon>
+		<RANDOM SIZE>
+		name:SIZE crossbow bolt made of MATERIAL
+		plural name:SIZE crossbow bolts made of MATERIAL
+		writing:
+		appearance:)
+		stackable:1
+		size:0.5
+		allowed material:bone
+		allowed material:wood
+		<weapon>
+			governing weapon skill:thrown weapons
+			weapon category:thrown
+			launcher:crossbows
+		</weapon>
+	</item>
+	
+	<item category:weapon>
+		<RANDOM SIZE>
+		name:SIZE stone
+		plural name:SIZE stones
+		writing:
+		appearance:)
+		stackable:1
+		size:0.5
+		color:stone
+		material:stone
+		<weapon>
+			governing weapon skill:thrown weapons
+			weapon category:thrown
+			launcher:slings
+		</weapon>
+	</item>
+	
+	<item category:weapon>
+		<RANDOM SIZE>
+		name:SIZE MATERIAL shuriken
+		plural name:SIZE MATERIAL shurikens
+		writing:
+		appearance:)
+		stackable:1
+		size:0.5
+		allowed material:copper
+		allowed material:brass
+		allowed material:bronze
+		allowed material:iron
+		allowed material:steel
+		allowed material:silver
+		allowed material:gold
+		allowed material:bone
 		<weapon>
 			governing weapon skill:thrown weapons
 			weapon category:thrown

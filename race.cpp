@@ -14,6 +14,8 @@ Race::Race(){
 
     natural_armor=0;
 
+    prefix_article="a";
+
     ai_trait_flees=false;
     ai_trait_uses_items=false;
     ai_trait_wanders=true;

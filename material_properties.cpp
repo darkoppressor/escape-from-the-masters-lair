@@ -64,7 +64,7 @@ void prepare_values(){
     values[MATERIAL_BONE]=6;
     values[MATERIAL_FOOD]=8;
     values[MATERIAL_GLASS]=11;
-    values[MATERIAL_STONE]=10;
+    values[MATERIAL_STONE]=5;
     values[MATERIAL_CORPSE]=7;
     values[MATERIAL_BRONZE]=14;
     values[MATERIAL_STEEL]=17;

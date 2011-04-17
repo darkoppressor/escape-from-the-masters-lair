@@ -724,6 +724,9 @@ void Game::generate_level(bool deepest_level){
     int max_items=random_range((generated_level_x*generated_level_y)/500,(generated_level_x*generated_level_y)/250);
     //The maximum number of tries.
     int random_amount_items=random_range((generated_level_x*generated_level_y)/10,(generated_level_x*generated_level_y)/4);
+    //The amount of important survival items generated on this level so far.
+    int amount_water_bottles=0;
+    int amount_oil_bottles=0;
 
     for(int i=0;i<random_amount_items && generated_items.size()<max_items;i++){
         //Choose a random location in the level.
@@ -731,12 +734,56 @@ void Game::generate_level(bool deepest_level){
         short y=random_range(0,generated_level_y-1);
 
         //Randomly determine the item category.
-        ///For now, equal chance for all categories.
-        int random_item_category=random_range(ITEM_WEAPON,ITEM_OTHER);
+
+        int random_item_category=0;
+
+        if(amount_water_bottles==0 || amount_oil_bottles==0){
+            random_item_category=random_range(ITEM_WEAPON,ITEM_OTHER+8);
+            if(random_item_category>ITEM_OTHER){
+                random_item_category=ITEM_DRINK;
+            }
+        }
+        else if(amount_water_bottles==1 || amount_oil_bottles==1){
+            random_item_category=random_range(ITEM_WEAPON,ITEM_OTHER+2);
+            if(random_item_category>ITEM_OTHER){
+                random_item_category=ITEM_DRINK;
+            }
+        }
+        else{
+            random_item_category=random_range(ITEM_WEAPON,ITEM_OTHER);
+        }
 
         //Randomly select an item from the chosen category's template.
-        ///For now, equal chance for all items within category.
-        int random_item_template=random_range(0,templates.template_items[random_item_category].size()-1);
+
+        int random_item_template=0;
+
+        if(amount_water_bottles==0){
+            random_item_template=random_range(0,templates.template_items[random_item_category].size()-1+templates.template_items[random_item_category].size()/4.0);
+            if(random_item_template>templates.template_items[random_item_category].size()-1){
+                random_item_template=player.return_item_template("bottle of water").index;
+            }
+        }
+        else if(amount_oil_bottles==0){
+            random_item_template=random_range(0,templates.template_items[random_item_category].size()-1+templates.template_items[random_item_category].size()/4.0);
+            if(random_item_template>templates.template_items[random_item_category].size()-1){
+                random_item_template=player.return_item_template("bottle of oil").index;
+            }
+        }
+        else if(amount_water_bottles==1){
+            random_item_template=random_range(0,templates.template_items[random_item_category].size()-1+templates.template_items[random_item_category].size()/8.0);
+            if(random_item_template>templates.template_items[random_item_category].size()-1){
+                random_item_template=player.return_item_template("bottle of water").index;
+            }
+        }
+        else if(amount_oil_bottles==1){
+            random_item_template=random_range(0,templates.template_items[random_item_category].size()-1+templates.template_items[random_item_category].size()/8.0);
+            if(random_item_template>templates.template_items[random_item_category].size()-1){
+                random_item_template=player.return_item_template("bottle of oil").index;
+            }
+        }
+        else{
+            random_item_template=random_range(0,templates.template_items[random_item_category].size()-1);
+        }
 
         //If the item is not spawnable.
         if(!templates.template_items[random_item_category][random_item_template].spawnable){
@@ -779,6 +826,13 @@ void Game::generate_level(bool deepest_level){
             //Set the newly generated item's position.
             generated_items[generated_items.size()-1].x=x;
             generated_items[generated_items.size()-1].y=y;
+
+            if(templates.template_items[random_item_category][random_item_template].name=="bottle of water"){
+                amount_water_bottles++;
+            }
+            else if(templates.template_items[random_item_category][random_item_template].name=="bottle of oil"){
+                amount_oil_bottles++;
+            }
         }
     }
 

@@ -33,8 +33,6 @@ Creature::Creature(){
     race=-1;
     race_name="";
 
-    prefix_article="a";
-
     ///class_name="";
     class_name="<class name>";
 

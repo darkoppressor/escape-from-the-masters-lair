@@ -177,7 +177,7 @@ class Player: public Creature{
     void render(std::vector< std::vector<bool> >* tile_rendered);
 
     //Saves an entry to the game log for this game.
-    void save_game_log_entry(short cause_of_death,std::string killer="",std::string killer_item="");
+    void save_game_log_entry(short cause_of_death,std::string killer="",std::string killer_item="",std::string killer_article="",std::string killer_item_article="");
 };
 
 #endif
