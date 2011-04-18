@@ -145,6 +145,8 @@
 		<Unit filename="game_window.h" />
 		<Unit filename="grammar.cpp" />
 		<Unit filename="grammar.h" />
+		<Unit filename="highscore.cpp" />
+		<Unit filename="highscore.h" />
 		<Unit filename="image.cpp" />
 		<Unit filename="image.h" />
 		<Unit filename="image_data.h" />

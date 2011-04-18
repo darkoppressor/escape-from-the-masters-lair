@@ -245,11 +245,11 @@ void render(int frame_rate, double ms_per_frame){
             //Render chat stuff:
 
             render_rectangle(0,player.option_screen_height-122,player.option_screen_width,122,1.0,COLOR_GRAY);
-            render_rectangle(2,player.option_screen_height-120,796,118,1.0,COLOR_BLACK);
+            render_rectangle(2,player.option_screen_height-120,player.option_screen_width-4,118,1.0,COLOR_BLACK);
 
             if(player.chat_mode){
-                render_rectangle(2,player.option_screen_height-font_small.spacing_y-6,796,font.spacing_y-4,1.0,COLOR_GRAY);
-                render_rectangle(4,player.option_screen_height-font_small.spacing_y-4,792,font.spacing_y-8,1.0,COLOR_BLACK);
+                render_rectangle(2,player.option_screen_height-font_small.spacing_y-6,player.option_screen_width-4,font.spacing_y-4,1.0,COLOR_GRAY);
+                render_rectangle(4,player.option_screen_height-font_small.spacing_y-4,player.option_screen_width-8,font.spacing_y-8,1.0,COLOR_BLACK);
             }
 
             double opacity=1.0;
@@ -294,13 +294,6 @@ void render(int frame_rate, double ms_per_frame){
                 font_small.show(4,chat_input_height,"> "+string_input_chat.str1,COLOR_WHITE,1.0);
                 font_small.show(17+font_small.spacing_x*string_input_chat.str1.length(),chat_input_height,"\x7F",COLOR_WHITE,player.cursor_opacity*0.1);
             }
-
-            //Display the framerate and milliseconds per frame.
-            /**if(player.option_fps){
-                ss.clear();ss.str("");ss<<"FPS: ";ss<<frame_rate;ss<<"\xA";msg=ss.str();
-                ss.clear();ss.str("");ss<<"MS Per Frame: ";ss<<ms_per_frame;msg+=ss.str();
-                font_small.show(624,0,msg,COLOR_RED);
-            }*/
 
             if(player.option_dev && player.chat_mode){
                 render_rectangle(0,0,275,225,0.75,COLOR_BLACK);
@@ -419,8 +412,8 @@ void render(int frame_rate, double ms_per_frame){
 
             int size_last_msg=0;
 
-            render_rectangle(0,player.option_screen_height-174,800,54,1.0,COLOR_GRAY);
-            render_rectangle(2,player.option_screen_height-172,796,50,1.0,COLOR_BLACK);
+            render_rectangle(0,player.option_screen_height-174,player.option_screen_width,54,1.0,COLOR_GRAY);
+            render_rectangle(2,player.option_screen_height-172,player.option_screen_width-4,50,1.0,COLOR_BLACK);
 
             ss.clear();ss.str("");ss<<player.name;ss<<" the ";ss<<player.race_name;ss<<" ";ss<<player.class_name;msg=ss.str();
             font_small.show(5,player.option_screen_height-170,msg,COLOR_WHITE);

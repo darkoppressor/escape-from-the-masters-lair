@@ -5,6 +5,7 @@
 #include "version.h"
 #include "dungeon_location.h"
 #include "dungeon.h"
+#include "highscore.h"
 
 #include <fstream>
 #include <ctime>
@@ -14,8 +15,115 @@
 using namespace std;
 using namespace boost::algorithm;
 
+void Player::save_highscore(string score_string){
+    //Load the highscores.
+
+    vector<Highscore> highscores;
+
+    ifstream load("highscores",ifstream::in);
+
+    if(load!=NULL){
+        //As long as we haven't reached the end of the file.
+        while(!load.eof()){
+            string line="";
+
+            //Grab the next line of the file.
+            getline(load,line);
+
+            //Clear initial whitespace from the line.
+            trim(line);
+
+            //If the line begins a highscore entry.
+            if(icontains(line,"<highscore>")){
+                highscores.push_back(Highscore());
+
+                //As long as we haven't reached the end of the file.
+                while(!load.eof()){
+                    //Grab the next line of the file.
+                    getline(load,line);
+
+                    //Clear initial whitespace from the line.
+                    trim(line);
+
+                    //Score.
+                    if(icontains(line,"<score>")){
+                        line.erase(0,7);
+
+                        highscores[highscores.size()-1].score=atoi(line.c_str());
+                    }
+                    //Score string.
+                    else if(icontains(line,"<score string>")){
+                        line.erase(0,14);
+
+                        highscores[highscores.size()-1].score_string=line;
+
+                        break;
+                    }
+                }
+            }
+        }
+
+        load.close();
+        load.clear();
+    }
+    else{
+        fprintf(stderr,"Error loading highscores file.\n");
+    }
+
+    for(int i=0;i<highscores.size();i++){
+        replace_all(highscores[i].score_string,"<NEWLINE>","\n");
+    }
+
+    bool score_inserted=false;
+
+    //Look through all of the highscores.
+    for(int i=0;i<highscores.size();i++){
+        //If the new score is higher than this highscore.
+        if(score>highscores[i].score){
+            highscores.insert(highscores.begin()+i,Highscore());
+            highscores[i].score=score;
+            highscores[i].score_string=score_string;
+            score_inserted=true;
+            break;
+        }
+    }
+
+    if(!score_inserted){
+        highscores.push_back(Highscore());
+        highscores[highscores.size()-1].score=score;
+        highscores[highscores.size()-1].score_string=score_string;
+    }
+
+    //Trim the highscores list to 10 entries.
+    while(highscores.size()>10){
+        highscores.erase(highscores.end());
+    }
+
+    for(int i=0;i<highscores.size();i++){
+        replace_all(highscores[i].score_string,"\n","<NEWLINE>");
+    }
+
+    ofstream save("highscores",ifstream::out);
+
+    if(save!=NULL){
+        for(int i=0;i<highscores.size();i++){
+            save<<"<highscore>\n";
+            save<<"<score>";
+            save<<highscores[i].score;
+            save<<"\n<score string>";
+            save<<highscores[i].score_string;
+            save<<"\n</highscore>\n";
+        }
+    }
+    else{
+        fprintf(stderr,"Error saving highscores file.\n");
+    }
+}
+
 void Player::save_game_log_entry(short cause_of_death,string killer,string killer_item,string killer_article,string killer_item_article){
     ofstream save_log("game_log",ifstream::app);
+
+    stringstream score_string("");
 
     if(save_log!=NULL){
         time_t now;
@@ -117,28 +225,28 @@ void Player::save_game_log_entry(short cause_of_death,string killer,string kille
             score*=2;
         }
 
-        save_log<<"name:"<<name<<"\n";
-        save_log<<"version:"<<AutoVersion::MAJOR<<"."<<AutoVersion::MINOR<<"\n";
-        save_log<<"score:"<<score<<"\n";
-        save_log<<"dungeon level:"<<current_level+1<<"\n";
-        save_log<<"highest dungeon level:"<<max_level+1<<"\n";
-        save_log<<"experience level:"<<experience_level<<"\n";
-        save_log<<"health:"<<return_health()<<"/"<<return_health_max()<<"\n";
-        ///save_log<<"mana:"<<return_mana()<<"/"<<return_mana_max()<<"\n";
-        save_log<<"deaths:"<<deaths<<"\n";
-        save_log<<"game start:"<<start_date<<" at "<<start_time<<"\n";
-        save_log<<"game end:"<<end_date<<" at "<<end_time<<"\n";
-        save_log<<"class:"<<class_name<<"\n";
-        save_log<<"race:"<<race_name<<"\n";
+        score_string<<"name:"<<name<<"\n";
+        score_string<<"version:"<<AutoVersion::MAJOR<<"."<<AutoVersion::MINOR<<"\n";
+        score_string<<"score:"<<score<<"\n";
+        score_string<<"dungeon level:"<<current_level+1<<"\n";
+        score_string<<"highest dungeon level:"<<max_level+1<<"\n";
+        score_string<<"experience level:"<<experience_level<<"\n";
+        score_string<<"health:"<<return_health()<<"/"<<return_health_max()<<"\n";
+        ///score_string<<"mana:"<<return_mana()<<"/"<<return_mana_max()<<"\n";
+        score_string<<"deaths:"<<deaths<<"\n";
+        score_string<<"game start:"<<start_date<<" at "<<start_time<<"\n";
+        score_string<<"game end:"<<end_date<<" at "<<end_time<<"\n";
+        score_string<<"class:"<<class_name<<"\n";
+        score_string<<"race:"<<race_name<<"\n";
 
         /**if(gender==GENDER_MALE){
-            save_log<<"gender:male"<<"\n";
+            score_string<<"gender:male"<<"\n";
         }
         else if(gender==GENDER_FEMALE){
-            save_log<<"gender:female"<<"\n";
+            score_string<<"gender:female"<<"\n";
         }
         else if(gender==GENDER_NEUTRAL){
-            save_log<<"gender:neutral"<<"\n";
+            score_string<<"gender:neutral"<<"\n";
         }*/
 
         if(cause_of_death==CAUSE_OF_DEATH_MELEE){
@@ -182,18 +290,20 @@ void Player::save_game_log_entry(short cause_of_death,string killer,string kille
 
         //If the player died.
         if(cause_of_death!=CAUSE_OF_DEATH_NONE){
-            save_log<<death_message<<"\n";
+            score_string<<death_message<<"\n";
         }
         //If the player escaped but did not win.
         else if(cause_of_death==CAUSE_OF_DEATH_NONE && !won){
-            save_log<<"Escaped from the Lair."<<"\n";
+            score_string<<"Escaped from the Lair."<<"\n";
         }
         //If the player escaped and won.
         else if(cause_of_death==CAUSE_OF_DEATH_NONE && won){
-            save_log<<"Escaped from the Lair with "<<runestones<<" Runestones."<<"\n";
+            score_string<<"Escaped from the Lair with "<<runestones<<" Runestones."<<"\n";
         }
 
-        save_log<<"\n\n";
+        score_string<<"\n\n";
+
+        save_log<<score_string.str();
 
         save_log.close();
         save_log.clear();
@@ -201,4 +311,6 @@ void Player::save_game_log_entry(short cause_of_death,string killer,string kille
     else{
         fprintf(stderr,"Error saving game log entry.\n");
     }
+
+    save_highscore(score_string.str());
 }

@@ -178,6 +178,9 @@ class Player: public Creature{
 
     //Saves an entry to the game log for this game.
     void save_game_log_entry(short cause_of_death,std::string killer="",std::string killer_item="",std::string killer_article="",std::string killer_item_article="");
+
+    //Checks the highscores list, and adds this game if it made it.
+    void save_highscore(std::string score_string);
 };
 
 #endif

@@ -1167,7 +1167,7 @@ void Player::render_death(){
     font_small.show(170,45,msg,font_color);
 
     ss.clear();ss.str("");ss<<"Adventurer Reclamations Department";msg=ss.str();
-    font_small.show(500,45,msg,font_color);
+    font_small.show(player.option_screen_width-300,45,msg,font_color);
 
     ss.clear();ss.str("");ss<<"Death Certificate";msg=ss.str();
     font.show((option_screen_width-msg.length()*font.spacing_x)/2.0,80,msg,font_color);
