@@ -359,6 +359,9 @@ class Creature: public Object{
     //Returns false if all attributes have not been set.
     bool levelup_all_attributes_set();
 
+    //Updates the creature's class name.
+    void update_class_name();
+
     //Returns a stringstream containing all of this creature's save data.
     std::string return_save_data();
 

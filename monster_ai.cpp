@@ -44,8 +44,8 @@ coordinates Monster::ai_nearest_hostile(){
 ai_action Monster::ai_determine_action(){
     ai_action action;
     action.action=AI_ACTION_DO_NOTHING;
-    action.coords.x=0;
-    action.coords.y=0;
+    action.coords.x=x;
+    action.coords.y=y;
 
     coordinates hostile_creature=ai_nearest_hostile();
 
@@ -71,7 +71,7 @@ ai_action Monster::ai_determine_action(){
             ///Set action coords to nearest fountain.
         }
     }
-    else if(!ai_state_low_health() && ai_state_hostile_nearby(hostile_creature.x,hostile_creature.y)){
+    else if(ai_state_hostile_nearby(hostile_creature.x,hostile_creature.y)){
         action.action=AI_ACTION_MOVE;
         action.coords.x=hostile_creature.x;
         action.coords.y=hostile_creature.y;

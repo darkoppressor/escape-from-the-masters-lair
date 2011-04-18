@@ -788,7 +788,9 @@ void Player::move(){
         //Remember the inventory_input_state in case it is needed for a two part inventory command.
         two_part_inventory_input_state=inventory_input_state;
 
-        inventory_input_state=0;
+        if(input_inventory!=INVENTORY_COMMAND_UNEQUIPPED_NOW_DROP_ITEM){
+            inventory_input_state=0;
+        }
 
         command_standard=COMMAND_NONE;
 

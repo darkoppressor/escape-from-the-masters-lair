@@ -8,6 +8,105 @@
 
 using namespace std;
 
+///This function will need to be updated for the new game to take into account all attributes.
+void Creature::update_class_name(){
+    class_name="";
+
+    if(attributes[ATTRIBUTE_STRENGTH]==attributes[ATTRIBUTE_AGILITY]==attributes[ATTRIBUTE_HARDINESS]){
+        if(attributes[ATTRIBUTE_STRENGTH]==1){
+            class_name="beginner";
+        }
+        else{
+            class_name="jack of all trades";
+        }
+
+        return;
+    }
+
+    //Determine the highest attribute.
+    int largest_attribute[2];
+    largest_attribute[0]=-1;
+    largest_attribute[1]=0;
+
+    for(int i=ATTRIBUTE_STRENGTH;i<ATTRIBUTE_HARDINESS+1;i++){
+        if(attributes[i]>largest_attribute[1]){
+            largest_attribute[0]=i;
+            largest_attribute[1]=attributes[i];
+            break;
+        }
+    }
+
+    if(largest_attribute[0]==ATTRIBUTE_STRENGTH){
+        if(largest_attribute[1]<5){
+           class_name="scuffler";
+        }
+        else if(largest_attribute[1]>=5 && largest_attribute[1]<10){
+           class_name="street tough";
+        }
+        else if(largest_attribute[1]>=10 && largest_attribute[1]<25){
+           class_name="fighter";
+        }
+        else if(largest_attribute[1]>=25 && largest_attribute[1]<50){
+           class_name="soldier";
+        }
+        else if(largest_attribute[1]>=50 && largest_attribute[1]<75){
+           class_name="warrior-in-training";
+        }
+        else if(largest_attribute[1]>=75 && largest_attribute[1]<100){
+           class_name="warrior";
+        }
+        else if(largest_attribute[1]>=100){
+           class_name="knight";
+        }
+    }
+    else if(largest_attribute[0]==ATTRIBUTE_AGILITY){
+        if(largest_attribute[1]<5){
+           class_name="circus performer";
+        }
+        else if(largest_attribute[1]>=5 && largest_attribute[1]<10){
+           class_name="acrobat";
+        }
+        else if(largest_attribute[1]>=10 && largest_attribute[1]<25){
+           class_name="speedster";
+        }
+        else if(largest_attribute[1]>=25 && largest_attribute[1]<50){
+           class_name="chucker";
+        }
+        else if(largest_attribute[1]>=50 && largest_attribute[1]<75){
+           class_name="hurler";
+        }
+        else if(largest_attribute[1]>=75 && largest_attribute[1]<100){
+           class_name="sharpshooter";
+        }
+        else if(largest_attribute[1]>=100){
+           class_name="olympic gold medalist";
+        }
+    }
+    else if(largest_attribute[0]==ATTRIBUTE_HARDINESS){
+        if(largest_attribute[1]<5){
+           class_name="tourist";
+        }
+        else if(largest_attribute[1]>=5 && largest_attribute[1]<10){
+           class_name="outdoorsy type";
+        }
+        else if(largest_attribute[1]>=10 && largest_attribute[1]<25){
+           class_name="survivor";
+        }
+        else if(largest_attribute[1]>=25 && largest_attribute[1]<50){
+           class_name="hunter";
+        }
+        else if(largest_attribute[1]>=50 && largest_attribute[1]<75){
+           class_name="ranger";
+        }
+        else if(largest_attribute[1]>=75 && largest_attribute[1]<100){
+           class_name="forester";
+        }
+        else if(largest_attribute[1]>=100){
+           class_name="master of survival";
+        }
+    }
+}
+
 bool Creature::levelup_is_selected_attribute(short attribute){
     //Look through all of the selected attributes.
     for(int i=0;i<levelup_attributes.size();i++){

@@ -95,9 +95,9 @@ void game_loop(){
             if(player.game_in_progress){
                 //Then, we move all of the objects, if the player has initiated a move.
                 if(player.alive && player.initiate_move){
+                    player.initiate_move=false;
                     turn();
                     player.turn++;
-                    player.initiate_move=false;
                 }
 
                 //Once everything has had its chance to move, we handle events (collision detection).

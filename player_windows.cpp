@@ -361,6 +361,8 @@ void Player::handle_input_get_starting_items(){
     else if(event.key.keysym.sym==SDLK_RETURN || event.key.keysym.sym==SDLK_KP_ENTER){
         done_buying_start_items=true;
 
+        update_class_name();
+
         //Make sure that enter is cleared before moving to the next screen.
         Uint8 *keystates=SDL_GetKeyState(NULL);
         keystates[SDLK_RETURN]=NULL;
@@ -462,6 +464,8 @@ void Player::handle_input_levelup(){
             //The creature levels up again.
             level_up();
         }
+
+        update_class_name();
 
         //Make sure that enter is cleared before moving to the next screen.
         Uint8 *keystates=SDL_GetKeyState(NULL);

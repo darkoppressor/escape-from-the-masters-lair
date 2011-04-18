@@ -5,6 +5,7 @@
 #include "world.h"
 #include "message_log.h"
 #include "random_chance.h"
+#include "grammar.h"
 
 using namespace std;
 
@@ -1120,11 +1121,8 @@ void Creature::check_command_inventory(char inventory_letter){
         }
         //If the item is equipped.
         else{
-            update_text_log("You must unequip the item first.",is_player);
-
-            //No inventory command will be executed.
-            input_inventory=0;
-            inventory_input_state=0;
+            input_inventory=INVENTORY_COMMAND_UNEQUIP_AND_DROP_ITEM;
+            initiate_move=true;
         }
     }
 
@@ -1151,7 +1149,11 @@ void Creature::check_command_inventory(char inventory_letter){
         }
         //If the item is already equipped.
         else if(inventory[inventory_item_index].equipped){
-            update_text_log("That item is already equipped.",is_player);
+            string str_msg="The ";
+            str_msg+=inventory[inventory_item_index].return_full_name(1);
+            str_msg+=" is already equipped.";
+
+            update_text_log(str_msg.c_str(),is_player);
 
             //No inventory command will be executed.
             input_inventory=0;
@@ -1159,7 +1161,9 @@ void Creature::check_command_inventory(char inventory_letter){
         }
         //If the item is not armor, but the creature tried to wear it.
         else if(command==INVENTORY_COMMAND_EQUIP_ARMOR && inventory[inventory_item_index].category!=ITEM_ARMOR){
-            string message="You can't wear a ";
+            string message="You can't wear ";
+            message+=a_vs_an(&inventory[inventory_item_index]);
+            message+=" ";
             message+=inventory[inventory_item_index].return_full_name(1);
             message+="!";
             update_text_log(message.c_str(),is_player);
@@ -1185,7 +1189,11 @@ void Creature::check_command_inventory(char inventory_letter){
         }
         //If the item is not equipped.
         else{
-            update_text_log("That item is not equipped.",is_player);
+            string str_msg="The ";
+            str_msg+=inventory[inventory_item_index].return_full_name(1);
+            str_msg+=" is not equipped.";
+
+            update_text_log(str_msg.c_str(),is_player);
 
             //No inventory command will be executed.
             input_inventory=0;
@@ -1202,12 +1210,9 @@ void Creature::check_command_inventory(char inventory_letter){
 
             //Setup a throw message.
 
-            string str_item="";
-
-            //If the creature is the player.
-            if(is_player){
-                str_item="Throw in what direction?";
-            }
+            string str_item="Throw the ";
+            str_item+=inventory[inventory_item_index].return_full_name(1);
+            str_item+=" in what direction?";
 
             update_text_log(str_item.c_str(),is_player);
 
@@ -1215,7 +1220,11 @@ void Creature::check_command_inventory(char inventory_letter){
         }
         //If the item is equipped.
         else{
-            update_text_log("You must unequip the item first.",is_player);
+            string str_item="You must first unequip the ";
+            str_item+=inventory[inventory_item_index].return_full_name(1);
+            str_item+=".";
+
+            update_text_log(str_item.c_str(),is_player);
 
             //No inventory command will be executed.
             input_inventory=0;
@@ -1232,7 +1241,11 @@ void Creature::check_command_inventory(char inventory_letter){
         }
         //If the item is equipped and its stack size is 1.
         else if(inventory[inventory_item_index].equipped && inventory[inventory_item_index].stack==1){
-            update_text_log("You must unequip the item first.",is_player);
+            string str_item="You must first unequip the ";
+            str_item+=inventory[inventory_item_index].return_full_name(1);
+            str_item+=".";
+
+            update_text_log(str_item.c_str(),is_player);
 
             //No inventory command will be executed.
             input_inventory=0;
@@ -1240,7 +1253,13 @@ void Creature::check_command_inventory(char inventory_letter){
         }
         //If the item cannot quench thirst.
         else{
-            update_text_log("You can't drink that!",is_player);
+            string str_item="You can't drink ";
+            str_item+=a_vs_an(&inventory[inventory_item_index]);
+            str_item+=" ";
+            str_item+=inventory[inventory_item_index].return_full_name(1);
+            str_item+="!";
+
+            update_text_log(str_item.c_str(),is_player);
 
             //No inventory command will be executed.
             input_inventory=0;
@@ -1376,7 +1395,7 @@ void Creature::execute_command_inventory(char inventory_letter){
         two_part_inventory_input_state=0;
     }
 
-    if(command==INVENTORY_COMMAND_DROP_ITEM){
+    if(command==INVENTORY_COMMAND_DROP_ITEM || command==INVENTORY_COMMAND_UNEQUIPPED_NOW_DROP_ITEM){
         //Setup a drop message.
 
         string str_item="";
@@ -1491,7 +1510,7 @@ void Creature::execute_command_inventory(char inventory_letter){
         equip_item(inventory_item_index,equip_slot);
     }
 
-    else if(command==INVENTORY_COMMAND_UNEQUIP_ITEM){
+    else if(command==INVENTORY_COMMAND_UNEQUIP_ITEM || command==INVENTORY_COMMAND_UNEQUIP_AND_DROP_ITEM){
         //Determine what slot the item is equipped in.
         short equip_slot=item_equipped_in_which_slot(inventory_item_index);
 
@@ -1523,6 +1542,11 @@ void Creature::execute_command_inventory(char inventory_letter){
 
         //Unequip the item.
         unequip_item(inventory_item_index);
+
+        if(command==INVENTORY_COMMAND_UNEQUIP_AND_DROP_ITEM){
+            input_inventory=INVENTORY_COMMAND_UNEQUIPPED_NOW_DROP_ITEM;
+            initiate_move=true;
+        }
     }
 
     else if(command==INVENTORY_COMMAND_QUAFF_ITEM){

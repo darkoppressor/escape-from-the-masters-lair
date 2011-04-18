@@ -135,6 +135,8 @@ void Monster::set_base_stats(short pass_level){
     //Re-max the monster's health and mana.
     health=health_max;
     mana=mana_max;
+
+    update_class_name();
 }
 
 void Monster::handle_input(){
@@ -360,7 +362,9 @@ void Monster::move(){
         //Remember the inventory_input_state in case it is needed for a two part inventory command.
         two_part_inventory_input_state=inventory_input_state;
 
-        inventory_input_state=0;
+        if(input_inventory!=INVENTORY_COMMAND_UNEQUIPPED_NOW_DROP_ITEM){
+            inventory_input_state=0;
+        }
 
         command_standard=COMMAND_NONE;
 
