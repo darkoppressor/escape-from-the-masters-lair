@@ -153,6 +153,7 @@ class Player: public Creature{
     void handle_input_death();
     void handle_input_death_1();
     void handle_input_confirm_leave_dungeon();
+    void handle_input_confirm_quaff_from_fountain();
     void handle_input_leave_dungeon();
 
     //Render the windows.

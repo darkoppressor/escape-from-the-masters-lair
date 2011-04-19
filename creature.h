@@ -53,8 +53,7 @@ class Creature: public Object{
 
     //If true, the creature has given some input that should initiate a call to turn().
     //Only used by the Player class.
-    ///This should really be renamed initiate_turn.
-    bool initiate_move;
+    bool initiate_turn;
 
     //If true, this creature is the player.
     //If false, this creature is not the player.
@@ -281,10 +280,6 @@ class Creature: public Object{
     //Increase or decrease thirst, and then handle thirst states.
     void change_thirst(bool increase,short amount);
 
-    std::string return_thirst_state();
-
-    std::string return_encumbrance_state();
-
     //Mix two items together.
     //The first item is applied to the second item.
     void mix_items(int item_index_1,int item_index_2);
@@ -315,6 +310,10 @@ class Creature: public Object{
     int return_movement_speed();
     int return_next_move();
     double return_carry_capacity();
+    short return_encumbrance_state();
+    short return_thirst_state();
+    std::string return_encumbrance_string();
+    std::string return_thirst_string();
 
     //Each of these functions returns the current TRUE attribute value (with all relevant bonuses, penalties, etc.) for the corresponding attribute.
     int return_attribute_strength();

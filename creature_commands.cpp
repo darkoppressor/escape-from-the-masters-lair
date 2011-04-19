@@ -20,7 +20,7 @@ void Creature::check_command(short command){
         //
         if(vector_levels[current_level].tiles[x][y].type==TILE_TYPE_DOWN_STAIRS){
             command_standard=command;
-            initiate_move=true;
+            initiate_turn=true;
         }
         //
         //If creature is located on: Anything else.
@@ -36,7 +36,7 @@ void Creature::check_command(short command){
         //And if the level above is not the outside.
         if(vector_levels[current_level].tiles[x][y].type==TILE_TYPE_UP_STAIRS && current_level-1>=0){
             command_standard=command;
-            initiate_move=true;
+            initiate_turn=true;
         }
         //If the creature is located on the up stairs.
         //And if the level above is the outside.
@@ -70,7 +70,7 @@ void Creature::check_command(short command){
                 if(inventory.size()<INVENTORY_MAX_SIZE){
                     //Due to the above if() statements, there is at least one item that can definitely be picked up on this tile.
                     command_standard=command;
-                    initiate_move=true;
+                    initiate_turn=true;
 
                     //There is no need to continue checking, so we return from this function.
                     return;
@@ -101,7 +101,7 @@ void Creature::check_command(short command){
         ///This if() may be unnecessary, as there may be no case in which a creature cannot wait.
         if(true){
             command_standard=command;
-            initiate_move=true;
+            initiate_turn=true;
         }
         //If the creature cannot wait.
         else{
@@ -114,7 +114,7 @@ void Creature::check_command(short command){
         ///This if() may be unnecessary, as there may be no case in which a creature cannot search.
         if(true){
             command_standard=command;
-            initiate_move=true;
+            initiate_turn=true;
         }
         //If the creature cannot search.
         else{
@@ -226,13 +226,26 @@ void Creature::execute_command(short command){
     else if(command==COMMAND_WAIT){
         ///Handle waiting.
 
-        update_text_log("You wait around.",true);
+        update_text_log("You wait around.",is_player);
     }
 
     else if(command==COMMAND_SEARCH){
         search();
 
-        update_text_log("You search the area.",true);
+        update_text_log("You search the area.",is_player);
+    }
+
+    else if(command==COMMAND_QUAFF_FROM_FOUNTAIN){
+        change_thirst(false,300);
+
+        update_text_log("You drink from the fountain.",is_player);
+
+        if(rc_fountain_dry_up()){
+            vector_levels[current_level].tiles[x][y].type=TILE_TYPE_FLOOR;
+            vector_levels[current_level].tiles[x][y].material=MATERIAL_STONE;
+
+            update_text_log("The fountain dries up.",true);
+        }
     }
 }
 
@@ -344,7 +357,7 @@ void Creature::check_command_directional(short direction){
     }
 
     //If the creature is overburdened and the directional command is a move command.
-    if(return_inventory_weight()>=return_carry_capacity()*3.0+1 &&
+    if(return_encumbrance_state()==ENCUMBRANCE_OVERBURDENED &&
        (command==DIRECTIONAL_COMMAND_MOVE_LEFT || command==DIRECTIONAL_COMMAND_MOVE_UP || command==DIRECTIONAL_COMMAND_MOVE_RIGHT ||
         command==DIRECTIONAL_COMMAND_MOVE_DOWN || command==DIRECTIONAL_COMMAND_MOVE_LEFT_UP || command==DIRECTIONAL_COMMAND_MOVE_RIGHT_UP ||
         command==DIRECTIONAL_COMMAND_MOVE_RIGHT_DOWN || command==DIRECTIONAL_COMMAND_MOVE_LEFT_DOWN)){
@@ -362,7 +375,7 @@ void Creature::check_command_directional(short direction){
         //Target: Closed door.
         //
         if(vector_levels[current_level].tiles[coords.check_x][coords.check_y].type==TILE_TYPE_DOOR_CLOSED){
-            initiate_move=true;
+            initiate_turn=true;
         }
         //
         //Target: Open door.
@@ -393,7 +406,7 @@ void Creature::check_command_directional(short direction){
         //Target: Open door.
         //
         if(vector_levels[current_level].tiles[coords.check_x][coords.check_y].type==TILE_TYPE_DOOR_OPEN){
-            initiate_move=true;
+            initiate_turn=true;
         }
         //
         //Target: Closed door.
@@ -422,7 +435,7 @@ void Creature::check_command_directional(short direction){
     else if(command==DIRECTIONAL_COMMAND_THROW_ITEM){
         //If the item can be thrown.
         if(true){
-            initiate_move=true;
+            initiate_turn=true;
         }
         //If the item cannot be thrown.
         else{
@@ -440,7 +453,7 @@ void Creature::check_command_directional(short direction){
            //And if a launcher is being wielded in either the right or left hand.
            ((!equipment_slot_empty(-1,EQUIP_HOLD_RIGHT) && inventory[index_of_item_in_slot(EQUIP_HOLD_RIGHT)].category==ITEM_WEAPON && inventory[index_of_item_in_slot(EQUIP_HOLD_RIGHT)].governing_skill_weapon==SKILL_LAUNCHER_WEAPONS) ||
             (!equipment_slot_empty(-1,EQUIP_HOLD_LEFT) && inventory[index_of_item_in_slot(EQUIP_HOLD_LEFT)].category==ITEM_WEAPON && inventory[index_of_item_in_slot(EQUIP_HOLD_LEFT)].governing_skill_weapon==SKILL_LAUNCHER_WEAPONS))){
-            initiate_move=true;
+            initiate_turn=true;
         }
         //If no item is quivered.
         else if(equipment_slot_empty(-1,EQUIP_QUIVER)){
@@ -464,7 +477,7 @@ void Creature::check_command_directional(short direction){
         bool move_check=check_movement(x-1,y);
 
         if(move_check){
-            initiate_move=true;
+            initiate_turn=true;
         }
         else{
             //No directional command will be executed.
@@ -477,7 +490,7 @@ void Creature::check_command_directional(short direction){
         bool move_check=check_movement(x,y-1);
 
         if(move_check){
-            initiate_move=true;
+            initiate_turn=true;
         }
         else{
             //No directional command will be executed.
@@ -490,7 +503,7 @@ void Creature::check_command_directional(short direction){
         bool move_check=check_movement(x+1,y);
 
         if(move_check){
-            initiate_move=true;
+            initiate_turn=true;
         }
         else{
             //No directional command will be executed.
@@ -503,7 +516,7 @@ void Creature::check_command_directional(short direction){
         bool move_check=check_movement(x,y+1);
 
         if(move_check){
-            initiate_move=true;
+            initiate_turn=true;
         }
         else{
             //No directional command will be executed.
@@ -523,7 +536,7 @@ void Creature::check_command_directional(short direction){
         }
 
         if(move_check){
-            initiate_move=true;
+            initiate_turn=true;
         }
         else{
             //No directional command will be executed.
@@ -543,7 +556,7 @@ void Creature::check_command_directional(short direction){
         }
 
         if(move_check){
-            initiate_move=true;
+            initiate_turn=true;
         }
         else{
             //No directional command will be executed.
@@ -563,7 +576,7 @@ void Creature::check_command_directional(short direction){
         }
 
         if(move_check){
-            initiate_move=true;
+            initiate_turn=true;
         }
         else{
             //No directional command will be executed.
@@ -583,7 +596,7 @@ void Creature::check_command_directional(short direction){
         }
 
         if(move_check){
-            initiate_move=true;
+            initiate_turn=true;
         }
         else{
             //No directional command will be executed.
@@ -1117,12 +1130,12 @@ void Creature::check_command_inventory(char inventory_letter){
     if(command==INVENTORY_COMMAND_DROP_ITEM){
         //If the item is unequipped.
         if(!inventory[inventory_item_index].equipped){
-            initiate_move=true;
+            initiate_turn=true;
         }
         //If the item is equipped.
         else{
             input_inventory=INVENTORY_COMMAND_UNEQUIP_AND_DROP_ITEM;
-            initiate_move=true;
+            initiate_turn=true;
         }
     }
 
@@ -1145,7 +1158,7 @@ void Creature::check_command_inventory(char inventory_letter){
         if(!inventory[inventory_item_index].equipped &&
         //And if the corresponding equipment slot is open.
         equipment_slot_empty(inventory_item_index,equip_slot)){
-            initiate_move=true;
+            initiate_turn=true;
         }
         //If the item is already equipped.
         else if(inventory[inventory_item_index].equipped){
@@ -1185,7 +1198,7 @@ void Creature::check_command_inventory(char inventory_letter){
     else if(command==INVENTORY_COMMAND_UNEQUIP_ITEM){
         //If the item is equipped.
         if(inventory[inventory_item_index].equipped){
-            initiate_move=true;
+            initiate_turn=true;
         }
         //If the item is not equipped.
         else{
@@ -1237,7 +1250,7 @@ void Creature::check_command_inventory(char inventory_letter){
         if((!inventory[inventory_item_index].equipped || (inventory[inventory_item_index].equipped && inventory[inventory_item_index].stack>1)) &&
            //And if the item is a drink.
            inventory[inventory_item_index].category==ITEM_DRINK){
-            initiate_move=true;
+            initiate_turn=true;
         }
         //If the item is equipped and its stack size is 1.
         else if(inventory[inventory_item_index].equipped && inventory[inventory_item_index].stack==1){
@@ -1270,7 +1283,7 @@ void Creature::check_command_inventory(char inventory_letter){
     else if(command==INVENTORY_COMMAND_USE_ITEM){
         //If the item can be used.
         if(inventory[inventory_item_index].possesses_effect(ITEM_EFFECT_USE_LIGHT) && inventory[inventory_item_index].fuel>0){
-            initiate_move=true;
+            initiate_turn=true;
         }
         //If the item is a light source with no fuel.
         else if(inventory[inventory_item_index].possesses_effect(ITEM_EFFECT_USE_LIGHT) && inventory[inventory_item_index].fuel==0){
@@ -1327,7 +1340,7 @@ void Creature::check_command_inventory(char inventory_letter){
     else if(command==INVENTORY_COMMAND_MIX_ITEMS_2){
         //If the items can be mixed.
         if(items_mixable(first_inventory_item_index,inventory_item_index)){
-            initiate_move=true;
+            initiate_turn=true;
         }
         //If the items cannot be mixed.
         else{
@@ -1340,7 +1353,7 @@ void Creature::check_command_inventory(char inventory_letter){
     else if(command==INVENTORY_COMMAND_READ_ITEM){
         //If the item can be read.
         if(boost::algorithm::trim_copy(inventory[inventory_item_index].writing).length()>0){
-            initiate_move=true;
+            initiate_turn=true;
         }
         //If the item cannot be read.
         else{
@@ -1545,7 +1558,7 @@ void Creature::execute_command_inventory(char inventory_letter){
 
         if(command==INVENTORY_COMMAND_UNEQUIP_AND_DROP_ITEM){
             input_inventory=INVENTORY_COMMAND_UNEQUIPPED_NOW_DROP_ITEM;
-            initiate_move=true;
+            initiate_turn=true;
         }
     }
 

@@ -108,8 +108,8 @@ int Creature::return_skill_dual_wielding(){
 int Creature::return_skill_speed(){
     double skill=skills[SKILL_SPEED][SKILL_EXPERIENCE_LEVEL];
 
-    //If the creature is anything aside from unencumbered.
-    if(!(return_inventory_weight()<=return_carry_capacity())){
+    //If the creature is anything aside from unburdened.
+    if(return_encumbrance_state()!=ENCUMBRANCE_UNBURDENED){
         //Apply the encumbrance penalty.
         skill-=(return_inventory_weight()-return_carry_capacity())*0.1;
     }

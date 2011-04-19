@@ -7,41 +7,7 @@ using namespace std;
 
 bool Monster::ai_state_thirsty(){
     //If the creature is thirsty.
-    if(thirst>=THIRST_THIRSTY){
-        return true;
-    }
-
-    return false;
-}
-
-bool Monster::ai_state_encumbered(){
-    //If the creature is slightly burdened.
-    if(return_inventory_weight()>=return_carry_capacity()+1 && return_inventory_weight()<=return_carry_capacity()*1.5){
-        return true;
-    }
-    //If the creature is somewhat burdened.
-    else if(return_inventory_weight()>=return_carry_capacity()*1.5+1 && return_inventory_weight()<=return_carry_capacity()*2.0){
-        return true;
-    }
-    //If the creature is quite burdened.
-    else if(return_inventory_weight()>=return_carry_capacity()*2.0+1 && return_inventory_weight()<=return_carry_capacity()*2.5){
-        return true;
-    }
-    //If the creature is heavily burdened.
-    else if(return_inventory_weight()>=return_carry_capacity()*2.5+1 && return_inventory_weight()<=return_carry_capacity()*3.0){
-        return true;
-    }
-    //If the creature is overburdened.
-    else if(return_inventory_weight()>=return_carry_capacity()*3.0+1){
-        return true;
-    }
-
-    return false;
-}
-
-bool Monster::ai_state_overencumbered(){
-    //If the creature is overburdened.
-    if(return_inventory_weight()>=return_carry_capacity()*3.0+1){
+    if(return_thirst_state()<=THIRST_THIRSTY){
         return true;
     }
 

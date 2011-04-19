@@ -52,12 +52,8 @@ class Monster: public Creature{
     coordinates ai_opposite_direction(short target_x,short target_y);
 
     //AI States:
-    //
-    //
 
     bool ai_state_thirsty();
-    bool ai_state_encumbered();
-    bool ai_state_overencumbered();
     bool ai_state_low_health();
     bool ai_state_hostile_nearby(short hostile_x,short hostile_y);
 };

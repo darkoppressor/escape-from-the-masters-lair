@@ -533,7 +533,7 @@ void Player::handle_input_confirm_leave_dungeon(){
 
         command_standard=COMMAND_GO_UP_STAIRS;
 
-        initiate_move=true;
+        initiate_turn=true;
     }
 
     //Return to game.
@@ -541,6 +541,26 @@ void Player::handle_input_confirm_leave_dungeon(){
         current_window=WINDOW_NONE;
 
         update_text_log("You decide to remain in the dungeon for now.",true);
+    }
+}
+
+void Player::handle_input_confirm_quaff_from_fountain(){
+    //Quaff from the fountain.
+    if(event.key.keysym.unicode==(Uint16)'y'){
+        current_window=WINDOW_NONE;
+
+        command_standard=COMMAND_QUAFF_FROM_FOUNTAIN;
+
+        initiate_turn=true;
+    }
+
+    //Return to game.
+    else if(event.key.keysym.unicode==(Uint16)'n'){
+        current_window=WINDOW_NONE;
+
+        update_text_log("What do you want to drink? [?*]",is_player);
+
+        input_inventory=INVENTORY_COMMAND_QUAFF_ITEM;
     }
 }
 
@@ -1406,7 +1426,7 @@ void Player::render_inventory(bool all_categories){
     ss.clear();ss.str("");ss<<"Weight/Capacity: ";ss<<(int)return_inventory_weight();ss<<"/";ss<<(int)return_carry_capacity();msg=ss.str();
     font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2,0,msg,render_color);
 
-    ss.clear();ss.str("");ss<<"You are currently ";ss<<return_encumbrance_state();ss<<".";msg=ss.str();
+    ss.clear();ss.str("");ss<<"You are currently ";ss<<return_encumbrance_string();ss<<".";msg=ss.str();
     font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2,font_small.spacing_y,msg,render_color);
 
     for(short n=ITEM_WEAPON;n<ITEM_OTHER+1;n++){

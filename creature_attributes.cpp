@@ -9,20 +9,26 @@ using namespace std;
 int Creature::return_attribute_strength(){
     double attribute=attributes[ATTRIBUTE_STRENGTH];
 
+    short thirst_state=return_thirst_state();
+
     //If the creature's thirst is satiated.
-    if(thirst>=THIRST_SATIATED && thirst<THIRST_NOT_THIRSTY){
+    if(thirst_state==THIRST_SATIATED){
         attribute+=attribute*0.10;
     }
     //If the creature is thirsty.
-    else if(thirst>=THIRST_THIRSTY && thirst<THIRST_WEAK){
+    else if(thirst_state==THIRST_THIRSTY){
         attribute-=attribute*0.10;
     }
     //If the creature is weak.
-    else if(thirst>=THIRST_WEAK && thirst<THIRST_FAINTING){
+    else if(thirst_state==THIRST_WEAK){
         attribute-=attribute*0.25;
     }
     //If the creature is fainting.
-    else if(thirst>=THIRST_FAINTING && thirst<THIRST_DEATH){
+    else if(thirst_state==THIRST_FAINTING){
+        attribute-=attribute*0.25;
+    }
+    //If the creature is dying.
+    else if(thirst_state==THIRST_DEATH){
         attribute-=attribute*0.25;
     }
 
@@ -39,20 +45,27 @@ int Creature::return_attribute_strength(){
 int Creature::return_attribute_agility(){
     double attribute=attributes[ATTRIBUTE_AGILITY];
 
-    //If the creature is anything aside from unencumbered.
-    if(!(return_inventory_weight()<=return_carry_capacity())){
+    //If the creature is anything aside from unburdened.
+    if(return_encumbrance_state()!=ENCUMBRANCE_UNBURDENED){
         //Apply the encumbrance penalty.
         attribute-=(return_inventory_weight()-return_carry_capacity())*0.025;
     }
 
+    short thirst_state=return_thirst_state();
+
     //If the creature is satiated.
-    if(thirst>=THIRST_SATIATED && thirst<THIRST_NOT_THIRSTY){
+    if(thirst_state==THIRST_SATIATED){
         //Apply a satiated bonus.
         attribute+=attribute*0.10;
     }
     //If the creature is fainting.
-    else if(thirst>=THIRST_FAINTING && thirst<THIRST_DEATH){
+    else if(thirst_state==THIRST_FAINTING){
         //Apply a fainting penalty.
+        attribute-=attribute*0.25;
+    }
+    //If the creature is dying.
+    else if(thirst_state==THIRST_DEATH){
+        //Apply a dying penalty.
         attribute-=attribute*0.25;
     }
 

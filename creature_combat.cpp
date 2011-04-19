@@ -408,8 +408,6 @@ void Creature::die(short cause_of_death,string killer,string killer_item,string 
     //The creature is now dead.
     alive=false;
 
-    ///health=0;
-
     string message="";
 
     if(is_player){

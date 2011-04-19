@@ -13,7 +13,7 @@
 	material:glass
 	effect:water
 	<drink>
-		thirst quenched:250
+		thirst quenched:200
 	</drink>
 </item>
 

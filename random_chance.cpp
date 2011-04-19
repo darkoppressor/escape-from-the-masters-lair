@@ -87,6 +87,17 @@ bool rc_discover_secret_door(){
     }
 }
 
+bool rc_fountain_dry_up(){
+    int random_attempt=random_range(0,99);
+
+    if(random_attempt>=0 && random_attempt<40){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
 /**bool rc_regain_mana(){
     int random_attempt=random_range(0,99);
 

@@ -313,6 +313,11 @@ void Monster::handle_input(){
             input_inventory=INVENTORY_COMMAND_QUAFF_ITEM;
         }
 
+        //Quaff from fountain.
+        else if(ai_keystates[AIK_QUAFF_FROM_FOUNTAIN]){
+            command_standard=COMMAND_QUAFF_FROM_FOUNTAIN;
+        }
+
         //Use item.
         else if(ai_keystates[AIK_USE_ITEM]){
             input_inventory=INVENTORY_COMMAND_USE_ITEM;

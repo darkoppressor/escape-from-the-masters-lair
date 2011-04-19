@@ -42,12 +42,17 @@ coordinates Monster::ai_nearest_hostile(){
 }
 
 ai_action Monster::ai_determine_action(){
+    //The default action is to do nothing.
     ai_action action;
     action.action=AI_ACTION_DO_NOTHING;
     action.coords.x=x;
     action.coords.y=y;
 
+    //Determine the coordinates of the nearest hostile creature.
     coordinates hostile_creature=ai_nearest_hostile();
+
+    //Determine the encumbrance state of the monster.
+    short encumbrance=return_encumbrance_state();
 
     Race* mr=&templates.template_races[race];
 
@@ -84,7 +89,7 @@ ai_action Monster::ai_determine_action(){
 
     //-Movement-//
 
-    if(action.action==AI_ACTION_MOVE && ai_state_overencumbered()){
+    if(action.action==AI_ACTION_MOVE && encumbrance==ENCUMBRANCE_OVERBURDENED){
         action.action=AI_ACTION_DROP_WEIGHT;
     }
 

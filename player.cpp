@@ -295,6 +295,9 @@ void Player::handle_input(){
                     else if(current_window==WINDOW_CONFIRM_LEAVE_DUNGEON){
                         handle_input_confirm_leave_dungeon();
                     }
+                    else if(current_window==WINDOW_CONFIRM_QUAFF_FROM_FOUNTAIN){
+                        handle_input_confirm_quaff_from_fountain();
+                    }
                     else if(current_window==WINDOW_LEAVE_DUNGEON){
                         handle_input_leave_dungeon();
                     }
@@ -478,9 +481,16 @@ void Player::handle_input(){
 
                         //Quaff item.
                         else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'q'){
-                            update_text_log("What do you want to drink? [?*]",is_player);
+                            if(vector_levels[current_level].tiles[x][y].type==TILE_TYPE_FOUNTAIN){
+                                update_text_log("There is a fountain here. Drink from it? [yn]",is_player);
 
-                            input_inventory=INVENTORY_COMMAND_QUAFF_ITEM;
+                                player.current_window=WINDOW_CONFIRM_QUAFF_FROM_FOUNTAIN;
+                            }
+                            else{
+                                update_text_log("What do you want to drink? [?*]",is_player);
+
+                                input_inventory=INVENTORY_COMMAND_QUAFF_ITEM;
+                            }
                         }
 
                         //Equip item in right hand.

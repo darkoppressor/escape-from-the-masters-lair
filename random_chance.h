@@ -25,6 +25,8 @@ bool rc_close_door();
 
 bool rc_discover_secret_door();
 
+bool rc_fountain_dry_up();
+
 //Turn stuff//
 
 ///bool rc_regain_mana();

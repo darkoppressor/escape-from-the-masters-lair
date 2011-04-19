@@ -93,9 +93,9 @@ void game_loop(){
             input();
 
             if(player.game_in_progress){
-                //Then, we move all of the objects, if the player has initiated a move.
-                if(player.alive && player.initiate_move){
-                    player.initiate_move=false;
+                //Then, we move all of the objects, if the player has initiated a turn.
+                if(player.alive && player.initiate_turn){
+                    player.initiate_turn=false;
                     turn();
                     player.turn++;
                 }

@@ -24,7 +24,7 @@ Creature::Creature(){
 
     item_info=-1;
 
-    initiate_move=false;
+    initiate_turn=false;
 
     is_player=false;
 
@@ -425,20 +425,22 @@ void Creature::process_move(){
 
     //Apply the overencumbered thirst penalty, if any.
 
+    short encumbrance=return_encumbrance_state();
+
     //If the creature is somewhat burdened.
-    if(return_inventory_weight()>=return_carry_capacity()*1.5+1 && return_inventory_weight()<=return_carry_capacity()*2.0){
+    if(encumbrance==ENCUMBRANCE_SOMEWHAT_BURDENED){
         thirst_change=random_range(1,2);
     }
     //If the creature is quite burdened.
-    else if(return_inventory_weight()>=return_carry_capacity()*2.0+1 && return_inventory_weight()<=return_carry_capacity()*2.5){
+    else if(encumbrance==ENCUMBRANCE_QUITE_BURDENED){
         thirst_change=random_range(1,2);
     }
     //If the creature is heavily burdened.
-    else if(return_inventory_weight()>=return_carry_capacity()*2.5+1 && return_inventory_weight()<=return_carry_capacity()*3.0){
+    else if(encumbrance==ENCUMBRANCE_HEAVILY_BURDENED){
         thirst_change=2;
     }
     //If the creature is overburdened.
-    else if(return_inventory_weight()>=return_carry_capacity()*3.0+1){
+    else if(encumbrance==ENCUMBRANCE_OVERBURDENED){
         thirst_change=random_range(2,3);
     }
 
@@ -454,15 +456,17 @@ void Creature::change_thirst(bool increase,short amount){
 
         //Handle thirst states. These are only handled when thirst increases.
 
+        short thirst_state=return_thirst_state();
+
         //If the creature is fainting.
-        if(thirst>=THIRST_FAINTING && thirst<THIRST_DEATH){
+        if(thirst_state==THIRST_FAINTING){
             ///I need to add 'if the creature is not currently fainted' here.
             if(rc_thirst_faint()){
                 ///Faint.
             }
         }
         //If the creature has reached the point of death from thirst.
-        else if(thirst>=THIRST_DEATH+(return_attribute_hardiness()*15)){
+        else if(thirst_state==THIRST_DEATH){
             if(rc_thirst_lose_health()){
                 health--;
 
@@ -483,72 +487,6 @@ void Creature::change_thirst(bool increase,short amount){
             thirst=THIRST_FLOOR;
         }
     }
-}
-
-string Creature::return_thirst_state(){
-    string thirst_state="";
-
-    //If the creature is bloated.
-    if(thirst<=THIRST_BLOATED){
-        thirst_state="bloated";
-    }
-    //If the creature is satiated.
-    else if(thirst>=THIRST_SATIATED && thirst<THIRST_NOT_THIRSTY){
-        thirst_state="satiated";
-    }
-    //If the creature is not thirsty.
-    else if(thirst>=THIRST_NOT_THIRSTY && thirst<THIRST_THIRSTY){
-        thirst_state="not thirsty";
-    }
-    //If the creature is thirsty.
-    else if(thirst>=THIRST_THIRSTY && thirst<THIRST_WEAK){
-        thirst_state="thirsty";
-    }
-    //If the creature is weak.
-    else if(thirst>=THIRST_WEAK && thirst<THIRST_FAINTING){
-        thirst_state="weak from thirst";
-    }
-    //If the creature is fainting.
-    else if(thirst>=THIRST_FAINTING && thirst<THIRST_DEATH){
-        thirst_state="fainting from lack of water";
-    }
-    //If the creature is dead.
-    else if(thirst>=THIRST_DEATH){
-        thirst_state="dying of thirst";
-    }
-
-    return thirst_state;
-}
-
-string Creature::return_encumbrance_state(){
-    string state="";
-
-    //If the creature is unburdened.
-    if(return_inventory_weight()<=return_carry_capacity()){
-        state="unburdened";
-    }
-    //If the creature is slightly burdened.
-    else if(return_inventory_weight()>=return_carry_capacity()+1 && return_inventory_weight()<=return_carry_capacity()*1.5){
-        state="slightly burdened";
-    }
-    //If the creature is somewhat burdened.
-    else if(return_inventory_weight()>=return_carry_capacity()*1.5+1 && return_inventory_weight()<=return_carry_capacity()*2.0){
-        state="somewhat burdened";
-    }
-    //If the creature is quite burdened.
-    else if(return_inventory_weight()>=return_carry_capacity()*2.0+1 && return_inventory_weight()<=return_carry_capacity()*2.5){
-        state="quite burdened";
-    }
-    //If the creature is heavily burdened.
-    else if(return_inventory_weight()>=return_carry_capacity()*2.5+1 && return_inventory_weight()<=return_carry_capacity()*3.0){
-        state="heavily burdened";
-    }
-    //If the creature is overburdened.
-    else if(return_inventory_weight()>=return_carry_capacity()*3.0+1){
-        state="overburdened";
-    }
-
-    return state;
 }
 
 void Creature::apply_race(short race_to_apply){
