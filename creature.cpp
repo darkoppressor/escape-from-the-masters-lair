@@ -46,7 +46,7 @@ Creature::Creature(){
     experience=0;
     experience_max=300;
 
-    thirst=THIRST_THIRSTY-500;
+    thirst=1000;
 
     base_damage_melee_min=0;
     base_damage_melee_max=0;

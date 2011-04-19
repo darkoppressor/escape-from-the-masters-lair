@@ -757,27 +757,12 @@ void Game::generate_level(bool deepest_level){
 
         int random_item_template=0;
 
-        if(amount_water_bottles==0){
-            random_item_template=random_range(0,templates.template_items[random_item_category].size()-1+templates.template_items[random_item_category].size()/4.0);
-            if(random_item_template>templates.template_items[random_item_category].size()-1){
+        if((amount_water_bottles==0 || amount_oil_bottles==0 || amount_water_bottles==1 || amount_oil_bottles==1) && random_item_category==ITEM_DRINK){
+            random_item_template=random_range(0,99);
+            if(random_item_template<50){
                 random_item_template=player.return_item_template("bottle of water").index;
             }
-        }
-        else if(amount_oil_bottles==0){
-            random_item_template=random_range(0,templates.template_items[random_item_category].size()-1+templates.template_items[random_item_category].size()/4.0);
-            if(random_item_template>templates.template_items[random_item_category].size()-1){
-                random_item_template=player.return_item_template("bottle of oil").index;
-            }
-        }
-        else if(amount_water_bottles==1){
-            random_item_template=random_range(0,templates.template_items[random_item_category].size()-1+templates.template_items[random_item_category].size()/8.0);
-            if(random_item_template>templates.template_items[random_item_category].size()-1){
-                random_item_template=player.return_item_template("bottle of water").index;
-            }
-        }
-        else if(amount_oil_bottles==1){
-            random_item_template=random_range(0,templates.template_items[random_item_category].size()-1+templates.template_items[random_item_category].size()/8.0);
-            if(random_item_template>templates.template_items[random_item_category].size()-1){
+            else{
                 random_item_template=player.return_item_template("bottle of oil").index;
             }
         }

@@ -629,7 +629,7 @@ void Player::render_get_race(){
     int lines_rendered=0;
 
     //The maximum number of lines before a new column is started.
-    int max_lines=35;
+    int max_lines=30;
 
     //The current column.
     int column=0;
