@@ -194,7 +194,7 @@
 
 <race>
 	name:hell hound pup
-	description:
+	description:Strangely enough, hell hound pups are somewhat adept at wearing armor.<NEWLINE>They aren't the best at going anywhere fast, though.
 	appearance:c
 	color:red
 	weight:300
@@ -204,7 +204,7 @@
 
 <race>
 	name:hell hound
-	description:
+	description:Hell hounds are red, water is blue, milk, eggs, coffee.
 	appearance:c
 	color:red
 	weight:300
@@ -218,7 +218,7 @@
 
 <race>
 	name:kitten
-	description:
+	description:Kittens may look cute and cuddly, but their claws have a nasty bite.
 	appearance:f
 	color:blue
 	weight:300
@@ -228,7 +228,7 @@
 
 <race>
 	name:housecat
-	description:
+	description:The common housecat. Made of claws, fur, and concentrated fury.
 	appearance:f
 	color:blue
 	weight:300
@@ -238,7 +238,7 @@
 
 <race>
 	name:jaguar
-	description:
+	description:Jaguars are speedy hard-hitters, but they can only take so many hits.
 	appearance:f
 	color:carrot orange
 	weight:300
@@ -249,7 +249,7 @@
 
 <race>
 	name:lynx
-	description:
+	description:Lynx move faster than the sphinx, but don't live as long.
 	appearance:f
 	color:burnt sienna
 	weight:300
@@ -260,7 +260,7 @@
 
 <race>
 	name:leopard
-	description:
+	description:Leopards are quick, leopards are slick, but staying alive just isn't their shtick.
 	appearance:f
 	color:pumpkin
 	weight:300
@@ -271,7 +271,7 @@
 
 <race>
 	name:cougar
-	description:
+	description:Cougars are fast, unarmed beasts, but can drop dead even faster than they can run.
 	appearance:f
 	color:sandy brown
 	weight:300
@@ -282,18 +282,18 @@
 
 <race>
 	name:pink panther
-	description:
+	description:The Pink Panther is a most mysterious creature.<NEWLINE>They are frequently seen lurking in the shadows, being frustratingly silent.
 	appearance:f
 	color:rose
 	weight:300
-	movement speed:-1
-	health:-15
-	
+	unarmed:-25
+	damage melee:1,1
+	health:-25
 </race>
 
 <race>
 	name:tiger
-	description:
+	description:Tigers are fast and strong, but can't take many hits.
 	appearance:f
 	color:orange
 	weight:300
@@ -304,7 +304,7 @@
 
 <race>
 	name:lion
-	description:
+	description:Lion's are the king of the jungle. They are also pretty tough in the dungeon. The tiger's more ferocious cousin.
 	appearance:f
 	color:burnt orange
 	weight:250
@@ -319,7 +319,7 @@
 
 <race>
 	name:wild boar
-	description:
+	description:Wild boar are quicker than they first appear.<NEWLINE>They take a penalty in general healthiness for this speed, however.<NEWLINE>They also make great eating while stranded on an island.
 	appearance:q
 	color:pale brown
 	weight:90
@@ -329,28 +329,29 @@
 
 <race>
 	name:elephant
-	description:
+	description:Elephants, with their tree trunk-like limbs and massive bodies, are some of the<NEWLINE>tougher creatures in the dungeon. They are also among the slowest.<NEWLINE>Legend tells of a beautiful tropical island inhabited by a single elephant named Hubert.
 	prefix article:an
 	appearance:q
 	color:light gray
 	weight:4175
-	health:40
+	health:50
 	movement speed:5
 </race>
 
 <race>
 	name:woolly mammoth
-	description:
+	description:Woolly mammoths are fairly tough, but quite slow.
 	appearance:q
 	color:gray
 	weight:4175
-	health:30
+	damage melee:1,1
+	health:35
 	movement speed:3
 </race>
 
 <race>
 	name:mastodon
-	description:
+	description:The mastodon. Somewhat tough, somewhat slow.
 	appearance:q
 	color:dark gray
 	weight:4175
@@ -360,7 +361,7 @@
 
 <race>
 	name:yak
-	description:
+	description:The common dungeon yak, covered in shaggy yak hair and bearing a nasty pair of yak horns.
 	appearance:q
 	color:brown
 	weight:4175
@@ -371,9 +372,9 @@
 
 <race>
 	name:wumpus
-	description:
+	description:Wumpus are pretty decent in a scuffle, but are less than decent at moving about the dungeon.<NEWLINE>Legend has it they like to eat adventurers. Good thing you aren't one.
 	appearance:q
-	color:blue
+	color:dark blue
 	weight:4175
 	damage melee:2,4
 	health:30
@@ -382,7 +383,7 @@
 
 <race>
 	name:buffalo
-	description:
+	description:Buffalo are somewhat good at unarmed combat, and somewhat bad at moving quickly.
 	appearance:q
 	color:dark brown
 	weight:1760
@@ -393,7 +394,7 @@
 
 <race>
 	name:hippopotamus
-	description:
+	description:Hippos are good at unarmed combat, but are rather slow, lumbering creatures.
 	appearance:q
 	color:burnt sienna
 	weight:450
@@ -404,7 +405,7 @@
 
 <race>
 	name:rhinoceros
-	description:
+	description:Rhinos are ok in a scuffle, and just less than ok at surviving.
 	appearance:q
 	color:payne's gray
 	weight:850
@@ -418,8 +419,7 @@
 
 <race>
 	name:valley orc
-	description:
-	prefix article:an
+	description:The lowest caste of orc, these poor souls are cursed with mediocrity. But they can hit stuff with a blade.
 	appearance:o
 	color:green
 	weight:55
@@ -434,7 +434,7 @@
 
 <race>
 	name:hill orc
-	description:
+	description:Hill orcs are orcs who like to cut things.
 	appearance:o
 	color:yellow
 	weight:55
@@ -449,7 +449,7 @@
 
 <race>
 	name:cave orc
-	description:
+	description:Cave orcs are tough warriors who favor blades.
 	appearance:o
 	color:gray
 	weight:55
@@ -464,7 +464,7 @@
 
 <race>
 	name:Beoghan orc
-	description:
+	description:Beoghan orcs enjoy slashing enemies and worshipping their mischievous deity.
 	appearance:o
 	color:blue
 	weight:55
@@ -503,7 +503,7 @@
 	name:dwarf
 	description:Dwarves are masters of blunt weapons and possess a naturally tough skin.<NEWLINE>Unfortunately, they are not good with other forms of melee weaponry, and they are not very agile.
 	appearance:d
-	color:white
+	color:tan
 	weight:55
 	blunt weapons:-100
 	natural armor:5
@@ -516,19 +516,37 @@
 	</ai traits>
 </race>
 
+<race>
+	name:gnome
+	description:Gnomes like poking things. They like poking things with sharp pointy things. They are good at this.<NEWLINE>They aren't good at much else. Also, they are somewhat fragile.
+	appearance:g
+	color:jungle
+	weight:55
+	stabbing weapons:-125
+	hardiness:-1
+	bladed weapons:75
+	blunt weapons:75
+	<ai traits>
+		flees:1
+		uses items:1
+	</ai traits>
+</race>
+
 //************//
 // e - elves: //
 //************//
 
 <race>
 	name:wood elf
-	description:
+	description:Wood elves excel at all forms of ranged attacks, but are quite fragile.
 	appearance:e
 	color:pale brown
 	weight:55
-	launcher weapons:-50
+	launcher weapons:-75
+	thrown weapons:-75
 	damage ranged:1,2
-	levelup hp range:-1,-2
+	damage thrown:1,2
+	health:-40
 	<ai traits>
 		flees:1
 		uses items:1
@@ -537,13 +555,15 @@
 
 <race>
 	name:high elf
-	description:
+	description:High elves are somewhat good with ranged weapons, but are below average with all forms of melee weapons.
 	appearance:e
 	color:sandy brown
 	weight:55
-	launcher weapons:-50
-	damage ranged:1,2
-	levelup hp range:-1,-2
+	launcher weapons:-25
+	thrown weapons:-25
+	bladed weapons:50
+	blunt weapons:50
+	stabbing weapons:50
 	<ai traits>
 		flees:1
 		uses items:1
@@ -552,13 +572,16 @@
 
 <race>
 	name:night elf
-	description:
+	description:Night elves can live practically forever, but are horrible in a scuffle.
 	appearance:e
 	color:indigo
 	weight:55
-	launcher weapons:-50
-	damage ranged:1,2
-	levelup hp range:-1,-2
+	health:20
+	levelup hp range:1,2
+	natural armor:10
+	damage melee:-2,-4
+	damage ranged:-1,-4
+	damage thrown:-1,-3
 	<ai traits>
 		flees:1
 		uses items:1
@@ -567,12 +590,12 @@
 
 <race>
 	name:cave elf
-	description:
+	description:Cave elves are fairly adept with ranged weapons, but suffer a reduced lifespan.
 	appearance:e
 	color:light gray
 	weight:55
 	launcher weapons:-50
-	damage ranged:1,2
+	thrown weapons:-50
 	levelup hp range:-1,-2
 	<ai traits>
 		flees:1
@@ -582,13 +605,16 @@
 
 <race>
 	name:kokiri
-	description:
+	description:Kokiri are weak and frail, but boy, can they run.
 	appearance:e
 	color:green
 	weight:55
-	launcher weapons:-50
-	damage ranged:1,2
-	levelup hp range:-1,-2
+	health:-45
+	damage melee:-2,-4
+	damage ranged:-1,-4
+	damage thrown:-1,-3
+	speed:-150
+	movement speed:-3
 	<ai traits>
 		flees:1
 		uses items:1
@@ -597,8 +623,15 @@
 
 <race>
 	name:grid bug
-	description:
+	description:The grid bug. Nature's most loathed creature. Weak, ineffective. No one wants to be one.
 	appearance:x
 	color:purple
 	weight:0.07
+	health:-30
+	strength:-2
+	agility:-2
+	hardiness:-2
+	<ai traits>
+		flees:1
+	</ai traits>
 </race>

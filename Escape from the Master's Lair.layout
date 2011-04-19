@@ -52,8 +52,8 @@
 	<File name="creature_combat.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="18168" topLine="400" />
 	</File>
-	<File name="creature_commands.cpp" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="11700" topLine="336" />
+	<File name="creature_commands.cpp" open="1" top="1" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="39189" topLine="1349" />
 	</File>
 	<File name="creature_equipment.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="1187" topLine="18" />
@@ -88,8 +88,8 @@
 	<File name="effect.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="132" topLine="0" />
 	</File>
-	<File name="enumerations.h" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="5044" topLine="278" />
+	<File name="enumerations.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="4911" topLine="26" />
 	</File>
 	<File name="font.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="1745" topLine="48" />
@@ -230,7 +230,7 @@
 		<Cursor1 position="196" topLine="0" />
 	</File>
 	<File name="player_windows.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="12660" topLine="336" />
+		<Cursor1 position="35094" topLine="1011" />
 	</File>
 	<File name="quit.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="963" topLine="21" />
@@ -268,8 +268,8 @@
 	<File name="save_load.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="204" topLine="0" />
 	</File>
-	<File name="string_input.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor1 position="208" topLine="0" />
+	<File name="string_input.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor1 position="9267" topLine="234" />
 	</File>
 	<File name="string_input.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor1 position="242" topLine="0" />

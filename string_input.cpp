@@ -240,6 +240,10 @@ void string_input::handle_events(){
                 save_game();
             }
 
+            else if(istarts_with(str_command,"4 8 15 16 23 42")){
+                ///
+            }
+
             else if(istarts_with(str_command,"fps")){
                 player.option_fps=!player.option_fps;
                 options_save();

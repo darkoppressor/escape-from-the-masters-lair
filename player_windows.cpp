@@ -691,9 +691,9 @@ void Player::render_get_race(){
         }
     }
 
-    ss.clear();ss.str("");ss<<"p - Pick a good race for me          * - Randomly choose a race";msg=ss.str();
+    ss.clear();ss.str("");ss<<"[p] - Pick a good race for me          [*] - Randomly choose a race";msg=ss.str();
     font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2.0,option_screen_height-font_small.spacing_y*2,msg,COLOR_WHITE);
-    ss.clear();ss.str("");ss<<"g - Pick a good character for me     ! - Randomly choose a character";msg=ss.str();
+    ss.clear();ss.str("");ss<<"[g] - Pick a good character for me     [!] - Randomly choose a character";msg=ss.str();
     font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2.0,option_screen_height-font_small.spacing_y,msg,COLOR_WHITE);
 
     ss.clear();ss.str("");ss<<"  <-- Press [Escape] to go back";msg=ss.str();
@@ -926,9 +926,9 @@ void Player::render_get_focused_skills(){
         font_small.show(option_screen_width-font_small.spacing_x*msg.length(),0,msg,COLOR_WHITE);
     }
 
-    ss.clear();ss.str("");ss<<"p - Pick a good race for me          * - Randomly choose a race";msg=ss.str();
+    ss.clear();ss.str("");ss<<"[p] - Pick a good race for me          [*] - Randomly choose a race";msg=ss.str();
     font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2.0,option_screen_height-font_small.spacing_y*2,msg,COLOR_WHITE);
-    ss.clear();ss.str("");ss<<"g - Pick a good character for me     ! - Randomly choose a character";msg=ss.str();
+    ss.clear();ss.str("");ss<<"[g] - Pick a good character for me     [!] - Randomly choose a character";msg=ss.str();
     font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2.0,option_screen_height-font_small.spacing_y,msg,COLOR_WHITE);
 
     ss.clear();ss.str("");ss<<"  <-- Press [Escape] to go back";msg=ss.str();
@@ -1015,9 +1015,9 @@ void Player::render_get_starting_items(){
     ss.clear();ss.str("");ss<<"Press [Enter] to continue -->  ";msg=ss.str();
     font_small.show(option_screen_width-font_small.spacing_x*msg.length(),0,msg,COLOR_WHITE);
 
-    ss.clear();ss.str("");ss<<"p - Pick a good race for me          * - Randomly choose a race";msg=ss.str();
+    ss.clear();ss.str("");ss<<"[p] - Pick a good race for me          [*] - Randomly choose a race";msg=ss.str();
     font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2.0,option_screen_height-font_small.spacing_y*2,msg,COLOR_WHITE);
-    ss.clear();ss.str("");ss<<"g - Pick a good character for me     ! - Randomly choose a character";msg=ss.str();
+    ss.clear();ss.str("");ss<<"[g] - Pick a good character for me     [!] - Randomly choose a character";msg=ss.str();
     font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2.0,option_screen_height-font_small.spacing_y,msg,COLOR_WHITE);
 
     ss.clear();ss.str("");ss<<"  <-- Press [Escape] to go back";msg=ss.str();

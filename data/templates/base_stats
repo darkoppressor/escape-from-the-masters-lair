@@ -6,8 +6,8 @@
 	health:50
 	mana:5
 	damage melee:8-12
-	damage ranged:6-10
-	damage thrown:4-8
+	damage ranged:5-7
+	damage thrown:3-5
 	movement speed:50
 	carrying capacity:150
 	levelup hp range:2-3

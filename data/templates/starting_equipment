@@ -12,7 +12,7 @@
 		<DO NOT SPAWN>
 		name:simple wooden dagger
 		plural name:simple wooden daggers
-		writing:
+		writing:IT'S DANGEROUS TO GO ALONE! TAKE THIS.
 		appearance:)
 		stackable:0
 		size:0.5
@@ -28,7 +28,7 @@
 		<DO NOT SPAWN>
 		name:simple wooden long sword
 		plural name:simple wooden long swords
-		writing:
+		writing:IT'S DANGEROUS TO GO ALONE! TAKE THIS.
 		appearance:)
 		stackable:0
 		size:2.5
@@ -44,7 +44,7 @@
 		<DO NOT SPAWN>
 		name:simple wooden axe
 		plural name:simple wooden axes
-		writing:
+		writing:IT'S DANGEROUS TO GO ALONE! TAKE THIS.
 		appearance:)
 		stackable:0
 		size:1.5
@@ -60,7 +60,7 @@
 		<DO NOT SPAWN>
 		name:simple wooden mace
 		plural name:simple wooden maces
-		writing:
+		writing:IT'S DANGEROUS TO GO ALONE! TAKE THIS.
 		appearance:)
 		stackable:0
 		size:1.5
@@ -76,7 +76,7 @@
 		<DO NOT SPAWN>
 		name:simple wooden quarterstaff
 		plural name:simple wooden quarterstaves
-		writing:
+		writing:IT'S DANGEROUS TO GO ALONE! TAKE THIS.
 		appearance:)
 		stackable:0
 		size:1.5
@@ -92,7 +92,7 @@
 		<DO NOT SPAWN>
 		name:simple wooden spear
 		plural name:simple wooden spears
-		writing:
+		writing:IT'S DANGEROUS TO GO ALONE! TAKE THIS.
 		appearance:)
 		stackable:0
 		size:2.5
@@ -112,7 +112,7 @@
 		<DO NOT SPAWN>
 		name:simple wooden bow
 		plural name:simple wooden bows
-		writing:
+		writing:IT'S DANGEROUS TO GO ALONE! TAKE THIS.
 		appearance:)
 		stackable:0
 		size:4.0
@@ -128,7 +128,7 @@
 		<DO NOT SPAWN>
 		name:simple wooden crossbow
 		plural name:simple wooden crossbows
-		writing:
+		writing:IT'S DANGEROUS TO GO ALONE! TAKE THIS.
 		appearance:)
 		stackable:0
 		size:3.5
@@ -144,7 +144,7 @@
 		<DO NOT SPAWN>
 		name:simple sling
 		plural name:simple slings
-		writing:
+		writing:IT'S DANGEROUS TO GO ALONE! TAKE THIS.
 		appearance:)
 		stackable:0
 		size:2.5

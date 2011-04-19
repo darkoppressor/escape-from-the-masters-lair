@@ -382,7 +382,7 @@ void Creature::check_command_directional(short direction){
         //
         else if(vector_levels[current_level].tiles[coords.check_x][coords.check_y].type==TILE_TYPE_DOOR_OPEN){
             //Door already open.
-            update_text_log("The door is already open.",is_player);
+            update_text_log("The door is already open. You could always close it, though.",is_player);
 
             //No directional command will be executed.
             input_directional=0;
@@ -393,7 +393,7 @@ void Creature::check_command_directional(short direction){
         //
         else{
             //No door there.
-            update_text_log("There is no door there.",is_player);
+            update_text_log("There is no door there. Just what are you trying to open?",is_player);
 
             //No directional command will be executed.
             input_directional=0;
@@ -413,7 +413,7 @@ void Creature::check_command_directional(short direction){
         //
         else if(vector_levels[current_level].tiles[coords.check_x][coords.check_y].type==TILE_TYPE_DOOR_CLOSED){
             //Door already closed.
-            update_text_log("The door is already closed.",is_player);
+            update_text_log("The door is already closed. It can't get more closed.",is_player);
 
             //No directional command will be executed.
             input_directional=0;
@@ -424,7 +424,7 @@ void Creature::check_command_directional(short direction){
         //
         else{
             //No door there.
-            update_text_log("There is no door there.",is_player);
+            update_text_log("There is no door there. Just what are you trying to close?",is_player);
 
             //No directional command will be executed.
             input_directional=0;
@@ -457,7 +457,7 @@ void Creature::check_command_directional(short direction){
         }
         //If no item is quivered.
         else if(equipment_slot_empty(-1,EQUIP_QUIVER)){
-            update_text_log("You have nothing in your quiver.",is_player);
+            update_text_log("Your quiver is empty. Perhaps you should put something in it.",is_player);
 
             //No directional command will be executed.
             input_directional=0;
@@ -465,7 +465,7 @@ void Creature::check_command_directional(short direction){
         }
         //If no launcher is being wielded.
         else{
-            update_text_log("You are not wielding a launcher weapon.",is_player);
+            update_text_log("You are not wielding a launcher weapon, so it will be next to impossible to launch anything at this time.",is_player);
 
             //No directional command will be executed.
             input_directional=0;
@@ -638,7 +638,7 @@ void Creature::execute_command_directional(short direction){
                 update_text_log("The door opens.",is_player);
             }
             else{
-                update_text_log("The door refuses to budge.",is_player);
+                update_text_log("The door refuses to budge. Drat!",is_player);
             }
         }
         //If the target tile is not what was expected, it must have changed between the time
@@ -657,7 +657,7 @@ void Creature::execute_command_directional(short direction){
                 update_text_log("The door closes.",is_player);
             }
             else{
-                update_text_log("The door refuses to budge.",is_player);
+                update_text_log("The door refuses to budge. Drat!",is_player);
             }
         }
         //If the target tile is not what was expected, it must have changed between the time
@@ -1167,6 +1167,7 @@ void Creature::check_command_inventory(char inventory_letter){
             str_msg+=" is already equipped.";
 
             update_text_log(str_msg.c_str(),is_player);
+            update_text_log("I suppose you could unequip it and then equip it again, but then who would that be helping, really?",is_player);
 
             //No inventory command will be executed.
             input_inventory=0;

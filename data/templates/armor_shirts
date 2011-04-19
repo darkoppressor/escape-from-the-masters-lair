@@ -20,3 +20,87 @@
 		</armor>
 	</item>
 	
+	<item category:armor>
+		name:shirt
+		plural name:shirts
+		writing:How much wood could a woodchuck chuck if a woodchuck could chuck wood?
+		appearance:[
+		stackable:0
+		size:4.0
+		color:cloth
+		material:cloth
+		<armor>
+			armor category:shirt
+		</armor>
+	</item>
+	
+	<item category:armor>
+		name:shirt
+		plural name:shirts
+		writing:Somewhere over the rainbow, there's another rainbow.
+		appearance:[
+		stackable:0
+		size:4.0
+		color:cloth
+		material:cloth
+		<armor>
+			armor category:shirt
+		</armor>
+	</item>
+	
+	<item category:armor>
+		name:shirt
+		plural name:shirts
+		writing:You owe the Oracle a new shirt.
+		appearance:[
+		stackable:0
+		size:4.0
+		color:cloth
+		material:cloth
+		<armor>
+			armor category:shirt
+		</armor>
+	</item>
+	
+	<item category:armor>
+		name:shirt
+		plural name:shirts
+		writing:4 8 15 16 23 42
+		appearance:[
+		stackable:0
+		size:4.0
+		color:cloth
+		material:cloth
+		<armor>
+			armor category:shirt
+		</armor>
+	</item>
+	
+	<item category:armor>
+		name:shirt
+		plural name:shirts
+		writing:I put on my robe and wizard hat...
+		appearance:[
+		stackable:0
+		size:4.0
+		color:cloth
+		material:cloth
+		<armor>
+			armor category:shirt
+		</armor>
+	</item>
+	
+	<item category:armor>
+		name:shirt
+		plural name:shirts
+		writing:IT'S A SECRET TO EVERYBODY.
+		appearance:[
+		stackable:0
+		size:4.0
+		color:cloth
+		material:cloth
+		<armor>
+			armor category:shirt
+		</armor>
+	</item>
+	
