@@ -10,6 +10,7 @@
 #include "message_log.h"
 #include "random_chance.h"
 #include "max_item_stack_size.h"
+#include "starting_values.h"
 
 using namespace std;
 
@@ -64,7 +65,7 @@ Creature::Creature(){
     for(int i=0;i<SKILL_MAGIC_SUMMONING+1;i++){
         skills[i][SKILL_EXPERIENCE_LEVEL]=1;
         skills[i][SKILL_EXPERIENCE]=0;
-        skills[i][SKILL_EXPERIENCE_MAX]=200;
+        skills[i][SKILL_EXPERIENCE_MAX]=STARTING_SKILL_EXPERIENCE_MAX;
     }
 
     for(int i=0;i<3;i++){

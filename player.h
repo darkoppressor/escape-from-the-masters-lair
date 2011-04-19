@@ -143,6 +143,11 @@ class Player: public Creature{
     void game_start_random_skills();
     void game_start_random_items();
 
+    void game_start_good_all();
+    void game_start_good_race();
+    void game_start_good_skills();
+    void game_start_good_items();
+
     //Handle the windows' input.
     void handle_input_no_game();
     void handle_input_get_name();

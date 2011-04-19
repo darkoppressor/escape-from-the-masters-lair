@@ -7,7 +7,7 @@
 #include "quit.h"
 #include "material_properties.h"
 #include "version.h"
-#include "player_starting_values.h"
+#include "starting_values.h"
 #include "covering_conversions.h"
 #include "message_log.h"
 #include "grammar.h"
@@ -167,6 +167,14 @@ void Player::handle_input_get_race(){
     else if(event.key.keysym.unicode==(Uint16)'!'){
         game_start_random_all();
     }
+
+    else if(event.key.keysym.unicode==(Uint16)'p'){
+        game_start_good_race();
+    }
+
+    else if(event.key.keysym.unicode==(Uint16)'g'){
+        game_start_good_all();
+    }
 }
 
 void Player::handle_input_get_focused_skills(){
@@ -292,6 +300,14 @@ void Player::handle_input_get_focused_skills(){
     else if(event.key.keysym.unicode==(Uint16)'!'){
         game_start_random_all();
     }
+
+    else if(event.key.keysym.unicode==(Uint16)'p'){
+        game_start_good_skills();
+    }
+
+    else if(event.key.keysym.unicode==(Uint16)'g'){
+        game_start_good_all();
+    }
 }
 
 void Player::handle_input_get_starting_items(){
@@ -391,6 +407,14 @@ void Player::handle_input_get_starting_items(){
 
     else if(event.key.keysym.unicode==(Uint16)'!'){
         game_start_random_all();
+    }
+
+    else if(event.key.keysym.unicode==(Uint16)'p'){
+        game_start_good_items();
+    }
+
+    else if(event.key.keysym.unicode==(Uint16)'g'){
+        game_start_good_all();
     }
 }
 

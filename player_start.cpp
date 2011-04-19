@@ -3,7 +3,7 @@
 
 #include "player.h"
 #include "world.h"
-#include "player_starting_values.h"
+#include "starting_values.h"
 
 using namespace std;
 
@@ -82,6 +82,92 @@ void Player::game_start_random_items(){
             }
         }
     }
+
+    done_buying_start_items=true;
+
+    update_class_name();
+}
+
+void Player::game_start_good_all(){
+    game_start_good_race();
+    game_start_good_skills();
+    game_start_good_items();
+}
+
+void Player::game_start_good_race(){
+    //Pick a good race.
+
+    int random=random_range(0,2);
+
+    string new_race="";
+
+    if(random==0){
+        new_race="human";
+    }
+    else if(random==1){
+        new_race="yak";
+    }
+    else if(random==2){
+        new_race="lynx";
+    }
+
+    //Find the race template index for the chosen race.
+    for(int i=0;i<templates.template_races.size();i++){
+        if(templates.template_races[i].name==new_race){
+            race=i;
+            break;
+        }
+    }
+
+    get_race.clear();
+}
+
+void Player::game_start_good_skills(){
+    focused_skills[0]=-1;
+    focused_skills[1]=-1;
+    focused_skills[2]=-1;
+
+    //If the player has an affiinity for one or more skills, choose those first.
+
+    for(int i=0;i<SKILL_MAGIC_SUMMONING+1;i++){
+        //If the player has less than the standard max experience for this skill, he has a natural affinity for it.
+        if(skills[i][SKILL_EXPERIENCE_MAX]<STARTING_SKILL_EXPERIENCE_MAX){
+            for(int n=0;n<3;n++){
+                if(focused_skills[n]==-1){
+                    focused_skills[n]=i;
+                    break;
+                }
+            }
+        }
+    }
+
+    for(int n=0;n<3;n++){
+        if(focused_skills[n]==-1){
+            focused_skills[n]=SKILL_BLADED_WEAPONS;
+            break;
+        }
+    }
+    for(int n=0;n<3;n++){
+        if(focused_skills[n]==-1){
+            focused_skills[n]=SKILL_ARMOR;
+            break;
+        }
+    }
+    for(int n=0;n<3;n++){
+        if(focused_skills[n]==-1){
+            focused_skills[n]=SKILL_SPEED;
+            break;
+        }
+    }
+
+    done_focusing_skills=true;
+}
+
+void Player::game_start_good_items(){
+    starting_items_gold=STARTING_ITEMS_GOLD;
+    starting_items.clear();
+
+    ///
 
     done_buying_start_items=true;
 

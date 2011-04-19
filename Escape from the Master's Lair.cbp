@@ -184,7 +184,6 @@
 		<Unit filename="player.h" />
 		<Unit filename="player_scores.cpp" />
 		<Unit filename="player_start.cpp" />
-		<Unit filename="player_starting_values.h" />
 		<Unit filename="player_windows.cpp" />
 		<Unit filename="quit.cpp" />
 		<Unit filename="quit.h" />
@@ -198,6 +197,7 @@
 		<Unit filename="render.h" />
 		<Unit filename="save_load.cpp" />
 		<Unit filename="save_load.h" />
+		<Unit filename="starting_values.h" />
 		<Unit filename="string_input.cpp" />
 		<Unit filename="string_input.h" />
 		<Unit filename="templates.cpp" />

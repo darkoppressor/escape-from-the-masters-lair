@@ -8,7 +8,7 @@
 #include "quit.h"
 #include "save_load.h"
 #include "message_log.h"
-#include "player_starting_values.h"
+#include "starting_values.h"
 #include "covering_conversions.h"
 
 using namespace std;
