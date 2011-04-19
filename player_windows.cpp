@@ -160,11 +160,11 @@ void Player::handle_input_get_race(){
         keystates[SDLK_KP_ENTER]=NULL;
     }
 
-    else if(event.key.keysym.unicode>=(Uint16)'*'){
+    else if(event.key.keysym.unicode==(Uint16)'*'){
         game_start_random_race();
     }
 
-    else if(event.key.keysym.unicode>=(Uint16)'!'){
+    else if(event.key.keysym.unicode==(Uint16)'!'){
         game_start_random_all();
     }
 }
@@ -285,11 +285,11 @@ void Player::handle_input_get_focused_skills(){
         keystates[SDLK_KP_ENTER]=NULL;
     }
 
-    else if(event.key.keysym.unicode>=(Uint16)'*'){
+    else if(event.key.keysym.unicode==(Uint16)'*'){
         game_start_random_skills();
     }
 
-    else if(event.key.keysym.unicode>=(Uint16)'!'){
+    else if(event.key.keysym.unicode==(Uint16)'!'){
         game_start_random_all();
     }
 }
@@ -385,11 +385,11 @@ void Player::handle_input_get_starting_items(){
         keystates[SDLK_KP_ENTER]=NULL;
     }
 
-    else if(event.key.keysym.unicode>=(Uint16)'*'){
+    else if(event.key.keysym.unicode==(Uint16)'*'){
         game_start_random_items();
     }
 
-    else if(event.key.keysym.unicode>=(Uint16)'!'){
+    else if(event.key.keysym.unicode==(Uint16)'!'){
         game_start_random_all();
     }
 }

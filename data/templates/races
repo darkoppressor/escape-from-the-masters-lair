@@ -5,8 +5,6 @@
 //************//
 // B - bears: //
 //************//
-//Health bonus
-//Slight melee damage penalty
 
 <race>
 	name:brown bear
@@ -24,8 +22,8 @@
 	appearance:B
 	color:dark blue
 	weight:125
-	health:15
-	damage melee:-1,-2
+	health:30
+	damage melee:-2,-4
 </race>
 
 <race>
@@ -34,8 +32,10 @@
 	appearance:B
 	color:white
 	weight:350
-	health:15
-	damage melee:-1,-2
+	health:30
+	natural armor:5
+	damage melee:-2,-4
+	movement speed:1
 </race>
 
 <race>
@@ -44,15 +44,35 @@
 	appearance:B
 	color:blue
 	weight:125
-	health:15
-	damage melee:-1,-2
+	health:40
+	natural armor:6
+	damage melee:-2,-4
+	movement speed:2
 </race>
 
 //**************//
 // r - rodents: //
 //**************//
-//Slow
-//HP on levelup bonus
+
+<race>
+	name:mouse
+	description:
+	appearance:r
+	color:light gray
+	weight:0.02
+	levelup hp range:1,2
+	movement speed:1
+</race>
+
+<race>
+	name:groundhog
+	description:
+	appearance:r
+	color:brown
+	weight:0.5
+	levelup hp range:1,3
+	movement speed:2
+</race>
 
 <race>
 	name:sewer rat
@@ -61,7 +81,9 @@
 	color:dark brown
 	weight:0.5
 	levelup hp range:1,2
-	movement speed:2
+	movement speed:1
+	health:15
+	speed:50
 </race>
 
 <race>
@@ -71,33 +93,14 @@
 	color:dark gray
 	weight:0.5
 	levelup hp range:1,2
-	movement speed:2
-</race>
-
-<race>
-	name:groundhog
-	description:
-	appearance:r
-	color:brown
-	weight:0.5
-	levelup hp range:1,2
-	movement speed:2
-</race>
-
-<race>
-	name:mouse
-	description:
-	appearance:r
-	color:light gray
-	weight:0.02
-	levelup hp range:1,2
-	movement speed:2
+	movement speed:1
+	health:30
+	speed:75
 </race>
 
 //**************//
 // c - canines: //
 //**************//
-//Unarmed bonus
 
 <race>
 	name:puppy
@@ -105,7 +108,10 @@
 	appearance:c
 	color:white
 	weight:300
-	unarmed:-50
+	unarmed:-25
+	bladed weapons:25
+	blunt weapons:25
+	stabbing weapons:25
 </race>
 
 <race>
@@ -115,6 +121,9 @@
 	color:white
 	weight:300
 	unarmed:-50
+	bladed weapons:50
+	blunt weapons:50
+	stabbing weapons:50
 </race>
 
 <race>
@@ -123,25 +132,10 @@
 	appearance:c
 	color:white
 	weight:300
-	unarmed:-50
-</race>
-
-<race>
-	name:hell hound pup
-	description:
-	appearance:c
-	color:red
-	weight:300
-	unarmed:-50
-</race>
-
-<race>
-	name:hell hound
-	description:
-	appearance:c
-	color:red
-	weight:300
-	unarmed:-50
+	unarmed:-75
+	bladed weapons:75
+	blunt weapons:75
+	stabbing weapons:75
 </race>
 
 <race>
@@ -150,7 +144,8 @@
 	appearance:c
 	color:gray
 	weight:300
-	unarmed:-50
+	health:15
+	armor:25
 </race>
 
 <race>
@@ -159,7 +154,8 @@
 	appearance:c
 	color:gray
 	weight:300
-	unarmed:-50
+	health:30
+	armor:50
 </race>
 
 <race>
@@ -168,7 +164,8 @@
 	appearance:c
 	color:payne's gray
 	weight:300
-	unarmed:-50
+	health:45
+	armor:65
 </race>
 
 <race>
@@ -178,6 +175,8 @@
 	color:brown
 	weight:300
 	unarmed:-50
+	health:30
+	armor:75
 </race>
 
 <race>
@@ -187,14 +186,35 @@
 	color:sepia
 	weight:300
 	unarmed:-50
+	health:30
+	bladed weapons:75
+	blunt weapons:75
+	stabbing weapons:75
+</race>
+
+<race>
+	name:hell hound pup
+	description:
+	appearance:c
+	color:red
+	weight:300
+	armor:-25
+	speed:25
+</race>
+
+<race>
+	name:hell hound
+	description:
+	appearance:c
+	color:red
+	weight:300
+	armor:-50
+	speed:50
 </race>
 
 //**************//
 // f - felines: //
 //**************//
-//Fast
-//Melee damage bonus
-//Health penalty
 
 <race>
 	name:kitten
@@ -202,8 +222,7 @@
 	appearance:f
 	color:blue
 	weight:300
-	damage melee:2,4
-	movement speed:-2
+	damage melee:1,2
 	health:-25
 </race>
 
@@ -214,8 +233,7 @@
 	color:blue
 	weight:300
 	damage melee:2,4
-	movement speed:-2
-	health:-25
+	health:-35
 </race>
 
 <race>
@@ -225,7 +243,7 @@
 	color:carrot orange
 	weight:300
 	damage melee:2,4
-	movement speed:-2
+	movement speed:-1
 	health:-25
 </race>
 
@@ -235,9 +253,9 @@
 	appearance:f
 	color:burnt sienna
 	weight:300
-	damage melee:2,4
-	movement speed:-2
-	health:-25
+	damage melee:1,2
+	movement speed:-1
+	health:-20
 </race>
 
 <race>
@@ -246,9 +264,9 @@
 	appearance:f
 	color:pumpkin
 	weight:300
-	damage melee:2,4
-	movement speed:-2
-	health:-25
+	unarmed:-25
+	movement speed:-1
+	health:-35
 </race>
 
 <race>
@@ -257,9 +275,9 @@
 	appearance:f
 	color:sandy brown
 	weight:300
-	damage melee:2,4
-	movement speed:-2
-	health:-25
+	unarmed:-50
+	movement speed:-1
+	health:-40
 </race>
 
 <race>
@@ -268,9 +286,9 @@
 	appearance:f
 	color:rose
 	weight:300
-	damage melee:2,4
-	movement speed:-2
-	health:-25
+	movement speed:-1
+	health:-15
+	
 </race>
 
 <race>
@@ -279,9 +297,9 @@
 	appearance:f
 	color:orange
 	weight:300
-	damage melee:2,4
-	movement speed:-2
-	health:-25
+	damage melee:1,2
+	movement speed:-1
+	health:-35
 </race>
 
 <race>
@@ -292,14 +310,12 @@
 	weight:250
 	damage melee:2,4
 	movement speed:-2
-	health:-25
+	health:-40
 </race>
 
 //*****************//
 // q - quadrupeds: //
 //*****************//
-//Slow
-//Health bonus
 
 <race>
 	name:wild boar
@@ -307,8 +323,8 @@
 	appearance:q
 	color:pale brown
 	weight:90
-	health:15
-	movement speed:2
+	health:-15
+	movement speed:-1
 </race>
 
 <race>
@@ -318,8 +334,8 @@
 	appearance:q
 	color:light gray
 	weight:4175
-	health:15
-	movement speed:2
+	health:40
+	movement speed:5
 </race>
 
 <race>
@@ -328,8 +344,8 @@
 	appearance:q
 	color:gray
 	weight:4175
-	health:15
-	movement speed:2
+	health:30
+	movement speed:3
 </race>
 
 <race>
@@ -339,7 +355,7 @@
 	color:dark gray
 	weight:4175
 	health:15
-	movement speed:2
+	movement speed:1
 </race>
 
 <race>
@@ -348,6 +364,7 @@
 	appearance:q
 	color:brown
 	weight:4175
+	damage melee:1,2
 	health:15
 	movement speed:2
 </race>
@@ -358,8 +375,9 @@
 	appearance:q
 	color:blue
 	weight:4175
-	health:15
-	movement speed:2
+	damage melee:2,4
+	health:30
+	movement speed:4
 </race>
 
 <race>
@@ -368,6 +386,7 @@
 	appearance:q
 	color:dark brown
 	weight:1760
+	unarmed:-25
 	health:15
 	movement speed:2
 </race>
@@ -378,8 +397,9 @@
 	appearance:q
 	color:burnt sienna
 	weight:450
-	health:15
-	movement speed:2
+	unarmed:-50
+	health:25
+	movement speed:3
 </race>
 
 <race>
@@ -388,16 +408,13 @@
 	appearance:q
 	color:payne's gray
 	weight:850
-	health:15
-	movement speed:2
+	damage melee:1,1
+	health:-15
 </race>
 
 //***********//
 // o - orcs: //
 //***********//
-//Bladed weapons skill bonus
-//Slight melee damage bonus
-//Slight health penalty
 
 <race>
 	name:valley orc
@@ -408,7 +425,7 @@
 	weight:55
 	bladed weapons:-50
 	damage melee:1,2
-	health:-5
+	health:-15
 	<ai traits>
 		flees:1
 		uses items:1
@@ -421,9 +438,9 @@
 	appearance:o
 	color:yellow
 	weight:55
-	bladed weapons:-50
+	bladed weapons:-75
 	damage melee:1,2
-	health:-5
+	health:-10
 	<ai traits>
 		flees:1
 		uses items:1
@@ -436,9 +453,9 @@
 	appearance:o
 	color:gray
 	weight:55
-	bladed weapons:-50
-	damage melee:1,2
-	health:-5
+	bladed weapons:-100
+	damage melee:1,3
+	health:-20
 	<ai traits>
 		flees:1
 		uses items:1
@@ -451,9 +468,9 @@
 	appearance:o
 	color:blue
 	weight:55
-	bladed weapons:-50
-	damage melee:1,2
-	health:-5
+	bladed weapons:-125
+	damage melee:2,2
+	health:-25
 	<ai traits>
 		flees:1
 		uses items:1
@@ -464,36 +481,35 @@
 // humanoids: //
 //************//
 
-//Bladed weapons skill bonus
-//Slight melee damage bonus
-//Armor skill penalty
 <race>
 	name:human
-	description:a boring race<NEWLINE>this is a new line
+	description:Humans are somewhat adept at all forms of melee combat, but are not very good ranged fighters.
 	appearance:@
 	color:white
 	weight:55
-	bladed weapons:-50
+	bladed weapons:-25
+	blunt weapons:-25
+	stabbing weapons:-25
 	damage melee:1,2
-	armor:50
+	damage ranged:-1,-1
+	launcher weapons:50
 	<ai traits>
 		flees:1
 		uses items:1
 	</ai traits>
 </race>
 
-//Blunt weapons skill bonus
-//Natural armor
-//Agility penalty
 <race>
 	name:dwarf
-	description:
+	description:Dwarves are masters of blunt weapons and possess a naturally tough skin.<NEWLINE>Unfortunately, they are not good with other forms of melee weaponry, and they are not very agile.
 	appearance:d
 	color:white
 	weight:55
-	blunt weapons:-50
+	blunt weapons:-100
 	natural armor:5
 	agility:-1
+	bladed weapons:75
+	stabbing weapons:75
 	<ai traits>
 		flees:1
 		uses items:1
@@ -503,9 +519,6 @@
 //************//
 // e - elves: //
 //************//
-//Launcher weapons skill bonus
-//Slight ranged damage bonus
-//Slight levelup hp gain penalty.
 
 <race>
 	name:wood elf
