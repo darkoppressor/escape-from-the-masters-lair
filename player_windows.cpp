@@ -653,10 +653,20 @@ void Player::render_get_race(){
         font_small.show(5+column*column_width,font_small.spacing_y*2+font_small.spacing_y*lines_rendered++,msg,render_color);
     }
 
-    if(get_race.length()>0 && atoi(get_race.c_str())<templates.template_races.size()){
-        ss.clear();ss.str("");ss<<"Press [Enter] to continue -->  ";msg=ss.str();
-        font_small.show(option_screen_width-font_small.spacing_x*msg.length(),0,msg,COLOR_WHITE);
+    int selected_race=-1;
+
+    if(get_race.length()>0){
+        selected_race=atoi(get_race.c_str());
+
+        if(selected_race<templates.template_races.size()){
+            ss.clear();ss.str("");ss<<"Press [Enter] to continue -->  ";msg=ss.str();
+            font_small.show(option_screen_width-font_small.spacing_x*msg.length(),0,msg,COLOR_WHITE);
+
+            ss.clear();ss.str("");ss<<templates.template_races[selected_race].description;msg=ss.str();
+            font_small.show(10,option_screen_height-font_small.spacing_y*5,msg,COLOR_WHITE);
+        }
     }
+
     ss.clear();ss.str("");ss<<"  <-- Press [Escape] to go back";msg=ss.str();
     font_small.show(0,0,msg,COLOR_WHITE);
 }

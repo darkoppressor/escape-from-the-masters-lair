@@ -16,6 +16,8 @@ Race::Race(){
 
     prefix_article="a";
 
+    description="";
+
     ai_trait_flees=false;
     ai_trait_uses_items=false;
     ai_trait_wanders=true;

@@ -540,6 +540,7 @@ void Templates::load_template_race(){
 
         string name="name:";
         string prefix_article="prefix article:";
+        string description="description:";
         string appearance="appearance:";
         string color="color:";
         string weight="weight:";
@@ -613,6 +614,18 @@ void Templates::load_template_race(){
             if(temp_race.prefix_article.length()==0){
                 temp_race.prefix_article=" ";
             }
+        }
+        //Description.
+        else if(icontains(line,description)){
+            //Clear the data name.
+            line.erase(0,description.length());
+
+            temp_race.description=line;
+            if(temp_race.description.length()==0){
+                temp_race.description=" ";
+            }
+
+            replace_all(temp_race.description,"<NEWLINE>","\xA");
         }
         //Appearance.
         else if(icontains(line,appearance)){

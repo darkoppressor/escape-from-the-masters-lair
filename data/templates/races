@@ -429,6 +429,7 @@
 //Armor skill penalty
 <race>
 	name:human
+	description:a boring race<NEWLINE>this is a new line
 	appearance:@
 	color:white
 	weight:55

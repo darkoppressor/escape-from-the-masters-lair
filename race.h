@@ -25,6 +25,9 @@ class Race: public Creature{
     //The article ('a' or 'an') to be used before a single one of this creature in a sentence.
     std::string prefix_article;
 
+    //A description of the race.
+    std::string description;
+
     //AI Traits:
 
     bool ai_trait_flees;
