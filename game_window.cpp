@@ -6,6 +6,7 @@
 #include "quit.h"
 #include "pixels.h"
 #include "save_load.h"
+#include "render.h"
 
 #include <time.h>
 #include <string>
@@ -16,6 +17,10 @@ Game_Window::Game_Window(){
     SCREEN_BPP=32;
 
     screen=NULL;
+
+    icon=NULL;
+
+    icon_colorkey=0;
 }
 
 bool Game_Window::initialize_opengl(){
@@ -100,6 +105,12 @@ bool Game_Window::init(){
 
     //Attempt to center the window on the screen.
     SDL_putenv("SDL_VIDEO_CENTERED=center");
+
+    //Set the window icon.
+    icon=SDL_LoadBMP("data/images/icon.bmp");
+    icon_colorkey=SDL_MapRGB(icon->format,0,0,0);
+    SDL_SetColorKey(icon,SDL_SRCCOLORKEY,icon_colorkey);
+    SDL_WM_SetIcon(icon,NULL);
 
     if(!initialize_opengl()){
         return false;

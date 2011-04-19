@@ -26,7 +26,11 @@ class Game_Window{
 
     short SCREEN_BPP;
 
-    SDL_Surface *screen;
+    SDL_Surface* screen;
+
+    SDL_Surface* icon;
+
+    Uint32 icon_colorkey;
 };
 
 #endif

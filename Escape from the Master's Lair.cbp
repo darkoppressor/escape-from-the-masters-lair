@@ -103,6 +103,9 @@
 			<Add option="-static-libgcc" />
 			<Add option="-static-libstdc++" />
 		</Linker>
+		<Unit filename="Escape from the Master&apos;s Lair.rc">
+			<Option compilerVar="WINDRES" />
+		</Unit>
 		<Unit filename="MersenneTwister.h" />
 		<Unit filename="age_limits.h" />
 		<Unit filename="ai.h" />
