@@ -159,6 +159,14 @@ void Player::handle_input_get_race(){
         keystates[SDLK_RETURN]=NULL;
         keystates[SDLK_KP_ENTER]=NULL;
     }
+
+    else if(event.key.keysym.unicode>=(Uint16)'*'){
+        game_start_random_race();
+    }
+
+    else if(event.key.keysym.unicode>=(Uint16)'!'){
+        game_start_random_all();
+    }
 }
 
 void Player::handle_input_get_focused_skills(){
@@ -276,6 +284,14 @@ void Player::handle_input_get_focused_skills(){
         keystates[SDLK_RETURN]=NULL;
         keystates[SDLK_KP_ENTER]=NULL;
     }
+
+    else if(event.key.keysym.unicode>=(Uint16)'*'){
+        game_start_random_skills();
+    }
+
+    else if(event.key.keysym.unicode>=(Uint16)'!'){
+        game_start_random_all();
+    }
 }
 
 void Player::handle_input_get_starting_items(){
@@ -367,6 +383,14 @@ void Player::handle_input_get_starting_items(){
         Uint8 *keystates=SDL_GetKeyState(NULL);
         keystates[SDLK_RETURN]=NULL;
         keystates[SDLK_KP_ENTER]=NULL;
+    }
+
+    else if(event.key.keysym.unicode>=(Uint16)'*'){
+        game_start_random_items();
+    }
+
+    else if(event.key.keysym.unicode>=(Uint16)'!'){
+        game_start_random_all();
     }
 }
 
@@ -629,7 +653,7 @@ void Player::render_get_race(){
     int lines_rendered=0;
 
     //The maximum number of lines before a new column is started.
-    int max_lines=30;
+    int max_lines=29;
 
     //The current column.
     int column=0;
@@ -663,9 +687,14 @@ void Player::render_get_race(){
             font_small.show(option_screen_width-font_small.spacing_x*msg.length(),0,msg,COLOR_WHITE);
 
             ss.clear();ss.str("");ss<<templates.template_races[selected_race].description;msg=ss.str();
-            font_small.show(10,option_screen_height-font_small.spacing_y*5,msg,COLOR_WHITE);
+            font_small.show(10,option_screen_height-font_small.spacing_y*6,msg,COLOR_WHITE);
         }
     }
+
+    ss.clear();ss.str("");ss<<"p - Pick a good race for me          * - Randomly choose a race";msg=ss.str();
+    font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2.0,option_screen_height-font_small.spacing_y*2,msg,COLOR_WHITE);
+    ss.clear();ss.str("");ss<<"g - Pick a good character for me     ! - Randomly choose a character";msg=ss.str();
+    font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2.0,option_screen_height-font_small.spacing_y,msg,COLOR_WHITE);
 
     ss.clear();ss.str("");ss<<"  <-- Press [Escape] to go back";msg=ss.str();
     font_small.show(0,0,msg,COLOR_WHITE);
@@ -896,6 +925,12 @@ void Player::render_get_focused_skills(){
         ss.clear();ss.str("");ss<<"Press [Enter] to continue -->  ";msg=ss.str();
         font_small.show(option_screen_width-font_small.spacing_x*msg.length(),0,msg,COLOR_WHITE);
     }
+
+    ss.clear();ss.str("");ss<<"p - Pick a good race for me          * - Randomly choose a race";msg=ss.str();
+    font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2.0,option_screen_height-font_small.spacing_y*2,msg,COLOR_WHITE);
+    ss.clear();ss.str("");ss<<"g - Pick a good character for me     ! - Randomly choose a character";msg=ss.str();
+    font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2.0,option_screen_height-font_small.spacing_y,msg,COLOR_WHITE);
+
     ss.clear();ss.str("");ss<<"  <-- Press [Escape] to go back";msg=ss.str();
     font_small.show(0,0,msg,COLOR_WHITE);
 }
@@ -979,6 +1014,12 @@ void Player::render_get_starting_items(){
 
     ss.clear();ss.str("");ss<<"Press [Enter] to continue -->  ";msg=ss.str();
     font_small.show(option_screen_width-font_small.spacing_x*msg.length(),0,msg,COLOR_WHITE);
+
+    ss.clear();ss.str("");ss<<"p - Pick a good race for me          * - Randomly choose a race";msg=ss.str();
+    font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2.0,option_screen_height-font_small.spacing_y*2,msg,COLOR_WHITE);
+    ss.clear();ss.str("");ss<<"g - Pick a good character for me     ! - Randomly choose a character";msg=ss.str();
+    font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2.0,option_screen_height-font_small.spacing_y,msg,COLOR_WHITE);
+
     ss.clear();ss.str("");ss<<"  <-- Press [Escape] to go back";msg=ss.str();
     font_small.show(0,0,msg,COLOR_WHITE);
 }
@@ -1032,7 +1073,7 @@ void Player::render_start_message(){
     ss.clear();ss.str("");ss<<"so you must take at least three with you.";msg=ss.str();
     font_small.show(40,75+font.spacing_y*2+font_small.spacing_y*15,msg,COLOR_WHITE);
 
-    ss.clear();ss.str("");ss<<"Go forth, young ";ss<<class_name;ss<<", go forth and achieve your destiny!";msg=ss.str();
+    ss.clear();ss.str("");ss<<"Go forth, young ";ss<<templates.template_races[race].name;ss<<", go forth and achieve your destiny!";msg=ss.str();
     font_small.show(40,75+font.spacing_y*2+font_small.spacing_y*16,msg,COLOR_WHITE);
 
     ss.clear();ss.str("");ss<<"  <-- Press [Enter] to continue -->  ";msg=ss.str();

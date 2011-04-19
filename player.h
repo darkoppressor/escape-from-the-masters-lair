@@ -136,6 +136,13 @@ class Player: public Creature{
 
     void update_window_caption(int frame_rate,double ms_per_frame);
 
+    //Game startup choice helpers.
+
+    void game_start_random_all();
+    void game_start_random_race();
+    void game_start_random_skills();
+    void game_start_random_items();
+
     //Handle the windows' input.
     void handle_input_no_game();
     void handle_input_get_name();

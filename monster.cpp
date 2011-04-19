@@ -95,8 +95,9 @@ void Monster::set_base_stats(short pass_level){
     //Set the monster's focused skills.
     for(int i=0;i<3;){
         //Choose a random skill.
-        short random_skill=random_range(SKILL_BLADED_WEAPONS,SKILL_MAGIC_SUMMONING);
+        ///short random_skill=random_range(SKILL_BLADED_WEAPONS,SKILL_MAGIC_SUMMONING);
         ///Disable some skills.
+        short random_skill=random_range(SKILL_BLADED_WEAPONS,SKILL_ARMOR);
         while(random_skill==SKILL_SECURITY || random_skill==SKILL_STEALTH || random_skill==SKILL_FIGHTING || random_skill==SKILL_DODGING){
             random_skill=random_range(SKILL_BLADED_WEAPONS,SKILL_ARMOR);
         }

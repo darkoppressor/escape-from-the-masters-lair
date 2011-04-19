@@ -9,25 +9,8 @@
 //Slight melee damage penalty
 
 <race>
-	name:polar bear
-	appearance:B
-	color:white
-	weight:350
-	health:15
-	damage melee:-1,-2
-</race>
-
-<race>
-	name:black bear
-	appearance:B
-	color:dark blue
-	weight:125
-	health:15
-	damage melee:-1,-2
-</race>
-
-<race>
 	name:brown bear
+	description:
 	appearance:B
 	color:brown
 	weight:300
@@ -36,7 +19,28 @@
 </race>
 
 <race>
+	name:black bear
+	description:
+	appearance:B
+	color:dark blue
+	weight:125
+	health:15
+	damage melee:-1,-2
+</race>
+
+<race>
+	name:polar bear
+	description:
+	appearance:B
+	color:white
+	weight:350
+	health:15
+	damage melee:-1,-2
+</race>
+
+<race>
 	name:giant panda
+	description:
 	appearance:B
 	color:blue
 	weight:125
@@ -52,6 +56,7 @@
 
 <race>
 	name:sewer rat
+	description:
 	appearance:r
 	color:dark brown
 	weight:0.5
@@ -61,6 +66,7 @@
 
 <race>
 	name:giant rat
+	description:
 	appearance:r
 	color:dark gray
 	weight:0.5
@@ -70,6 +76,7 @@
 
 <race>
 	name:groundhog
+	description:
 	appearance:r
 	color:brown
 	weight:0.5
@@ -79,6 +86,7 @@
 
 <race>
 	name:mouse
+	description:
 	appearance:r
 	color:light gray
 	weight:0.02
@@ -93,6 +101,7 @@
 
 <race>
 	name:puppy
+	description:
 	appearance:c
 	color:white
 	weight:300
@@ -101,6 +110,7 @@
 
 <race>
 	name:dog
+	description:
 	appearance:c
 	color:white
 	weight:300
@@ -109,6 +119,7 @@
 
 <race>
 	name:large dog
+	description:
 	appearance:c
 	color:white
 	weight:300
@@ -117,6 +128,7 @@
 
 <race>
 	name:hell hound pup
+	description:
 	appearance:c
 	color:red
 	weight:300
@@ -125,6 +137,7 @@
 
 <race>
 	name:hell hound
+	description:
 	appearance:c
 	color:red
 	weight:300
@@ -133,6 +146,7 @@
 
 <race>
 	name:wolf cub
+	description:
 	appearance:c
 	color:gray
 	weight:300
@@ -141,6 +155,7 @@
 
 <race>
 	name:wolf
+	description:
 	appearance:c
 	color:gray
 	weight:300
@@ -149,6 +164,7 @@
 
 <race>
 	name:coyote
+	description:
 	appearance:c
 	color:payne's gray
 	weight:300
@@ -157,6 +173,7 @@
 
 <race>
 	name:jackal
+	description:
 	appearance:c
 	color:brown
 	weight:300
@@ -165,6 +182,7 @@
 
 <race>
 	name:fox
+	description:
 	appearance:c
 	color:sepia
 	weight:300
@@ -180,6 +198,7 @@
 
 <race>
 	name:kitten
+	description:
 	appearance:f
 	color:blue
 	weight:300
@@ -190,6 +209,7 @@
 
 <race>
 	name:housecat
+	description:
 	appearance:f
 	color:blue
 	weight:300
@@ -200,6 +220,7 @@
 
 <race>
 	name:jaguar
+	description:
 	appearance:f
 	color:carrot orange
 	weight:300
@@ -210,6 +231,7 @@
 
 <race>
 	name:lynx
+	description:
 	appearance:f
 	color:burnt sienna
 	weight:300
@@ -220,6 +242,7 @@
 
 <race>
 	name:leopard
+	description:
 	appearance:f
 	color:pumpkin
 	weight:300
@@ -230,6 +253,7 @@
 
 <race>
 	name:cougar
+	description:
 	appearance:f
 	color:sandy brown
 	weight:300
@@ -240,6 +264,7 @@
 
 <race>
 	name:pink panther
+	description:
 	appearance:f
 	color:rose
 	weight:300
@@ -250,6 +275,7 @@
 
 <race>
 	name:tiger
+	description:
 	appearance:f
 	color:orange
 	weight:300
@@ -260,6 +286,7 @@
 
 <race>
 	name:lion
+	description:
 	appearance:f
 	color:burnt orange
 	weight:250
@@ -276,6 +303,7 @@
 
 <race>
 	name:wild boar
+	description:
 	appearance:q
 	color:pale brown
 	weight:90
@@ -285,6 +313,7 @@
 
 <race>
 	name:elephant
+	description:
 	prefix article:an
 	appearance:q
 	color:light gray
@@ -295,6 +324,7 @@
 
 <race>
 	name:woolly mammoth
+	description:
 	appearance:q
 	color:gray
 	weight:4175
@@ -304,6 +334,7 @@
 
 <race>
 	name:mastodon
+	description:
 	appearance:q
 	color:dark gray
 	weight:4175
@@ -313,6 +344,7 @@
 
 <race>
 	name:yak
+	description:
 	appearance:q
 	color:brown
 	weight:4175
@@ -322,6 +354,7 @@
 
 <race>
 	name:wumpus
+	description:
 	appearance:q
 	color:blue
 	weight:4175
@@ -331,6 +364,7 @@
 
 <race>
 	name:buffalo
+	description:
 	appearance:q
 	color:dark brown
 	weight:1760
@@ -340,6 +374,7 @@
 
 <race>
 	name:hippopotamus
+	description:
 	appearance:q
 	color:burnt sienna
 	weight:450
@@ -349,6 +384,7 @@
 
 <race>
 	name:rhinoceros
+	description:
 	appearance:q
 	color:payne's gray
 	weight:850
@@ -365,6 +401,7 @@
 
 <race>
 	name:valley orc
+	description:
 	prefix article:an
 	appearance:o
 	color:green
@@ -380,6 +417,7 @@
 
 <race>
 	name:hill orc
+	description:
 	appearance:o
 	color:yellow
 	weight:55
@@ -394,6 +432,7 @@
 
 <race>
 	name:cave orc
+	description:
 	appearance:o
 	color:gray
 	weight:55
@@ -408,6 +447,7 @@
 
 <race>
 	name:Beoghan orc
+	description:
 	appearance:o
 	color:blue
 	weight:55
@@ -447,6 +487,7 @@
 //Agility penalty
 <race>
 	name:dwarf
+	description:
 	appearance:d
 	color:white
 	weight:55
@@ -468,6 +509,7 @@
 
 <race>
 	name:wood elf
+	description:
 	appearance:e
 	color:pale brown
 	weight:55
@@ -482,6 +524,7 @@
 
 <race>
 	name:high elf
+	description:
 	appearance:e
 	color:sandy brown
 	weight:55
@@ -496,6 +539,7 @@
 
 <race>
 	name:night elf
+	description:
 	appearance:e
 	color:indigo
 	weight:55
@@ -510,6 +554,7 @@
 
 <race>
 	name:cave elf
+	description:
 	appearance:e
 	color:light gray
 	weight:55
@@ -524,6 +569,7 @@
 
 <race>
 	name:kokiri
+	description:
 	appearance:e
 	color:green
 	weight:55
@@ -538,6 +584,7 @@
 
 <race>
 	name:grid bug
+	description:
 	appearance:x
 	color:purple
 	weight:0.07
