@@ -17,6 +17,8 @@ using namespace std;
 using namespace boost;
 
 Game::Game(){
+    turn=0;
+
     generated_level_x=0;
     generated_level_y=0;
 

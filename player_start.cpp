@@ -102,7 +102,7 @@ void Player::game_start_good_race(){
     string new_race="";
 
     if(random==0){
-        new_race="human";
+        new_race="high elf";
     }
     else if(random==1){
         new_race="dwarf";

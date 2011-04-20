@@ -28,6 +28,10 @@ class Race: public Creature{
     //A description of the race.
     std::string description;
 
+    //If true, the race can only spawn in darkness.
+    //If false, the race can spawn anywhere.
+    bool dark_spawn;
+
     //AI Traits:
 
     bool ai_trait_flees;

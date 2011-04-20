@@ -97,7 +97,6 @@ void game_loop(){
                 if(player.alive && player.initiate_turn){
                     player.initiate_turn=false;
                     turn();
-                    player.turn++;
                 }
 
                 //Once everything has had its chance to move, we handle events (collision detection).

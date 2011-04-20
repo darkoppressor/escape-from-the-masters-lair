@@ -637,3 +637,37 @@
 		flees:1
 	</ai traits>
 </race>
+
+<race>
+	name:dark spawn
+	<DARK SPAWN>
+	description:Dark spawn spawn in the dark.
+	appearance:D
+	color:indigo
+	weight:0.07
+	strength:1
+	damage melee:3,6
+	levelup hp range:-1,-2
+	health:-40
+	speed:150
+	movement speed:1
+	agility:-2
+	hardiness:-2
+</race>
+
+<race>
+	name:grue
+	<DARK SPAWN>
+	description:When it is dark, adventurers are likely to be eaten by a grue.
+	appearance:D
+	color:dark blue
+	weight:0.07
+	strength:2
+	damage melee:3,6
+	levelup hp range:-1,-2
+	health:-45
+	speed:150
+	movement speed:1
+	agility:-2
+	hardiness:-2
+</race>

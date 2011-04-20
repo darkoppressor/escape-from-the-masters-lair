@@ -42,6 +42,9 @@ class Game{
 
     public:
 
+    //The current world-wide turn.
+    int turn;
+
     //Available identifiers for objects.
     //0 is reserved to mean "no identifier assigned."
     std::vector< std::vector<uint32_t> > identifiers;

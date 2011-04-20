@@ -208,6 +208,10 @@ class Creature: public Object{
     //Returns an inventory letter to the list.
     void return_inventory_letter(char returning_letter);
 
+    //Returns true if the creature is currently holding at least one lit item.
+    //Returns false if the creature is not holding any lit items.
+    bool has_light();
+
     //Check to see if a command can be done.
     //If so, queue it for the next call to move().
     //If not, handle it appropriately.

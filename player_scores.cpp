@@ -287,6 +287,9 @@ void Player::save_game_log_entry(short cause_of_death,string killer,string kille
         else if(cause_of_death==CAUSE_OF_DEATH_DROWN){
             death_message="Drowned.";
         }
+        else if(cause_of_death==CAUSE_OF_DEATH_BURNED_BY_LIGHT){
+            death_message="Burned up in the light.";
+        }
 
         //If the player died.
         if(cause_of_death!=CAUSE_OF_DEATH_NONE){

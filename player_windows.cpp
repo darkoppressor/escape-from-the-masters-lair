@@ -144,6 +144,22 @@ void Player::handle_input_get_race(){
         get_race.clear();
     }
 
+    else if(event.key.keysym.unicode==(Uint16)'*'){
+        game_start_random_race();
+    }
+
+    else if(event.key.keysym.unicode==(Uint16)'!'){
+        game_start_random_all();
+    }
+
+    else if(event.key.keysym.unicode==(Uint16)'-'){
+        game_start_good_race();
+    }
+
+    else if(event.key.keysym.unicode==(Uint16)'='){
+        game_start_good_all();
+    }
+
     else if(event.key.keysym.sym==SDLK_BACKSPACE && get_race.length()>0){
         //Remove one character from the end of the string.
         get_race.erase(get_race.length()-1);
@@ -159,22 +175,6 @@ void Player::handle_input_get_race(){
         keystates[SDLK_RETURN]=NULL;
         keystates[SDLK_KP_ENTER]=NULL;
     }
-
-    else if(event.key.keysym.unicode==(Uint16)'*'){
-        game_start_random_race();
-    }
-
-    else if(event.key.keysym.unicode==(Uint16)'!'){
-        game_start_random_all();
-    }
-
-    else if(event.key.keysym.unicode==(Uint16)'p'){
-        game_start_good_race();
-    }
-
-    else if(event.key.keysym.unicode==(Uint16)'g'){
-        game_start_good_all();
-    }
 }
 
 void Player::handle_input_get_focused_skills(){
@@ -187,6 +187,22 @@ void Player::handle_input_get_focused_skills(){
         focused_skills[1]=-1;
         focused_skills[2]=-1;
         done_focusing_skills=false;
+    }
+
+    else if(event.key.keysym.unicode==(Uint16)'*'){
+        game_start_random_skills();
+    }
+
+    else if(event.key.keysym.unicode==(Uint16)'!'){
+        game_start_random_all();
+    }
+
+    else if(event.key.keysym.unicode==(Uint16)'-'){
+        game_start_good_skills();
+    }
+
+    else if(event.key.keysym.unicode==(Uint16)'='){
+        game_start_good_all();
     }
 
     else if(event.key.keysym.unicode>=(Uint16)'a' && event.key.keysym.unicode<=(Uint16)'u'){
@@ -292,22 +308,6 @@ void Player::handle_input_get_focused_skills(){
         keystates[SDLK_RETURN]=NULL;
         keystates[SDLK_KP_ENTER]=NULL;
     }
-
-    else if(event.key.keysym.unicode==(Uint16)'*'){
-        game_start_random_skills();
-    }
-
-    else if(event.key.keysym.unicode==(Uint16)'!'){
-        game_start_random_all();
-    }
-
-    else if(event.key.keysym.unicode==(Uint16)'p'){
-        game_start_good_skills();
-    }
-
-    else if(event.key.keysym.unicode==(Uint16)'g'){
-        game_start_good_all();
-    }
 }
 
 void Player::handle_input_get_starting_items(){
@@ -321,6 +321,22 @@ void Player::handle_input_get_starting_items(){
         starting_items_gold=STARTING_ITEMS_GOLD;
         starting_items.clear();
         done_buying_start_items=false;
+    }
+
+    else if(event.key.keysym.unicode==(Uint16)'*'){
+        game_start_random_items();
+    }
+
+    else if(event.key.keysym.unicode==(Uint16)'!'){
+        game_start_random_all();
+    }
+
+    else if(event.key.keysym.unicode==(Uint16)'-'){
+        game_start_good_items();
+    }
+
+    else if(event.key.keysym.unicode==(Uint16)'='){
+        game_start_good_all();
     }
 
     else if((event.key.keysym.unicode>=(Uint16)'a' && event.key.keysym.unicode<=(Uint16)'z') || (event.key.keysym.unicode>=(Uint16)'A' && event.key.keysym.unicode<=(Uint16)'Z')){
@@ -399,22 +415,6 @@ void Player::handle_input_get_starting_items(){
         Uint8 *keystates=SDL_GetKeyState(NULL);
         keystates[SDLK_RETURN]=NULL;
         keystates[SDLK_KP_ENTER]=NULL;
-    }
-
-    else if(event.key.keysym.unicode==(Uint16)'*'){
-        game_start_random_items();
-    }
-
-    else if(event.key.keysym.unicode==(Uint16)'!'){
-        game_start_random_all();
-    }
-
-    else if(event.key.keysym.unicode==(Uint16)'p'){
-        game_start_good_items();
-    }
-
-    else if(event.key.keysym.unicode==(Uint16)'g'){
-        game_start_good_all();
     }
 }
 
@@ -715,9 +715,9 @@ void Player::render_get_race(){
         }
     }
 
-    ss.clear();ss.str("");ss<<"[p] - Pick a good race for me          [*] - Randomly choose a race";msg=ss.str();
+    ss.clear();ss.str("");ss<<"[-] - Pick a good race for me          [*] - Randomly choose a race";msg=ss.str();
     font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2.0,option_screen_height-font_small.spacing_y*2,msg,COLOR_WHITE);
-    ss.clear();ss.str("");ss<<"[g] - Pick a good character for me     [!] - Randomly choose a character";msg=ss.str();
+    ss.clear();ss.str("");ss<<"[=] - Pick a good character for me     [!] - Randomly choose a character";msg=ss.str();
     font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2.0,option_screen_height-font_small.spacing_y,msg,COLOR_WHITE);
 
     ss.clear();ss.str("");ss<<"  <-- Press [Escape] to go back";msg=ss.str();
@@ -950,9 +950,9 @@ void Player::render_get_focused_skills(){
         font_small.show(option_screen_width-font_small.spacing_x*msg.length(),0,msg,COLOR_WHITE);
     }
 
-    ss.clear();ss.str("");ss<<"[p] - Pick a good race for me          [*] - Randomly choose a race";msg=ss.str();
+    ss.clear();ss.str("");ss<<"[-] - Pick good skills for me          [*] - Randomly choose skills";msg=ss.str();
     font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2.0,option_screen_height-font_small.spacing_y*2,msg,COLOR_WHITE);
-    ss.clear();ss.str("");ss<<"[g] - Pick a good character for me     [!] - Randomly choose a character";msg=ss.str();
+    ss.clear();ss.str("");ss<<"[=] - Pick a good character for me     [!] - Randomly choose a character";msg=ss.str();
     font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2.0,option_screen_height-font_small.spacing_y,msg,COLOR_WHITE);
 
     ss.clear();ss.str("");ss<<"  <-- Press [Escape] to go back";msg=ss.str();
@@ -1039,9 +1039,9 @@ void Player::render_get_starting_items(){
     ss.clear();ss.str("");ss<<"Press [Enter] to continue -->  ";msg=ss.str();
     font_small.show(option_screen_width-font_small.spacing_x*msg.length(),0,msg,COLOR_WHITE);
 
-    ss.clear();ss.str("");ss<<"[p] - Pick a good race for me          [*] - Randomly choose a race";msg=ss.str();
+    ss.clear();ss.str("");ss<<"[-] - Pick good items for me          [*] - Randomly choose items";msg=ss.str();
     font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2.0,option_screen_height-font_small.spacing_y*2,msg,COLOR_WHITE);
-    ss.clear();ss.str("");ss<<"[g] - Pick a good character for me     [!] - Randomly choose a character";msg=ss.str();
+    ss.clear();ss.str("");ss<<"[=] - Pick a good character for me     [!] - Randomly choose a character";msg=ss.str();
     font_small.show((option_screen_width-msg.length()*font_small.spacing_x)/2.0,option_screen_height-font_small.spacing_y,msg,COLOR_WHITE);
 
     ss.clear();ss.str("");ss<<"  <-- Press [Escape] to go back";msg=ss.str();
@@ -1323,7 +1323,14 @@ void Player::render_item_info(){
         ss.clear();ss.str("");ss<<"It can do ";ss<<inventory[item_info].damage_min_ranged;ss<<"-";ss<<inventory[item_info].damage_max_ranged;ss<<" ranged damage.";ss<<"\xA";msg+=ss.str();
     }
     if(inventory[item_info].category==ITEM_ARMOR){
-        ss.clear();ss.str("");ss<<"It can defend against ";ss<<inventory[item_info].defense;ss<<" points of damage.";ss<<"\xA";msg+=ss.str();
+        string points="";
+        if(inventory[item_info].defense==1){
+            points="point";
+        }
+        else{
+            points="points";
+        }
+        ss.clear();ss.str("");ss<<"It can defend against ";ss<<inventory[item_info].defense;ss<<" ";ss<<points;ss<<" of damage.";ss<<"\xA";msg+=ss.str();
     }
     ss.clear();ss.str("");ss<<"It is worth ";ss<<inventory[item_info].monetary_value*inventory[item_info].stack;ss<<".";ss<<"\xA";msg+=ss.str();
 

@@ -18,6 +18,8 @@ Race::Race(){
 
     description="";
 
+    dark_spawn=false;
+
     ai_trait_flees=false;
     ai_trait_uses_items=false;
     ai_trait_wanders=true;

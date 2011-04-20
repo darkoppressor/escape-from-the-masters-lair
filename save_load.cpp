@@ -55,6 +55,9 @@ void save_game(){
         }
     }
 
+    //World turn.
+    save<<game.turn<<"\n";
+
     //Level information.
     save<<current_level<<"\n";
     save<<max_level<<"\n";
@@ -225,6 +228,10 @@ void load_game(){
                 game.identifiers[i].push_back(this_identifier);
             }
         }
+
+        //World turn.
+        getline(load,line);
+        game.turn=atoi(line.c_str());
 
         //Level information.
         getline(load,line);

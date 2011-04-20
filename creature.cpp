@@ -263,6 +263,19 @@ int Creature::give_item(Item* item){
     return -1;
 }
 
+bool Creature::has_light(){
+    bool light=false;
+
+    for(int i=0;i<inventory.size();i++){
+        if(inventory[i].light_on){
+            light=true;
+            break;
+        }
+    }
+
+    return light;
+}
+
 item_template_data Creature::return_item_template(string item_name){
     item_template_data item_template;
 
@@ -422,6 +435,17 @@ void Creature::process_turn(){
 
         if(return_health()>return_health_max()){
             health=health_max;
+        }
+    }
+
+    //If the creature is a dark spawn, and its current tile is a lit tile.
+    if(templates.template_races[race].dark_spawn && (vector_levels[current_level].fog[x][y]>FOG_REVEALED_TEMPORARY || has_light())){
+        health-=return_health()/1.5;
+        health-=2;
+
+        if(return_health()<=0){
+            //The creature dies by burning up in the light.
+            die(CAUSE_OF_DEATH_BURNED_BY_LIGHT);
         }
     }
 }

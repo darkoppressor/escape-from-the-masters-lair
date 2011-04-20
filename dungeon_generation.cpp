@@ -786,7 +786,6 @@ void Game::generate_level(bool deepest_level){
         }
 
         //If the tile at the random position is an appropriate tile for an item.
-        ///It should also check to make sure there is not more than one other item within a small radius.
         if(generated_tiles[x][y].type==TILE_TYPE_FLOOR){
             //Generate the item.
             generated_items.push_back(Item());
@@ -841,12 +840,11 @@ void Game::generate_level(bool deepest_level){
         y=random_range(0,generated_level_y-1);
 
         //Randomly select a race from the races template.
-        ///For now, equal chance of all races.
         int random_race_template=random_range(0,templates.template_races.size()-1);
 
         //If the tile at the random position is an appropriate tile for a monster.
-        ///It should also check to make sure there is not more than one other monster within a small radius.
-        if(generated_tiles[x][y].type==TILE_TYPE_FLOOR){
+        if(generated_tiles[x][y].type==TILE_TYPE_FLOOR &&
+           (!templates.template_races[random_race_template].dark_spawn || (templates.template_races[random_race_template].dark_spawn && generated_fog[x][y]<=FOG_FOG))){
             //Generate the monster.
             generated_monsters.push_back(Monster());
 

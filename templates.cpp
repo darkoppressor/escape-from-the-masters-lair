@@ -535,6 +535,7 @@ void Templates::load_template_race(){
         //The data name strings used in the file.
 
         string name="name:";
+        string dark_spawn="<DARK SPAWN>";
         string prefix_article="prefix article:";
         string description="description:";
         string appearance="appearance:";
@@ -600,6 +601,13 @@ void Templates::load_template_race(){
             if(temp_race.name.length()==0){
                 temp_race.name=" ";
             }
+        }
+        //Dark spawn.
+        else if(icontains(line,dark_spawn)){
+            //Clear the data name.
+            line.erase(0,dark_spawn.length());
+
+            temp_race.dark_spawn=true;
         }
         //Prefix article.
         else if(icontains(line,prefix_article)){

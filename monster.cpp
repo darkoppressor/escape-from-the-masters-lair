@@ -9,13 +9,14 @@
 #include "render.h"
 #include "dungeon.h"
 #include "covering_conversions.h"
+#include "starting_values.h"
 
 using namespace std;
 
 void Monster::set_inventory(){
     //Add some random gold.
     if(random_range(0,99)<50){
-        give_item("gold piece",random_range(1,10));
+        give_item("gold piece",random_range(1,experience_level*10.0));
     }
 
     //Add some random bottles of water.
@@ -25,7 +26,7 @@ void Monster::set_inventory(){
 
     //Give the monster any race-specific items.
     for(int i=0;i<templates.template_races[race].inventory_items.size();i++){
-        if(random_range(0,99)<45){
+        if(random_range(0,99)<experience_level){
             give_item(templates.template_races[race].inventory_items[i]);
 
             //If the new item is armor.
@@ -68,20 +69,20 @@ void Monster::set_base_stats(short pass_level){
 
     // From creature: //
 
-    health_max=random_range(templates.base_stats.health_max/2.0,templates.base_stats.health_max);
+    health_max=templates.base_stats.health_max;
     health=health_max;
 
-    mana_max=random_range(templates.base_stats.mana_max/2.0,templates.base_stats.mana_max);
+    mana_max=templates.base_stats.mana_max;
     mana=mana_max;
 
-    base_damage_melee_min=random_range(templates.base_stats.base_damage_melee_min/2.0,templates.base_stats.base_damage_melee_min);
-    base_damage_melee_max=random_range(templates.base_stats.base_damage_melee_max/2.0,templates.base_stats.base_damage_melee_max);
+    base_damage_melee_min=templates.base_stats.base_damage_melee_min;
+    base_damage_melee_max=templates.base_stats.base_damage_melee_max;
 
-    base_damage_ranged_min=random_range(templates.base_stats.base_damage_ranged_min/2.0,templates.base_stats.base_damage_ranged_min);
-    base_damage_ranged_max=random_range(templates.base_stats.base_damage_ranged_max/2.0,templates.base_stats.base_damage_ranged_max);
+    base_damage_ranged_min=templates.base_stats.base_damage_ranged_min;
+    base_damage_ranged_max=templates.base_stats.base_damage_ranged_max;
 
-    base_damage_thrown_min=random_range(templates.base_stats.base_damage_thrown_min/2.0,templates.base_stats.base_damage_thrown_min);
-    base_damage_thrown_max=random_range(templates.base_stats.base_damage_thrown_max/2.0,templates.base_stats.base_damage_thrown_max);
+    base_damage_thrown_min=templates.base_stats.base_damage_thrown_min;
+    base_damage_thrown_max=templates.base_stats.base_damage_thrown_max;
 
     movement_speed=templates.base_stats.movement_speed;
     next_move=movement_speed;
@@ -93,20 +94,36 @@ void Monster::set_base_stats(short pass_level){
     }
 
     //Set the monster's focused skills.
-    for(int i=0;i<3;){
-        //Choose a random skill.
-        ///short random_skill=random_range(SKILL_BLADED_WEAPONS,SKILL_MAGIC_SUMMONING);
-        ///Disable some skills.
-        short random_skill=random_range(SKILL_BLADED_WEAPONS,SKILL_ARMOR);
-        while(random_skill==SKILL_SECURITY || random_skill==SKILL_STEALTH || random_skill==SKILL_FIGHTING || random_skill==SKILL_DODGING){
-            random_skill=random_range(SKILL_BLADED_WEAPONS,SKILL_ARMOR);
-        }
-        ///
 
-        //If the random skill is different from all of the focused skills.
-        if(random_skill!=focused_skills[0] && random_skill!=focused_skills[1] && random_skill!=focused_skills[2]){
-            focused_skills[i]=random_skill;
-            i++;
+    //If the monster has an affiinity for one or more skills, choose those first.
+    for(int i=SKILL_BLADED_WEAPONS;i<SKILL_MAGIC_SUMMONING+1;i++){
+        //If the player has less than the standard max experience for this skill, he has a natural affinity for it.
+        if(skills[i][SKILL_EXPERIENCE_MAX]<STARTING_SKILL_EXPERIENCE_MAX){
+            for(int n=0;n<3;n++){
+                if(focused_skills[n]==-1){
+                    focused_skills[n]=i;
+                    break;
+                }
+            }
+        }
+    }
+
+    for(int n=0;n<3;n++){
+        if(focused_skills[n]==-1){
+            focused_skills[n]=SKILL_ARMOR;
+            break;
+        }
+    }
+    for(int n=0;n<3;n++){
+        if(focused_skills[n]==-1){
+            focused_skills[n]=SKILL_SPEED;
+            break;
+        }
+    }
+    for(int n=0;n<3;n++){
+        if(focused_skills[n]==-1){
+            focused_skills[n]=SKILL_BLADED_WEAPONS;
+            break;
         }
     }
 

@@ -5,6 +5,8 @@
 #include "world.h"
 #include "render.h"
 #include "material_properties.h"
+#include "grammar.h"
+#include "message_log.h"
 
 #include <SDL.h>
 
@@ -69,6 +71,89 @@ void turn(){
                 vector_levels[current_level].monsters[i].handle_input();
                 vector_levels[current_level].monsters[i].move();
                 vector_levels[current_level].monsters[i].next_move=vector_levels[current_level].monsters[i].return_movement_speed();
+            }
+        }
+    }
+
+    //Increment the player's turn count.
+    player.turn++;
+
+    //Increment the world turn count.
+    game.turn++;
+
+    int world_turn_limit=100;
+    bool player_has_light=player.has_light();
+    if(!player_has_light){
+        world_turn_limit=10;
+    }
+
+    //If enough world turns have passed.
+    if(game.turn>world_turn_limit){
+        game.turn=0;
+
+        int monster_limit=(vector_levels[current_level].level_x*vector_levels[current_level].level_y)/250.0;
+        if(!player_has_light){
+            monster_limit=(vector_levels[current_level].level_x*vector_levels[current_level].level_y)/125.0;
+        }
+
+        //If there are not already too many monsters.
+        if(vector_levels[current_level].monsters.size()<monster_limit){
+            //Attempt to spawn a new monster.
+            for(int i=0;i<50;i++){
+                short x,y;
+                int random_race_template=-1;
+
+                if(player_has_light){
+                    //Choose a random location in the level.
+                    x=random_range(0,vector_levels[current_level].level_x-1);
+                    y=random_range(0,vector_levels[current_level].level_y-1);
+
+                    //Randomly select a race from the races template.
+                    random_race_template=random_range(0,templates.template_races.size()-1);
+                }
+                else{
+                    //Choose a random location near the player.
+                    do{
+                        x=random_range(player.x-12,player.x+12);
+                        y=random_range(player.y-12,player.y+12);
+                    }while(x<0 || x>vector_levels[current_level].level_x-1 || y<0 || y>vector_levels[current_level].level_y-1);
+
+                    //Select a dark spawn race.
+                    do{
+                        random_race_template=random_range(0,templates.template_races.size()-1);
+                    }while(!templates.template_races[random_race_template].dark_spawn);
+                }
+
+                //If the tile at the random position is an appropriate tile for a monster.
+                if(vector_levels[current_level].tiles[x][y].type==TILE_TYPE_FLOOR &&
+                   (!templates.template_races[random_race_template].dark_spawn || (templates.template_races[random_race_template].dark_spawn && vector_levels[current_level].fog[x][y]<=FOG_FOG))){
+                    //Generate the monster.
+                    vector_levels[current_level].monsters.push_back(Monster());
+
+                    //Assign an identifier to the monster.
+                    vector_levels[current_level].monsters[vector_levels[current_level].monsters.size()-1].assign_identifier();
+
+                    //Apply the selected template to the monster.
+                    vector_levels[current_level].monsters[vector_levels[current_level].monsters.size()-1].apply_race(random_race_template);
+
+                    //Set the monster's base stats.
+                    vector_levels[current_level].monsters[vector_levels[current_level].monsters.size()-1].set_base_stats(player.experience_level-1);
+
+                    //Set the newly generated monster's position.
+                    vector_levels[current_level].monsters[vector_levels[current_level].monsters.size()-1].x=x;
+                    vector_levels[current_level].monsters[vector_levels[current_level].monsters.size()-1].y=y;
+
+                    //Set the monster's starting inventory.
+                    vector_levels[current_level].monsters[vector_levels[current_level].monsters.size()-1].set_inventory();
+
+                    msg=a_vs_an(random_race_template);
+                    msg+=" ";
+                    msg+=templates.template_races[random_race_template].name;
+                    msg+=" spawns.";
+                    update_text_log(msg.c_str(),true);
+
+                    break;
+                }
             }
         }
     }
@@ -309,6 +394,7 @@ void render(int frame_rate, double ms_per_frame){
                 ss.clear();ss.str("");ss<<"Weight: ";ss<<player.weight;ss<<"\xA";msg+=ss.str();
                 ss.clear();ss.str("");ss<<"Armor Weight: ";ss<<player.return_inventory_weight(ITEM_ARMOR);ss<<"\xA";msg+=ss.str();
                 ss.clear();ss.str("");ss<<"Movement speed: ";ss<<player.return_movement_speed();ss<<"\xA";msg+=ss.str();
+                ss.clear();ss.str("");ss<<"Base hp: ";ss<<player.health;ss<<"\xA";msg+=ss.str();
                 font_small.show(5,5,msg,COLOR_WHITE);
             }
 

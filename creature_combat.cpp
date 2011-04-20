@@ -423,6 +423,9 @@ void Creature::die(short cause_of_death,string killer,string killer_item,string 
         else if(cause_of_death==CAUSE_OF_DEATH_DROWN){
             message="You sink beneath the waves... Press [Spacebar] to continue.";
         }
+        else if(cause_of_death==CAUSE_OF_DEATH_BURNED_BY_LIGHT){
+            message="You burn away into nothing in the blinding light... Press [Spacebar] to continue.";
+        }
         else{
             message="You die... Press [Spacebar] to continue.";
         }
@@ -465,6 +468,11 @@ void Creature::die(short cause_of_death,string killer,string killer_item,string 
             message="The ";
             message+=return_full_name();
             message+=" drowns!";
+        }
+        else if(cause_of_death==CAUSE_OF_DEATH_BURNED_BY_LIGHT){
+            message="The ";
+            message+=return_full_name();
+            message+=" burns up in the light!";
         }
     }
 

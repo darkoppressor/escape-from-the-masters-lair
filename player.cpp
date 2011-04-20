@@ -209,7 +209,7 @@ void Player::set_inventory(){
 void Player::set_base_stats(){
     // From creature: //
 
-    health_max=templates.base_stats.health_max;
+    health_max=templates.base_stats.health_max*2.0;
     health=health_max;
 
     mana_max=templates.base_stats.mana_max;
