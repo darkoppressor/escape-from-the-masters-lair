@@ -12,8 +12,8 @@ using namespace std;
 void Creature::update_class_name(){
     class_name="";
 
-    if(attributes[ATTRIBUTE_STRENGTH]==attributes[ATTRIBUTE_AGILITY]==attributes[ATTRIBUTE_HARDINESS]){
-        if(attributes[ATTRIBUTE_STRENGTH]==1){
+    if(return_attribute_strength()==return_attribute_agility()==return_attribute_hardiness()){
+        if(return_attribute_strength()==1){
             class_name="beginner";
         }
         else{
@@ -24,84 +24,81 @@ void Creature::update_class_name(){
     }
 
     //Determine the highest attribute.
-    int largest_attribute[2];
-    largest_attribute[0]=-1;
-    largest_attribute[1]=0;
+    short largest_attribute=ATTRIBUTE_STRENGTH;
 
-    for(int i=ATTRIBUTE_STRENGTH;i<ATTRIBUTE_HARDINESS+1;i++){
-        if(attributes[i]>largest_attribute[1]){
-            largest_attribute[0]=i;
-            largest_attribute[1]=attributes[i];
-            break;
-        }
+    if(return_attribute_agility()>return_attribute_strength()){
+        largest_attribute=ATTRIBUTE_AGILITY;
+    }
+    if(return_attribute_hardiness()>return_attribute_agility()){
+        largest_attribute=ATTRIBUTE_HARDINESS;
     }
 
-    if(largest_attribute[0]==ATTRIBUTE_STRENGTH){
-        if(largest_attribute[1]<5){
+    if(largest_attribute==ATTRIBUTE_STRENGTH){
+        if(return_attribute_strength()<5){
            class_name="scuffler";
         }
-        else if(largest_attribute[1]>=5 && largest_attribute[1]<10){
+        else if(return_attribute_strength()>=5 && return_attribute_strength()<10){
            class_name="street tough";
         }
-        else if(largest_attribute[1]>=10 && largest_attribute[1]<25){
+        else if(return_attribute_strength()>=10 && return_attribute_strength()<25){
            class_name="fighter";
         }
-        else if(largest_attribute[1]>=25 && largest_attribute[1]<50){
+        else if(return_attribute_strength()>=25 && return_attribute_strength()<50){
            class_name="soldier";
         }
-        else if(largest_attribute[1]>=50 && largest_attribute[1]<75){
+        else if(return_attribute_strength()>=50 && return_attribute_strength()<75){
            class_name="warrior-in-training";
         }
-        else if(largest_attribute[1]>=75 && largest_attribute[1]<100){
+        else if(return_attribute_strength()>=75 && return_attribute_strength()<100){
            class_name="warrior";
         }
-        else if(largest_attribute[1]>=100){
+        else if(return_attribute_strength()>=100){
            class_name="knight";
         }
     }
-    else if(largest_attribute[0]==ATTRIBUTE_AGILITY){
-        if(largest_attribute[1]<5){
+    else if(largest_attribute==ATTRIBUTE_AGILITY){
+        if(return_attribute_agility()<5){
            class_name="circus performer";
         }
-        else if(largest_attribute[1]>=5 && largest_attribute[1]<10){
+        else if(return_attribute_agility()>=5 && return_attribute_agility()<10){
            class_name="acrobat";
         }
-        else if(largest_attribute[1]>=10 && largest_attribute[1]<25){
+        else if(return_attribute_agility()>=10 && return_attribute_agility()<25){
            class_name="speedster";
         }
-        else if(largest_attribute[1]>=25 && largest_attribute[1]<50){
+        else if(return_attribute_agility()>=25 && return_attribute_agility()<50){
            class_name="chucker";
         }
-        else if(largest_attribute[1]>=50 && largest_attribute[1]<75){
+        else if(return_attribute_agility()>=50 && return_attribute_agility()<75){
            class_name="hurler";
         }
-        else if(largest_attribute[1]>=75 && largest_attribute[1]<100){
+        else if(return_attribute_agility()>=75 && return_attribute_agility()<100){
            class_name="sharpshooter";
         }
-        else if(largest_attribute[1]>=100){
+        else if(return_attribute_agility()>=100){
            class_name="olympic gold medalist";
         }
     }
-    else if(largest_attribute[0]==ATTRIBUTE_HARDINESS){
-        if(largest_attribute[1]<5){
+    else if(largest_attribute==ATTRIBUTE_HARDINESS){
+        if(return_attribute_hardiness()<5){
            class_name="tourist";
         }
-        else if(largest_attribute[1]>=5 && largest_attribute[1]<10){
+        else if(return_attribute_hardiness()>=5 && return_attribute_hardiness()<10){
            class_name="outdoorsy type";
         }
-        else if(largest_attribute[1]>=10 && largest_attribute[1]<25){
+        else if(return_attribute_hardiness()>=10 && return_attribute_hardiness()<25){
            class_name="survivor";
         }
-        else if(largest_attribute[1]>=25 && largest_attribute[1]<50){
+        else if(return_attribute_hardiness()>=25 && return_attribute_hardiness()<50){
            class_name="hunter";
         }
-        else if(largest_attribute[1]>=50 && largest_attribute[1]<75){
+        else if(return_attribute_hardiness()>=50 && return_attribute_hardiness()<75){
            class_name="ranger";
         }
-        else if(largest_attribute[1]>=75 && largest_attribute[1]<100){
+        else if(return_attribute_hardiness()>=75 && return_attribute_hardiness()<100){
            class_name="forester";
         }
-        else if(largest_attribute[1]>=100){
+        else if(return_attribute_hardiness()>=100){
            class_name="master of survival";
         }
     }

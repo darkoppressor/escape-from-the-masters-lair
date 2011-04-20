@@ -1155,7 +1155,6 @@ void Creature::check_command_inventory(char inventory_letter){
             str_msg+=" is already equipped.";
 
             update_text_log(str_msg.c_str(),is_player);
-            update_text_log("I suppose you could unequip it and then equip it again, but then who would that be helping, really?",is_player);
 
             //No inventory command will be executed.
             input_inventory=0;
@@ -1450,7 +1449,7 @@ void Creature::execute_command_inventory(char inventory_letter){
                 str_item="You place the ";
             }
             else if(command==INVENTORY_COMMAND_EQUIP_LAUNCHER_WEAPON){
-                str_item="You wield the ";
+                str_item="You use the ";
             }
             else if(command==INVENTORY_COMMAND_EQUIP_ARMOR){
                 str_item="You put on the ";
@@ -1471,7 +1470,7 @@ void Creature::execute_command_inventory(char inventory_letter){
             else if(command==INVENTORY_COMMAND_EQUIP_LAUNCHER_WEAPON){
                 str_item="The ";
                 str_item+=return_full_name();
-                str_item+=" wields the ";
+                str_item+=" uses the ";
             }
             else if(command==INVENTORY_COMMAND_EQUIP_ARMOR){
                 str_item="The ";

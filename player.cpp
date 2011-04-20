@@ -189,13 +189,19 @@ void Player::set_inventory(){
                     slot=EQUIP_QUIVER;
                 }
             }
-            //If the item is a melee weapon or a ranged weapon.
-            else if((inventory[inventory.size()-1].weapon_category>=WEAPON_SHORT_BLADES && inventory[inventory.size()-1].weapon_category<=WEAPON_STAVES) || (inventory[inventory.size()-1].weapon_category>=WEAPON_BOWS && inventory[inventory.size()-1].weapon_category<=WEAPON_SLINGS)){
+            //If the item is a melee weapon.
+            else if(inventory[inventory.size()-1].weapon_category>=WEAPON_SHORT_BLADES && inventory[inventory.size()-1].weapon_category<=WEAPON_STAVES){
                 if(equipment_slot_empty(inventory.size()-1,EQUIP_HOLD_RIGHT)){
                     slot=EQUIP_HOLD_RIGHT;
                 }
                 else if(equipment_slot_empty(inventory.size()-1,EQUIP_HOLD_LEFT)){
                     slot=EQUIP_HOLD_LEFT;
+                }
+            }
+            //If the item is a ranged weapon.
+            else if(inventory[inventory.size()-1].weapon_category>=WEAPON_BOWS && inventory[inventory.size()-1].weapon_category<=WEAPON_SLINGS){
+                if(equipment_slot_empty(inventory.size()-1,EQUIP_LAUNCHER_WEAPON)){
+                    slot=EQUIP_LAUNCHER_WEAPON;
                 }
             }
 
@@ -209,7 +215,7 @@ void Player::set_inventory(){
 void Player::set_base_stats(){
     // From creature: //
 
-    health_max=templates.base_stats.health_max*2.0;
+    health_max=templates.base_stats.health_max*1.5;
     health=health_max;
 
     mana_max=templates.base_stats.mana_max;

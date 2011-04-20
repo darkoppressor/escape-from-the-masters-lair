@@ -1292,8 +1292,8 @@ void Player::render_item_info(){
     else{
         ss.clear();ss.str("");ss<<"This item is composed of ";ss<<material_to_string(inventory[item_info].material);ss<<".";ss<<"\xA";msg=ss.str();
     }
-    ss.clear();ss.str("");ss<<"It weighs ";ss<<inventory[item_info].weight;ss<<".";ss<<"\xA";msg+=ss.str();
-    ss.clear();ss.str("");ss<<"It requires ";ss<<inventory[item_info].weight*1.5;ss<<" strength to wield in melee.";ss<<"\xA";msg+=ss.str();
+    ss.clear();ss.str("");ss<<"It weighs ";ss<<(int)inventory[item_info].weight;ss<<".";ss<<"\xA";msg+=ss.str();
+    ss.clear();ss.str("");ss<<"It requires ";ss<<(int)(inventory[item_info].weight*1.5);ss<<" strength to wield in melee.";ss<<"\xA";msg+=ss.str();
     ss.clear();ss.str("");ss<<"It can do ";ss<<inventory[item_info].damage_min_melee;ss<<"-";ss<<inventory[item_info].damage_max_melee;ss<<" melee damage.";ss<<"\xA";msg+=ss.str();
     ss.clear();ss.str("");ss<<"It can do ";ss<<inventory[item_info].damage_min_thrown;ss<<"-";ss<<inventory[item_info].damage_max_thrown;ss<<" thrown damage.";ss<<"\xA";msg+=ss.str();
     if(inventory[item_info].damage_max_ranged!=0){
@@ -1679,7 +1679,7 @@ void Player::render_inventory(bool all_categories){
 
                         str_item=" (";
 
-                        //If the item is a stack larger than 1 and the equipment slot is a hold slot or the light source slot.
+                        //If the item is a stack larger than 1 and the equipment slot is a hold slot.
                         if(inventory[i].stack>1 && (equip_slot==EQUIP_HOLD_RIGHT || equip_slot==EQUIP_HOLD_LEFT)){
                             str_item+="one ";
                         }
@@ -1691,6 +1691,10 @@ void Player::render_inventory(bool all_categories){
 
                         case EQUIP_HOLD_LEFT:
                             str_item+="being wielded in left hand)";
+                            break;
+
+                        case EQUIP_LAUNCHER_WEAPON:
+                            str_item+="being used as a launcher)";
                             break;
 
                         case EQUIP_QUIVER:
