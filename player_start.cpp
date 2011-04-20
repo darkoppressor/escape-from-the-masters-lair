@@ -97,7 +97,7 @@ void Player::game_start_good_all(){
 void Player::game_start_good_race(){
     //Pick a good race.
 
-    int random=random_range(0,2);
+    int random=random_range(0,5);
 
     string new_race="";
 
@@ -105,9 +105,18 @@ void Player::game_start_good_race(){
         new_race="human";
     }
     else if(random==1){
-        new_race="yak";
+        new_race="dwarf";
     }
     else if(random==2){
+        new_race="gnome";
+    }
+    else if(random==3){
+        new_race="wood elf";
+    }
+    else if(random==4){
+        new_race="yak";
+    }
+    else if(random==5){
         new_race="lynx";
     }
 
@@ -129,9 +138,9 @@ void Player::game_start_good_skills(){
 
     //If the player has an affiinity for one or more skills, choose those first.
 
-    for(int i=0;i<SKILL_MAGIC_SUMMONING+1;i++){
+    for(int i=SKILL_BLADED_WEAPONS;i<SKILL_MAGIC_SUMMONING+1;i++){
         //If the player has less than the standard max experience for this skill, he has a natural affinity for it.
-        if(skills[i][SKILL_EXPERIENCE_MAX]<STARTING_SKILL_EXPERIENCE_MAX){
+        if(skills[i][SKILL_EXPERIENCE_MAX]+templates.template_races[race].skills[i][SKILL_EXPERIENCE_MAX]<STARTING_SKILL_EXPERIENCE_MAX){
             for(int n=0;n<3;n++){
                 if(focused_skills[n]==-1){
                     focused_skills[n]=i;
@@ -143,12 +152,6 @@ void Player::game_start_good_skills(){
 
     for(int n=0;n<3;n++){
         if(focused_skills[n]==-1){
-            focused_skills[n]=SKILL_BLADED_WEAPONS;
-            break;
-        }
-    }
-    for(int n=0;n<3;n++){
-        if(focused_skills[n]==-1){
             focused_skills[n]=SKILL_ARMOR;
             break;
         }
@@ -156,6 +159,12 @@ void Player::game_start_good_skills(){
     for(int n=0;n<3;n++){
         if(focused_skills[n]==-1){
             focused_skills[n]=SKILL_SPEED;
+            break;
+        }
+    }
+    for(int n=0;n<3;n++){
+        if(focused_skills[n]==-1){
+            focused_skills[n]=SKILL_BLADED_WEAPONS;
             break;
         }
     }
@@ -172,32 +181,63 @@ void Player::game_start_good_items(){
 
     int random_item=-1;
 
-    for(int n=0;n<;n++){
-        if(is_focused_skill(SKILL_BLADED_WEAPONS)){
-            item_wanted="simple wooden dagger";
-        }
+    bool need_ammo=false;
 
-        for(int i=0;i<available_starting_items.size();i++){
-            if(available_starting_items[i]==item_wanted){
-                random_item=i;
-                break;
+    for(int n=SKILL_BLADED_WEAPONS;n<SKILL_MAGIC_SUMMONING+1+20;n++){
+        item_wanted="";
+
+        //While we are looking at skills.
+        if(n<=SKILL_MAGIC_SUMMONING && is_focused_skill(n)){
+            if(n==SKILL_BLADED_WEAPONS){
+                item_wanted="simple wooden dagger";
+            }
+            else if(n==SKILL_BLUNT_WEAPONS){
+                item_wanted="simple wooden mace";
+            }
+            else if(n==SKILL_STABBING_WEAPONS){
+                item_wanted="simple wooden spear";
+            }
+            else if(n==SKILL_LAUNCHER_WEAPONS){
+                if(!need_ammo){
+                    item_wanted="simple wooden bow";
+                    n--;
+                    need_ammo=true;
+                }
+                else{
+                    item_wanted="simple wooden arrow";
+                }
+            }
+            else if(n==SKILL_THROWN_WEAPONS){
+                item_wanted="simple bone shuriken";
             }
         }
+        else if(n>SKILL_MAGIC_SUMMONING){
+            item_wanted=available_starting_items[random_range(13,available_starting_items.size()-1)];
+        }
 
-        //Determine the monetary value of the item.
-        int item_value=0;
+        if(item_wanted.length()>0){
+            for(int i=0;i<available_starting_items.size();i++){
+                if(available_starting_items[i]==item_wanted){
+                    random_item=i;
+                    break;
+                }
+            }
 
-        item_template_data item_template=return_item_template(available_starting_items[random_item]);
+            //Determine the monetary value of the item.
+            int item_value=0;
 
-        item_value=templates.template_items[item_template.category][item_template.index].monetary_value;
+            item_template_data item_template=return_item_template(available_starting_items[random_item]);
 
-        //If we have enough money for this item.
-        if(item_value<=starting_items_gold){
-            //Add the purchased item.
-            starting_items.push_back(random_item);
+            item_value=templates.template_items[item_template.category][item_template.index].monetary_value;
 
-            //Remove the item's value from the starting gold.
-            starting_items_gold-=item_value;
+            //If we have enough money for this item.
+            if(item_value<=starting_items_gold){
+                //Add the purchased item.
+                starting_items.push_back(random_item);
+
+                //Remove the item's value from the starting gold.
+                starting_items_gold-=item_value;
+            }
         }
     }
 
