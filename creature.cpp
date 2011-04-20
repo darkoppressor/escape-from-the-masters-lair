@@ -128,6 +128,11 @@ bool Creature::give_item(string item_name,int stack_size){
             //Apply the selected template to the item.
             temp_item=templates.template_items[item_category][item_index];
 
+            //If the item is set to have a random size.
+            if(templates.template_items[item_category][item_index].random_size){
+                templates.template_items[item_category][item_index].size=templates.determine_item_size(&temp_item,item_category,item_index);
+            }
+
             //If this item's template has only certain materials allowed.
             if(templates.template_items[item_category][item_index].allowed_materials.size()>0){
                 templates.determine_item_material(&temp_item,item_category,item_index);

@@ -167,7 +167,39 @@ void Player::game_start_good_items(){
     starting_items_gold=STARTING_ITEMS_GOLD;
     starting_items.clear();
 
-    ///
+    //Randomly select an item for purchase.
+    string item_wanted="";
+
+    int random_item=-1;
+
+    for(int n=0;n<;n++){
+        if(is_focused_skill(SKILL_BLADED_WEAPONS)){
+            item_wanted="simple wooden dagger";
+        }
+
+        for(int i=0;i<available_starting_items.size();i++){
+            if(available_starting_items[i]==item_wanted){
+                random_item=i;
+                break;
+            }
+        }
+
+        //Determine the monetary value of the item.
+        int item_value=0;
+
+        item_template_data item_template=return_item_template(available_starting_items[random_item]);
+
+        item_value=templates.template_items[item_template.category][item_template.index].monetary_value;
+
+        //If we have enough money for this item.
+        if(item_value<=starting_items_gold){
+            //Add the purchased item.
+            starting_items.push_back(random_item);
+
+            //Remove the item's value from the starting gold.
+            starting_items_gold-=item_value;
+        }
+    }
 
     done_buying_start_items=true;
 

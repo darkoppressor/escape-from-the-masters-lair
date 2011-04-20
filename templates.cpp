@@ -140,15 +140,7 @@ void Templates::determine_item_material(Item* item,int item_category,int item_te
 
     replace_first(item->plural_name,"MATERIAL",material_to_string(item->material));
 
-    //Determine the size to use for the item's attribute calculations.
-    double size_to_use=template_items[item_category][item_template_index].size;
-
-    //If the item is set to have a random size.
-    if(template_items[item_category][item_template_index].random_size){
-        size_to_use=determine_item_size(item,item_category,item_template_index);
-    }
-
-    calculate_item_attributes(item,size_to_use);
+    calculate_item_attributes(item,template_items[item_category][item_template_index].size);
 }
 
 double Templates::determine_item_size(Item* item,int item_category,int item_template_index){
