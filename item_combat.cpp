@@ -90,6 +90,9 @@ void Item::attack_thrown(Creature* target){
 
             damage=base_damage;
 
+            //Add the momentum bonus.
+            damage+=momentum*2.0;
+
             //Add the racial base thrown damage modifier.
 
             //If the race has a thrown damage bonus.
@@ -251,6 +254,9 @@ void Item::attack_fired(Creature* target){
             int base_damage=random_range(owner_data_fired[0].base_damage_min_ranged,owner_data_fired[0].base_damage_max_ranged);
 
             damage=base_damage;
+
+            //Add the momentum bonus.
+            damage+=momentum*2.0;
 
             //Add the racial base ranged damage modifier.
 

@@ -82,6 +82,9 @@ void Creature::attack_melee(Creature* target){
 
             //Add in melee weapon damage.
 
+            //Remember how many weapons are being wielded that the creature has insufficient strength to wield properly.
+            int weapons_under_strength=0;
+
             //Check for items wielded in either hand.
             for(int i=EQUIP_HOLD_RIGHT;i<EQUIP_HOLD_LEFT+1;i++){
                 //If there is an item wielded in this hand.
@@ -111,6 +114,11 @@ void Creature::attack_melee(Creature* target){
 
                     //Add the weapon's damage to the attack's damage.
                     damage+=weapon_damage;
+
+                    //If the creature does not have sufficient strength to wield this item.
+                    if(){
+                        weapons_under_strength++;
+                    }
                 }
             }
 

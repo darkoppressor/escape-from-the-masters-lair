@@ -15,7 +15,7 @@ Mana DOES regenerate on its own.\strike0\par
 \strike Creatures have a vector of statuses. When they walk through water or otherwise have water on them, they become wet.\par
 They dry out at some rate (perhaps each dungeon level should have a temperature that affects this?).\strike0\par
 \par
-There are no classes. You do get a class name, but it is determined by your attributes and skills, and is just descriptive.\par
+\strike There are no classes. You do get a class name, but it is determined by your attributes and skills, and is just descriptive.\strike0\par
 \strike Instead of choosing a class at the beginning of the game, you choose what skills to focus on.\strike0\par
 \strike All skills and attributes start at pretty low defaults, which are the same every game (so no point in start-scumming). When you choose your focus, your focused skills increase a bit.\strike0\par
 \strike Focused skills increase a little faster than regular ones.\strike0\par
@@ -42,9 +42,11 @@ Instead of a multiplier, I am going with a straight up number increase. Like, a 
 There should be some things that can give penalties to offensive and defensive actions, as well.\par
 For offensive, wielding a weapon you shouldn't be gives a pretty big damage reduction.\par
 You must have enough strength to wield a given item, or you will fail to use it in some way (straight up can't attack, damage reduction, etc.)\par
+If a creature attacks with one weapon that is too heavy, his total damage that attack will be cut in half. If it uses two weapons that are too heavy, the damage is cut to a fourth. Also, weapon skills are not improved when wielding a weapon that is too heavy.\par
+All items need a strength requirement. This should be able to be calculated by the game during the course of the game as it is needed. Probably just the item's weight will be needed. If a creature meets the strength requirement for an item, it can do standard melee damage with the item. If the creature does not meet the requirement, damage will be affected as detailed above.\par
 If you wear armor you shouldn't wear, it will give a reduction to movement speed, chance to hit, chance to dodge, and chance to crit.\par
 If you wear non-magic user armor, you will suffer a penalty to magic damage.\par
-If a creature attacks with one weapon that is too heavy, his total damage that attack will be cut in half. If it uses two weapons that are too heavy, the damage is cut to a fourth. Also, weapon skills are not improved when wielding a weapon that is too heavy.\par
+\strike An item's momentum should probably figure into its damage calculations.\strike0\par
 \par
 \strike Each time you level up, you gain max health and max mana.\strike0\par
 \par
