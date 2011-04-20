@@ -59,6 +59,10 @@ void Templates::calculate_item_attributes(Item* item,double temp_item_size){
     //If the item is armor and no defense was set.
     if(item->category==ITEM_ARMOR && item->defense==-1){
         item->defense=(temp_item_size*toughness[item->material])/8.0;
+        //The armor piece should at least have 1 defense.
+        if(item->defense<=0){
+            item->defense=1;
+        }
     }
 
     //If no melee damage max was set.

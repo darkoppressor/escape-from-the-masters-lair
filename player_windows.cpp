@@ -1217,17 +1217,115 @@ void Player::render_item_info(){
 
     font_small.show(5,5,msg,render_color);
 
-    ss.clear();ss.str("");ss<<"Composed of ";ss<<material_to_string(inventory[item_info].material);ss<<"\xA";msg=ss.str();
-    ss.clear();ss.str("");ss<<"Weighing ";ss<<inventory[item_info].weight*inventory[item_info].stack;ss<<"\xA";msg+=ss.str();
-    ss.clear();ss.str("");ss<<"With a value of ";ss<<inventory[item_info].monetary_value*inventory[item_info].stack;ss<<"\xA";msg+=ss.str();
-    ss.clear();ss.str("");ss<<"Melee damage: ";ss<<inventory[item_info].damage_min_melee;ss<<"-";ss<<inventory[item_info].damage_max_melee;ss<<"\xA";msg+=ss.str();
-    ss.clear();ss.str("");ss<<"Thrown damage: ";ss<<inventory[item_info].damage_min_thrown;ss<<"-";ss<<inventory[item_info].damage_max_thrown;ss<<"\xA";msg+=ss.str();
+    if(inventory[item_info].category!=ITEM_OTHER){
+        ss.clear();ss.str("");ss<<"This item is ";msg=ss.str();
+        if(inventory[item_info].category==ITEM_WEAPON){
+            ss.clear();ss.str("");ss<<"a weapon. It is ";msg+=ss.str();
+            if(inventory[item_info].weapon_category==WEAPON_SHORT_BLADES){
+                ss.clear();ss.str("");ss<<"a short blade";msg+=ss.str();
+            }
+            else if(inventory[item_info].weapon_category==WEAPON_LONG_BLADES){
+                ss.clear();ss.str("");ss<<"a long blade";msg+=ss.str();
+            }
+            else if(inventory[item_info].weapon_category==WEAPON_AXES){
+                ss.clear();ss.str("");ss<<"an axe";msg+=ss.str();
+            }
+            else if(inventory[item_info].weapon_category==WEAPON_MACES){
+                ss.clear();ss.str("");ss<<"a mace";msg+=ss.str();
+            }
+            else if(inventory[item_info].weapon_category==WEAPON_POLEARMS){
+                ss.clear();ss.str("");ss<<"a polearm";msg+=ss.str();
+            }
+            else if(inventory[item_info].weapon_category==WEAPON_STAVES){
+                ss.clear();ss.str("");ss<<"a staff";msg+=ss.str();
+            }
+            else if(inventory[item_info].weapon_category==WEAPON_BOWS){
+                ss.clear();ss.str("");ss<<"a bow";msg+=ss.str();
+            }
+            else if(inventory[item_info].weapon_category==WEAPON_CROSSBOWS){
+                ss.clear();ss.str("");ss<<"a crossbow";msg+=ss.str();
+            }
+            else if(inventory[item_info].weapon_category==WEAPON_SLINGS){
+                ss.clear();ss.str("");ss<<"a sling";msg+=ss.str();
+            }
+            else if(inventory[item_info].weapon_category==WEAPON_THROWN){
+                ss.clear();ss.str("");ss<<"a throwing weapon";msg+=ss.str();
+            }
+        }
+        else if(inventory[item_info].category==ITEM_ARMOR){
+            ss.clear();ss.str("");ss<<"a piece of armor. It is for the ";msg+=ss.str();
+            if(inventory[item_info].armor_category==ARMOR_HEAD){
+                ss.clear();ss.str("");ss<<"head";msg+=ss.str();
+            }
+            else if(inventory[item_info].armor_category==ARMOR_SHOULDER){
+                ss.clear();ss.str("");ss<<"shoulder";msg+=ss.str();
+            }
+            else if(inventory[item_info].armor_category==ARMOR_CHEST){
+                ss.clear();ss.str("");ss<<"chest";msg+=ss.str();
+            }
+            else if(inventory[item_info].armor_category==ARMOR_BACK){
+                ss.clear();ss.str("");ss<<"back";msg+=ss.str();
+            }
+            else if(inventory[item_info].armor_category==ARMOR_WAIST){
+                ss.clear();ss.str("");ss<<"waist";msg+=ss.str();
+            }
+            else if(inventory[item_info].armor_category==ARMOR_LEG){
+                ss.clear();ss.str("");ss<<"legs";msg+=ss.str();
+            }
+            else if(inventory[item_info].armor_category==ARMOR_FOOT){
+                ss.clear();ss.str("");ss<<"feet";msg+=ss.str();
+            }
+            else if(inventory[item_info].armor_category==ARMOR_HAND){
+                ss.clear();ss.str("");ss<<"hands";msg+=ss.str();
+            }
+            else if(inventory[item_info].armor_category==ARMOR_SHIELD){
+                ss.clear();ss.str("");ss<<"arm";msg+=ss.str();
+            }
+            else if(inventory[item_info].armor_category==ARMOR_NECK){
+                ss.clear();ss.str("");ss<<"neck";msg+=ss.str();
+            }
+            else if(inventory[item_info].armor_category==ARMOR_WRIST){
+                ss.clear();ss.str("");ss<<"wrists";msg+=ss.str();
+            }
+            else if(inventory[item_info].armor_category==ARMOR_SHIRT){
+                ss.clear();ss.str("");ss<<"chest";msg+=ss.str();
+            }
+            else if(inventory[item_info].armor_category==ARMOR_FINGER){
+                ss.clear();ss.str("");ss<<"fingers";msg+=ss.str();
+            }
+        }
+        else if(inventory[item_info].category==ITEM_FOOD){
+            ss.clear();ss.str("");ss<<"food";msg+=ss.str();
+        }
+        else if(inventory[item_info].category==ITEM_DRINK){
+            ss.clear();ss.str("");ss<<"a drink";msg+=ss.str();
+        }
+        else if(inventory[item_info].category==ITEM_SCROLL){
+            ss.clear();ss.str("");ss<<"a scroll";msg+=ss.str();
+        }
+        else if(inventory[item_info].category==ITEM_BOOK){
+            ss.clear();ss.str("");ss<<"a book";msg+=ss.str();
+        }
+        else if(inventory[item_info].category==ITEM_CONTAINER){
+            ss.clear();ss.str("");ss<<"a container";msg+=ss.str();
+        }
+        ss.clear();ss.str("");ss<<".";ss<<"\xA";msg+=ss.str();
+        ss.clear();ss.str("");ss<<"It is composed of ";ss<<material_to_string(inventory[item_info].material);ss<<".";ss<<"\xA";msg+=ss.str();
+    }
+    else{
+        ss.clear();ss.str("");ss<<"This item is composed of ";ss<<material_to_string(inventory[item_info].material);ss<<".";ss<<"\xA";msg=ss.str();
+    }
+    ss.clear();ss.str("");ss<<"It weighs ";ss<<inventory[item_info].weight*inventory[item_info].stack;ss<<".";ss<<"\xA";msg+=ss.str();
+    ss.clear();ss.str("");ss<<"It requires ";ss<<inventory[item_info].weight*1.5;ss<<" strength to wield in melee.";ss<<"\xA";msg+=ss.str();
+    ss.clear();ss.str("");ss<<"It can do ";ss<<inventory[item_info].damage_min_melee;ss<<"-";ss<<inventory[item_info].damage_max_melee;ss<<" melee damage.";ss<<"\xA";msg+=ss.str();
+    ss.clear();ss.str("");ss<<"It can do ";ss<<inventory[item_info].damage_min_thrown;ss<<"-";ss<<inventory[item_info].damage_max_thrown;ss<<" thrown damage.";ss<<"\xA";msg+=ss.str();
     if(inventory[item_info].damage_max_ranged!=0){
-        ss.clear();ss.str("");ss<<"Ranged damage: ";ss<<inventory[item_info].damage_min_ranged;ss<<"-";ss<<inventory[item_info].damage_max_ranged;ss<<"\xA";msg+=ss.str();
+        ss.clear();ss.str("");ss<<"It can do ";ss<<inventory[item_info].damage_min_ranged;ss<<"-";ss<<inventory[item_info].damage_max_ranged;ss<<" ranged damage.";ss<<"\xA";msg+=ss.str();
     }
     if(inventory[item_info].category==ITEM_ARMOR){
-        ss.clear();ss.str("");ss<<"Defense: ";ss<<inventory[item_info].defense;ss<<"\xA";msg+=ss.str();
+        ss.clear();ss.str("");ss<<"It can defend against ";ss<<inventory[item_info].defense;ss<<" points of damage.";ss<<"\xA";msg+=ss.str();
     }
+    ss.clear();ss.str("");ss<<"It is worth ";ss<<inventory[item_info].monetary_value*inventory[item_info].stack;ss<<".";ss<<"\xA";msg+=ss.str();
 
     font_small.show(5,5+font_small.spacing_y,msg,COLOR_WHITE);
 }

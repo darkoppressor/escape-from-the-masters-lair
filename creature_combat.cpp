@@ -16,47 +16,6 @@ void Creature::attack_melee(Creature* target){
 
     string outcome="";
 
-    //Handle the attacker's skill gains.
-
-    //Exercise the fighting skill.
-    ///gain_skill_experience(SKILL_FIGHTING,1);
-
-    //Check for items wielded in either hand.
-    for(int i=EQUIP_HOLD_RIGHT;i<EQUIP_HOLD_LEFT+1;i++){
-        //If there is an item wielded in this hand.
-        if(equipment[i]!=0){
-            //Determine the identifier for the item equipped in this slot.
-            int item_identifier=index_of_item_in_slot(i);
-
-            //If the item is governed by the bladed weapons skill.
-            if(inventory[item_identifier].category==ITEM_WEAPON && inventory[item_identifier].governing_skill_weapon==SKILL_BLADED_WEAPONS){
-                //Exercise the bladed weapons skill.
-                gain_skill_experience(SKILL_BLADED_WEAPONS,1);
-            }
-            //If the item is governed by the blunt weapons skill.
-            else if(inventory[item_identifier].category==ITEM_WEAPON && inventory[item_identifier].governing_skill_weapon==SKILL_BLUNT_WEAPONS){
-                //Exercise the blunt weapons skill.
-                gain_skill_experience(SKILL_BLUNT_WEAPONS,1);
-            }
-            //If the item is governed by the stabbing weapons skill.
-            else if(inventory[item_identifier].category==ITEM_WEAPON && inventory[item_identifier].governing_skill_weapon==SKILL_STABBING_WEAPONS){
-                //Exercise the stabbing weapons skill.
-                gain_skill_experience(SKILL_STABBING_WEAPONS,1);
-            }
-        }
-    }
-
-    //If items are being dual-wielded.
-    if(equipment[EQUIP_HOLD_RIGHT]!=0 && equipment[EQUIP_HOLD_LEFT]!=0){
-        //Exercise the dual wielding skill.
-        gain_skill_experience(SKILL_DUAL_WIELDING,1);
-    }
-    //If there are no items being wielded.
-    else if(equipment[EQUIP_HOLD_RIGHT]==0 && equipment[EQUIP_HOLD_LEFT]==0){
-        //Exercise the unarmed skill.
-        gain_skill_experience(SKILL_UNARMED,1);
-    }
-
     //If the attacker succeeds its hit check.
     /**if(rc_attack_hit(return_skill_fighting(),return_attribute_agility(),experience_level,target)){
        //If the defender fails its dodge check.
@@ -97,28 +56,47 @@ void Creature::attack_melee(Creature* target){
                     int weapon_damage_max=inventory[item_identifier].damage_max_melee;
                     int weapon_damage=random_range(weapon_damage_min,weapon_damage_max);
 
+                    //Does the creature have enough strength to wield this item?
+                    bool enough_strength=true;
+
+                    //If the creature does not have sufficient strength to wield this item.
+                    if(inventory[item_identifier].weight*1.5>attributes[ATTRIBUTE_STRENGTH]){
+                        weapons_under_strength++;
+                        enough_strength=false;
+                    }
+
                     //Apply the appropriate weapon skill, if any.
 
                     //If the item is governed by the bladed weapons skill.
                     if(inventory[item_identifier].category==ITEM_WEAPON && inventory[item_identifier].governing_skill_weapon==SKILL_BLADED_WEAPONS){
                         weapon_damage+=weapon_damage*(return_skill_bladed_weapons()/10.0);
+
+                        if(enough_strength){
+                            //Exercise the bladed weapons skill.
+                            gain_skill_experience(SKILL_BLADED_WEAPONS,1);
+                        }
                     }
                     //If the item is governed by the blunt weapons skill.
                     else if(inventory[item_identifier].category==ITEM_WEAPON && inventory[item_identifier].governing_skill_weapon==SKILL_BLUNT_WEAPONS){
                         weapon_damage+=weapon_damage*(return_skill_blunt_weapons()/10.0);
+
+                        if(enough_strength){
+                            //Exercise the blunt weapons skill.
+                            gain_skill_experience(SKILL_BLUNT_WEAPONS,1);
+                        }
                     }
                     //If the item is governed by the stabbing weapons skill.
                     else if(inventory[item_identifier].category==ITEM_WEAPON && inventory[item_identifier].governing_skill_weapon==SKILL_STABBING_WEAPONS){
                         weapon_damage+=weapon_damage*(return_skill_stabbing_weapons()/10.0);
+
+                        if(enough_strength){
+                            //Exercise the stabbing weapons skill.
+                            gain_skill_experience(SKILL_STABBING_WEAPONS,1);
+                        }
                     }
 
                     //Add the weapon's damage to the attack's damage.
                     damage+=weapon_damage;
-
-                    //If the creature does not have sufficient strength to wield this item.
-                    if(){
-                        weapons_under_strength++;
-                    }
                 }
             }
 
@@ -132,16 +110,33 @@ void Creature::attack_melee(Creature* target){
                 else{
                     damage+=return_skill_dual_wielding()/2.0;
                 }
+
+                //As long as both weapons are being wielded with enough strength.
+                if(weapons_under_strength==0){
+                    //Exercise the dual wielding skill.
+                    gain_skill_experience(SKILL_DUAL_WIELDING,1);
+                }
             }
 
             //If there are no items being wielded.
             else if(equipment[EQUIP_HOLD_RIGHT]==0 && equipment[EQUIP_HOLD_LEFT]==0){
                 //Apply the unarmed weapon skill.
                 damage+=base_damage*(return_skill_unarmed()/10.0);
+
+                //Exercise the unarmed skill.
+                gain_skill_experience(SKILL_UNARMED,1);
             }
 
             //Apply the strength bonus.
             damage+=damage*(return_attribute_strength()/4.0);
+
+            //If the creature is wielding one or more weapons under strength, reduce its damage.
+            if(weapons_under_strength==1){
+                damage/=2.0;
+            }
+            else if(weapons_under_strength==2){
+                damage/=4.0;
+            }
 
             //We have finished determining the maximum damage the attacker can do.
             //Now, we determine the damage reduction based on the target's stats.

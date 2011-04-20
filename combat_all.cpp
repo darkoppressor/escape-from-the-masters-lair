@@ -13,7 +13,9 @@ int determine_damage_reduction(Creature* target){
 
     //Exercise the target's armor skill.
     int points_gained=1;
+
     double inventory_weight=target->return_inventory_weight(ITEM_ARMOR);
+
     //Apply the encumbrance bonus to the armor skill increase.
     points_gained+=inventory_weight/75.0;
     target->gain_skill_experience(SKILL_ARMOR,points_gained);

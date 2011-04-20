@@ -223,20 +223,32 @@ void Player::game_start_good_items(){
                 }
             }
 
-            //Determine the monetary value of the item.
-            int item_value=0;
+            //Determine whether this item has already been purchased.
+            bool item_already_purchased=false;
 
-            item_template_data item_template=return_item_template(available_starting_items[random_item]);
+            for(int i=0;i<starting_items.size();i++){
+                if(random_item==starting_items[i]){
+                    item_already_purchased=true;
+                    break;
+                }
+            }
 
-            item_value=templates.template_items[item_template.category][item_template.index].monetary_value;
+            if(!item_already_purchased){
+                //Determine the monetary value of the item.
+                int item_value=0;
 
-            //If we have enough money for this item.
-            if(item_value<=starting_items_gold){
-                //Add the purchased item.
-                starting_items.push_back(random_item);
+                item_template_data item_template=return_item_template(available_starting_items[random_item]);
 
-                //Remove the item's value from the starting gold.
-                starting_items_gold-=item_value;
+                item_value=templates.template_items[item_template.category][item_template.index].monetary_value;
+
+                //If we have enough money for this item.
+                if(item_value<=starting_items_gold){
+                    //Add the purchased item.
+                    starting_items.push_back(random_item);
+
+                    //Remove the item's value from the starting gold.
+                    starting_items_gold-=item_value;
+                }
             }
         }
     }

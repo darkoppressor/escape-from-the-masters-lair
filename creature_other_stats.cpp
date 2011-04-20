@@ -105,6 +105,14 @@ int Creature::return_movement_speed(){
     //Subtract the hardiness bonus.
     speed-=return_attribute_hardiness()/10.0;
 
+    //Apply the armor weight penalty.
+    double penalty_amount=return_inventory_weight(ITEM_ARMOR)/15.0;
+    penalty_amount-=return_skill_armor();
+    if(penalty_amount<0.0){
+        penalty_amount=0.0;
+    }
+    speed+=penalty_amount;
+
     //If the creature is bloated.
     if(thirst<=THIRST_BLOATED){
         //Being bloated causes a penalty to speed.
@@ -132,6 +140,14 @@ int Creature::return_next_move(){
 
     //Subtract the hardiness bonus.
     speed-=return_attribute_hardiness()/10.0;
+
+    //Apply the armor weight penalty.
+    double penalty_amount=return_inventory_weight(ITEM_ARMOR)/15.0;
+    penalty_amount-=return_skill_armor();
+    if(penalty_amount<0.0){
+        penalty_amount=0.0;
+    }
+    speed+=penalty_amount;
 
     //If the creature is bloated.
     if(thirst<=THIRST_BLOATED){
