@@ -104,9 +104,11 @@ void turn(){
                 int random_race_template=-1;
 
                 if(player_has_light){
-                    //Choose a random location in the level.
-                    x=random_range(0,vector_levels[current_level].level_x-1);
-                    y=random_range(0,vector_levels[current_level].level_y-1);
+                    //Choose a random location in the level, far from the player.
+                    do{
+                        x=random_range(0,vector_levels[current_level].level_x-1);
+                        y=random_range(0,vector_levels[current_level].level_y-1);
+                    }while(x>=player.x-12 && x<=player.x+12 && y>=player.y-12 && y<=player.y+12);
 
                     //Randomly select a race from the races template.
                     random_race_template=random_range(0,templates.template_races.size()-1);

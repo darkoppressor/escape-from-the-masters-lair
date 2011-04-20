@@ -30,7 +30,7 @@ void Player::game_start_random_skills(){
         ///short random_skill=random_range(SKILL_BLADED_WEAPONS,SKILL_MAGIC_SUMMONING);
         ///Disable some skills.
         short random_skill=random_range(SKILL_BLADED_WEAPONS,SKILL_ARMOR);
-        while(random_skill==SKILL_SECURITY || random_skill==SKILL_STEALTH || random_skill==SKILL_FIGHTING || random_skill==SKILL_DODGING){
+        while(random_skill==SKILL_SECURITY || random_skill==SKILL_STEALTH){
             random_skill=random_range(SKILL_BLADED_WEAPONS,SKILL_ARMOR);
         }
         ///

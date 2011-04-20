@@ -90,7 +90,7 @@ void Creature::unequip_item(int item_identifier){
 }
 
 void Creature::equip_item(int item_identifier,short equip_slot){
-    //If we are equipping an item in the right hand, left hand, or quiver.
+    //If we are equipping an item in the right hand, left hand, quiver, or launcher weapon slot.
     if(equip_slot!=-1){
         //Assign the item to this slot.
         equipment[equip_slot]=inventory[item_identifier].inventory_letter;
@@ -185,8 +185,13 @@ bool Creature::equipment_slot_empty(int item_identifier,short equip_slot){
     ///This might instead be handled in the inventory input check function.
     ///For now, all weapons need one slot.
 
-    //If we are checking the right hand, left hand, or quiver.
+    //If we are checking the right hand, left hand, quiver, or launcher weapon slot.
     if(equip_slot!=-1){
+        //If the slot is the launcher weapon slot, and the item is not a launcher weapon.
+        if(equip_slot==EQUIP_LAUNCHER_WEAPON && (inventory[item_identifier].category!=ITEM_WEAPON || inventory[item_identifier].governing_skill_weapon!=SKILL_LAUNCHER_WEAPONS)){
+            return false;
+        }
+
         //If the slot is empty.
         if(equipment[equip_slot]==0){
             return true;

@@ -25,7 +25,6 @@ void Item::assign_owner_data_thrown(Creature* creature){
 
     owner_data_thrown[0].strength=creature->return_attribute_strength();
     owner_data_thrown[0].agility=creature->return_attribute_agility();
-    ///owner_data_thrown[0].fighting_skill=creature->return_skill_fighting();
     owner_data_thrown[0].thrown_weapons_skill=creature->return_skill_thrown_weapons();
     owner_data_thrown[0].experience_level=creature->experience_level;
     owner_data_thrown[0].base_damage_min_thrown=creature->base_damage_thrown_min;
@@ -42,7 +41,6 @@ void Item::assign_owner_data_fired(Creature* creature,int launcher_item){
 
     owner_data_fired[0].strength=creature->return_attribute_strength();
     owner_data_fired[0].agility=creature->return_attribute_agility();
-    ///owner_data_fired[0].fighting_skill=creature->return_skill_fighting();
     owner_data_fired[0].launcher_weapons_skill=creature->return_skill_launcher_weapons();
     owner_data_fired[0].experience_level=creature->experience_level;
     owner_data_fired[0].base_damage_min_ranged=creature->base_damage_ranged_min;
@@ -78,117 +76,63 @@ void Item::attack_thrown(Creature* target){
 
     string outcome="";
 
-    //If the attacker succeeds its hit check.
-    /**if(rc_attack_hit(owner_data_thrown[0].fighting_skill,owner_data_thrown[0].agility,owner_data_thrown[0].experience_level,target)){
-       //If the defender fails its dodge check.
-       if(!rc_attack_dodge(owner_data_thrown[0].experience_level,target)){*/
-            //The attack will hit.
-            //We now determine the maximum amount of damage the attacker can do (before the target's reduction(s)).
+    //Determine the maximum amount of damage the attacker can do (before the target's reduction(s)).
 
-            //Damage begins with base thrown damage.
-            int base_damage=random_range(owner_data_thrown[0].base_damage_min_thrown,owner_data_thrown[0].base_damage_max_thrown);
+    //Damage begins with base thrown damage.
+    int base_damage=random_range(owner_data_thrown[0].base_damage_min_thrown,owner_data_thrown[0].base_damage_max_thrown);
 
-            damage=base_damage;
+    damage=base_damage;
 
-            //Add the momentum bonus.
-            damage+=momentum*2.0;
+    //Add the momentum bonus.
+    damage+=momentum*2.0;
 
-            //Add the racial base thrown damage modifier.
+    //Add the racial base thrown damage modifier.
 
-            //If the race has a thrown damage bonus.
-            if(templates.template_races[owner_data_thrown[0].race].base_damage_thrown_max>=0){
-                damage+=random_range(templates.template_races[owner_data_thrown[0].race].base_damage_thrown_min,templates.template_races[owner_data_thrown[0].race].base_damage_thrown_max);
-            }
-            //If the race has a thrown damage penalty.
-            else{
-                damage-=random_range(abs(templates.template_races[owner_data_thrown[0].race].base_damage_thrown_min),abs(templates.template_races[owner_data_thrown[0].race].base_damage_thrown_max));
-            }
-
-            //Add in thrown weapon damage.
-
-            //Determine the base damage range for this item.
-            int weapon_damage_min=damage_min_thrown;
-            int weapon_damage_max=damage_max_thrown;
-            int weapon_damage=random_range(weapon_damage_min,weapon_damage_max);
-
-            //Apply the appropriate weapon skill, if any.
-
-            //If the item is governed by the thrown weapons skill.
-            if(category==ITEM_WEAPON && governing_skill_weapon==SKILL_THROWN_WEAPONS){
-                weapon_damage+=weapon_damage*(owner_data_thrown[0].thrown_weapons_skill/10);
-            }
-
-            //Add the weapon's damage to the attack's damage.
-            damage+=weapon_damage;
-
-            //Apply the agility bonus.
-            damage+=damage*(owner_data_thrown[0].agility/6);
-
-            //Apply the strength bonus.
-            damage+=damage*(owner_data_thrown[0].strength/8);
-
-            //We have finished determining the maximum damage the attacker can do.
-            //Now, we determine the damage reduction based on the target's stats.
-
-            int damage_reduction=determine_damage_reduction(target);
-
-            //Subtract the total damage reduction from the maximum damage.
-            damage-=damage_reduction;
-
-            if(damage<0){
-                damage=0;
-            }
-
-            //If the attacker succeeds in a critical strike.
-            /**if(rc_attack_critical_strike(owner_data_thrown[0].agility,owner_data_thrown[0].experience_level,target)){
-                damage+=random_range(damage/4,damage/2);
-            }*/
-       /**}
-        //If the defender succeeds in its dodge check.
-        else{
-            if(owner_data_thrown[0].is_player){
-                outcome="The ";
-                outcome+=target->return_full_name();
-                outcome+=" dodges your ";
-                outcome+=return_full_name(1);
-                outcome+="!";
-            }
-            else{
-                outcome="You dodge the ";
-                outcome+=owner_data_thrown[0].full_name;
-                outcome+="'s ";
-                outcome+=return_full_name(1);
-                outcome+="!";
-            }
-
-            update_text_log(outcome.c_str(),true);
-
-            return;
-        }*/
-    /**}
-    //If the attacker fails its hit check.
+    //If the race has a thrown damage bonus.
+    if(templates.template_races[owner_data_thrown[0].race].base_damage_thrown_max>=0){
+        damage+=random_range(templates.template_races[owner_data_thrown[0].race].base_damage_thrown_min,templates.template_races[owner_data_thrown[0].race].base_damage_thrown_max);
+    }
+    //If the race has a thrown damage penalty.
     else{
-        if(owner_data_thrown[0].is_player){
-            outcome="Your ";
-            outcome+=return_full_name(1);
-            outcome+=" misses the ";
-            outcome+=target->return_full_name();
-            outcome+="!";
-        }
-        else{
-            outcome="The ";
-            outcome+=owner_data_thrown[0].full_name;
-            outcome+="'s ";
-            outcome+=return_full_name(1);
-            outcome+=" misses!";
-        }
+        damage-=random_range(abs(templates.template_races[owner_data_thrown[0].race].base_damage_thrown_min),abs(templates.template_races[owner_data_thrown[0].race].base_damage_thrown_max));
+    }
 
-        update_text_log(outcome.c_str(),true);
+    //Add in thrown weapon damage.
 
-        return;
-    }*/
+    //Determine the base damage range for this item.
+    int weapon_damage_min=damage_min_thrown;
+    int weapon_damage_max=damage_max_thrown;
+    int weapon_damage=random_range(weapon_damage_min,weapon_damage_max);
 
-    //If the attack succeeded and did damage.
+    //Apply the appropriate weapon skill, if any.
+
+    //If the item is governed by the thrown weapons skill.
+    if(category==ITEM_WEAPON && governing_skill_weapon==SKILL_THROWN_WEAPONS){
+        weapon_damage+=weapon_damage*(owner_data_thrown[0].thrown_weapons_skill/10);
+    }
+
+    //Add the weapon's damage to the attack's damage.
+    damage+=weapon_damage;
+
+    //Apply the agility bonus.
+    damage+=damage*(owner_data_thrown[0].agility/6);
+
+    //Apply the strength bonus.
+    damage+=damage*(owner_data_thrown[0].strength/8);
+
+    //We have finished determining the maximum damage the attacker can do.
+    //Now, we determine the damage reduction based on the target's stats.
+
+    int damage_reduction=determine_damage_reduction(target);
+
+    //Subtract the total damage reduction from the maximum damage.
+    damage-=damage_reduction;
+
+    if(damage<0){
+        damage=0;
+    }
+
+    //If the attack did damage.
     if(damage>0){
         //If the creature is the player.
         if(owner_data_thrown[0].is_player){
@@ -243,122 +187,68 @@ void Item::attack_fired(Creature* target){
 
     string outcome="";
 
-    //If the attacker succeeds its hit check.
-    /**if(rc_attack_hit(owner_data_fired[0].fighting_skill,owner_data_fired[0].agility,owner_data_fired[0].experience_level,target)){
-       //If the defender fails its dodge check.
-       if(!rc_attack_dodge(owner_data_fired[0].experience_level,target)){*/
-            //The attack will hit.
-            //We now determine the maximum amount of damage the attacker can do (before the target's reduction(s)).
+    //Determine the maximum amount of damage the attacker can do (before the target's reduction(s)).
 
-            //Damage begins with base ranged damage.
-            int base_damage=random_range(owner_data_fired[0].base_damage_min_ranged,owner_data_fired[0].base_damage_max_ranged);
+    //Damage begins with base ranged damage.
+    int base_damage=random_range(owner_data_fired[0].base_damage_min_ranged,owner_data_fired[0].base_damage_max_ranged);
 
-            damage=base_damage;
+    damage=base_damage;
 
-            //Add the momentum bonus.
-            damage+=momentum*2.0;
+    //Add the momentum bonus.
+    damage+=momentum*2.0;
 
-            //Add the racial base ranged damage modifier.
+    //Add the racial base ranged damage modifier.
 
-            //If the race has a ranged damage bonus.
-            if(templates.template_races[owner_data_fired[0].race].base_damage_ranged_max>=0){
-                damage+=random_range(templates.template_races[owner_data_fired[0].race].base_damage_ranged_min,templates.template_races[owner_data_fired[0].race].base_damage_ranged_max);
-            }
-            //If the race has a ranged damage penalty.
-            else{
-                damage-=random_range(abs(templates.template_races[owner_data_fired[0].race].base_damage_ranged_min),abs(templates.template_races[owner_data_fired[0].race].base_damage_ranged_max));
-            }
-
-            //Add the actual projectile's thrown weapon damage.
-
-            //Determine the base damage range for this item.
-            int weapon_damage_min=damage_min_thrown;
-            int weapon_damage_max=damage_max_thrown;
-            int weapon_damage=random_range(weapon_damage_min,weapon_damage_max);
-
-            //Add the weapon's damage to the attack's damage.
-            damage+=weapon_damage;
-
-            //Add in the launcher's damage.
-
-            weapon_damage_min=owner_data_fired[0].launcher_damage_min;
-            weapon_damage_max=owner_data_fired[0].launcher_damage_max;
-            weapon_damage=random_range(weapon_damage_min,weapon_damage_max);
-
-            //Apply the ranged weapon skill.
-            weapon_damage+=weapon_damage*(owner_data_fired[0].launcher_weapons_skill/10);
-
-            //Add the weapon's damage to the attack's damage.
-            damage+=weapon_damage;
-
-            //Apply the agility bonus.
-            damage+=damage*(owner_data_fired[0].agility/6);
-
-            //Apply the strength bonus.
-            damage+=damage*(owner_data_fired[0].strength/8);
-
-            //We have finished determining the maximum damage the attacker can do.
-            //Now, we determine the damage reduction based on the target's stats.
-
-            int damage_reduction=determine_damage_reduction(target);
-
-            //Subtract the total damage reduction from the maximum damage.
-            damage-=damage_reduction;
-
-            if(damage<0){
-                damage=0;
-            }
-
-            //If the attacker succeeds in a critical strike.
-            /**if(rc_attack_critical_strike(owner_data_fired[0].agility,owner_data_fired[0].experience_level,target)){
-                damage+=random_range(damage/4,damage/2);
-            }*/
-       /**}
-        //If the defender succeeds in its dodge check.
-        else{
-            if(owner_data_fired[0].is_player){
-                outcome="The ";
-                outcome+=target->return_full_name();
-                outcome+=" dodges your ";
-                outcome+=return_full_name(1);
-                outcome+="!";
-            }
-            else{
-                outcome="You dodge the ";
-                outcome+=owner_data_fired[0].full_name;
-                outcome+="'s ";
-                outcome+=return_full_name(1);
-                outcome+="!";
-            }
-
-            update_text_log(outcome.c_str(),true);
-
-            return;
-        }*/
-    /**}
-    //If the attacker fails its hit check.
+    //If the race has a ranged damage bonus.
+    if(templates.template_races[owner_data_fired[0].race].base_damage_ranged_max>=0){
+        damage+=random_range(templates.template_races[owner_data_fired[0].race].base_damage_ranged_min,templates.template_races[owner_data_fired[0].race].base_damage_ranged_max);
+    }
+    //If the race has a ranged damage penalty.
     else{
-        if(owner_data_fired[0].is_player){
-            outcome="Your ";
-            outcome+=return_full_name(1);
-            outcome+=" misses the ";
-            outcome+=target->return_full_name();
-            outcome+="!";
-        }
-        else{
-            outcome="The ";
-            outcome+=owner_data_fired[0].full_name;
-            outcome+="'s ";
-            outcome+=return_full_name(1);
-            outcome+=" misses!";
-        }
+        damage-=random_range(abs(templates.template_races[owner_data_fired[0].race].base_damage_ranged_min),abs(templates.template_races[owner_data_fired[0].race].base_damage_ranged_max));
+    }
 
-        update_text_log(outcome.c_str(),true);
+    //Add the actual projectile's thrown weapon damage.
 
-        return;
-    }*/
+    //Determine the base damage range for this item.
+    int weapon_damage_min=damage_min_thrown;
+    int weapon_damage_max=damage_max_thrown;
+    int weapon_damage=random_range(weapon_damage_min,weapon_damage_max);
 
-    //If the attack succeeded and did damage.
+    //Add the weapon's damage to the attack's damage.
+    damage+=weapon_damage;
+
+    //Add in the launcher's damage.
+
+    weapon_damage_min=owner_data_fired[0].launcher_damage_min;
+    weapon_damage_max=owner_data_fired[0].launcher_damage_max;
+    weapon_damage=random_range(weapon_damage_min,weapon_damage_max);
+
+    //Apply the ranged weapon skill.
+    weapon_damage+=weapon_damage*(owner_data_fired[0].launcher_weapons_skill/10);
+
+    //Add the weapon's damage to the attack's damage.
+    damage+=weapon_damage;
+
+    //Apply the agility bonus.
+    damage+=damage*(owner_data_fired[0].agility/6);
+
+    //Apply the strength bonus.
+    damage+=damage*(owner_data_fired[0].strength/8);
+
+    //We have finished determining the maximum damage the attacker can do.
+    //Now, we determine the damage reduction based on the target's stats.
+
+    int damage_reduction=determine_damage_reduction(target);
+
+    //Subtract the total damage reduction from the maximum damage.
+    damage-=damage_reduction;
+
+    if(damage<0){
+        damage=0;
+    }
+
+    //If the attack did damage.
     if(damage>0){
         //If the creature is the player.
         if(owner_data_fired[0].is_player){

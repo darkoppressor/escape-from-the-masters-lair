@@ -514,6 +514,13 @@ void Player::handle_input(){
                             input_inventory=INVENTORY_COMMAND_QUIVER_ITEM;
                         }
 
+                        //Equip launcher weapon.
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'3'){
+                            update_text_log("What do you want to use as a launcher? [?*]",is_player);
+
+                            input_inventory=INVENTORY_COMMAND_EQUIP_LAUNCHER_WEAPON;
+                        }
+
                         //Equip armor.
                         else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'w'){
                             update_text_log("What do you want to wear? [?*]",is_player);

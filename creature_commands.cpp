@@ -450,9 +450,8 @@ void Creature::check_command_directional(short direction){
     else if(command==DIRECTIONAL_COMMAND_FIRE_ITEM){
         //If an item is quivered.
         if(!equipment_slot_empty(-1,EQUIP_QUIVER) &&
-           //And if a launcher is being wielded in either the right or left hand.
-           ((!equipment_slot_empty(-1,EQUIP_HOLD_RIGHT) && inventory[index_of_item_in_slot(EQUIP_HOLD_RIGHT)].category==ITEM_WEAPON && inventory[index_of_item_in_slot(EQUIP_HOLD_RIGHT)].governing_skill_weapon==SKILL_LAUNCHER_WEAPONS) ||
-            (!equipment_slot_empty(-1,EQUIP_HOLD_LEFT) && inventory[index_of_item_in_slot(EQUIP_HOLD_LEFT)].category==ITEM_WEAPON && inventory[index_of_item_in_slot(EQUIP_HOLD_LEFT)].governing_skill_weapon==SKILL_LAUNCHER_WEAPONS))){
+           //And if a launcher is being wielded in the launcher weapon slot.
+           !equipment_slot_empty(-1,EQUIP_LAUNCHER_WEAPON)){
             initiate_turn=true;
         }
         //If no item is quivered.
@@ -691,9 +690,6 @@ void Creature::execute_command_directional(short direction){
 
         //If the item's stack is not 0.
         if(inventory[inventory_item_index].stack!=0){
-            //Exercise the fighting skill.
-            ///gain_skill_experience(SKILL_FIGHTING,1);
-
             //If the item is an actual thrown weapon.
             if(inventory[inventory_item_index].category==ITEM_WEAPON && inventory[inventory_item_index].governing_skill_weapon==SKILL_THROWN_WEAPONS){
                 //Exercise the thrown weapons skill.
@@ -758,15 +754,7 @@ void Creature::execute_command_directional(short direction){
         int quivered_item=index_of_item_in_slot(EQUIP_QUIVER);
 
         //Determine the index of the launcher item.
-        int launcher_item=-1;
-        //If a launcher is being wielded in the right hand.
-        if(!equipment_slot_empty(-1,EQUIP_HOLD_RIGHT) && inventory[index_of_item_in_slot(EQUIP_HOLD_RIGHT)].category==ITEM_WEAPON && inventory[index_of_item_in_slot(EQUIP_HOLD_RIGHT)].governing_skill_weapon==SKILL_LAUNCHER_WEAPONS){
-            launcher_item=index_of_item_in_slot(EQUIP_HOLD_RIGHT);
-        }
-        //If a launcher is being wielded in the left hand.
-        else if(!equipment_slot_empty(-1,EQUIP_HOLD_LEFT) && inventory[index_of_item_in_slot(EQUIP_HOLD_LEFT)].category==ITEM_WEAPON && inventory[index_of_item_in_slot(EQUIP_HOLD_LEFT)].governing_skill_weapon==SKILL_LAUNCHER_WEAPONS){
-            launcher_item=index_of_item_in_slot(EQUIP_HOLD_LEFT);
-        }
+        int launcher_item=index_of_item_in_slot(EQUIP_LAUNCHER_WEAPON);
 
         //Setup a fire message.
 
@@ -793,9 +781,6 @@ void Creature::execute_command_directional(short direction){
 
         //If the quivered item's stack is not 0.
         if(inventory[quivered_item].stack!=0){
-            //Exercise the fighting skill.
-            ///gain_skill_experience(SKILL_FIGHTING,1);
-
             //Exercise the launcher weapons skill.
             gain_skill_experience(SKILL_LAUNCHER_WEAPONS,1);
 
@@ -822,7 +807,7 @@ void Creature::execute_command_directional(short direction){
             //Add the item to the dungeon items vector.
             vector_levels[current_level].items.push_back(inventory[quivered_item]);
 
-            //Regardless of whether or not the item was unequipped above, the new item in the dungeon MUST not be set to equipped.
+            //Regardless of whether or not the item was unequipped above, the new item in the dungeon MUST NOT be set to equipped.
             vector_levels[current_level].items[vector_levels[current_level].items.size()-1].equipped=false;
 
             //Assign an identifier to the newly fired item.
@@ -1140,7 +1125,7 @@ void Creature::check_command_inventory(char inventory_letter){
     }
 
     else if(command==INVENTORY_COMMAND_EQUIP_RIGHT_HAND || command==INVENTORY_COMMAND_EQUIP_LEFT_HAND ||
-            command==INVENTORY_COMMAND_QUIVER_ITEM || command==INVENTORY_COMMAND_EQUIP_ARMOR){
+            command==INVENTORY_COMMAND_QUIVER_ITEM || command==INVENTORY_COMMAND_EQUIP_ARMOR || command==INVENTORY_COMMAND_EQUIP_LAUNCHER_WEAPON){
         //Determine the equipment slot to check.
         //If this remains -1, we are checking an armor slot.
         short equip_slot=-1;
@@ -1152,6 +1137,9 @@ void Creature::check_command_inventory(char inventory_letter){
         }
         else if(command==INVENTORY_COMMAND_QUIVER_ITEM){
             equip_slot=EQUIP_QUIVER;
+        }
+        else if(command==INVENTORY_COMMAND_EQUIP_LAUNCHER_WEAPON){
+            equip_slot=EQUIP_LAUNCHER_WEAPON;
         }
 
         //If the item is not already equipped.
@@ -1168,6 +1156,19 @@ void Creature::check_command_inventory(char inventory_letter){
 
             update_text_log(str_msg.c_str(),is_player);
             update_text_log("I suppose you could unequip it and then equip it again, but then who would that be helping, really?",is_player);
+
+            //No inventory command will be executed.
+            input_inventory=0;
+            inventory_input_state=0;
+        }
+        //If the item is not a launcher weapon, but the creature tried to wield it as one.
+        else if(command==INVENTORY_COMMAND_EQUIP_LAUNCHER_WEAPON && (inventory[inventory_item_index].category!=ITEM_WEAPON || inventory[inventory_item_index].governing_skill_weapon!=SKILL_LAUNCHER_WEAPONS)){
+            string message="You can't use ";
+            message+=a_vs_an(&inventory[inventory_item_index]);
+            message+=" ";
+            message+=inventory[inventory_item_index].return_full_name(1);
+            message+=" as a launcher!";
+            update_text_log(message.c_str(),is_player);
 
             //No inventory command will be executed.
             input_inventory=0;
@@ -1435,7 +1436,7 @@ void Creature::execute_command_inventory(char inventory_letter){
     }
 
     else if(command==INVENTORY_COMMAND_EQUIP_RIGHT_HAND || command==INVENTORY_COMMAND_EQUIP_LEFT_HAND ||
-            command==INVENTORY_COMMAND_QUIVER_ITEM || command==INVENTORY_COMMAND_EQUIP_ARMOR){
+            command==INVENTORY_COMMAND_QUIVER_ITEM || command==INVENTORY_COMMAND_EQUIP_ARMOR || command==INVENTORY_COMMAND_EQUIP_LAUNCHER_WEAPON){
         //Setup an equip message.
 
         string str_item="";
@@ -1447,6 +1448,9 @@ void Creature::execute_command_inventory(char inventory_letter){
             }
             else if(command==INVENTORY_COMMAND_QUIVER_ITEM){
                 str_item="You place the ";
+            }
+            else if(command==INVENTORY_COMMAND_EQUIP_LAUNCHER_WEAPON){
+                str_item="You wield the ";
             }
             else if(command==INVENTORY_COMMAND_EQUIP_ARMOR){
                 str_item="You put on the ";
@@ -1464,6 +1468,11 @@ void Creature::execute_command_inventory(char inventory_letter){
                 str_item+=return_full_name();
                 str_item+=" places the ";
             }
+            else if(command==INVENTORY_COMMAND_EQUIP_LAUNCHER_WEAPON){
+                str_item="The ";
+                str_item+=return_full_name();
+                str_item+=" wields the ";
+            }
             else if(command==INVENTORY_COMMAND_EQUIP_ARMOR){
                 str_item="The ";
                 str_item+=return_full_name();
@@ -1471,7 +1480,7 @@ void Creature::execute_command_inventory(char inventory_letter){
             }
         }
 
-        if(command==INVENTORY_COMMAND_EQUIP_RIGHT_HAND || command==INVENTORY_COMMAND_EQUIP_LEFT_HAND){
+        if(command==INVENTORY_COMMAND_EQUIP_RIGHT_HAND || command==INVENTORY_COMMAND_EQUIP_LEFT_HAND || command==INVENTORY_COMMAND_EQUIP_LAUNCHER_WEAPON){
             str_item+=inventory[inventory_item_index].return_full_name(1);
         }
         else{
@@ -1502,6 +1511,14 @@ void Creature::execute_command_inventory(char inventory_letter){
                 str_item+=" into its quiver";
             }
         }
+        else if(command==INVENTORY_COMMAND_EQUIP_LAUNCHER_WEAPON){
+            if(is_player){
+                str_item+=" as a launcher";
+            }
+            else{
+                str_item+=" as a launcher";
+            }
+        }
 
         str_item+=".";
 
@@ -1515,6 +1532,9 @@ void Creature::execute_command_inventory(char inventory_letter){
         }
         else if(command==INVENTORY_COMMAND_EQUIP_LEFT_HAND){
             equip_slot=EQUIP_HOLD_LEFT;
+        }
+        else if(command==INVENTORY_COMMAND_EQUIP_LAUNCHER_WEAPON){
+            equip_slot=EQUIP_LAUNCHER_WEAPON;
         }
         else if(command==INVENTORY_COMMAND_QUIVER_ITEM){
             equip_slot=EQUIP_QUIVER;

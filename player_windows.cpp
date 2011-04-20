@@ -239,12 +239,6 @@ void Player::handle_input_get_focused_skills(){
         case (Uint16)'j':
             skill=SKILL_SPEED;
             break;
-        /**case (Uint16)'k':
-            skill=SKILL_FIGHTING;
-            break;
-        case (Uint16)'l':
-            skill=SKILL_DODGING;
-            break;*/
         case (Uint16)'m':
             skill=SKILL_ARMOR;
             break;
@@ -832,29 +826,7 @@ void Player::render_get_focused_skills(){
 
     font_small.show(150,60,msg,COLOR_WHITE);
 
-    msg="";
-
-    /**ss.clear();ss.str("");ss<<"(k) ";msg+=ss.str();
-    if(is_focused_skill(SKILL_FIGHTING)){
-        ss.clear();ss.str("");ss<<"+ ";msg+=ss.str();
-    }
-    else{
-        ss.clear();ss.str("");ss<<"- ";msg+=ss.str();
-    }
-    ss.clear();ss.str("");ss<<"Fighting";ss<<"\xA";msg+=ss.str();
-    msg+="\xA";
-
-    ss.clear();ss.str("");ss<<"(l) ";msg+=ss.str();
-    if(is_focused_skill(SKILL_DODGING)){
-        ss.clear();ss.str("");ss<<"+ ";msg+=ss.str();
-    }
-    else{
-        ss.clear();ss.str("");ss<<"- ";msg+=ss.str();
-    }
-    ss.clear();ss.str("");ss<<"Dodging";ss<<"\xA";msg+=ss.str();
-    msg+="\xA";*/
-
-    ss.clear();ss.str("");ss<<"(m) ";msg+=ss.str();
+    ss.clear();ss.str("");ss<<"(m) ";msg=ss.str();
     if(is_focused_skill(SKILL_ARMOR)){
         ss.clear();ss.str("");ss<<"+ ";msg+=ss.str();
     }
@@ -1207,13 +1179,18 @@ void Player::render_item_info(){
 
     string item_amount_prefix="";
 
+    string stack_size="";
+
     if(inventory[item_info].stack==1){
         item_amount_prefix=a_vs_an(&inventory[item_info]);
 
         item_amount_prefix+=" ";
     }
+    else{
+        ss.clear();ss.str("");ss<<" (x";ss<<inventory[item_info].stack;ss<<")";stack_size=ss.str();
+    }
 
-    ss.clear();ss.str("");ss<<inventory[item_info].appearance;ss<<" - ";ss<<item_amount_prefix;ss<<inventory[item_info].return_full_name();ss<<"\xA";msg=ss.str();
+    ss.clear();ss.str("");ss<<inventory[item_info].appearance;ss<<" - ";ss<<item_amount_prefix;ss<<inventory[item_info].return_full_name(1);ss<<stack_size;ss<<"\xA";msg=ss.str();
 
     font_small.show(5,5,msg,render_color);
 
@@ -1315,7 +1292,7 @@ void Player::render_item_info(){
     else{
         ss.clear();ss.str("");ss<<"This item is composed of ";ss<<material_to_string(inventory[item_info].material);ss<<".";ss<<"\xA";msg=ss.str();
     }
-    ss.clear();ss.str("");ss<<"It weighs ";ss<<inventory[item_info].weight*inventory[item_info].stack;ss<<".";ss<<"\xA";msg+=ss.str();
+    ss.clear();ss.str("");ss<<"It weighs ";ss<<inventory[item_info].weight;ss<<".";ss<<"\xA";msg+=ss.str();
     ss.clear();ss.str("");ss<<"It requires ";ss<<inventory[item_info].weight*1.5;ss<<" strength to wield in melee.";ss<<"\xA";msg+=ss.str();
     ss.clear();ss.str("");ss<<"It can do ";ss<<inventory[item_info].damage_min_melee;ss<<"-";ss<<inventory[item_info].damage_max_melee;ss<<" melee damage.";ss<<"\xA";msg+=ss.str();
     ss.clear();ss.str("");ss<<"It can do ";ss<<inventory[item_info].damage_min_thrown;ss<<"-";ss<<inventory[item_info].damage_max_thrown;ss<<" thrown damage.";ss<<"\xA";msg+=ss.str();
@@ -1332,7 +1309,7 @@ void Player::render_item_info(){
         }
         ss.clear();ss.str("");ss<<"It can defend against ";ss<<inventory[item_info].defense;ss<<" ";ss<<points;ss<<" of damage.";ss<<"\xA";msg+=ss.str();
     }
-    ss.clear();ss.str("");ss<<"It is worth ";ss<<inventory[item_info].monetary_value*inventory[item_info].stack;ss<<".";ss<<"\xA";msg+=ss.str();
+    ss.clear();ss.str("");ss<<"It is worth ";ss<<inventory[item_info].monetary_value;ss<<".";ss<<"\xA";msg+=ss.str();
 
     font_small.show(5,5+font_small.spacing_y,msg,COLOR_WHITE);
 }
@@ -1543,13 +1520,6 @@ void Player::render_stats(){
 
     font_small.show(200,30,msg,COLOR_WHITE);
 
-    /**ss.clear();ss.str("");ss<<"Fighting - ";ss<<return_skill_fighting();ss<<" (";ss<<skills[SKILL_FIGHTING][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_FIGHTING][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg=ss.str();
-    msg+="\xA";
-    ss.clear();ss.str("");ss<<"Dodging - ";ss<<return_skill_dodging();ss<<" (";ss<<skills[SKILL_DODGING][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_DODGING][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
-    msg+="\xA";*/
-
-    ///ss.clear();ss.str("");ss<<"Armor - ";ss<<return_skill_armor();ss<<" (";ss<<skills[SKILL_ARMOR][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_ARMOR][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg+=ss.str();
-    ///USE THIS LINE INSTEAD OF THE ABOVE LINE.
     ss.clear();ss.str("");ss<<"Armor - ";ss<<return_skill_armor();ss<<" (";ss<<skills[SKILL_ARMOR][SKILL_EXPERIENCE];ss<<"/";ss<<skills[SKILL_ARMOR][SKILL_EXPERIENCE_MAX];ss<<")";ss<<"\xA";msg=ss.str();
     msg+="\xA";
 

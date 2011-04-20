@@ -284,7 +284,7 @@ void Creature::level_up_skill(short skill,int experience_gained){
     }
     //If the skill is governed by agility.
     else if(skill==SKILL_SECURITY || skill==SKILL_STEALTH || skill==SKILL_LAUNCHER_WEAPONS || skill==SKILL_THROWN_WEAPONS ||
-            skill==SKILL_DUAL_WIELDING || skill==SKILL_SPEED || skill==SKILL_FIGHTING || skill==SKILL_DODGING){
+            skill==SKILL_DUAL_WIELDING || skill==SKILL_SPEED){
         attribute_level_bonuses[ATTRIBUTE_AGILITY]++;
     }
     //If the skill is governed by hardiness.

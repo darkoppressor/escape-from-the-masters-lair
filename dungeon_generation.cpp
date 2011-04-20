@@ -608,7 +608,6 @@ void Game::generate_level(bool deepest_level){
         y=random_range(0,generated_level_y-1);
 
         //If the tile at the random position is an appropriate tile.
-        ///It should also check to make sure there is not more than one other fountain within a small radius.
         if(generated_tiles[x][y].type==TILE_TYPE_FLOOR){
             generated_tiles[x][y].type=TILE_TYPE_FOUNTAIN;
             generated_tiles[x][y].material=MATERIAL_WATER;
@@ -624,7 +623,7 @@ void Game::generate_level(bool deepest_level){
     //Add traps.
 
     //The maximum number.
-    int max_traps=random_range((generated_level_x*generated_level_y)/25000,(generated_level_x*generated_level_y)/20000);
+    /**int max_traps=random_range((generated_level_x*generated_level_y)/25000,(generated_level_x*generated_level_y)/20000);
     //The maximum number of tries.
     int random_amount_traps=random_range((generated_level_x*generated_level_y)/10,(generated_level_x*generated_level_y)/4);
     //The number created successfully.
@@ -638,7 +637,6 @@ void Game::generate_level(bool deepest_level){
         y=random_range(0,generated_level_y-1);
 
         //If the tile at the random position is an appropriate tile.
-        ///It should also check to make sure there is not more than one other trap within a small radius.
         if(generated_tiles[x][y].type==TILE_TYPE_FLOOR){
             generated_tiles[x][y].type=TILE_TYPE_TRAP;
             traps_created++;
@@ -648,7 +646,7 @@ void Game::generate_level(bool deepest_level){
         if(traps_created>max_traps){
             break;
         }
-    }
+    }*/
 
     //Modify the covering(s) of the tiles according to the level's temperature.
     for(short y=0;y<generated_level_y;y++){

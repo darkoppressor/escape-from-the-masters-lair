@@ -566,8 +566,6 @@ void Templates::load_template_race(){
         string thrown_weapons="thrown weapons:";
         string dual_wielding="dual wielding:";
         string speed="speed:";
-        string fighting="fighting:";
-        string dodging="dodging:";
         string armor="armor:";
         string air_magic="air magic:";
         string fire_magic="fire magic:";
@@ -936,20 +934,6 @@ void Templates::load_template_race(){
             line.erase(0,speed.length());
 
             temp_race.skills[SKILL_SPEED][SKILL_EXPERIENCE_MAX]=atoi(line.c_str());
-        }
-        //Fighting
-        else if(icontains(line,fighting)){
-            //Clear the data name.
-            line.erase(0,fighting.length());
-
-            temp_race.skills[SKILL_FIGHTING][SKILL_EXPERIENCE_MAX]=atoi(line.c_str());
-        }
-        //Dodging
-        else if(icontains(line,dodging)){
-            //Clear the data name.
-            line.erase(0,dodging.length());
-
-            temp_race.skills[SKILL_DODGING][SKILL_EXPERIENCE_MAX]=atoi(line.c_str());
         }
         //Armor
         else if(icontains(line,armor)){

@@ -311,6 +311,11 @@ void Monster::handle_input(){
             input_inventory=INVENTORY_COMMAND_QUIVER_ITEM;
         }
 
+        //Equip launcher weapon.
+        else if(ai_keystates[AIK_EQUIP_LAUNCHER_WEAPON]){
+            input_inventory=INVENTORY_COMMAND_EQUIP_LAUNCHER_WEAPON;
+        }
+
         //Equip armor.
         else if(ai_keystates[AIK_EQUIP_ARMOR]){
             input_inventory=INVENTORY_COMMAND_EQUIP_ARMOR;

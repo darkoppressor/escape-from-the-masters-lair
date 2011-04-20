@@ -26,6 +26,7 @@ bool Covering::process_turn(){
 
         if(age>=AGE_BLOOD_LOTS_DRY){
             type=COVERING_BLOOD_DRIED;
+            age=0;
         }
     }
     else if(type==COVERING_ICE){
@@ -33,6 +34,7 @@ bool Covering::process_turn(){
 
         if(age>=AGE_ICE){
             type=COVERING_WATER;
+            age=0;
         }
     }
     else if(type==COVERING_WATER){

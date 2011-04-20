@@ -131,12 +131,6 @@ short Templates::string_to_skill(string line){
     else if(line=="speed"){
         governing_skill=SKILL_SPEED;
     }
-    else if(line=="fighting"){
-        governing_skill=SKILL_FIGHTING;
-    }
-    else if(line=="dodging"){
-        governing_skill=SKILL_DODGING;
-    }
 
     else if(line=="armor"){
         governing_skill=SKILL_ARMOR;

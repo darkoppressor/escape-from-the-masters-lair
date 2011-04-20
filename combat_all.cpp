@@ -8,9 +8,6 @@ using namespace std;
 int determine_damage_reduction(Creature* target){
     int damage_reduction=0;
 
-    //Exercise the target's dodging skill.
-    ///target->gain_skill_experience(SKILL_DODGING,1);
-
     //Exercise the target's armor skill.
     int points_gained=1;
 

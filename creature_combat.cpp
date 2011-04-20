@@ -16,182 +16,136 @@ void Creature::attack_melee(Creature* target){
 
     string outcome="";
 
-    //If the attacker succeeds its hit check.
-    /**if(rc_attack_hit(return_skill_fighting(),return_attribute_agility(),experience_level,target)){
-       //If the defender fails its dodge check.
-       if(!rc_attack_dodge(experience_level,target)){*/
-            //The attack will hit.
-            //We now determine the maximum amount of damage the attacker can do (before the target's reduction(s)).
+    //Determine the maximum amount of damage the attacker can do (before the target's reduction(s)).
 
-            //Damage begins with base melee damage.
-            int base_damage=random_range(base_damage_melee_min,base_damage_melee_max);
+    //Damage begins with base melee damage.
+    int base_damage=random_range(base_damage_melee_min,base_damage_melee_max);
 
-            damage=base_damage;
+    damage=base_damage;
 
-            //Add the racial base melee damage modifier.
+    //Add the racial base melee damage modifier.
 
-            //If the race has a melee damage bonus.
-            if(templates.template_races[race].base_damage_melee_max>=0){
-                damage+=random_range(templates.template_races[race].base_damage_melee_min,templates.template_races[race].base_damage_melee_max);
-            }
-            //If the race has a melee damage penalty.
-            else{
-                damage-=random_range(abs(templates.template_races[race].base_damage_melee_min),abs(templates.template_races[race].base_damage_melee_max));
-            }
-
-            //Add in melee weapon damage.
-
-            //Remember how many weapons are being wielded that the creature has insufficient strength to wield properly.
-            int weapons_under_strength=0;
-
-            //Check for items wielded in either hand.
-            for(int i=EQUIP_HOLD_RIGHT;i<EQUIP_HOLD_LEFT+1;i++){
-                //If there is an item wielded in this hand.
-                if(equipment[i]!=0){
-                    //Determine the identifier for the item equipped in this slot.
-                    int item_identifier=index_of_item_in_slot(i);
-
-                    //Determine the base damage range for this item.
-                    int weapon_damage_min=inventory[item_identifier].damage_min_melee;
-                    int weapon_damage_max=inventory[item_identifier].damage_max_melee;
-                    int weapon_damage=random_range(weapon_damage_min,weapon_damage_max);
-
-                    //Does the creature have enough strength to wield this item?
-                    bool enough_strength=true;
-
-                    //If the creature does not have sufficient strength to wield this item.
-                    if(inventory[item_identifier].weight*1.5>attributes[ATTRIBUTE_STRENGTH]){
-                        weapons_under_strength++;
-                        enough_strength=false;
-                    }
-
-                    //Apply the appropriate weapon skill, if any.
-
-                    //If the item is governed by the bladed weapons skill.
-                    if(inventory[item_identifier].category==ITEM_WEAPON && inventory[item_identifier].governing_skill_weapon==SKILL_BLADED_WEAPONS){
-                        weapon_damage+=weapon_damage*(return_skill_bladed_weapons()/10.0);
-
-                        if(enough_strength){
-                            //Exercise the bladed weapons skill.
-                            gain_skill_experience(SKILL_BLADED_WEAPONS,1);
-                        }
-                    }
-                    //If the item is governed by the blunt weapons skill.
-                    else if(inventory[item_identifier].category==ITEM_WEAPON && inventory[item_identifier].governing_skill_weapon==SKILL_BLUNT_WEAPONS){
-                        weapon_damage+=weapon_damage*(return_skill_blunt_weapons()/10.0);
-
-                        if(enough_strength){
-                            //Exercise the blunt weapons skill.
-                            gain_skill_experience(SKILL_BLUNT_WEAPONS,1);
-                        }
-                    }
-                    //If the item is governed by the stabbing weapons skill.
-                    else if(inventory[item_identifier].category==ITEM_WEAPON && inventory[item_identifier].governing_skill_weapon==SKILL_STABBING_WEAPONS){
-                        weapon_damage+=weapon_damage*(return_skill_stabbing_weapons()/10.0);
-
-                        if(enough_strength){
-                            //Exercise the stabbing weapons skill.
-                            gain_skill_experience(SKILL_STABBING_WEAPONS,1);
-                        }
-                    }
-
-                    //Add the weapon's damage to the attack's damage.
-                    damage+=weapon_damage;
-                }
-            }
-
-            //If items are being dual-wielded.
-            if(equipment[EQUIP_HOLD_RIGHT]!=0 && equipment[EQUIP_HOLD_LEFT]!=0){
-                //Apply the dual-wielding modifier.
-
-                if(return_skill_dual_wielding()<10){
-                    damage-=50.0/return_skill_dual_wielding();
-                }
-                else{
-                    damage+=return_skill_dual_wielding()/2.0;
-                }
-
-                //As long as both weapons are being wielded with enough strength.
-                if(weapons_under_strength==0){
-                    //Exercise the dual wielding skill.
-                    gain_skill_experience(SKILL_DUAL_WIELDING,1);
-                }
-            }
-
-            //If there are no items being wielded.
-            else if(equipment[EQUIP_HOLD_RIGHT]==0 && equipment[EQUIP_HOLD_LEFT]==0){
-                //Apply the unarmed weapon skill.
-                damage+=base_damage*(return_skill_unarmed()/10.0);
-
-                //Exercise the unarmed skill.
-                gain_skill_experience(SKILL_UNARMED,1);
-            }
-
-            //Apply the strength bonus.
-            damage+=damage*(return_attribute_strength()/4.0);
-
-            //If the creature is wielding one or more weapons under strength, reduce its damage.
-            if(weapons_under_strength==1){
-                damage/=2.0;
-            }
-            else if(weapons_under_strength==2){
-                damage/=4.0;
-            }
-
-            //We have finished determining the maximum damage the attacker can do.
-            //Now, we determine the damage reduction based on the target's stats.
-
-            int damage_reduction=determine_damage_reduction(target);
-
-            //Subtract the total damage reduction from the maximum damage.
-            damage-=damage_reduction;
-
-            if(damage<0){
-                damage=0;
-            }
-
-            //If the attacker succeeds in a critical strike.
-            /**if(rc_attack_critical_strike(return_attribute_agility(),experience_level,target)){
-                damage+=random_range(damage/4,damage/2);
-            }*/
-       /**}
-        //If the defender succeeds in its dodge check.
-        else{
-            if(is_player){
-                outcome="The ";
-                outcome+=target->return_full_name();
-                outcome+=" dodges out of the way!";
-            }
-            else{
-                outcome="You dodge the ";
-                outcome+=return_full_name();
-                outcome+="'s attack!";
-            }
-
-            update_text_log(outcome.c_str(),true);
-
-            return;
-        }*/
-    /**}
-    //If the attacker fails its hit check.
+    //If the race has a melee damage bonus.
+    if(templates.template_races[race].base_damage_melee_max>=0){
+        damage+=random_range(templates.template_races[race].base_damage_melee_min,templates.template_races[race].base_damage_melee_max);
+    }
+    //If the race has a melee damage penalty.
     else{
-        if(is_player){
-            outcome="You miss the ";
-            outcome+=target->return_full_name();
-            outcome+="!";
+        damage-=random_range(abs(templates.template_races[race].base_damage_melee_min),abs(templates.template_races[race].base_damage_melee_max));
+    }
+
+    //Add in melee weapon damage.
+
+    //Remember how many weapons are being wielded that the creature has insufficient strength to wield properly.
+    int weapons_under_strength=0;
+
+    //Check for items wielded in either hand.
+    for(int i=EQUIP_HOLD_RIGHT;i<EQUIP_HOLD_LEFT+1;i++){
+        //If there is an item wielded in this hand.
+        if(equipment[i]!=0){
+            //Determine the identifier for the item equipped in this slot.
+            int item_identifier=index_of_item_in_slot(i);
+
+            //Determine the base damage range for this item.
+            int weapon_damage_min=inventory[item_identifier].damage_min_melee;
+            int weapon_damage_max=inventory[item_identifier].damage_max_melee;
+            int weapon_damage=random_range(weapon_damage_min,weapon_damage_max);
+
+            //Does the creature have enough strength to wield this item?
+            bool enough_strength=true;
+
+            //If the creature does not have sufficient strength to wield this item.
+            if(inventory[item_identifier].weight*1.5>attributes[ATTRIBUTE_STRENGTH]){
+                weapons_under_strength++;
+                enough_strength=false;
+            }
+
+            //Apply the appropriate weapon skill, if any.
+
+            //If the item is governed by the bladed weapons skill.
+            if(inventory[item_identifier].category==ITEM_WEAPON && inventory[item_identifier].governing_skill_weapon==SKILL_BLADED_WEAPONS){
+                weapon_damage+=weapon_damage*(return_skill_bladed_weapons()/10.0);
+
+                if(enough_strength){
+                    //Exercise the bladed weapons skill.
+                    gain_skill_experience(SKILL_BLADED_WEAPONS,1);
+                }
+            }
+            //If the item is governed by the blunt weapons skill.
+            else if(inventory[item_identifier].category==ITEM_WEAPON && inventory[item_identifier].governing_skill_weapon==SKILL_BLUNT_WEAPONS){
+                weapon_damage+=weapon_damage*(return_skill_blunt_weapons()/10.0);
+
+                if(enough_strength){
+                    //Exercise the blunt weapons skill.
+                    gain_skill_experience(SKILL_BLUNT_WEAPONS,1);
+                }
+            }
+            //If the item is governed by the stabbing weapons skill.
+            else if(inventory[item_identifier].category==ITEM_WEAPON && inventory[item_identifier].governing_skill_weapon==SKILL_STABBING_WEAPONS){
+                weapon_damage+=weapon_damage*(return_skill_stabbing_weapons()/10.0);
+
+                if(enough_strength){
+                    //Exercise the stabbing weapons skill.
+                    gain_skill_experience(SKILL_STABBING_WEAPONS,1);
+                }
+            }
+
+            //Add the weapon's damage to the attack's damage.
+            damage+=weapon_damage;
+        }
+    }
+
+    //If items are being dual-wielded.
+    if(equipment[EQUIP_HOLD_RIGHT]!=0 && equipment[EQUIP_HOLD_LEFT]!=0){
+        //Apply the dual-wielding modifier.
+
+        if(return_skill_dual_wielding()<10){
+            damage-=50.0/return_skill_dual_wielding();
         }
         else{
-            outcome="The ";
-            outcome+=return_full_name();
-            outcome+=" misses!";
+            damage+=return_skill_dual_wielding()/2.0;
         }
 
-        update_text_log(outcome.c_str(),true);
+        //As long as both weapons are being wielded with enough strength.
+        if(weapons_under_strength==0){
+            //Exercise the dual wielding skill.
+            gain_skill_experience(SKILL_DUAL_WIELDING,1);
+        }
+    }
 
-        return;
-    }*/
+    //If there are no items being wielded.
+    else if(equipment[EQUIP_HOLD_RIGHT]==0 && equipment[EQUIP_HOLD_LEFT]==0){
+        //Apply the unarmed weapon skill.
+        damage+=base_damage*(return_skill_unarmed()/10.0);
 
-    //If the attack succeeded and did damage.
+        //Exercise the unarmed skill.
+        gain_skill_experience(SKILL_UNARMED,1);
+    }
+
+    //Apply the strength bonus.
+    damage+=damage*(return_attribute_strength()/4.0);
+
+    //If the creature is wielding one or more weapons under strength, reduce its damage.
+    if(weapons_under_strength==1){
+        damage/=2.0;
+    }
+    else if(weapons_under_strength==2){
+        damage/=4.0;
+    }
+
+    //We have finished determining the maximum damage the attacker can do.
+    //Now, we determine the damage reduction based on the target's stats.
+
+    int damage_reduction=determine_damage_reduction(target);
+
+    //Subtract the total damage reduction from the maximum damage.
+    damage-=damage_reduction;
+
+    if(damage<0){
+        damage=0;
+    }
+
+    //If the attack did damage.
     if(damage>0){
         //If the creature is the player.
         if(is_player){

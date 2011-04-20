@@ -338,8 +338,6 @@ class Creature: public Object{
     int return_skill_thrown_weapons();
     int return_skill_dual_wielding();
     int return_skill_speed();
-    ///int return_skill_fighting();
-    ///int return_skill_dodging();
     int return_skill_armor();
     /**int return_skill_magic_air();
     int return_skill_magic_fire();

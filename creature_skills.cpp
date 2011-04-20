@@ -121,26 +121,6 @@ int Creature::return_skill_speed(){
     return (int)skill;
 }
 
-/**int Creature::return_skill_fighting(){
-    double skill=skills[SKILL_FIGHTING][SKILL_EXPERIENCE_LEVEL];
-
-    if(skill<1.0){
-        skill=1.0;
-    }
-
-    return (int)skill;
-}
-
-int Creature::return_skill_dodging(){
-    double skill=skills[SKILL_DODGING][SKILL_EXPERIENCE_LEVEL];
-
-    if(skill<1.0){
-        skill=1.0;
-    }
-
-    return (int)skill;
-}*/
-
 int Creature::return_skill_armor(){
     double skill=skills[SKILL_ARMOR][SKILL_EXPERIENCE_LEVEL];
 

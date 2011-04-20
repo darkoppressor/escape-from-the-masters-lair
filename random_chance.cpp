@@ -6,54 +6,6 @@
 
 using namespace std;
 
-/**bool rc_attack_critical_strike(short attacker_agility,int attacker_experience_level,Creature* target){
-    int max_chance_range=99-((double)attacker_agility/10)*((double)attacker_experience_level/(double)target->experience_level);
-    if(max_chance_range<0){
-        max_chance_range=0;
-    }
-
-    int random_attempt=random_range(0,max_chance_range);
-
-    if(random_attempt==0){
-        return true;
-    }
-    else{
-        return false;
-    }
-}
-
-bool rc_attack_dodge(int attacker_experience_level,Creature* target){
-    int max_chance_range=(99-((double)target->return_skill_dodging()/250)*(double)target->return_attribute_agility())/((double)target->experience_level/(double)attacker_experience_level);
-    if(max_chance_range<0){
-        max_chance_range=0;
-    }
-
-    int random_attempt=random_range(0,max_chance_range);
-
-    if(random_attempt==0){
-        return true;
-    }
-    else{
-        return false;
-    }
-}
-
-bool rc_attack_hit(short attacker_fighting_skill,short attacker_agility,int attacker_experience_level,Creature* target){
-    int max_chance_range=(99-((double)attacker_fighting_skill/2500)*(double)attacker_agility)/((double)attacker_experience_level/(double)target->experience_level);
-    if(max_chance_range<0){
-        max_chance_range=0;
-    }
-
-    int random_attempt=random_range(0,max_chance_range);
-
-    if(random_attempt>=0 && random_attempt<89){
-        return true;
-    }
-    else{
-        return false;
-    }
-}*/
-
 bool rc_open_door(){
     int random_attempt=random_range(0,99);
 
