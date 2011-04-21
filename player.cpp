@@ -132,7 +132,7 @@ Player::Player(){
     text_log_display_position=text_log.size()-1;
 
     //Options:
-    option_fullscreen=true;
+    option_fullscreen=false;
     option_screen_width=800;
     option_screen_height=600;
     option_dev=false;

@@ -101,8 +101,8 @@ bool Game_Window::init_sdl(){
         return false;
     }
 
-    player.option_screen_width=SDL_GetVideoInfo()->current_w;
-    player.option_screen_height=SDL_GetVideoInfo()->current_h;
+    ///player.option_screen_width=SDL_GetVideoInfo()->current_w;
+    ///player.option_screen_height=SDL_GetVideoInfo()->current_h;
 }
 
 bool Game_Window::init(){
