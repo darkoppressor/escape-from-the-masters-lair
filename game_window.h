@@ -18,6 +18,8 @@ class Game_Window{
 
     bool initialize_opengl();
 
+    bool init_sdl();
+
     bool init();
 
     void screenshot();

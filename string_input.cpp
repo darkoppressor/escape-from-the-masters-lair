@@ -86,6 +86,7 @@ void string_input::handle_events(){
             else if(istarts_with(str_command,"dev")){
                 player.option_dev=!player.option_dev;
                 options_save();
+
                 if(player.option_dev){
                     update_text_log("Dev mode on.",true,MESSAGE_SYSTEM);
                 }

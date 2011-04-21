@@ -1315,10 +1315,10 @@ void Player::render_item_info(){
 }
 
 void Player::render_death(){
-    short border_color=COLOR_SEPIA;
+    short border_color=COLOR_PAYNES_GRAY;
     short font_color=COLOR_BLACK;
 
-    render_rectangle(0,0,option_screen_width,option_screen_height,1.0,COLOR_WHITE);
+    render_rectangle(0,0,option_screen_width,option_screen_height,1.0,COLOR_GRAY);
 
     for(int i=font.w/256;i<option_screen_width-font.w/256;i+=font.w/256){
         font.show(i,0,"\xCD",border_color);

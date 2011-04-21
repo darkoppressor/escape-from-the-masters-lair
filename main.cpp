@@ -89,6 +89,11 @@ void game_loop(){
 
             //Now we update the game logic:
 
+            //If the dev option is ever on, this game should be flagged a cheater.
+            if(player.option_dev){
+                player.flag_cheater=true;
+            }
+
             //First, we check for input from the player.
             input();
 
@@ -164,6 +169,11 @@ int main(int argc, char* args[]){
     image.current_texture=0;
 
     create_top_level_directories();
+
+    //Initialize the basic SDL subsystems.
+    if(!main_window.init_sdl()){
+        return 1;
+    }
 
     if(!options_load()){
         fprintf(stderr,"Failed to load 'options.cfg.'\n");

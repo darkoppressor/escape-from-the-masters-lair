@@ -94,15 +94,18 @@ bool Game_Window::initialize_opengl(){
     return true;
 }
 
-bool Game_Window::init(){
-    //Initialize all of the SDL stuff:
-
+bool Game_Window::init_sdl(){
     //Initialize all of the standard SDL stuff, and return false if it did not initialize properly.
     if(SDL_Init(SDL_INIT_EVERYTHING)==-1){
         fprintf(stderr,"Unable to init SDL: %s\n",SDL_GetError());
         return false;
     }
 
+    player.option_screen_width=SDL_GetVideoInfo()->current_w;
+    player.option_screen_height=SDL_GetVideoInfo()->current_h;
+}
+
+bool Game_Window::init(){
     //Attempt to center the window on the screen.
     SDL_putenv("SDL_VIDEO_CENTERED=center");
 

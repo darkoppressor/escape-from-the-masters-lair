@@ -42,6 +42,10 @@ class Player: public Creature{
     //The number of deaths in this game.
     int deaths;
 
+    //If the player ever enters dev mode, this is set to true.
+    //If true, this prevents the current game from being entered into the highscores or game log.
+    bool flag_cheater;
+
     //**************************************************//
     // Variables that should not be saved in savegames. //
     //**************************************************//

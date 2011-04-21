@@ -368,6 +368,8 @@ void Creature::die(short cause_of_death,string killer,string killer_item,string 
     string message="";
 
     if(is_player){
+        player.deaths++;
+
         if(cause_of_death==CAUSE_OF_DEATH_THIRST){
             message="You succumb to thirst... Press [Spacebar] to continue.";
         }

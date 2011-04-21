@@ -78,6 +78,7 @@ void save_game(){
     save<<player.start_date<<"\n";
     save<<player.start_time<<"\n";
     save<<player.deaths<<"\n";
+    save<<player.flag_cheater<<"\n";
     save<<player.score_from_game<<"\n";
     for(int i=0;i<player.text_log.size();i++){
         save<<player.text_log[i]<<"\n";
@@ -264,6 +265,9 @@ void load_game(){
 
         getline(load,line);
         player.deaths=atoi(line.c_str());
+
+        getline(load,line);
+        player.flag_cheater=(bool)atoi(line.c_str());
 
         getline(load,line);
         player.score_from_game=atoi(line.c_str());

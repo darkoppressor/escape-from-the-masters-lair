@@ -32,7 +32,8 @@ void update_text_log(const char *message,bool display,unsigned char message_type
 
         //Don't log system messsages.
         if(message_type!=MESSAGE_SYSTEM){
-            ofstream save_log("message_log.txt",ifstream::app);
+            ///This is commented out for the release version.
+            /**ofstream save_log("message_log.txt",ifstream::app);
 
             if(save_log!=NULL){
                 time_t now;
@@ -49,7 +50,7 @@ void update_text_log(const char *message,bool display,unsigned char message_type
             }
             else{
                 fprintf(stderr,"Error logging message.\n");
-            }
+            }*/
         }
     }
 }

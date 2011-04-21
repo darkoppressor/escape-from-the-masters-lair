@@ -132,12 +132,14 @@ Player::Player(){
     text_log_display_position=text_log.size()-1;
 
     //Options:
-    option_fullscreen=false;
+    option_fullscreen=true;
     option_screen_width=800;
     option_screen_height=600;
     option_dev=false;
     option_fps=true;
-    option_healthbars=false;
+    option_healthbars=true;
+
+    flag_cheater=false;
 
     //Set the camera's initial location and its dimensions.
     camera_x=0.0;
@@ -679,7 +681,8 @@ void Player::handle_input(){
         //******************//
 
         //If numpad 0 is pressed, toggle the camera's stickiness and play the appropriate sound.
-        if(keystates[SDLK_KP0]){
+        ///This is commented out for the release version.
+        /**if(keystates[SDLK_KP0]){
             if(cam_state==CAM_STICKY){
                 cam_state=0;
             }
@@ -725,7 +728,7 @@ void Player::handle_input(){
             if(!keystates[SDLK_DELETE] && !keystates[SDLK_HOME] && !keystates[SDLK_PAGEDOWN] && !keystates[SDLK_END]){
                 cam_state=0;
             }
-        }
+        }*/
 
         //If the player hits the command key.
         if(keystates[SDLK_RETURN] || keystates[SDLK_KP_ENTER]){
@@ -1013,7 +1016,7 @@ void Player::render(vector< vector<bool> >* tile_rendered){
 
                 font.show((int)(return_absolute_x()-camera_x),(int)(return_absolute_y()-camera_y),appearance,render_color);
 
-                if(player.option_healthbars){
+                if(option_healthbars && return_health()<return_health_max()){
                     short health_bar_color=COLOR_GREEN;
                     if(return_health()>=return_health_max()*0.75){
                         health_bar_color=COLOR_GREEN;
@@ -1028,7 +1031,7 @@ void Player::render(vector< vector<bool> >* tile_rendered){
                         health_bar_color=COLOR_RED;
                     }
                     double health_bar_width=((double)((double)health/(double)health_max)*100)/6.25;
-                    render_rectangle((int)(return_absolute_x()-camera_x),(int)(return_absolute_y()-camera_y),health_bar_width,5,0.75,health_bar_color);
+                    render_rectangle((int)(return_absolute_x()-camera_x),(int)(return_absolute_y()+TILE_SIZE_Y-3-camera_y),health_bar_width,3,0.75,health_bar_color);
                 }
 
                 tile_rendered->at(x)[y]=true;

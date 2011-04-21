@@ -427,7 +427,7 @@ void Monster::render(vector< vector<bool> >* tile_rendered){
 
                     font.show((int)(return_absolute_x()-player.camera_x),(int)(return_absolute_y()-player.camera_y),appearance,render_color);
 
-                    if(player.option_healthbars){
+                    if(player.option_healthbars && return_health()<return_health_max()){
                         short health_bar_color=COLOR_GREEN;
                         if(return_health()>=return_health_max()*0.75){
                             health_bar_color=COLOR_GREEN;
@@ -442,12 +442,12 @@ void Monster::render(vector< vector<bool> >* tile_rendered){
                             health_bar_color=COLOR_RED;
                         }
                         double health_bar_width=((double)((double)health/(double)health_max)*100)/6.25;
-                        render_rectangle((int)(return_absolute_x()-player.camera_x),(int)(return_absolute_y()-player.camera_y),health_bar_width,5,0.75,health_bar_color);
+                        render_rectangle((int)(return_absolute_x()-player.camera_x),(int)(return_absolute_y()+TILE_SIZE_Y-3-player.camera_y),health_bar_width,3,0.75,health_bar_color);
                     }
 
                     if(player.option_dev){
                         ss.clear();ss.str("");ss<<return_health();ss<<"/";ss<<return_health_max();msg=ss.str();
-                        font.show((int)(return_absolute_x()-player.camera_x),(int)(return_absolute_y()-player.camera_y),msg,COLOR_GREEN);
+                        font_small.show((int)(return_absolute_x()-player.camera_x),(int)(return_absolute_y()-player.camera_y),msg,COLOR_GREEN);
                     }
 
                     tile_rendered->at(x)[y]=true;
