@@ -794,15 +794,20 @@ void Game::generate_level(bool deepest_level){
             //Apply the selected template to the item.
             generated_items[generated_items.size()-1]=templates.template_items[random_item_category][random_item_template];
 
+            //Default size is simply the size from this item's template.
+            double temp_item_size=templates.template_items[random_item_category][random_item_template].size;
+
             //If the item is set to have a random size.
             if(templates.template_items[random_item_category][random_item_template].random_size){
-                templates.template_items[random_item_category][random_item_template].size=templates.determine_item_size(&generated_items[generated_items.size()-1],random_item_category,random_item_template);
+                temp_item_size=templates.determine_item_size(&generated_items[generated_items.size()-1],random_item_category,random_item_template);
             }
 
             //If this item's template has only certain materials allowed.
             if(templates.template_items[random_item_category][random_item_template].allowed_materials.size()>0){
                 templates.determine_item_material(&generated_items[generated_items.size()-1],random_item_category,random_item_template);
             }
+
+            templates.calculate_item_attributes(&generated_items[generated_items.size()-1],temp_item_size);
 
             //Run the item's setup function.
             generated_items[generated_items.size()-1].setup();

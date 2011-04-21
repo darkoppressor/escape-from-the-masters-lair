@@ -1292,8 +1292,16 @@ void Player::render_item_info(){
     else{
         ss.clear();ss.str("");ss<<"This item is composed of ";ss<<material_to_string(inventory[item_info].material);ss<<".";ss<<"\xA";msg=ss.str();
     }
-    ss.clear();ss.str("");ss<<"It weighs ";ss<<(int)inventory[item_info].weight;ss<<".";ss<<"\xA";msg+=ss.str();
-    ss.clear();ss.str("");ss<<"It requires ";ss<<(int)(inventory[item_info].weight*1.5);ss<<" strength to wield in melee.";ss<<"\xA";msg+=ss.str();
+    double it_weighs=inventory[item_info].weight;
+    if(it_weighs>1.0){
+        it_weighs=(int)it_weighs;
+    }
+    ss.clear();ss.str("");ss<<"It weighs ";ss<<it_weighs;ss<<".";ss<<"\xA";msg+=ss.str();
+    int strength_req=(int)(inventory[item_info].weight*0.25);
+    if(strength_req<1){
+        strength_req=1;
+    }
+    ss.clear();ss.str("");ss<<"It requires ";ss<<strength_req;ss<<" strength to wield in melee.";ss<<"\xA";msg+=ss.str();
     ss.clear();ss.str("");ss<<"It can do ";ss<<inventory[item_info].damage_min_melee;ss<<"-";ss<<inventory[item_info].damage_max_melee;ss<<" melee damage.";ss<<"\xA";msg+=ss.str();
     ss.clear();ss.str("");ss<<"It can do ";ss<<inventory[item_info].damage_min_thrown;ss<<"-";ss<<inventory[item_info].damage_max_thrown;ss<<" thrown damage.";ss<<"\xA";msg+=ss.str();
     if(inventory[item_info].damage_max_ranged!=0){
@@ -1391,10 +1399,10 @@ void Player::render_death(){
     ss.clear();ss.str("");ss<<"Level: ";ss<<experience_level;msg=ss.str();
     font_small.show(50,95+font.spacing_y+font_small.spacing_y*8,msg,font_color);
 
-    ss.clear();ss.str("");ss<<"Maximum health at time of death: ";ss<<return_health_max();msg=ss.str();
+    ss.clear();ss.str("");ss<<"Health at time of death: ";ss<<return_health();ss<<"/";ss<<return_health_max();msg=ss.str();
     font_small.show(50,95+font.spacing_y+font_small.spacing_y*9,msg,font_color);
 
-    /**ss.clear();ss.str("");ss<<"Maximum mana at time of death: ";ss<<return_mana_max();msg=ss.str();
+    /**ss.clear();ss.str("");ss<<"Mana at time of death: ";ss<<return_mana();ss<<"/";ss<<return_mana_max();msg=ss.str();
     font_small.show(50,95+font.spacing_y+font_small.spacing_y*10,msg,font_color);*/
 
     ss.clear();ss.str("");ss<<"Final score: ";ss<<score;msg=ss.str();

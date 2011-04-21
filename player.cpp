@@ -284,6 +284,17 @@ void Player::handle_input(){
                 break;
 
             case SDL_KEYDOWN:
+                if(event.key.keysym.sym==SDLK_PAGEUP){
+                    if(text_log_display_position<text_log.size()-1){
+                        text_log_display_position++;
+                    }
+                }
+                else if(event.key.keysym.sym==SDLK_PAGEDOWN){
+                    if(text_log_display_position>5 && text_log[text_log_display_position-1]!="\x1F"){
+                        text_log_display_position--;
+                    }
+                }
+
                 if(!chat_mode){
                     if(current_window==WINDOW_INVENTORY){
                         handle_input_inventory();

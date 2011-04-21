@@ -58,7 +58,7 @@ void Templates::calculate_item_attributes(Item* item,double temp_item_size){
 
     //If the item is armor and no defense was set.
     if(item->category==ITEM_ARMOR && item->defense==-1){
-        item->defense=(temp_item_size*toughness[item->material])/8.0;
+        item->defense=(temp_item_size*toughness[item->material])/4.0;
         //The armor piece should at least have 1 defense.
         if(item->defense<=0){
             item->defense=1;
@@ -75,7 +75,7 @@ void Templates::calculate_item_attributes(Item* item,double temp_item_size){
         //If the item is not a melee weapon.
         else{
             item->damage_min_melee=1;
-            item->damage_max_melee=(temp_item_size*(item->weight/2.0))/8.0;
+            item->damage_max_melee=(temp_item_size*(item->weight/2.0))/4.0;
         }
 
         if(item->damage_min_melee<1){
@@ -136,15 +136,9 @@ void Templates::determine_item_material(Item* item,int item_category,int item_te
 
     item->color=string_to_color(material_to_string(item->material));
 
-    /**if(item->material==MATERIAL_IRON){
-        item->prefix_article="an";
-    }*/
-
     replace_first(item->name,"MATERIAL",material_to_string(item->material));
 
     replace_first(item->plural_name,"MATERIAL",material_to_string(item->material));
-
-    calculate_item_attributes(item,template_items[item_category][item_template_index].size);
 }
 
 double Templates::determine_item_size(Item* item,int item_category,int item_template_index){
@@ -174,13 +168,13 @@ double Templates::determine_item_size(Item* item,int item_category,int item_temp
     }
     //Large
     else if(random_size==3){
-        size*=1.25;
+        size*=1.5;
         replace_first(item->name,"SIZE","large");
         replace_first(item->plural_name,"SIZE","large");
     }
     //Huge
     else if(random_size==4){
-        size*=1.5;
+        size*=2.0;
         replace_first(item->name,"SIZE","huge");
         replace_first(item->plural_name,"SIZE","huge");
     }
@@ -499,8 +493,6 @@ void Templates::load_base_stats(){
 
         //If the line ends the base stats.
         else if(icontains(line,"</base stats>")){
-            ///Ensure the base stats are legitimate.
-
             //Apply these base stats to the base_stats object.
             base_stats=temp_race;
 
@@ -1013,8 +1005,6 @@ void Templates::load_template_race(){
 
         //If the line ends the race.
         else if(icontains(line,"</race>")){
-            ///Ensure the race is legitimate.
-
             //Add this race to its templates vector.
             template_races.push_back(temp_race);
 
@@ -1408,12 +1398,10 @@ void Templates::load_template_item(short category){
 
         //If the line ends the item.
         else if(icontains(line,"</item>")){
-            //If the item is a standard item with a predefined material.
-            if(temp_item.allowed_materials.size()==0){
+            //If the item is a standard item with a predefined size and material.
+            if(!temp_item.random_size && temp_item.allowed_materials.size()==0){
                 calculate_item_attributes(&temp_item,temp_item.size);
             }
-
-            ///Ensure the item is legitimate.
 
             //Add this item to its templates vector.
             template_items[category].push_back(temp_item);

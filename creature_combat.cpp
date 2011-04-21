@@ -55,7 +55,7 @@ void Creature::attack_melee(Creature* target){
             bool enough_strength=true;
 
             //If the creature does not have sufficient strength to wield this item.
-            if((int)(inventory[item_identifier].weight*1.5)>return_attribute_strength()){
+            if((int)(inventory[item_identifier].weight*0.25)>return_attribute_strength()){
                 weapons_under_strength++;
                 enough_strength=false;
             }
