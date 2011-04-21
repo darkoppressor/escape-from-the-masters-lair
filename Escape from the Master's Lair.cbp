@@ -8,21 +8,21 @@
 		<Build>
 			<Target title="Release-Windows">
 				<Option platforms="Windows;" />
-				<Option output="bin\Release-Windows\Escape.exe" prefix_auto="1" extension_auto="0" />
+				<Option output="bin/Release-Windows/Escape.exe" prefix_auto="1" extension_auto="0" />
 				<Option working_dir="" />
-				<Option object_output="obj\Release-Windows\" />
+				<Option object_output="obj/Release-Windows/" />
 				<Option type="5" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-w" />
-					<Add directory="..\..\MinGW\include" />
-					<Add directory="..\..\SDL\include\SDL" />
-					<Add directory="..\..\SDL\SDL_image\include" />
-					<Add directory="..\..\SDL\SDL_gfx\include" />
-					<Add directory="..\..\SDL\SDL_mixer\include" />
-					<Add directory="..\..\glew\include\GL" />
-					<Add directory="..\..\Boost" />
+					<Add directory="../../MinGW/include" />
+					<Add directory="../../SDL/include/SDL" />
+					<Add directory="../../SDL/SDL_image/include" />
+					<Add directory="../../SDL/SDL_gfx/include" />
+					<Add directory="../../SDL/SDL_mixer/include" />
+					<Add directory="../../glew/include/GL" />
+					<Add directory="../../Boost" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -32,21 +32,21 @@
 					<Add option="-lSDL" />
 					<Add option="-mwindows" />
 					<Add option="-Wl,--stack,16777216" />
-					<Add library="..\..\SDL\lib\libSDL.dll.a" />
-					<Add library="..\..\SDL\lib\libSDLmain.a" />
-					<Add library="..\..\glew\lib\glew32s.lib" />
-					<Add library="..\..\MinGW\lib\libopengl32.a" />
-					<Add library="..\..\MinGW\lib\libglu32.a" />
-					<Add library="..\..\SDL\SDL_image\lib\SDL_image.lib" />
-					<Add library="..\..\SDL\SDL_gfx\lib\libSDL_gfx.dll.a" />
-					<Add library="..\..\SDL\SDL_mixer\lib\SDL_mixer.lib" />
-					<Add library="..\..\Boost\stage\lib\libboost_system-mgw45-mt-1_46_1.a" />
-					<Add library="..\..\Boost\stage\lib\libboost_filesystem-mgw45-mt-1_46_1.a" />
-					<Add library="..\..\Boost\stage\lib\libboost_iostreams-mgw45-mt-1_46_1.a" />
-					<Add library="..\..\Boost\stage\lib\libboost_bzip2-mgw45-mt-1_46_1.a" />
-					<Add directory="..\..\SDL\lib" />
-					<Add directory="..\..\glew\lib" />
-					<Add directory="..\..\Boost\stage\lib" />
+					<Add library="../../SDL/lib/libSDL.dll.a" />
+					<Add library="../../SDL/lib/libSDLmain.a" />
+					<Add library="../../glew/lib/glew32s.lib" />
+					<Add library="../../MinGW/lib/libopengl32.a" />
+					<Add library="../../MinGW/lib/libglu32.a" />
+					<Add library="../../SDL/SDL_image/lib/SDL_image.lib" />
+					<Add library="../../SDL/SDL_gfx/lib/libSDL_gfx.dll.a" />
+					<Add library="../../SDL/SDL_mixer/lib/SDL_mixer.lib" />
+					<Add library="../../Boost/stage/lib/libboost_system-mgw45-mt-1_46_1.a" />
+					<Add library="../../Boost/stage/lib/libboost_filesystem-mgw45-mt-1_46_1.a" />
+					<Add library="../../Boost/stage/lib/libboost_iostreams-mgw45-mt-1_46_1.a" />
+					<Add library="../../Boost/stage/lib/libboost_bzip2-mgw45-mt-1_46_1.a" />
+					<Add directory="../../SDL/lib" />
+					<Add directory="../../glew/lib" />
+					<Add directory="../../Boost/stage/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release-Linux">
@@ -56,43 +56,31 @@
 				<Option type="5" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-O2" />
-					<Add option="-D__CONSOLE_MODE" />
-					<Add directory="..\..\MinGW\include" />
-					<Add directory="..\..\SDL\include\SDL" />
-					<Add directory="..\..\SDL\SDL_image\include" />
-					<Add directory="..\..\SDL\SDL_gfx\include" />
-					<Add directory="..\..\SDL\SDL_mixer\include" />
-					<Add directory="..\..\glew\include\GL" />
-					<Add directory="..\..\Boost" />
-					<Add directory="..\..\PDCurses-SO" />
-					<Add directory="..\..\PDCurses-SO\win32" />
+					<Add option="-fexpensive-optimizations" />
+					<Add option="-O3" />
+					<Add option="-w" />
+					<Add directory="/usr/include/SDL/" />
+					<Add directory="/usr/include/" />
+					<Add directory="/usr/include/GL/" />
+					<Add directory="../../boost" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add option="-lws2_32" />
-					<Add option="-lmingw32" />
 					<Add option="-lSDLmain" />
 					<Add option="-lSDL" />
-					<Add option="-mwindows" />
-					<Add option="-Wl,--stack,16777216" />
-					<Add library="..\..\SDL\lib\libSDL.dll.a" />
-					<Add library="..\..\SDL\lib\libSDLmain.a" />
-					<Add library="..\..\glew\lib\glew32s.lib" />
-					<Add library="..\..\MinGW\lib\libopengl32.a" />
-					<Add library="..\..\MinGW\lib\libglu32.a" />
-					<Add library="..\..\SDL\SDL_image\lib\SDL_image.lib" />
-					<Add library="..\..\SDL\SDL_gfx\lib\libSDL_gfx.dll.a" />
-					<Add library="..\..\SDL\SDL_mixer\lib\SDL_mixer.lib" />
-					<Add library="..\..\Boost\stage\lib\libboost_system-mgw45-mt-1_46_1.a" />
-					<Add library="..\..\Boost\stage\lib\libboost_filesystem-mgw45-mt-1_46_1.a" />
-					<Add library="..\..\Boost\stage\lib\libboost_iostreams-mgw45-mt-1_46_1.a" />
-					<Add library="..\..\Boost\stage\lib\libboost_bzip2-mgw45-mt-1_46_1.a" />
-					<Add library="..\..\PDCurses-SO\win32\panel.a" />
-					<Add library="..\..\PDCurses-SO\win32\pdcurses.a" />
-					<Add directory="..\..\SDL\lib" />
-					<Add directory="..\..\glew\lib" />
-					<Add directory="..\..\Boost\stage\lib" />
+					<Add library="/usr/lib64/libSDL.so" />
+					<Add library="/usr/lib64/libSDLmain.a" />
+					<Add library="/usr/lib64/libGLEW.so" />
+					<Add library="/usr/lib64/libGL.so" />
+					<Add library="/usr/lib64/libGLU.so" />
+					<Add library="/usr/lib64/libSDL_image.so" />
+					<Add library="/usr/lib64/libSDL_gfx.so" />
+					<Add library="/usr/lib64/libSDL_mixer.so" />
+					<Add library="../../boost/stage/lib/libboost_system.so" />
+					<Add library="../../boost/stage/lib/libboost_filesystem.so" />
+					<Add library="../../boost/stage/lib/libboost_iostreams.so" />
+					<Add directory="/usr/lib64/" />
+					<Add directory="../../boost/stage/lib" />
 				</Linker>
 			</Target>
 		</Build>
