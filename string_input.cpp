@@ -281,7 +281,7 @@ void string_input::handle_events(){
                 update_text_log("--------------------------------------------------------------------------------",true,MESSAGE_SYSTEM);
             }
 
-            else if(istarts_with(str_command,"quit") || istarts_with(str_command,"exit") || istarts_with(str_command,"leave")){
+            else if(istarts_with(str_command,"quit")){
                 save_game();
             }
 

@@ -519,21 +519,21 @@ void Player::handle_input(){
                         }
 
                         //Equip item in right hand.
-                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'1'){
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'2'){
                             update_text_log("What do you want to wield in your right hand? [?*]",is_player);
 
                             input_inventory=INVENTORY_COMMAND_EQUIP_RIGHT_HAND;
                         }
 
                         //Equip item in left hand.
-                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'2'){
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'1'){
                             update_text_log("What do you want to wield in your left hand? [?*]",is_player);
 
                             input_inventory=INVENTORY_COMMAND_EQUIP_LEFT_HAND;
                         }
 
                         //Quiver item.
-                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'Q'){
+                        else if(input_inventory==INVENTORY_COMMAND_NONE && input_directional==DIRECTIONAL_COMMAND_NONE && event.key.keysym.unicode==(Uint16)'4'){
                             update_text_log("What do you want to quiver? [?*]",is_player);
 
                             input_inventory=INVENTORY_COMMAND_QUIVER_ITEM;
@@ -666,7 +666,7 @@ void Player::handle_input(){
     //Toggle fullscreen.
     //This is located here in the code because it needs to come before the chat toggle,
     //which also uses SDLK_RETURN.
-    if((keystates[SDLK_LALT] || keystates[SDLK_RALT]) && keystates[SDLK_RETURN]){
+    if(((keystates[SDLK_LALT] || keystates[SDLK_RALT]) && keystates[SDLK_RETURN]) || keystates[SDLK_F11]){
         main_window.toggle_fullscreen();
 
         if(keystates[SDLK_LALT]){
@@ -676,6 +676,7 @@ void Player::handle_input(){
             keystates[SDLK_RALT]=NULL;
         }
         keystates[SDLK_RETURN]=NULL;
+        keystates[SDLK_F11]=NULL;
     }
 
     if(!chat_mode && current_window==WINDOW_NONE){

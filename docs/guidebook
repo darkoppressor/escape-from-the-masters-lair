@@ -52,7 +52,7 @@
 	
 == Controls ==
 	
-	== Movement ==
+	== Exploring the Lair ==
 	
 		You can move in 8 different directions.
 		You have a few options for going about this:
@@ -73,12 +73,75 @@
 				         /     |     \
 				b(down left)   j(down) n(down right)
 				
+		To go up stairs, press '<'.
+	
+		To go down stairs, press '>'.
+		
+		To pick something up, press ','.
+		
+		To rest a turn, press '.'.
+		
+		To search the area around you, press 's'.
+		
+		To open a door, press 'o'.
+		
+		To close a door, press 'c'.
+		
+	== Windows ==
+	
+		To open your inventory, press 'i'.
+		
+		To open your stats screen, press 'F1'.
+				
 	== Combat ==
 				
-	To attack a monster with melee, simply "walk" into them.
+		To attack a monster with melee, simply "walk" into them.
+		
+		To throw an item, press 't' and then the letter that represents the item you wish to throw.
+		
+		To fire whatever is in your quiver with your currently equipped launcher weapon, press 'f'.
 	
-	To throw an item, press 't' and then the letter that represents the item you wish to throw.
+	== Managing your Inventory ==
+	
+		To drop something, press 'd'.
+		
+		To drink something (also called quaffing), press 'q'.
+		
+		To equip something in your left hand, press '1'.
+		
+		To equip something in your right hand, press '2'.
+		
+		To equip a launcher weapon, such as a bow or a sling, press '3'.
+		
+		To place an item in your quiver, press '4'.
+		
+		To wear some armor, press 'w'.
+		
+		To remove any kind of equipment (weapons, armor, whatever), press 'r'.
+		
+		To use an item, press 'a'.
+		
+		To mix two items together, press 'm'.
+		
+		To read an item, press R.
+		
+		To examine an item, press 'e'.
 				
 == Extended Commands ==
 
+	You can bring up a console box by pressing the enter key. Here, you can type extended commands. Don't worry, there are only a few of these! You can close the box at any time with the escape key.
+	
+	hb - Toggles the health bar display option.
+	
+	hl - Toggles the highlight self option.
+	
+	fps - Toggles the FPS (frames per second) display option.
+	
+	fs - Toggles fullscreen mode.
+	
+	save - Saves your game!
+	
+	about - Gives you some information about the game.
+	
+	quit - Quits the game.
 	
