@@ -402,6 +402,7 @@ bool options_load(){
         load>>player.option_dev;
         load>>player.option_fps;
         load>>player.option_healthbars;
+        load>>player.option_highlight_self;
 
         load.close();
         load.clear();
@@ -428,6 +429,7 @@ bool options_save(){
         save<<player.option_dev<<"\n";
         save<<player.option_fps<<"\n";
         save<<player.option_healthbars<<"\n";
+        save<<player.option_highlight_self<<"\n";
 
         save.close();
         save.clear();

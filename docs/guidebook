@@ -55,9 +55,30 @@
 	== Movement ==
 	
 		You can move in 8 different directions.
-		You have a few options for moving.
-		You can use the arrow keys, but with those, you can only move orthogonally.
+		You have a few options for going about this:
+		
+			* You can use the arrow keys to move orthogonally.
+		
+			* You can move in all 8 directions using the numpad.
+				7(up left)     8(up)   9(up right)
+				         \     |     /
+				4(left)  -     5   -   6(right)
+				         /     |     \
+				1(down left)   2(down) 3(down right)
+			
+			* You can also use the hjklyubn keys to move in all 8 directions.
+				y(up left)     k(up)   u(up right)
+				         \     |     /
+				h(left)  -         -   l(right)
+				         /     |     \
+				b(down left)   j(down) n(down right)
+				
+	== Combat ==
+				
+	To attack a monster with melee, simply "walk" into them.
 	
+	To throw an item, press 't' and then the letter that represents the item you wish to throw.
+				
 == Extended Commands ==
 
 	

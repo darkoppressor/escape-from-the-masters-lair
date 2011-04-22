@@ -23,14 +23,17 @@ string_input::string_input(){
 
 void string_input::handle_events(){
     if(event.type==SDL_KEYDOWN){
-        if(str1.length()<110){/**If the string is less than the maximum size.*/
+        //If the string is less than the maximum size.
+        if(str1.length()<110){
             if(event.key.keysym.unicode>=(Uint16)' ' && event.key.keysym.unicode<=(Uint16)'~'){
                 str1+=(char)event.key.keysym.unicode;
             }
         }
 
-        if(event.key.keysym.sym==SDLK_BACKSPACE && str1.length()>0){/**If the backspace key is pressed and the string is not empty.*/
-            str1.erase(str1.length()-1);/**Remove one character from the end of the string.*/
+        //If the backspace key is pressed and the string is not empty.
+        if(event.key.keysym.sym==SDLK_BACKSPACE && str1.length()>0){
+            //Remove one character from the end of the string.
+            str1.erase(str1.length()-1);
         }
 
         else if(event.key.keysym.sym==SDLK_UP){
@@ -53,7 +56,8 @@ void string_input::handle_events(){
             }
         }
 
-        else if((event.key.keysym.sym==SDLK_RETURN || event.key.keysym.sym==SDLK_KP_ENTER) && str1.length()>0){/**If the player hits enter.*/
+        //If the player hits enter.
+        else if((event.key.keysym.sym==SDLK_RETURN || event.key.keysym.sym==SDLK_KP_ENTER) && str1.length()>0){
             string str_command=str1;
 
             //Forget the oldest command string.
@@ -64,26 +68,7 @@ void string_input::handle_events(){
 
             trim(str_command);
 
-            if(istarts_with(str_command,"info")){
-                //Determine the date and time.
-                time_t now;
-                struct tm *tm_now;
-                char buff[BUFSIZ];
-                now=time(NULL);
-                tm_now=localtime(&now);
-                strftime(buff,sizeof buff,"%A, %B %d, %Y - %H:%M:%S",tm_now);
-
-                update_text_log("------------------------------------Info---------------------------------------",true,MESSAGE_SYSTEM);
-
-                msg="Name: ";
-                msg+=player.name;
-                update_text_log(msg.c_str(),true,MESSAGE_SYSTEM);
-
-                msg=buff;
-                update_text_log(msg.c_str(),true,MESSAGE_SYSTEM);
-            }
-
-            else if(istarts_with(str_command,"dev")){
+            if(istarts_with(str_command,"dev")){
                 player.option_dev=!player.option_dev;
                 options_save();
 
@@ -92,17 +77,6 @@ void string_input::handle_events(){
                 }
                 else{
                     update_text_log("Dev mode off.",true,MESSAGE_SYSTEM);
-                }
-            }
-
-            else if(istarts_with(str_command,"health bars")){
-                player.option_healthbars=!player.option_healthbars;
-                options_save();
-                if(player.option_healthbars){
-                    update_text_log("Health bar display on.",true,MESSAGE_SYSTEM);
-                }
-                else{
-                    update_text_log("Health bar display off.",true,MESSAGE_SYSTEM);
                 }
             }
 
@@ -237,12 +211,26 @@ void string_input::handle_events(){
                 }
             }
 
-            else if(istarts_with(str_command,"save")){
-                save_game();
+            else if(istarts_with(str_command,"hb")){
+                player.option_healthbars=!player.option_healthbars;
+                options_save();
+                if(player.option_healthbars){
+                    update_text_log("Health bar display on.",true,MESSAGE_SYSTEM);
+                }
+                else{
+                    update_text_log("Health bar display off.",true,MESSAGE_SYSTEM);
+                }
             }
 
-            else if(istarts_with(str_command,"4 8 15 16 23 42")){
-                ///
+            else if(istarts_with(str_command,"hl")){
+                player.option_highlight_self=!player.option_highlight_self;
+                options_save();
+                if(player.option_highlight_self){
+                    update_text_log("Highlight self on.",true,MESSAGE_SYSTEM);
+                }
+                else{
+                    update_text_log("Highlight self off.",true,MESSAGE_SYSTEM);
+                }
             }
 
             else if(istarts_with(str_command,"fps")){
@@ -256,19 +244,27 @@ void string_input::handle_events(){
                 }
             }
 
-            else if(istarts_with(str_command,"help")){
-                update_text_log("-------------------------------------Help---------------------------------------",true,MESSAGE_SYSTEM);
-                update_text_log("For a full list of commands, type '/commands'.",true,MESSAGE_SYSTEM);
+            else if(istarts_with(str_command,"fs")){
+                main_window.toggle_fullscreen();
+                if(player.option_fullscreen){
+                    update_text_log("Switched to fullscreen mode.",true,MESSAGE_SYSTEM);
+                }
+                else{
+                    update_text_log("Switched to windowed mode.",true,MESSAGE_SYSTEM);
+                }
+            }
+
+            else if(istarts_with(str_command,"save")){
+                save_game();
+            }
+
+            /**else if(istarts_with(str_command,"help") || istarts_with(str_command,"?")){
+                update_text_log("For a list of extended commands, type 'commands'.",true,MESSAGE_SYSTEM);
             }
 
             else if(istarts_with(str_command,"commands")){
-                update_text_log("-----------------------------------Commands-------------------------------------",true,MESSAGE_SYSTEM);
-                update_text_log("/info",true,MESSAGE_SYSTEM);
-                update_text_log("/help",true,MESSAGE_SYSTEM);
-                update_text_log("/about",true,MESSAGE_SYSTEM);
-                update_text_log("/exit",true,MESSAGE_SYSTEM);
-                update_text_log("/fullscreen",true,MESSAGE_SYSTEM);
-            }
+                update_text_log("help",true,MESSAGE_SYSTEM);
+            }*/
 
             else if(istarts_with(str_command,"about")){
                 string version="";
@@ -285,18 +281,12 @@ void string_input::handle_events(){
                 update_text_log("--------------------------------------------------------------------------------",true,MESSAGE_SYSTEM);
             }
 
-            else if(istarts_with(str_command,"quit") || istarts_with(str_command,"exit")){
-                quit_game();
+            else if(istarts_with(str_command,"quit") || istarts_with(str_command,"exit") || istarts_with(str_command,"leave")){
+                save_game();
             }
 
-            else if(istarts_with(str_command,"fullscreen") || istarts_with(str_command,"fs")){
-                main_window.toggle_fullscreen();
-                if(player.option_fullscreen){
-                    update_text_log("Switched to fullscreen mode.",true,MESSAGE_SYSTEM);
-                }
-                else{
-                    update_text_log("Switched to windowed mode.",true,MESSAGE_SYSTEM);
-                }
+            else if(istarts_with(str_command,"4 8 15 16 23 42")){
+                ///
             }
 
             else{
@@ -308,7 +298,7 @@ void string_input::handle_events(){
             player.chat_mode=false;
 
             //Make sure that enter is cleared before moving to the next screen.
-            Uint8 *keystates=SDL_GetKeyState(NULL);/**Get keystates.*/
+            Uint8 *keystates=SDL_GetKeyState(NULL);
             keystates[SDLK_RETURN]=NULL;
             keystates[SDLK_KP_ENTER]=NULL;
         }
@@ -317,7 +307,7 @@ void string_input::handle_events(){
             player.chat_mode=false;
 
             //Make sure that enter is cleared before moving to the next screen.
-            Uint8 *keystates=SDL_GetKeyState(NULL);/**Get keystates.*/
+            Uint8 *keystates=SDL_GetKeyState(NULL);
             keystates[SDLK_RETURN]=NULL;
             keystates[SDLK_KP_ENTER]=NULL;
         }
@@ -328,7 +318,7 @@ void string_input::handle_events(){
             player.chat_mode=false;
 
             //Make sure that escape is cleared before moving to the next screen.
-            Uint8 *keystates=SDL_GetKeyState(NULL);/**Get keystates.*/
+            Uint8 *keystates=SDL_GetKeyState(NULL);
             keystates[SDLK_ESCAPE]=NULL;
         }
     }

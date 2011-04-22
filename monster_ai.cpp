@@ -76,11 +76,15 @@ ai_action Monster::ai_determine_action(){
             ///Set action coords to nearest fountain.
         }
     }
-    else if(ai_state_hostile_nearby(hostile_creature.x,hostile_creature.y)){
+
+    //-Combat-//
+
+    else if(return_health()>=return_health_max()*0.5 && ai_state_hostile_nearby(hostile_creature.x,hostile_creature.y)){
         action.action=AI_ACTION_MOVE;
         action.coords.x=hostile_creature.x;
         action.coords.y=hostile_creature.y;
     }
+
     else if(mr->ai_trait_wanders){
         action.action=AI_ACTION_MOVE;
         action.coords.x=random_range(0,vector_levels[current_level].level_x-1);

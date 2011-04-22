@@ -101,10 +101,11 @@ void Monster::set_base_stats(short pass_level){
 
     //Set the monster's focused skills.
 
-    //If the monster has an affiinity for one or more skills, choose those first.
+    //If the player has an affiinity for one or more skills, choose those first.
+
     for(int i=SKILL_BLADED_WEAPONS;i<SKILL_MAGIC_SUMMONING+1;i++){
         //If the player has less than the standard max experience for this skill, he has a natural affinity for it.
-        if(skills[i][SKILL_EXPERIENCE_MAX]<STARTING_SKILL_EXPERIENCE_MAX){
+        if(skills[i][SKILL_EXPERIENCE_MAX]+templates.template_races[race].skills[i][SKILL_EXPERIENCE_MAX]<STARTING_SKILL_EXPERIENCE_MAX){
             for(int n=0;n<3;n++){
                 if(focused_skills[n]==-1){
                     focused_skills[n]=i;
@@ -114,28 +115,83 @@ void Monster::set_base_stats(short pass_level){
         }
     }
 
+    //Then, choose 3 decent skills if they are not already chosen.
+
+    bool armor_chosen=false;
     for(int n=0;n<3;n++){
-        if(focused_skills[n]==-1){
-            focused_skills[n]=SKILL_ARMOR;
+        if(focused_skills[n]==SKILL_ARMOR){
+            armor_chosen=true;
             break;
         }
     }
+    if(!armor_chosen){
+        for(int n=0;n<3;n++){
+            if(focused_skills[n]==-1){
+                focused_skills[n]=SKILL_ARMOR;
+                break;
+            }
+        }
+    }
+
+    bool speed_chosen=false;
     for(int n=0;n<3;n++){
-        if(focused_skills[n]==-1){
-            focused_skills[n]=SKILL_SPEED;
+        if(focused_skills[n]==SKILL_SPEED){
+            speed_chosen=true;
             break;
         }
     }
+    if(!speed_chosen){
+        for(int n=0;n<3;n++){
+            if(focused_skills[n]==-1){
+                focused_skills[n]=SKILL_SPEED;
+                break;
+            }
+        }
+    }
+
+    bool bladed_weapons_chosen=false;
     for(int n=0;n<3;n++){
-        if(focused_skills[n]==-1){
-            focused_skills[n]=SKILL_BLADED_WEAPONS;
+        if(focused_skills[n]==SKILL_BLADED_WEAPONS){
+            bladed_weapons_chosen=true;
             break;
+        }
+    }
+    if(!bladed_weapons_chosen){
+        for(int n=0;n<3;n++){
+            if(focused_skills[n]==-1){
+                focused_skills[n]=SKILL_BLADED_WEAPONS;
+                break;
+            }
+        }
+    }
+
+    //Finally, fill out our skills with random ones, if necessary.
+
+    for(int i=0;i<3;){
+        if(focused_skills[i]==-1){
+            //Choose a random skill.
+            ///short random_skill=random_range(SKILL_BLADED_WEAPONS,SKILL_MAGIC_SUMMONING);
+            ///Disable some skills.
+            short random_skill=random_range(SKILL_BLADED_WEAPONS,SKILL_ARMOR);
+            while(random_skill==SKILL_SECURITY || random_skill==SKILL_STEALTH){
+                random_skill=random_range(SKILL_BLADED_WEAPONS,SKILL_ARMOR);
+            }
+            ///
+
+            //If the random skill is different from all of the focused skills.
+            if(random_skill!=focused_skills[0] && random_skill!=focused_skills[1] && random_skill!=focused_skills[2]){
+                focused_skills[i]=random_skill;
+                i++;
+            }
+        }
+        else{
+            i++;
         }
     }
 
     //Once the focused skills are set, apply their initial bonuses to their corresponding skills.
     for(int i=0;i<3;i++){
-        gain_skill_experience(focused_skills[i],skills[focused_skills[i]][SKILL_EXPERIENCE_MAX]-skills[focused_skills[i]][SKILL_EXPERIENCE],0,false);
+        gain_skill_experience(focused_skills[i],skills[focused_skills[i]][SKILL_EXPERIENCE_MAX]-skills[focused_skills[i]][SKILL_EXPERIENCE],0,false,false);
     }
 
     //Level the monster up an appropriate number of times.
@@ -441,8 +497,8 @@ void Monster::render(vector< vector<bool> >* tile_rendered){
                         else{
                             health_bar_color=COLOR_RED;
                         }
-                        double health_bar_width=((double)((double)health/(double)health_max)*100)/6.25;
-                        render_rectangle((int)(return_absolute_x()-player.camera_x),(int)(return_absolute_y()+TILE_SIZE_Y-3-player.camera_y),health_bar_width,3,0.75,health_bar_color);
+                        double health_bar_width=((double)((double)return_health()/(double)return_health_max())*100.0)/6.25;
+                        render_rectangle((int)(return_absolute_x()-player.camera_x),(int)(return_absolute_y()+TILE_SIZE_Y-3-player.camera_y),health_bar_width,3,1.0,health_bar_color);
                     }
 
                     if(player.option_dev){

@@ -150,22 +150,77 @@ void Player::game_start_good_skills(){
         }
     }
 
+    //Then, choose 3 decent skills if they are not already chosen.
+
+    bool armor_chosen=false;
     for(int n=0;n<3;n++){
-        if(focused_skills[n]==-1){
-            focused_skills[n]=SKILL_ARMOR;
+        if(focused_skills[n]==SKILL_ARMOR){
+            armor_chosen=true;
             break;
         }
     }
+    if(!armor_chosen){
+        for(int n=0;n<3;n++){
+            if(focused_skills[n]==-1){
+                focused_skills[n]=SKILL_ARMOR;
+                break;
+            }
+        }
+    }
+
+    bool speed_chosen=false;
     for(int n=0;n<3;n++){
-        if(focused_skills[n]==-1){
-            focused_skills[n]=SKILL_SPEED;
+        if(focused_skills[n]==SKILL_SPEED){
+            speed_chosen=true;
             break;
         }
     }
+    if(!speed_chosen){
+        for(int n=0;n<3;n++){
+            if(focused_skills[n]==-1){
+                focused_skills[n]=SKILL_SPEED;
+                break;
+            }
+        }
+    }
+
+    bool bladed_weapons_chosen=false;
     for(int n=0;n<3;n++){
-        if(focused_skills[n]==-1){
-            focused_skills[n]=SKILL_BLADED_WEAPONS;
+        if(focused_skills[n]==SKILL_BLADED_WEAPONS){
+            bladed_weapons_chosen=true;
             break;
+        }
+    }
+    if(!bladed_weapons_chosen){
+        for(int n=0;n<3;n++){
+            if(focused_skills[n]==-1){
+                focused_skills[n]=SKILL_BLADED_WEAPONS;
+                break;
+            }
+        }
+    }
+
+    //Finally, fill out our skills with random ones, if necessary.
+
+    for(int i=0;i<3;){
+        if(focused_skills[i]==-1){
+            //Choose a random skill.
+            ///short random_skill=random_range(SKILL_BLADED_WEAPONS,SKILL_MAGIC_SUMMONING);
+            ///Disable some skills.
+            short random_skill=random_range(SKILL_BLADED_WEAPONS,SKILL_ARMOR);
+            while(random_skill==SKILL_SECURITY || random_skill==SKILL_STEALTH){
+                random_skill=random_range(SKILL_BLADED_WEAPONS,SKILL_ARMOR);
+            }
+            ///
+
+            //If the random skill is different from all of the focused skills.
+            if(random_skill!=focused_skills[0] && random_skill!=focused_skills[1] && random_skill!=focused_skills[2]){
+                focused_skills[i]=random_skill;
+                i++;
+            }
+        }
+        else{
+            i++;
         }
     }
 

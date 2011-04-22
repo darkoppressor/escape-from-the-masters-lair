@@ -58,7 +58,7 @@ void Templates::calculate_item_attributes(Item* item,double temp_item_size){
 
     //If the item is armor and no defense was set.
     if(item->category==ITEM_ARMOR && item->defense==-1){
-        item->defense=(temp_item_size*toughness[item->material])/4.0;
+        item->defense=(temp_item_size*toughness[item->material])/1.5;
         //The armor piece should at least have 1 defense.
         if(item->defense<=0){
             item->defense=1;
@@ -69,13 +69,13 @@ void Templates::calculate_item_attributes(Item* item,double temp_item_size){
     if(item->damage_max_melee==-1){
         //If the item is a melee weapon.
         if(item->category==ITEM_WEAPON && item->weapon_category>=WEAPON_SHORT_BLADES && item->weapon_category<=WEAPON_STAVES){
-            item->damage_min_melee=temp_item_size*toughness[item->material]*3.0;
-            item->damage_max_melee=temp_item_size*toughness[item->material]*4.0;
+            item->damage_min_melee=temp_item_size*toughness[item->material]*7.0;
+            item->damage_max_melee=temp_item_size*toughness[item->material]*9.0;
         }
         //If the item is not a melee weapon.
         else{
             item->damage_min_melee=1;
-            item->damage_max_melee=(temp_item_size*(item->weight/2.0))/4.0;
+            item->damage_max_melee=(temp_item_size*(item->weight/2.0))/2.0;
         }
 
         if(item->damage_min_melee<1){
@@ -90,8 +90,8 @@ void Templates::calculate_item_attributes(Item* item,double temp_item_size){
     if(item->damage_max_thrown==-1){
         //If the item is a thrown weapon.
         if(item->category==ITEM_WEAPON && item->weapon_category==WEAPON_THROWN){
-            item->damage_min_thrown=temp_item_size*toughness[item->material]*3.0;
-            item->damage_max_thrown=temp_item_size*toughness[item->material]*4.0;
+            item->damage_min_thrown=(temp_item_size*4.0)*toughness[item->material]*6.0;
+            item->damage_max_thrown=(temp_item_size*6.0)*toughness[item->material]*8.0;
         }
         //If the item is not a thrown weapon.
         else{
@@ -111,8 +111,8 @@ void Templates::calculate_item_attributes(Item* item,double temp_item_size){
     if(item->damage_max_ranged==-1){
         //If the item is a ranged weapon.
         if(item->category==ITEM_WEAPON && item->weapon_category>=WEAPON_BOWS && item->weapon_category<=WEAPON_SLINGS){
-            item->damage_min_ranged=temp_item_size*toughness[item->material]*0.25;
-            item->damage_max_ranged=temp_item_size*toughness[item->material]*0.35;
+            item->damage_min_ranged=temp_item_size*toughness[item->material]*3.0;
+            item->damage_max_ranged=temp_item_size*toughness[item->material]*4.0;
 
             if(item->damage_min_ranged<1){
                 item->damage_min_ranged=1;

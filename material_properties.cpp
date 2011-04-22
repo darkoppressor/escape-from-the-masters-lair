@@ -14,67 +14,67 @@ double values[MATERIAL_LAVA+1];
 void prepare_specific_gravities(){
     specific_gravities[MATERIAL_WOOD]=0.7;
     specific_gravities[MATERIAL_PAPER]=0.9;
-    specific_gravities[MATERIAL_DIRT]=1.4;
     specific_gravities[MATERIAL_LEATHER]=0.95;
+    specific_gravities[MATERIAL_WATER]=1.0;
     specific_gravities[MATERIAL_CLOTH]=1.32;
+    specific_gravities[MATERIAL_DIRT]=1.4;
     specific_gravities[MATERIAL_BONE]=1.92;
+    specific_gravities[MATERIAL_LAVA]=2.0;
     specific_gravities[MATERIAL_FOOD]=2.0;
     specific_gravities[MATERIAL_GLASS]=2.4;
     specific_gravities[MATERIAL_STONE]=2.8;
     specific_gravities[MATERIAL_CORPSE]=3.84;
+    specific_gravities[MATERIAL_IRON]=7.03;
     specific_gravities[MATERIAL_BRONZE]=7.4;
     specific_gravities[MATERIAL_STEEL]=7.7;
-    specific_gravities[MATERIAL_IRON]=7.03;
     specific_gravities[MATERIAL_BRASS]=8.4;
     specific_gravities[MATERIAL_COPPER]=8.89;
     specific_gravities[MATERIAL_SILVER]=10.5;
     specific_gravities[MATERIAL_GOLD]=19.32;
-    specific_gravities[MATERIAL_WATER]=1.0;
-    specific_gravities[MATERIAL_LAVA]=2.0;
 }
 
 void prepare_toughness(){
-    toughness[MATERIAL_WOOD]=2;
-    toughness[MATERIAL_PAPER]=0.1;
-    toughness[MATERIAL_DIRT]=0.1;
-    toughness[MATERIAL_LEATHER]=5;
-    toughness[MATERIAL_CLOTH]=4;
-    toughness[MATERIAL_BONE]=3;
-    toughness[MATERIAL_FOOD]=0.1;
-    toughness[MATERIAL_GLASS]=1;
-    toughness[MATERIAL_STONE]=6;
-    toughness[MATERIAL_CORPSE]=0.1;
-    toughness[MATERIAL_BRONZE]=8;
-    toughness[MATERIAL_STEEL]=10;
-    toughness[MATERIAL_IRON]=9;
-    toughness[MATERIAL_BRASS]=7.5;
-    toughness[MATERIAL_COPPER]=7;
-    toughness[MATERIAL_SILVER]=6.8;
-    toughness[MATERIAL_GOLD]=6.5;
-    toughness[MATERIAL_WATER]=0.1;
-    toughness[MATERIAL_LAVA]=0.1;
+    toughness[MATERIAL_WATER]=0.05;
+    toughness[MATERIAL_LAVA]=0.05;
+    toughness[MATERIAL_PAPER]=0.05;
+    toughness[MATERIAL_DIRT]=0.05;
+    toughness[MATERIAL_FOOD]=0.05;
+    toughness[MATERIAL_CORPSE]=0.05;
+    toughness[MATERIAL_GLASS]=0.25;
+    toughness[MATERIAL_WOOD]=0.5;
+    toughness[MATERIAL_BONE]=0.75;
+    toughness[MATERIAL_CLOTH]=1.0;
+    toughness[MATERIAL_LEATHER]=1.25;
+    toughness[MATERIAL_STONE]=1.5;
+    toughness[MATERIAL_GOLD]=2.0;
+    toughness[MATERIAL_SILVER]=2.5;
+    toughness[MATERIAL_COPPER]=3.0;
+    toughness[MATERIAL_BRASS]=3.5;
+    toughness[MATERIAL_BRONZE]=4.0;
+    toughness[MATERIAL_IRON]=4.5;
+    toughness[MATERIAL_STEEL]=5.0;
 }
 
 void prepare_values(){
-    values[MATERIAL_WOOD]=5;
-    values[MATERIAL_PAPER]=4;
-    values[MATERIAL_DIRT]=3;
-    values[MATERIAL_LEATHER]=12;
-    values[MATERIAL_CLOTH]=9;
-    values[MATERIAL_BONE]=6;
-    values[MATERIAL_FOOD]=8;
-    values[MATERIAL_GLASS]=11;
-    values[MATERIAL_STONE]=5;
-    values[MATERIAL_CORPSE]=7;
-    values[MATERIAL_BRONZE]=14;
-    values[MATERIAL_STEEL]=17;
-    values[MATERIAL_IRON]=16;
-    values[MATERIAL_BRASS]=15;
-    values[MATERIAL_COPPER]=13;
-    values[MATERIAL_SILVER]=18;
-    values[MATERIAL_GOLD]=19;
     values[MATERIAL_WATER]=1;
     values[MATERIAL_LAVA]=2;
+    values[MATERIAL_DIRT]=3;
+    values[MATERIAL_PAPER]=4;
+    values[MATERIAL_WOOD]=5;
+    values[MATERIAL_STONE]=5;
+    values[MATERIAL_BONE]=6;
+    values[MATERIAL_CORPSE]=7;
+    values[MATERIAL_FOOD]=8;
+    values[MATERIAL_CLOTH]=9;
+    values[MATERIAL_GLASS]=11;
+    values[MATERIAL_LEATHER]=12;
+    values[MATERIAL_COPPER]=13;
+    values[MATERIAL_BRONZE]=14;
+    values[MATERIAL_BRASS]=15;
+    values[MATERIAL_IRON]=16;
+    values[MATERIAL_STEEL]=17;
+    values[MATERIAL_SILVER]=18;
+    values[MATERIAL_GOLD]=19;
 }
 
 string material_to_string(short material){

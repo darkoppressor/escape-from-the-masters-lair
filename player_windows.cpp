@@ -414,11 +414,6 @@ void Player::handle_input_get_starting_items(){
 
 void Player::handle_input_start_message(){
     if(event.key.keysym.sym==SDLK_RETURN || event.key.keysym.sym==SDLK_KP_ENTER || event.key.keysym.sym==SDLK_SPACE){
-        //Apply the focused skills' initial bonuses to their corresponding skills.
-        for(int i=0;i<3;i++){
-            gain_skill_experience(focused_skills[i],skills[focused_skills[i]][SKILL_EXPERIENCE_MAX]-skills[focused_skills[i]][SKILL_EXPERIENCE],0,false);
-        }
-
         game.new_game();
     }
 }

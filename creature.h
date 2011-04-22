@@ -262,7 +262,7 @@ class Creature: public Object{
     void level_up_skill(short skill,int experience_gained);
 
     //Gain skill experience points.
-    void gain_skill_experience(short skill,int points_gained,int experience_gained=1,bool allow_focused_bonus=true);
+    void gain_skill_experience(short skill,int points_gained,int experience_gained=1,bool allow_focused_bonus=true,bool enable_pacing=true);
 
     //Evaluate the tile the creature is trying to move to.
     //Returns true if the creature can move, false if the creature can not move.

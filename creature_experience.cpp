@@ -218,12 +218,10 @@ void Creature::level_up(){
     else{
         //Select the monster's attributes to improve and improve them.
 
-        ///Right now this is random, but the monster should be somewhat intelligent about this.
+        ///Right now this just prioritizes attributes based on their order, but the monster should be somewhat intelligent about this.
         //Determine the attributes to improve.
         for(int i=0;i<levelup_attributes.size();i++){
-            ///Disable some attributes.
-            levelup_attributes[i]=random_range(ATTRIBUTE_STRENGTH,ATTRIBUTE_HARDINESS);
-            ///
+            levelup_attributes[i]=i;
         }
 
         //Apply the selected attribute bonuses.
@@ -297,10 +295,6 @@ void Creature::level_up_skill(short skill,int experience_gained){
         attribute_level_bonuses[ATTRIBUTE_ACUMEN]++;
     }
 
-    ///ss.clear();ss.str("");ss<<"You have gained a skill level!";msg=ss.str();
-
-    ///update_text_log(msg.c_str(),is_player);
-
     //If the skill's experience reaches its current maximum experience.
     if(skills[skill][SKILL_EXPERIENCE]>=skills[skill][SKILL_EXPERIENCE_MAX]){
         //The skill levels up.
@@ -308,7 +302,12 @@ void Creature::level_up_skill(short skill,int experience_gained){
     }
 }
 
-void Creature::gain_skill_experience(short skill,int points_gained,int experience_gained,bool allow_focused_bonus){
+void Creature::gain_skill_experience(short skill,int points_gained,int experience_gained,bool allow_focused_bonus,bool enable_pacing){
+    if(enable_pacing){
+        //Set the pace of skill leveling.
+        points_gained*=3.0;
+    }
+
     //As long as at least one point is being gained.
     if(points_gained>0){
         //If this skill is a focused skill.

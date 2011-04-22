@@ -665,7 +665,7 @@ void Creature::execute_movement(short check_x,short check_y){
                 points_gained=0;
                 inventory_weight=return_inventory_weight(ITEM_ARMOR);
                 //Apply the encumbrance bonus to the armor skill increase.
-                points_gained+=inventory_weight/75.0;
+                points_gained+=(int)inventory_weight/50.0;
                 gain_skill_experience(SKILL_ARMOR,points_gained);
             }
 

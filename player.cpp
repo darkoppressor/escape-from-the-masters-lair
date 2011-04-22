@@ -138,6 +138,7 @@ Player::Player(){
     option_dev=false;
     option_fps=true;
     option_healthbars=true;
+    option_highlight_self=true;
 
     flag_cheater=false;
 
@@ -217,7 +218,7 @@ void Player::set_inventory(){
 void Player::set_base_stats(){
     // From creature: //
 
-    health_max=templates.base_stats.health_max*1.5;
+    health_max=templates.base_stats.health_max*2.0;
     health=health_max;
 
     mana_max=templates.base_stats.mana_max;
@@ -239,6 +240,11 @@ void Player::set_base_stats(){
 
     for(int i=SKILL_BLADED_WEAPONS;i<SKILL_MAGIC_SUMMONING+1;i++){
         skills[i][SKILL_EXPERIENCE_MAX]+=templates.template_races[race].skills[i][SKILL_EXPERIENCE_MAX];
+    }
+
+    //Apply the focused skills' initial bonuses to their corresponding skills.
+    for(int i=0;i<3;i++){
+        gain_skill_experience(focused_skills[i],skills[focused_skills[i]][SKILL_EXPERIENCE_MAX]-skills[focused_skills[i]][SKILL_EXPERIENCE],0,false,false);
     }
 }
 
@@ -691,55 +697,56 @@ void Player::handle_input(){
         // Camera controls: //
         //******************//
 
-        //If numpad 0 is pressed, toggle the camera's stickiness and play the appropriate sound.
-        ///This is commented out for the release version.
-        /**if(keystates[SDLK_KP0]){
-            if(cam_state==CAM_STICKY){
-                cam_state=0;
-            }
-            else{
-                cam_state=CAM_STICKY;
+        if(option_dev){
+            //If numpad 0 is pressed, toggle the camera's stickiness and play the appropriate sound.
+            if(keystates[SDLK_KP0]){
+                if(cam_state==CAM_STICKY){
+                    cam_state=0;
+                }
+                else{
+                    cam_state=CAM_STICKY;
+                }
+
+                //Once the toggle camera stickiness key has been hit, the player must release it for it to function again.
+                keystates[SDLK_KP0]=NULL;
             }
 
-            //Once the toggle camera stickiness key has been hit, the player must release it for it to function again.
-            keystates[SDLK_KP0]=NULL;
+            //If the camera is unsticky, check for camera inputs.
+            if(cam_state!=CAM_STICKY){
+                //Handle camera directional keys being pressed.
+                if(keystates[SDLK_DELETE]){
+                    cam_state=LEFT;
+                }
+                if(keystates[SDLK_HOME]){
+                    cam_state=UP;
+                }
+                if(keystates[SDLK_PAGEDOWN]){
+                    cam_state=RIGHT;
+                }
+                if(keystates[SDLK_END]){
+                    cam_state=DOWN;
+                }
+
+                //Handle multiple camera directional keys being pressed at once.
+                if(keystates[SDLK_DELETE] && keystates[SDLK_HOME]){
+                    cam_state=LEFT_UP;
+                }
+                if(keystates[SDLK_PAGEDOWN] && keystates[SDLK_HOME]){
+                    cam_state=RIGHT_UP;
+                }
+                if(keystates[SDLK_PAGEDOWN] && keystates[SDLK_END]){
+                    cam_state=RIGHT_DOWN;
+                }
+                if(keystates[SDLK_DELETE] && keystates[SDLK_END]){
+                    cam_state=LEFT_DOWN;
+                }
+
+                //If no camera directional keys are pressed, stop the camera.
+                if(!keystates[SDLK_DELETE] && !keystates[SDLK_HOME] && !keystates[SDLK_PAGEDOWN] && !keystates[SDLK_END]){
+                    cam_state=0;
+                }
+            }
         }
-
-        //If the camera is unsticky, check for camera inputs.
-        if(cam_state!=CAM_STICKY){
-            //Handle camera directional keys being pressed.
-            if(keystates[SDLK_DELETE]){
-                cam_state=LEFT;
-            }
-            if(keystates[SDLK_HOME]){
-                cam_state=UP;
-            }
-            if(keystates[SDLK_PAGEDOWN]){
-                cam_state=RIGHT;
-            }
-            if(keystates[SDLK_END]){
-                cam_state=DOWN;
-            }
-
-            //Handle multiple camera directional keys being pressed at once.
-            if(keystates[SDLK_DELETE] && keystates[SDLK_HOME]){
-                cam_state=LEFT_UP;
-            }
-            if(keystates[SDLK_PAGEDOWN] && keystates[SDLK_HOME]){
-                cam_state=RIGHT_UP;
-            }
-            if(keystates[SDLK_PAGEDOWN] && keystates[SDLK_END]){
-                cam_state=RIGHT_DOWN;
-            }
-            if(keystates[SDLK_DELETE] && keystates[SDLK_END]){
-                cam_state=LEFT_DOWN;
-            }
-
-            //If no camera directional keys are pressed, stop the camera.
-            if(!keystates[SDLK_DELETE] && !keystates[SDLK_HOME] && !keystates[SDLK_PAGEDOWN] && !keystates[SDLK_END]){
-                cam_state=0;
-            }
-        }*/
 
         //If the player hits the command key.
         if(keystates[SDLK_RETURN] || keystates[SDLK_KP_ENTER]){
@@ -883,9 +890,9 @@ void Player::update_fov(){
     //Process the player's light(s).
 
     //Give off the "no lights" light.
-    fov_circle(&fov_settings,&vector_levels[current_level],&(light_data)LIGHT_SOURCE_OFF_DATA,player.x,player.y,LIGHT_SOURCE_OFF_RADIUS);
+    ///fov_circle(&fov_settings,&vector_levels[current_level],&(light_data)LIGHT_SOURCE_OFF_DATA,player.x,player.y,LIGHT_SOURCE_OFF_RADIUS);
     //Light the player's own space.
-    fov_circle(&fov_settings,&vector_levels[current_level],&(light_data)LIGHT_SOURCE_OFF_DATA,player.x,player.y,0);
+    ///fov_circle(&fov_settings,&vector_levels[current_level],&(light_data)LIGHT_SOURCE_OFF_DATA,player.x,player.y,0);
 
     bool any_lights=false;
 
@@ -1018,6 +1025,11 @@ void Player::render(vector< vector<bool> >* tile_rendered){
         if(!tile_rendered->at(x)[y]){
             //Render the player if the player is in the camera bounds:
             if(return_absolute_x()>=camera_x-TILE_SIZE_X && return_absolute_x()<=camera_x+camera_w && return_absolute_y()>=camera_y-TILE_SIZE_Y && return_absolute_y()<=camera_y+camera_h){
+                if(option_highlight_self){
+                    render_rectangle((int)(return_absolute_x()-camera_x),(int)(return_absolute_y()-camera_y),TILE_SIZE_X,TILE_SIZE_Y,1.0,COLOR_WHITE);
+                    render_rectangle((int)(return_absolute_x()+1-camera_x),(int)(return_absolute_y()+1-camera_y),TILE_SIZE_X-2,TILE_SIZE_Y-2,1.0,COLOR_BLACK);
+                }
+
                 short render_color=color;
 
                 short temp_color=coverings_to_color(this);
@@ -1041,8 +1053,8 @@ void Player::render(vector< vector<bool> >* tile_rendered){
                     else{
                         health_bar_color=COLOR_RED;
                     }
-                    double health_bar_width=((double)((double)health/(double)health_max)*100)/6.25;
-                    render_rectangle((int)(return_absolute_x()-camera_x),(int)(return_absolute_y()+TILE_SIZE_Y-3-camera_y),health_bar_width,3,0.75,health_bar_color);
+                    double health_bar_width=((double)((double)return_health()/(double)return_health_max())*100.0)/6.25;
+                    render_rectangle((int)(return_absolute_x()-camera_x),(int)(return_absolute_y()+TILE_SIZE_Y-3-camera_y),health_bar_width,3,1.0,health_bar_color);
                 }
 
                 tile_rendered->at(x)[y]=true;

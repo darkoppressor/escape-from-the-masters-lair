@@ -125,7 +125,7 @@ bool rc_thirst_lose_health(){
 bool rc_exercise_skill_armor(){
     int random_attempt=random_range(0,99);
 
-    if(random_attempt>=0 && random_attempt<25){
+    if(random_attempt>=0 && random_attempt<15){
         return true;
     }
     else{
@@ -136,7 +136,7 @@ bool rc_exercise_skill_armor(){
 bool rc_exercise_skill_speed(){
     int random_attempt=random_range(0,99);
 
-    if(random_attempt>=0 && random_attempt<25){
+    if(random_attempt>=0 && random_attempt<15){
         return true;
     }
     else{
