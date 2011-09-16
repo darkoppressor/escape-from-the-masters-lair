@@ -2,11 +2,12 @@ syntax: glob
 bin
 obj
 .objs
+Escape
+*.depend
+Thumbs.db
 message_log.txt
 *.cfg
-*.depend
 saves
 screenshots
-Escape
 game_log
 highscores
