@@ -31,7 +31,7 @@
 					<Add option="-lSDLmain" />
 					<Add option="-lSDL" />
 					<Add option="-mwindows" />
-					<Add option="-Wl,--stack,67108864" />
+					<Add option="-Wl,--stack=67108864" />
 					<Add library="..\..\SDL\lib\libSDL.dll.a" />
 					<Add library="..\..\SDL\lib\libSDLmain.a" />
 					<Add library="..\..\glew\lib\glew32s.lib" />
