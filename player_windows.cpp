@@ -119,7 +119,7 @@ void Player::handle_input_get_name(){
         get_name.clear();
 
         //If the name is associated with a character that already exists.
-        if(boost::filesystem3::is_regular_file(to_lower_copy(check_name))){
+        if(boost::filesystem::is_regular_file(to_lower_copy(check_name))){
             game.old_game();
         }
 

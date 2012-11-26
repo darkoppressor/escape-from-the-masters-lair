@@ -20,6 +20,8 @@ SDL_Event event;
 BitmapFont font;
 BitmapFont font_small;
 
+String_Stuff string_stuff;
+
 //String stream used to easily render ints and stuff as strings.
 stringstream ss("");
 

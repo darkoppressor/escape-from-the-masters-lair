@@ -4,6 +4,9 @@
 #ifndef string_input_h
 #define string_input_h
 
+#include "render.h"
+#include "tile.h"
+
 #include <string>
 #include <vector>
 
@@ -27,6 +30,8 @@ class string_input{
     string_input();
 
     void handle_events();
+
+    color_data tile_to_color(Tile* tile);
 };
 
 #endif

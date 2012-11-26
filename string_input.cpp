@@ -7,6 +7,8 @@
 #include "save_load.h"
 #include "version.h"
 #include "message_log.h"
+#include "pixels.h"
+#include "savepng.h"
 
 using namespace std;
 using namespace boost::algorithm;
@@ -77,6 +79,76 @@ void string_input::handle_events(){
                 }
                 else{
                     update_text_log("Dev mode off.",true,MESSAGE_SYSTEM);
+                }
+            }
+
+            else if(istarts_with(str_command,"export")){
+                for(int i=0;i<vector_levels.size();i++){
+                    //Determine the date and time.
+                    /**time_t now;
+                    struct tm *tm_now;
+                    char buff[BUFSIZ];
+                    now=time(NULL);
+                    tm_now=localtime(&now);
+
+                    //Store the date and time in buff.
+                    strftime(buff,sizeof buff,"%Y-%m-%d_%H.%M.%S",tm_now);*/
+
+                    //Used to store the filename of the picture.
+                    string picture_name;
+
+                    //Set the filename.
+                    picture_name="dungeon_map_";
+                    picture_name+=string_stuff.num_to_string(i);
+                    picture_name+=".png";
+
+                    SDL_Surface* surface_temp=NULL;
+
+                    int map_width=vector_levels[i].level_x;
+                    int map_height=vector_levels[i].level_y;
+
+                    uint32_t rmask,gmask,bmask,amask;
+
+                    if(SDL_BYTEORDER==SDL_BIG_ENDIAN){
+                        rmask = 0xff000000;
+                        gmask = 0x00ff0000;
+                        bmask = 0x0000ff00;
+                        amask = 0x000000ff;
+                    }
+                    else{
+                        rmask = 0x000000ff;
+                        gmask = 0x0000ff00;
+                        bmask = 0x00ff0000;
+                        amask = 0xff000000;
+                    }
+
+                    //Setup a surface to hold the tiles as individual pixels.
+                    surface_temp=SDL_CreateRGBSurface(SDL_SWSURFACE,map_width,map_height,32,rmask,gmask,bmask,amask);
+
+                    //If the surface must be locked.
+                    if(SDL_MUSTLOCK(surface_temp)){
+                        //Lock the surface.
+                        SDL_LockSurface(surface_temp);
+                    }
+
+                    //Put one pixel in the temporary surface to represent each tile.
+                    for(int x=0;x<map_width;x++){
+                        for(int y=0;y<map_height;y++){
+                            color_data color=tile_to_color(&vector_levels[i].tiles[x][y]);
+                            uint32_t pixel=SDL_MapRGBA(surface_temp->format,color.red*255,color.green*255,color.blue*255,255);
+                            surface_put_pixel(surface_temp,x,y,pixel);
+                        }
+                    }
+
+                    //If the surface had to be locked.
+                    if(SDL_MUSTLOCK(surface_temp)){
+                        //Unlock the surface.
+                        SDL_UnlockSurface(surface_temp);
+                    }
+
+                    IMG_SavePNG(picture_name.c_str(),surface_temp,-1);
+
+                    SDL_FreeSurface(surface_temp);
                 }
             }
 
@@ -322,4 +394,48 @@ void string_input::handle_events(){
             keystates[SDLK_ESCAPE]=NULL;
         }
     }
+}
+
+color_data string_input::tile_to_color(Tile* tile){
+    color_data color;
+    color=color_shorts_to_doubles(0,0,0);
+
+    /**
+    TILE_TYPE_UP_STAIRS,
+    ,
+    ,
+    ,
+    ,
+    TILE_TYPE_TRAP*/
+
+    if(tile->type==TILE_TYPE_WALL){
+        color=color_shorts_to_doubles(255,255,255);
+    }
+    else if(tile->type==TILE_TYPE_FLOOR){
+        color=color_shorts_to_doubles(0,0,0);
+    }
+    else if(tile->type==TILE_TYPE_SOLID){
+        color=color_shorts_to_doubles(89,89,89);
+    }
+    else if(tile->type==TILE_TYPE_LIQUID || tile->type==TILE_TYPE_FOUNTAIN){
+        if(tile->material==MATERIAL_WATER){
+            if(tile->has_covering(COVERING_ICE)){
+                color=color_shorts_to_doubles(128,0,128);
+            }
+            else{
+                color=color_shorts_to_doubles(0,0,255);
+            }
+        }
+        else if(tile->material==MATERIAL_LAVA){
+            color=color_shorts_to_doubles(255,0,0);
+        }
+    }
+    else if(tile->type==TILE_TYPE_DOWN_STAIRS){
+        color=color_shorts_to_doubles(0,255,0);
+    }
+    else if(tile->type==TILE_TYPE_DOOR_CLOSED || tile->type==TILE_TYPE_DOOR_OPEN || tile->type==TILE_TYPE_SECRET_DOOR){
+        color=color_shorts_to_doubles(89,44,0);
+    }
+
+    return color;
 }

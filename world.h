@@ -24,6 +24,7 @@
 #include "tile_size.h"
 #include "dungeon_location.h"
 #include "templates.h"
+#include "string_stuff.h"
 
 extern Game_Window main_window;
 
@@ -35,6 +36,8 @@ extern SDL_Event event;
 
 extern BitmapFont font;
 extern BitmapFont font_small;
+
+extern String_Stuff string_stuff;
 
 extern std::stringstream ss;
 extern std::string msg;

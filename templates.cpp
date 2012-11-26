@@ -184,7 +184,7 @@ double Templates::determine_item_size(Item* item,int item_category,int item_temp
 
 bool Templates::load_templates(){
     //Look through all of the files in the directory.
-    for(boost::filesystem3::directory_iterator it("data/templates");it!=boost::filesystem3::directory_iterator();it++){
+    for(boost::filesystem::directory_iterator it("data/templates");it!=boost::filesystem::directory_iterator();it++){
         //Determine the file's full path name.
         string file_path=it->path().string();
 
@@ -192,7 +192,7 @@ bool Templates::load_templates(){
         string file_name=it->path().filename().string();
 
         //If the file is not a directory.
-        if(boost::filesystem3::is_regular_file(it->path())){
+        if(boost::filesystem::is_regular_file(it->path())){
             load.open(file_path.c_str(),ifstream::in);
 
             if(load!=NULL){
